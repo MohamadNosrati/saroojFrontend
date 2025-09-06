@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import HeroUiProvider from "./HeroUiProvider";
+import ReactQueryProvider from "./ReactQueryProvider";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -9,9 +10,11 @@ interface ProvidersProps {
 
 const Providers: React.FC<ProvidersProps> = ({ children }) => {
   return (
-    <HeroUiProvider themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-      {children}
-    </HeroUiProvider>
+    <ReactQueryProvider>
+      <HeroUiProvider themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+        {children}
+      </HeroUiProvider>
+    </ReactQueryProvider>
   );
 };
 
