@@ -1,6 +1,9 @@
+import { SelectionIcon } from "@/components/icons";
+
 const SiginPage = () => {
   return (
     <div className="container flex min-h-screen max-w-2xl flex-col justify-center">
+        <SelectionIcon/>
       {/* <CustomContainer customClassName="h-fit max-w-">
         <h1 className="mb-10 text-center text-2xl font-black text-woodSmoke-950 dark:text-slate-300">
           ورود
