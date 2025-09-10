@@ -1,3 +1,31 @@
+class Auth {
+  private readonly base: string;
+
+  constructor() {
+    this.base = "auth";
+  }
+
+  signin() {
+    return `${this.base}/signin`;
+  }
+
+  signup() {
+    return `${this.base}/signup`;
+  }
+}
+
+class File {
+  private readonly base: string;
+
+  constructor() {
+    this.base = "files";
+  }
+
+  upload(){
+    return `${this.base}/upload`
+  }
+}
+
 class Catgories {
   private readonly base: string;
 
@@ -127,3 +155,5 @@ export const ProjectsRoute = new Projects();
 export const CommentsRoute = new Comments();
 export const TeamatesRoute = new Temates();
 export const PictresRoute = new Pictures();
+export const AuthRoute = new Auth();
+export const filesRoute = new File();

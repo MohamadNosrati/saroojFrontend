@@ -1,50 +1,62 @@
-import { SelectionIcon } from "@/components/icons";
+"use client";
+import { useState } from "react";
+import { Button } from "@heroui/button";
+import CustomInput from "@/components/ui/CustomInput";
+import CustomContainer from "@/components/ui/CustomContainer";
+import { useForm } from "react-hook-form";
+import { authServices } from "@/lib/services/auth";
+import { useRouter } from "next/navigation";
+import { dashboardRoutes } from "@/lib/routes/navigationRoutes";
+import { responseHandler } from "@/lib/tools/responseHandler";
+
+type TFormValues ={
+  email:string;
+  password:string;
+}
 
 const SiginPage = () => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const {register,handleSubmit} = useForm<TFormValues>();
+  const onSubmit =async (data:TFormValues)=>{
+    try{
+      setIsLoading(true);
+      const res = await authServices.signin(data);
+      responseHandler.success(res.data?.message)
+      router.push(dashboardRoutes.dashboard());
+    }catch(error){
+      responseHandler.fail(error)
+    }finally{
+      setIsLoading(false);
+    }
+  }
   return (
-    <div className="container flex min-h-screen max-w-2xl flex-col justify-center">
-        <SelectionIcon/>
-      {/* <CustomContainer customClassName="h-fit max-w-">
+    <div className="min-h-screen flex justify-center items-center">
+      <CustomContainer>
         <h1 className="mb-10 text-center text-2xl font-black text-woodSmoke-950 dark:text-slate-300">
           ورود
         </h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <CustomInput
-            {...register("identifier", {
-              required: {
-                value: true,
-                message: "وارد کردن نام کاربری الزامی است.",
-              },
-            })}
-            startContent={<SelectionIcon width={20} height={20} />}
-            placeholder="نام کاربری"
-            errorMessage={errors.identifier?.message}
-            isInvalid={!!errors.identifier?.message}
-          />
-
-          <PasswordInput
-            {...register("password", {
-              required: {
-                value: true,
-                message: "وارد کردن رمز عبور الزامی است.",
-              },
-            })}
-            startContent={<SelectionIcon width={20} height={20} />}
-            placeholder="رمز عبور"
-            errorMessage={errors.password?.message}
-            isInvalid={!!errors.password?.message}
-          />
+          <div className="w-96">
+            <CustomInput {...register("email",{
+              required:true
+            })} type="Email" placeholder="Email ..." />
+          </div>
+          <div className="w-96">
+            <CustomInput {...register("password",{
+              required:true
+            })} type="password" placeholder="Password ..." />
+          </div>
           <Button
             type="submit"
             isLoading={isLoading}
             fullWidth
-            color="primary"
-            className="!mt-10"
+            className="!mt-10 bg-sky-400 font-bold"
           >
             ورود
           </Button>
         </form>
-      </CustomContainer> */}
+      </CustomContainer>
     </div>
   );
 };
