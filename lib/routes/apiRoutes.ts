@@ -18,7 +18,7 @@ class File {
   private readonly base: string;
 
   constructor() {
-    this.base = "files";
+    this.base = "pictures";
   }
 
   upload(){

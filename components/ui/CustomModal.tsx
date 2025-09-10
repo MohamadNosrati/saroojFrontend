@@ -45,11 +45,6 @@ const CustomModal : React.FC<ICustomMoalProps> = ({buttonTitle,modalTitle,childr
               <ModalBody>
                 {children}
               </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-              </ModalFooter>
             </>
           )}
         </ModalContent>
