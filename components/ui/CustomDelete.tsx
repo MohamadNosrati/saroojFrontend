@@ -1,4 +1,4 @@
-import { TeamatesRoute } from "@/lib/routes/apiRoutes";
+import { categoriesRoute, TeamatesRoute } from "@/lib/routes/apiRoutes";
 import { temateServices } from "@/lib/services/teamates";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { Button } from "@heroui/button";
@@ -6,23 +6,45 @@ import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { DeleteIcon } from "../icons";
+import { categoryServices } from "@/lib/services/categories";
+
+export type TEntity = "category" | "teamate" | "comment" | "project";
 
 interface ICustomDeleteProps {
-    id:string;
-    title:string;
+  id: string;
+  title: string;
+  entity: TEntity;
 }
 
-const CustomDelete : React.FC<ICustomDeleteProps> = ({id,title}) => {
+const CustomDelete: React.FC<ICustomDeleteProps> = ({ id, title, entity }) => {
+  const config = {
+    teamate: {
+      service: temateServices,
+      route: TeamatesRoute,
+    },
+    category: {
+      service: categoryServices,
+      route: categoriesRoute,
+    },
+    comment: {
+      service: categoryServices,
+      route: categoriesRoute,
+    },
+    project: {
+      service: categoryServices,
+      route: categoriesRoute,
+    },
+  };
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const queryClient = useQueryClient();
   const deleteHandler = async () => {
     try {
       setIsDeleting(true);
-      const res = await temateServices.delete(id);
+      const res = await config[entity].service.delete(id);
       responseHandler.success(res?.data?.message);
       queryClient.invalidateQueries({
-        queryKey: [TeamatesRoute.getAll()],
+        queryKey: [config[entity].route.getAll()],
       });
       setIsDeleteOpen(false);
     } catch (err) {

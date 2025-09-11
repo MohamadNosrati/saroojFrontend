@@ -1,24 +1,21 @@
 "use client";
 import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
-import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import { Controller, useForm } from "react-hook-form";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { useState } from "react";
 import { Button } from "@heroui/button";
-import { temateServices } from "@/lib/services/teamates";
-import { ITeamate } from "@/lib/types/teamate";
 import CustomSelect from "@/components/ui/CustomSelect";
+import { commentServices } from "@/lib/services/comments";
 
 interface IFormContainerProps {
-  teamate?: ITeamate;
+  comment?: IComment;
 }
 
 type TformValues = {
-  title: string;
-  position: string;
-  description: string;
-  pictureId: string;
+  fullName: string;
+  text: string;
+  email: string;
   isActive: "0" | "1";
 };
 
@@ -33,26 +30,23 @@ const options = [
   },
 ];
 
-const FormContainer: React.FC<IFormContainerProps> = ({ teamate }) => {
+const FormContainer: React.FC<IFormContainerProps> = ({ comment }) => {
   const [loading, setLoading] = useState(false);
   const { handleSubmit, setValue, watch, control, reset } =
     useForm<TformValues>({
       defaultValues: {
-        title: "",
-        position: "",
-        pictureId: "",
-        description: "",
+        fullName: "",
+        text:"",
+        email:"",
         isActive: "1",
       },
       values: {
-        title: teamate?.title || "",
-        description: teamate?.description || "",
-        pictureId: teamate?.pictureId.id || "",
-        position: teamate?.position || "",
-        isActive: !teamate ? "1" : teamate?.isActive === true ? "1" : "0",
+        fullName: comment?.fullName || "",
+        text: comment?.text || "",
+        email: comment?.email || "",
+        isActive: !comment ? "1" : comment?.isActive === true ? "1" : "0",
       },
     });
-  const { pictureId } = watch();
   const onSubmit = async (data: TformValues) => {
     let res;
     const payload = {
@@ -61,13 +55,13 @@ const FormContainer: React.FC<IFormContainerProps> = ({ teamate }) => {
     };
     try {
       setLoading(true);
-      if (teamate) {
-        res = await temateServices.update(teamate?.id, payload);
+      if (comment) {
+        res = await commentServices.update(comment?.id, payload);
       } else {
-        res = await temateServices.create(payload);
+        res = await commentServices.create(payload);
       }
       responseHandler.success(res.data?.message);
-      if (!teamate) {
+      if (!comment) {
         reset();
       }
     } catch (err) {
@@ -81,13 +75,13 @@ const FormContainer: React.FC<IFormContainerProps> = ({ teamate }) => {
       <div>
         <Controller
           control={control}
-          name="title"
+          name="fullName"
           render={({ field: { value, onChange } }) => (
             <CustomInput
               value={value}
               onChange={onChange}
               labelPlacement="outside-top"
-              label="نام و نام خانوادگی"
+              label="نام کاربر"
             />
           )}
         />
@@ -95,30 +89,10 @@ const FormContainer: React.FC<IFormContainerProps> = ({ teamate }) => {
       <div>
         <Controller
           control={control}
-          name="position"
-          render={({ field: { value, onChange } }) => (
-            <CustomInput
-              value={value}
-              onChange={onChange}
-              labelPlacement="outside-top"
-              label="عنوان شغلی"
-            />
-          )}
-        />
-      </div>
-      <div>
-        <Controller
-          control={control}
-          name="description"
+          name="text"
           render={({ field: { value, onChange } }) => (
             <CustomTextArea value={value} onChange={onChange} />
           )}
-        />
-      </div>
-      <div>
-        <CustomImageLoader
-          value={pictureId}
-          setValue={(value: string) => setValue("pictureId", value)}
         />
       </div>
       <div>
@@ -131,7 +105,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({ teamate }) => {
       </div>
       <div>
         <Button isLoading={loading} fullWidth type="submit" color="primary">
-          {teamate ? "ویرایش" : "ثبت"}
+          {comment ? "ویرایش" : "ثبت"}
         </Button>
       </div>
     </form>

@@ -18,7 +18,6 @@ const TeamatesPage = () => {
       <div className="flex items-center justify-between">
         <div></div>
         <CustomModal
-          editData={editData}
           isOpen={isOpen}
           onOpen={onOpen}
           onOpenChange={onOpenChange}
@@ -35,6 +34,7 @@ const TeamatesPage = () => {
           <div className="grid grid-cols-2 gap-8">
             {data?.data?.map((item) => (
               <CustomCard
+                entity="teamate"
                 setEditData={setEditData}
                 onOpen={onOpen}
                 key={item?.id}

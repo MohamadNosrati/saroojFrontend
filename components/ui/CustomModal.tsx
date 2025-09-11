@@ -3,8 +3,6 @@ import {
   Modal,
   ModalBody,
   ModalHeader,
-  ModalFooter,
-  useDisclosure,
   ModalContent,
 } from "@heroui/modal";
 import { Button } from "@heroui/button";
@@ -18,7 +16,7 @@ interface ICustomMoalProps {
   buttonTitle: string;
   modalTitle: string;
   children: React.ReactNode;
-  editData?:ITeamate;
+
 }
 
 const CustomModal: React.FC<ICustomMoalProps> = ({
@@ -28,7 +26,6 @@ const CustomModal: React.FC<ICustomMoalProps> = ({
   buttonTitle,
   modalTitle,
   children,
-  editData
 }) => {
   return (
     <>

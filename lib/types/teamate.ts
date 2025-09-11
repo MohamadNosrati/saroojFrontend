@@ -5,6 +5,7 @@ export interface ITeamatePayload {
     position:string;
     description:string;
     pictureId:string;
+    isActive:boolean;
 }
 
 export interface ITeamate {
@@ -14,5 +15,6 @@ export interface ITeamate {
     pictureId:IFile;
     description:string;
     createdAt:Date;
-    updateAt:Date;
+    updatedAt:Date;
+    isActive:boolean;
 }

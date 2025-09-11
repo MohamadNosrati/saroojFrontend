@@ -6,17 +6,16 @@ import { Controller, useForm } from "react-hook-form";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { useState } from "react";
 import { Button } from "@heroui/button";
-import { temateServices } from "@/lib/services/teamates";
-import { ITeamate } from "@/lib/types/teamate";
 import CustomSelect from "@/components/ui/CustomSelect";
+import { categoryServices } from "@/lib/services/categories";
+import { ICategory } from "@/lib/types/categories";
 
 interface IFormContainerProps {
-  teamate?: ITeamate;
+  category?: ICategory;
 }
 
 type TformValues = {
   title: string;
-  position: string;
   description: string;
   pictureId: string;
   isActive: "0" | "1";
@@ -33,23 +32,21 @@ const options = [
   },
 ];
 
-const FormContainer: React.FC<IFormContainerProps> = ({ teamate }) => {
+const FormContainer: React.FC<IFormContainerProps> = ({ category }) => {
   const [loading, setLoading] = useState(false);
   const { handleSubmit, setValue, watch, control, reset } =
     useForm<TformValues>({
       defaultValues: {
         title: "",
-        position: "",
         pictureId: "",
         description: "",
         isActive: "1",
       },
       values: {
-        title: teamate?.title || "",
-        description: teamate?.description || "",
-        pictureId: teamate?.pictureId.id || "",
-        position: teamate?.position || "",
-        isActive: !teamate ? "1" : teamate?.isActive === true ? "1" : "0",
+        title: category?.title || "",
+        description: category?.description || "",
+        pictureId: category?.pictureId.id || "",
+        isActive: !category ? "1" : category?.isActive === true ? "1" : "0",
       },
     });
   const { pictureId } = watch();
@@ -61,13 +58,13 @@ const FormContainer: React.FC<IFormContainerProps> = ({ teamate }) => {
     };
     try {
       setLoading(true);
-      if (teamate) {
-        res = await temateServices.update(teamate?.id, payload);
+      if (category) {
+        res = await categoryServices.update(category?.id, payload);
       } else {
-        res = await temateServices.create(payload);
+        res = await categoryServices.create(payload);
       }
       responseHandler.success(res.data?.message);
-      if (!teamate) {
+      if (!category) {
         reset();
       }
     } catch (err) {
@@ -87,21 +84,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({ teamate }) => {
               value={value}
               onChange={onChange}
               labelPlacement="outside-top"
-              label="نام و نام خانوادگی"
-            />
-          )}
-        />
-      </div>
-      <div>
-        <Controller
-          control={control}
-          name="position"
-          render={({ field: { value, onChange } }) => (
-            <CustomInput
-              value={value}
-              onChange={onChange}
-              labelPlacement="outside-top"
-              label="عنوان شغلی"
+              label="نام دسته بندی"
             />
           )}
         />
@@ -131,7 +114,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({ teamate }) => {
       </div>
       <div>
         <Button isLoading={loading} fullWidth type="submit" color="primary">
-          {teamate ? "ویرایش" : "ثبت"}
+          {category ? "ویرایش" : "ثبت"}
         </Button>
       </div>
     </form>
