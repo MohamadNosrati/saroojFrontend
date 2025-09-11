@@ -1,3 +1,4 @@
+"use client";
 import {
   Modal,
   ModalBody,
@@ -8,15 +9,27 @@ import {
 } from "@heroui/modal";
 import { Button } from "@heroui/button";
 import { Divider } from "@heroui/divider";
+import { ITeamate } from "@/lib/types/teamate";
 
 interface ICustomMoalProps {
-    buttonTitle:string;
-    modalTitle:string;
-    children:React.ReactNode;
+  isOpen: boolean;
+  onOpen: () => void;
+  onOpenChange: () => void;
+  buttonTitle: string;
+  modalTitle: string;
+  children: React.ReactNode;
+  editData?:ITeamate;
 }
 
-const CustomModal : React.FC<ICustomMoalProps> = ({buttonTitle,modalTitle,children}) => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+const CustomModal: React.FC<ICustomMoalProps> = ({
+  isOpen,
+  onOpen,
+  onOpenChange,
+  buttonTitle,
+  modalTitle,
+  children,
+  editData
+}) => {
   return (
     <>
       <Button
@@ -32,7 +45,7 @@ const CustomModal : React.FC<ICustomMoalProps> = ({buttonTitle,modalTitle,childr
         }}
         dir="rtl"
         size="5xl"
-        isOpen={true}
+        isOpen={isOpen}
         onOpenChange={onOpenChange}
       >
         <ModalContent>
@@ -42,9 +55,7 @@ const CustomModal : React.FC<ICustomMoalProps> = ({buttonTitle,modalTitle,childr
                 {modalTitle}
               </ModalHeader>
               <Divider />
-              <ModalBody>
-                {children}
-              </ModalBody>
+              <ModalBody>{children}</ModalBody>
             </>
           )}
         </ModalContent>

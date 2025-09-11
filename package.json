@@ -17,6 +17,7 @@
     "@heroui/listbox": "2.3.24",
     "@heroui/modal": "^2.2.23",
     "@heroui/navbar": "2.2.23",
+    "@heroui/popover": "^2.3.26",
     "@heroui/snippet": "2.2.26",
     "@heroui/spinner": "^2.2.23",
     "@heroui/switch": "2.2.23",

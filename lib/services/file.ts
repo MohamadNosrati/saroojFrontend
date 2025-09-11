@@ -7,7 +7,7 @@ import axiosInstance from "./base";
 export const useFindFile = (id: string) => {
   const { data, isLoading } = useQuery({
     queryKey: [filesRoute.find(id)],
-    queryFn: async () => await axiosInstance.get(filesRoute.find(id)),
+    queryFn: async () => await axiosInstance.get<IBaseResponse<IFile>>(filesRoute.find(id)),
     enabled: Boolean(id),
   });
   return {

@@ -4,6 +4,7 @@ import { ChangeEvent, useState } from "react";
 import { DeleteIcon } from "../icons";
 import { Button } from "@heroui/button";
 import { Spinner } from "@heroui/spinner";
+import CustomImage from "./CustomImage";
 
 interface ICustomImageLoaderProps {
   value: string;
@@ -20,7 +21,7 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
       if (e.target.files?.length) {
         setIsUploading(true);
         const formData = new FormData();
-        formData.set("images",e.target.files[0])
+        formData.set("images", e.target.files[0]);
         const res = await fileServices.upload(formData);
         if (res?.data?.data) {
           setValue(res.data?.data[0].id);
@@ -32,6 +33,11 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
       setIsUploading(false);
     }
   };
+
+  const deleteImage = ()=>{
+    setValue("")
+  }
+
   return (
     <>
       <label
@@ -42,25 +48,34 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
           <span className="text-small text-foreground">{`آپلود عکس`}</span>
         </div>
         <div className="h-10 bg-shark-950 rounded-xl flex items-center justify-between p-4">
-          <div>
-            {!value && (
-              <>
-                {isUploading && (
-                  <div>
-                    <Spinner size="sm" />
-                  </div>
-                )}
-              </>
-            )}
+          <div className="flex items-center gap-x-2">
+            {value && <CustomImage width={32} height={32} id={value} />}
           </div>
-          <div>
-            {value && (
-              <Button className="bg-transparent min-w-0 w-fit min-h-0 p-0">
-                <span>
-                  <DeleteIcon width={24} height={24} className="text-red-500" />
-                </span>
-              </Button>
-            )}
+          <div className="flex gap-x-2 items-center">
+            <div>
+              {!value && (
+                <>
+                  {isUploading && (
+                    <div>
+                      <Spinner size="sm" />
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+            <div className="w-6">
+              {value && (
+                <Button onPress={deleteImage} className="bg-transparent min-w-0 w-fit min-h-0 p-0">
+                  <span>
+                    <DeleteIcon
+                      width={24}
+                      height={24}
+                      className="text-red-500"
+                    />
+                  </span>
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </label>

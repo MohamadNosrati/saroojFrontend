@@ -119,7 +119,7 @@ class Temates {
   private readonly base: string;
 
   constructor() {
-    this.base = "temates";
+    this.base = "teamates";
   }
 
   getAll() {
