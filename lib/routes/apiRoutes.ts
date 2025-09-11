@@ -24,6 +24,11 @@ class File {
   upload(){
     return `${this.base}/upload`
   }
+
+  find(id:string){
+    return `${this.base}/${id}`
+  }
+
 }
 
 class Catgories {

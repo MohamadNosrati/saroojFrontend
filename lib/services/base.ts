@@ -6,9 +6,9 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   async (config) => {
-    const session = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Yjk3OGQ3YjE5YmMyNzZmMzMzMDAwNiIsImlhdCI6MTc1NzUzOTkxNywiZXhwIjoxNzU3NjI2MzE3fQ._Tg8aeGLZDhzaERR5GO1fG1XhiOwGtXUp_35nkcCQFQ";
-    if(session){
-        config.headers.Authorization = `Bearer ${session}`
+    const token = localStorage.getItem("token");
+    if(token){
+        config.headers.Authorization = `Bearer ${token}`
     }
     return config;
   },

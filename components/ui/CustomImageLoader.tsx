@@ -19,9 +19,9 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
     try {
       if (e.target.files?.length) {
         setIsUploading(true);
-        const res = await fileServices.upload({
-          images: e.target.files,
-        });
+        const formData = new FormData();
+        formData.set("images",e.target.files[0])
+        const res = await fileServices.upload(formData);
         if (res?.data?.data) {
           setValue(res.data?.data[0].id);
         }
