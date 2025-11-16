@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@config "../tailwind.config.js";
+
+:root {
+  --primary: #ae8649;
+  --primaryLight: #b6915a;
+  --white: #f1f1f2;
+  --whiteGray: #fcfcfd;
+  --grayLighter: #d6d6d6;
+  --grayDarker: #1d1d1d;
+  --secondary: #666666;
+  --gray: #2f2f2f;
+}

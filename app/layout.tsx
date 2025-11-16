@@ -1,9 +1,8 @@
-import "@/styles/globals.css";
+import "@/public/globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
 
 import { siteConfig } from "@/lib/config/site";
-import { fontSans } from "@/lib/config/fonts";
 import Providers from "@/lib/providers";
 import { ToastContainer } from "react-toastify";
 
@@ -18,12 +17,12 @@ export const metadata: Metadata = {
   },
 };
 
-// export const viewport: Viewport = {
-//   themeColor: [
-//     { media: "(prefers-color-scheme: light)", color: "white" },
-//     { media: "(prefers-color-scheme: dark)", color: "black" },
-//   ],
-// };
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+};
 
 export default function RootLayout({
   children,
@@ -31,12 +30,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning lang="en">
+    <html suppressHydrationWarning >
       <head />
       <body
         className={clsx(
-          "min-h-screen text-foreground  font-sans antialiased bg-white",
-          fontSans.variable
+          "min-h-screen  antialiased bg-white",
         )}
       >
         <Providers>{children}</Providers>

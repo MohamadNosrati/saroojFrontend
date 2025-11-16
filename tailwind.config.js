@@ -8,16 +8,35 @@ const config = {
     "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    container: {
+      center: true,
+      padding: {
+        lg: "1rem",
+        sm: "12px",
+        DEFAULT: "6px",
+      },
+      screen: {
+        DEFAULT: "1254px",
+      },
+    },
     extend: {
       fontFamily: {
-        
-        sans: ["var(--font-sans)"],
+        yekan: ["var(--font-yekan)"],
         mono: ["var(--font-mono)"],
       },
       colors: {
         primary: {
-          DEFAULT: "#AE8649",
-          dark: "#55462F",
+          DEFAULT: "var(--primary)",
+          light: "var(--primaryLight)",
+        },
+        white: {
+          DEFAULT: "var(--white)",
+          gray: "var(--whiteGray)",
+        },
+        gray: {
+          lighter: "var(--grayLighter)",
+          DEFAULT:"var(--gray)",
+          darker: "var(--grayDarker)",
         },
         secondary: "#D6D6D6",
         light: "#F1F1F2",
@@ -75,8 +94,8 @@ const config = {
           950: "#1e1f25",
         },
         componentBase: {
-          "1": "#1F222A",
-          "2": "#17191F",
+          1: "#1F222A",
+          2: "#17191F",
         },
       },
     },
