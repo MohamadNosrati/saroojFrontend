@@ -1,6 +1,6 @@
-import Image from "next/image";
-import ProjectImage from "@/public/images/projectImage.png";
+
 import { Pagination } from "@heroui/pagination";
+import ProjectItem from "../../ProjectItem";
 
 const Container = () => {
   return (
@@ -8,7 +8,7 @@ const Container = () => {
       <div className="container grid grid-cols-6 gap-5">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9]?.map((item) => (
           <div key={item} className="col-span-2">
-            <Image src={ProjectImage} alt="" />
+            <ProjectItem/>
           </div>
         ))}
       </div>

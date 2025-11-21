@@ -1,5 +1,5 @@
-import Banner from "@/features/landing/projects/Banner";
-import Container from "@/features/landing/projects/Container";
+import Banner from "@/features/landing/Projects/Banner";
+import Container from "@/features/landing/Projects/Container";
 
 const ProjectsPage = () => {
   return (
