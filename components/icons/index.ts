@@ -12,3 +12,4 @@ export { default as DobleQuatesIcon } from "./landing/doubleQuotes.svg";
 export { default as EnvelopeIcon } from "./landing/envelope.svg";
 export { default as LocationIcon } from "./landing/location.svg";
 export { default as PhoneIcon } from "./landing/phone.svg";
+export { default as ArrowIcon } from "./landing/Arrow.svg";

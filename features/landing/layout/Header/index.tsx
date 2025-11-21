@@ -29,7 +29,7 @@ const data = [
 
 const Header = () => {
   return (
-    <section className="h-28  bg-[#959595]/47 backdrop-blur-md fixed w-full top-0 z-10 flex items-center">
+    <section className="h-28  bg-[#959595]/47 backdrop-blur-md  w-full top-0 z-10 flex items-center">
       <div className="container  flex items-center justify-between">
         <div className="flex items-center  gap-24">
           <Image src={Logo} alt="ساروج" />
