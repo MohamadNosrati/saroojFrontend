@@ -3,12 +3,14 @@
 @config "../tailwind.config.js";
 
 :root {
-  --primary: #ae8649;
+  --primary: #AE8649;
   --primaryLight: #b6915a;
-  --white: #f1f1f2;
-  --whiteGray: #fcfcfd;
-  --grayLighter: #d6d6d6;
-  --grayDarker: #1d1d1d;
+  --primaryDark:#473B29;
+  --white: #F1F1F2;
+  --whiteGray: #FCFCFD;
+  --grayLighter: #D6D6D6;
+  --grayDarker: #1D1D1D;
   --secondary: #666666;
   --gray: #2f2f2f;
 }
+

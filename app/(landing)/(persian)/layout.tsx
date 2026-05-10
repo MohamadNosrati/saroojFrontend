@@ -5,8 +5,11 @@ import clsx from "clsx";
 
 const PersianLyout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <main dir="rtl" className={clsx([
-      yekanBakh.className,
+    <main
+    style={{ '--font-yekan': yekanBakh.style.fontFamily } as React.CSSProperties}
+    dir="rtl" className={clsx([
+      "font-yekan",
+      // yekanBakh.className,
       "flex flex-col justify-between min-h-screen"
     ])}>
       <Header/>

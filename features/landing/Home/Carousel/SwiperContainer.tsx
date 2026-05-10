@@ -8,6 +8,7 @@ import { Button } from "@heroui/button";
 import { useRef, useState } from "react";
 import type { Swiper as SwiperType } from "swiper/types";
 import cn from "@/lib/tools/cn";
+import { Autoplay } from "swiper/modules";
 
 const SwiperContainer = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -15,11 +16,12 @@ const SwiperContainer = () => {
   return (
     <>
       <Swiper
-        spaceBetween={5}
+        spaceBetween={0}
         slidesPerView={1}
         autoplay={{
           delay: 2500,
         }}
+        modules={[Autoplay]}
         loop
         onSlideChange={(swiper) => {
           setActiveIndex(swiper.realIndex);
@@ -27,7 +29,7 @@ const SwiperContainer = () => {
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}
-        className="!w-full h-screen"
+        className="!w-full bg-black h-screen"
       >
         {[1, 2, 3]?.map((item) => (
           <SwiperSlide className="!relative" key={item}>

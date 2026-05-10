@@ -1,19 +1,23 @@
+import { url } from "inspector";
 import FaqsContainer from "./FaqsContainer";
+import HouseImage from "@/public/images/house.png";
 
 const Faqs = () => {
   return (
-    <section className="px-24 pt-28 pb-52 flex gap-11 flex-col items-center  bg-black">
-      <div className="flex items-center flex-col">
-        <h4 className="text-center text-primary text-2xl leading-16 font-bold">
-          سوالات متداول
-        </h4>
-        <h6 className="text-lg text-white leading-14">
-          پرسش و پاسخ های متداول
-        </h6>
-      </div>
-      <div className="flex flex-col w-2/3 gap-2.5">
-        <FaqsContainer />
-      </div>
+    <section className="dark:bg-dark">
+      <section
+        style={{
+          backgroundImage: `url(${HouseImage.src})`,
+        }}
+        className="bg-no-repeat max-lg:!bg-none bg-cover lg:pt-20 lg:pb-48 md:pt-14 md:pb-24 sm:pt-12 sm:pb-14 pt-6 pb-10 flex lg:gap-12 gap-8 flex-col items-center"
+      >
+          <h4 className="text-center text-primary text-2xl font-bold">
+            سوالات متداول
+          </h4>
+        <div className="flex container flex-col lg:w-2/3  w-full">
+          <FaqsContainer />
+        </div>
+      </section>
     </section>
   );
 };

@@ -4,21 +4,16 @@ import ServiceImage from "@/public/images/serviceImage.png";
 
 const Services = () => {
   return (
-    <section className="px-24 pt-20 pb-40 bg-gray-darker">
-      <h5 className="text-center text-white text-2xl font-bold">دسته بندی</h5>
-      <div className=" container mt-12 flex gap-12">
-        <div className="basis-1/3 aspect-square relative">
+    <section className="lg:pt-20 md:pt-12 lg:pb-32 md:pb-24 sm:pt-10 sm:pb-20 pt-8 pb-12 bg-gray-darker">
+      <h5 className="text-center text-white text-2xl font-bold">
+        چه خدماتی به مشتریان ارایه می دهیم؟
+      </h5>
+      <div className="container max-lg:flex-col lg:mt-12 sm:mt-8 mt-4 flex gap-x-12">
+        <div className="basis-1/3 max-lg:hidden aspect-square relative">
           <Image alt="" fill src={ServiceImage} />
         </div>
-        <div className="flex flex-col gap-11 justify-between basis-2/3">
-          <div className="">
-            <h4 className="text-3xl font-bold">چه خدماتی به مشتریان ارایه می دهیم؟</h4>
-          </div>
-          <div className="basis-2/3 grid grid-cols-2 gap-14">
-            {[1, 2, 3, 4]?.map((item) => (
-              <ServiceItem item={item} key={item} />
-            ))}
-          </div>
+        <div className="basis-2/3 grid sm:grid-cols-2 lg:gap-14 md:gap-10 sm:gap-8 gap-6">
+          {[1, 2, 3, 4]?.map((item) => <ServiceItem item={item} key={item} />)}
         </div>
       </div>
     </section>

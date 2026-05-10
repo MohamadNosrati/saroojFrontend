@@ -1,70 +1,54 @@
-"use client";
-
 import Image from "next/image";
 import Logo from "@/public/images/logo.png";
 import Link from "next/link";
-import { Button } from "@heroui/button";
-import { MoonIcon, WorldIcon } from "@/components/icons";
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-} from "@heroui/dropdown";
 import { persianRoutes } from "@/lib/routes/navigationRoutes";
+import ToggleTheme from "./ToggleTheme";
+import SelectLanguage from "./SelectLanguage";
+import { AboutIcon, BlogsIcon, HouseIcon, ProjectsIcon } from "@/components/icons";
+import DeskTopNavigation from "./DesktopNavigation";
+import MobileNavigation from "./MobileNavigation";
+
 
 const data = [
   {
-    href: persianRoutes.aboutPage(),
-    label: "درباره ما",
+    href: persianRoutes.homePage(),
+    label: "خانه",
+    icon: HouseIcon
   },
   {
     href: persianRoutes.projectsPage(),
     label: "پروژه ها",
+    icon: ProjectsIcon
+
   },
   {
     href: persianRoutes.blogsPage(),
     label: "مقالات",
+    icon: BlogsIcon
+
+  },
+  {
+    href: persianRoutes.aboutPage(),
+    label: "درباره ما",
+    icon: AboutIcon
+
   },
 ];
 
 const Header = () => {
   return (
-    <section className="h-28  bg-[#959595]/47 backdrop-blur-md  w-full top-0 z-10 flex items-center">
-      <div className="container  flex items-center justify-between">
-        <div className="flex items-center  gap-24">
-          <Image src={Logo} alt="ساروج" />
-          <div className="flex items-center gap-12">
-            {data?.map((item) => (
-              <Link
-                key={item?.href}
-                className="text-black font-bold"
-                href={item?.href}
-              >
-                {item?.label}
-              </Link>
-            ))}
-          </div>
+    <section className="h-20 sticky bg-white dark:bg-dark bg-opacity-20 backdrop-blur-sm  w-full top-0 z-[10000] flex items-center">
+      <div className="container flex items-center justify-between">
+        <div className="flex items-center  xl:gap-24 lg:gap-12 gap-6">
+          <MobileNavigation />
+          <Link href={persianRoutes.homePage()}>
+            <Image src={Logo} className="max-sm:w-24 h-16" alt="ساروج" />
+          </Link>
+          <DeskTopNavigation data={data} />
         </div>
-        <div className="flex items-center gap-16">
-          <Button className="bg-transparent min-w-0">
-            <span>
-              <MoonIcon width={40} height={40} className="text-black" />
-            </span>
-          </Button>
-          <Dropdown>
-            <DropdownTrigger>
-              <Button className="bg-transparent min-w-0 flex gap-2">
-                <span className="text-black text-sm">English</span>
-                <span>
-                  <WorldIcon width={20} height={20} className="text-black" />
-                </span>
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu aria-label="Static Actions">
-              <DropdownItem key="new">New file</DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
+        <div className="flex items-center xl:gap-16 lg:gap-12 gap-6">
+          <SelectLanguage />
+          <ToggleTheme />
         </div>
       </div>
     </section>

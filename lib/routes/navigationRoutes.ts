@@ -11,12 +11,16 @@ class PersianNavigationRoutes {
     return "/projects";
   }
 
-  singleProjectPage(id: string) {
-    return `/projects/${id}`;
+  singleProjectPage(slug: string) {
+    return `/projects/${slug}`;
   }
 
   blogsPage() {
     return "/blogs";
+  }
+
+  singleBlogPage(slug: string) {
+    return `/blogs/${slug}`;
   }
 
 }

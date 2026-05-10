@@ -1,8 +1,6 @@
 export { default as SelectionIcon } from "./dashboard/selection.svg";
 export { default as DeleteIcon } from "./dashboard/delete.svg";
 export { default as EditIcon } from "./dashboard/edit.svg";
-
-
 export { default as MoonIcon } from "./landing/moonIcon.svg";
 export { default as WorldIcon } from "./landing/world.svg";
 export { default as HomeIcon } from "./landing/home.svg";
@@ -13,3 +11,18 @@ export { default as EnvelopeIcon } from "./landing/envelope.svg";
 export { default as LocationIcon } from "./landing/location.svg";
 export { default as PhoneIcon } from "./landing/phone.svg";
 export { default as ArrowIcon } from "./landing/Arrow.svg";
+export { default as SunIcon } from "./landing/sun.svg";
+export { default as HouseIcon } from "./landing/house.svg";
+export { default as AboutIcon } from "./landing/about.svg";
+export { default as ProjectsIcon } from "./landing/projects.svg";
+export { default as BlogsIcon } from "./landing/blogs.svg";
+export { default as HamburgerIcon } from "./landing/hamburger.svg";
+export { default as CloseIcon } from "./landing/close.svg";
+export { default as CallIcon } from "./landing/call.svg";
+export { default as EmailIcon } from "./landing/email.svg";
+export { default as CalandarIcon } from "./landing/Calandar.svg";
+export { default as EmptyCalendarIcon } from "./landing/emptyCalander.svg";
+export { default as AreaIcon } from "./landing/area.svg";
+export { default as BuildingIcon } from "./landing/building.svg";
+export { default as DescriptionIcon } from "./landing/description.svg";
+export { default as WriterIcon } from "./landing/writer.svg";

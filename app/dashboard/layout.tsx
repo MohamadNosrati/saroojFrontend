@@ -1,5 +1,6 @@
 "use client";
 import SideBar from "@/features/dashboard/layout/SideBar";
+import { yekanBakh } from "@/lib/config/fonts";
 import React from "react";
 
 export default function Layout({
@@ -8,18 +9,20 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <main dir="rtl" className="h-screen w-full gap-4 p-8 bg-component-base-2 grid grid-cols-5 ">
-        <div className="relative z-2  lg:pr-5 rounded-2xl h-full">
-          <SideBar />
-        </div>
+    <main
+      style={{ '--font-yekan': yekanBakh.style.fontFamily } as React.CSSProperties}
+      dir="rtl" className="bg-gray-darker p-6 min-h-screen font-yekan flex flex-col  w-full gap-4 ">
+      <div className="p-6 border-primary border-2 rounded-2xl">
+
+      </div>
+      <div className="flex gap-4 grow">
+        <SideBar />
         <div
-          id="mainContainer"
-          className="z-1 col-span-4 flex-col min-h-full justify-start overflow-y-auto overflow-x-hidden scroll-smooth"
+          className="z-1 grow flex-col border-2 border-primary rounded-2xl justify-start overflow-y-auto overflow-x-hidden scroll-smooth p-6"
         >
           {children}
         </div>
-      </main>
-    </>
+      </div>
+    </main>
   );
 }

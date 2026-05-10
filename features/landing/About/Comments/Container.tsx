@@ -1,39 +1,46 @@
 "use client";
 
-import Image from "next/image";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useRef, useState } from "react";
-import type { Swiper as SwiperType } from "swiper/types";
-import cn from "@/lib/tools/cn";
 import CommentItem from "./CommentItem";
+import { Autoplay } from "swiper/modules";
 
 const Container = () => {
-  const [acitveIndex, setActiveIndex] = useState<number>(0);
-  const swiperRef = useRef<SwiperType | null>(null);
   return (
-    <>
-      <Swiper
-        spaceBetween={20}
-        slidesPerView={3}
-        autoplay={{
-          delay: 2500,
-        }}
-        loop
-        onSlideChange={(swiper) => {
-          setActiveIndex(swiper.realIndex);
-        }}
-        onSwiper={(swiper) => {
-          swiperRef.current = swiper;
-        }}
-      >
-        {[1, 2, 3, 4, 5]?.map((item) => (
-          <SwiperSlide className="!pt-12 " key={item}>
-            <CommentItem />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </>
+    <Swiper
+      breakpoints={{
+        1020: {
+          slidesPerView: 3,
+          spaceBetween: 20
+        },
+        768: {
+          slidesPerView: 2.4,
+          spaceBetween: 16
+        },
+        540: {
+          slidesPerView: 1.6,
+          spaceBetween: 12
+        },
+        320: {
+          slidesPerView: 1.4,
+          spaceBetween: 8,
+          centeredSlides: true
+        }
+      }}
+      autoplay={{
+        delay: 2500,
+        pauseOnMouseEnter: true,  
+      }}
+      
+      loop
+      modules={[Autoplay]}
+    >
+      {[1, 2, 3, 4, 5]?.map((item) => (
+        <SwiperSlide className="!pt-12" key={item}>
+          <CommentItem />
+        </SwiperSlide>
+      ))}
+    </Swiper>
   );
 };
 

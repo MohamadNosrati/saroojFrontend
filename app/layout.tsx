@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning>
       <head />
-      <body className={clsx("antialiased min-h-screen ")}>
+      <body className={clsx("antialiased min-h-screen")}>
         <Providers>{children}</Providers>
         <ToastContainer position="top-center" autoClose={3000} />
       </body>

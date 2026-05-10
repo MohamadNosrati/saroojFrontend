@@ -3,7 +3,7 @@ import SwiperContainer from "./SwiperContainer";
 
 const HomeCarousel = () => {
   return (
-    <section className="relative">
+    <section className="">
         <SwiperContainer/>
     </section>
   );

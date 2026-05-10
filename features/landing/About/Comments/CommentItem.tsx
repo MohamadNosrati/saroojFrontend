@@ -17,7 +17,7 @@ const CommentItem = () => {
       <span className="mt-5">
         <DobleQuatesIcon width={16} height={12} className="text-primary" />
       </span>
-      <p className="mt-5 text-center">
+      <p className="mt-5 text-center text-gray-lighter">
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
         ligula eget dolor. Aenean Lorem ipsum dolor sit amet, consectetuer
         adipiscing elit. Aenean

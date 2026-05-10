@@ -1,7 +1,11 @@
+import BlogsLatest from "@/features/landing/Blog/Latest";
+import BlogsList from "@/features/landing/Blog/List";
+
 export default function BlogsPage(){
     return (
-        <section>
-            <h1 className="text-black">blogs page</h1>
-        </section>
+        <main>
+            <BlogsLatest/>
+            <BlogsList/>
+        </main>
     )
 }
