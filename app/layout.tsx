@@ -30,13 +30,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning >
+    <html suppressHydrationWarning>
       <head />
-      <body
-        className={clsx(
-          "min-h-screen  antialiased bg-white",
-        )}
-      >
+      <body className={clsx("antialiased min-h-screen ")}>
         <Providers>{children}</Providers>
         <ToastContainer position="top-center" autoClose={3000} />
       </body>

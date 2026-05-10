@@ -11,19 +11,20 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "@heroui/dropdown";
+import { persianRoutes } from "@/lib/routes/navigationRoutes";
 
 const data = [
   {
-    href: "fewtwe",
-    label: "fd",
+    href: persianRoutes.aboutPage(),
+    label: "درباره ما",
   },
   {
-    href: "fewwe",
-    label: "fgwe",
+    href: persianRoutes.projectsPage(),
+    label: "پروژه ها",
   },
   {
-    href: "fewtgwetwee",
-    label: "",
+    href: persianRoutes.blogsPage(),
+    label: "مقالات",
   },
 ];
 

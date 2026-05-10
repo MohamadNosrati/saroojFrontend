@@ -14,6 +14,11 @@ class PersianNavigationRoutes {
   singleProjectPage(id: string) {
     return `/projects/${id}`;
   }
+
+  blogsPage() {
+    return "/blogs";
+  }
+
 }
 
 class EnglishNavigationRoutes {
@@ -68,3 +73,5 @@ class DashboardRoute {
 }
 
 export const dashboardRoutes = new DashboardRoute();
+export const persianRoutes = new PersianNavigationRoutes();
+export const englishRoutes = new EnglishNavigationRoutes();

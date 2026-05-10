@@ -10,7 +10,7 @@ import type { Swiper as SwiperType } from "swiper/types";
 import cn from "@/lib/tools/cn";
 
 const SwiperContainer = () => {
-  const [acitveIndex, setActiveIndex] = useState<number>(0);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
   const swiperRef = useRef<SwiperType | null>(null);
   return (
     <>
@@ -27,7 +27,7 @@ const SwiperContainer = () => {
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}
-        className="!w-full  !h-screen"
+        className="!w-full h-screen"
       >
         {[1, 2, 3]?.map((item) => (
           <SwiperSlide className="!relative" key={item}>
@@ -54,7 +54,7 @@ const SwiperContainer = () => {
             className={cn(
               "min-h-0 min-w-0 border-2 border-white  h-3 w-3 rounded-full bg-transparent p-0",
               {
-                "bg-white border-transparent": index === acitveIndex,
+                "bg-white border-transparent": index === activeIndex,
               }
             )}
           ></Button>
