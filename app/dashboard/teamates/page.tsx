@@ -1,51 +1,67 @@
 "use client";
-import CustomCard from "@/components/ui/CustomCard";
 import CustomContainer from "@/components/ui/CustomContainer";
-import CustomLoader from "@/components/ui/CustomLoader";
 import CustomModal from "@/components/ui/CustomModal";
+import CustomTable from "@/components/ui/CustomTable";
 import FormContainer from "@/features/dashboard/teamates/TeamateFormContainer";
-import { useGetTemates } from "@/lib/hooks/temates";
-import { ITeamate } from "@/lib/types/teamate";
+import { useDeleteTeamate, useGetTeamate, useGetTemates } from "@/lib/hooks/temates";
 import { useDisclosure } from "@heroui/modal";
 import { useState } from "react";
 
-const TeamatesPage = () => {
+const columns = [
+  { name: "عکس", uid: "pictureId" },
+  { name: "عنوان", uid: "title" },
+  { name: "موقعیت", uid: "position" },
+  { name: "توضیحات عکس", uid: "alt" },
+  { name: "وضعیت", uid: "isActive" },
+  { name: "تاریخ ساخت", uid: "createdAt" },
+  { name: "تاریخ ویرایش", uid: "updatedAt" },
+  { name: "عملیات", uid: "actions" },
+];
+
+const TematesPage = () => {
   const { data, isLoading } = useGetTemates();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [editData, setEditData] = useState<ITeamate | undefined >(undefined);
+  const { isPending, mutate: deleteTemate } = useDeleteTeamate();
+  const [editId, setEditId] = useState<string | undefined>(undefined);
+  const { data: editData } = useGetTeamate(editId);
+
+  const deleteHandler = (id: string) => {
+    deleteTemate(id);
+  };
+  const editHandler = (id: string) => {
+    onOpenChange();
+    setEditId(id);
+  };
   return (
-    <CustomContainer className="flex flex-col gap-y-8">
+    <CustomContainer className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
-        <div></div>
+        <div>
+          <h1 className="text-2xl font-bold text-white-gray">لیست اعضای تیم</h1>
+        </div>
         <CustomModal
           isOpen={isOpen}
           onOpen={onOpen}
           onOpenChange={onOpenChange}
-          buttonTitle="افزودن هم تیمی"
+          buttonTitle="افزودن عضو تیم"
           modalTitle={
-            editData ? `ویرایش هم تیمی ${editData?.title}` : "ساخت هم تیمی"
+            editId ? `ویرایش عضو تیم ${editData?.data?.title}` : "ساخت عضو تیم"
           }
         >
-          <FormContainer teamate={editData} />
+          <FormContainer onOpenChage={onOpenChange} teamate={editData?.data} />
         </CustomModal>
       </div>
-      <div className="bg-component-base-2 p-8 rounded-2xl">
-        <CustomLoader isLoading={isLoading}>
-          <div className="grid grid-cols-2 gap-8">
-            {data?.data?.map((item) => (
-              <CustomCard
-                entity="teamate"
-                setEditData={setEditData}
-                onOpen={onOpen}
-                key={item?.id}
-                item={item}
-              />
-            ))}
-          </div>
-        </CustomLoader>
+      <div className="bg-component-base-2 rounded-2xl">
+        <CustomTable
+          isLoading={isLoading}
+          isPending={isPending}
+          editHandler={editHandler}
+          deleteHandler={deleteHandler}
+          items={data?.data || []}
+          columns={columns}
+        />
       </div>
     </CustomContainer>
   );
 };
 
-export default TeamatesPage;
+export default TematesPage;

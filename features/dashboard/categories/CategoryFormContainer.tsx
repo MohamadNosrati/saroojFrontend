@@ -6,7 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Button } from "@heroui/button";
 import CustomSelect from "@/components/ui/CustomSelect";
 import { ICategory } from "@/lib/types/categories";
-import { useCreateCategory } from "@/lib/hooks/categories";
+import { useCreateCategory, useUpdateCategory } from "@/lib/hooks/categories";
 import { isActiveOptions } from "@/lib/config/isActive";
 import { useQueryClient } from "@tanstack/react-query";
 import { categoriesRoute } from "@/lib/routes/apiRoutes";
@@ -14,6 +14,7 @@ import { responseHandler } from "@/lib/tools/responseHandler";
 
 interface IFormContainerProps {
   category?: ICategory;
+  onOpenChage: ()=>void;
 }
 
 type TformValues = {
@@ -24,9 +25,12 @@ type TformValues = {
   alt: string;
 };
 
-const FormContainer: React.FC<IFormContainerProps> = ({ category }) => {
+const FormContainer: React.FC<IFormContainerProps> = ({ category,onOpenChage }) => {
   const queryClient = useQueryClient();
-  const { mutate, isPending, isSuccess } = useCreateCategory();
+  const { mutate: createMutate, isPending: isCreatePending } =
+    useCreateCategory();
+  const { mutate: updateMutate, isPending: isUpdatePending } =
+    useUpdateCategory();
   const { handleSubmit, setValue, watch, control, reset } =
     useForm<TformValues>({
       defaultValues: {
@@ -39,27 +43,42 @@ const FormContainer: React.FC<IFormContainerProps> = ({ category }) => {
       values: {
         title: category?.title || "",
         description: category?.description || "",
-        pictureId: category?.pictureId.id || "",
+        pictureId: category?.pictureId?.id || "",
         alt: category?.alt || "",
         isActive: category?.isActive === false ? "0" : "1",
       },
     });
   const { pictureId } = watch();
   const onSubmit = async (data: TformValues) => {
-    console.log("inHere", data);
-    const payload = {
+    const createPayload = {
       ...data,
       isActive: data?.isActive === "1" ? true : false,
     };
-    mutate(payload, {
-      onSuccess: (res) => {
-        queryClient.invalidateQueries({
-          queryKey: [categoriesRoute.getAll()],
-        });
-        responseHandler.success("دسته بندی با موفقیت ایجاد شد");
-        reset();
-      },
-    });
+    const updatePayload = {
+      ...createPayload,
+      id: category?.id as string,
+    };
+    if (category) {
+      updateMutate(updatePayload, {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: [categoriesRoute.getAll()],
+          });
+          responseHandler.success("دسته بندی با ویرایش ایجاد شد");
+          onOpenChage();
+        },
+      });
+    } else {
+      createMutate(createPayload, {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: [categoriesRoute.getAll()],
+          });
+          responseHandler.success("دسته بندی با موفقیت ایجاد شد");
+          reset();
+        },
+      });
+    }
   };
   return (
     <form className="flex flex-col gap-y-10" onSubmit={handleSubmit(onSubmit)}>
@@ -144,10 +163,10 @@ const FormContainer: React.FC<IFormContainerProps> = ({ category }) => {
       <div>
         <Button
           className="font-bold"
-          isLoading={isPending}
+          isLoading={isCreatePending || isUpdatePending}
           fullWidth
           type="submit"
-          color="success"
+          color={category ? "warning" : "success"}
         >
           {category ? "ویرایش" : "ثبت"}
         </Button>

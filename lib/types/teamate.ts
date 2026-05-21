@@ -17,4 +17,10 @@ export interface ITeamate {
     createdAt:Date;
     updatedAt:Date;
     isActive:boolean;
+    alt:string;
+}
+
+
+export interface IUpdateTeamatePayload extends Partial<ITeamatePayload> {
+    id:string;
 }

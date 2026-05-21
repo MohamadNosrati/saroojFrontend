@@ -8,7 +8,7 @@ export const getAll = async () => {
 };
 
 export const findOne = async (id: string) => {
-  return await axiosInstance.get(categoriesRoute.findOne(id));
+  return await axiosInstance.get<IBaseResponse<ICategory>>(categoriesRoute.findOne(id));
 };
 
 class CategoryServices {

@@ -12,7 +12,7 @@ import { useDisclosure } from "@heroui/modal";
 import { useState } from "react";
 
 const columns = [
-  { name: "عکس", uid: "image" },
+  { name: "عکس", uid: "pictureId" },
   { name: "عنوان", uid: "title" },
   { name: "توضیحات عکس", uid: "alt" },
   { name: "وضعیت", uid: "isActive" },
@@ -28,16 +28,15 @@ const CategoriesPage = () => {
   const [editId, setEditId] = useState<string | undefined>(undefined);
   const { data: editData } = useGetCategory(editId);
 
-  console.log("ed",editData)
-
   const deleteHandler = (id: string) => {
     deleteCategory(id);
   };
   const editHandler = (id: string) => {
+    onOpenChange();
     setEditId(id);
   };
   return (
-    <CustomContainer className="flex flex-col gap-y-8">
+    <CustomContainer className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white-gray">
@@ -50,10 +49,12 @@ const CategoriesPage = () => {
           onOpenChange={onOpenChange}
           buttonTitle="افزودن دسته بندی"
           modalTitle={
-            editId ? `ویرایش دسته بندی ${editData?.title}` : "ساخت دسته بندی"
+            editId
+              ? `ویرایش دسته بندی ${editData?.data?.title}`
+              : "ساخت دسته بندی"
           }
         >
-          <FormContainer category={editData} />
+          <FormContainer onOpenChage={onOpenChange} category={editData?.data} />
         </CustomModal>
       </div>
       <div className="bg-component-base-2 rounded-2xl">

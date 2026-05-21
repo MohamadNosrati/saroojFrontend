@@ -18,7 +18,7 @@ export default function Layout({
       <div className="flex gap-4 grow">
         <SideBar />
         <div
-          className="z-1 grow flex-col border-2 border-primary rounded-2xl justify-start overflow-y-auto overflow-x-hidden scroll-smooth p-6"
+          className="z-1 grow flex-col border-2 border-primary rounded-2xl justify-start overflow-y-auto overflow-x-hidden scroll-smooth"
         >
           {children}
         </div>

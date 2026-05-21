@@ -3,77 +3,87 @@ import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
 import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import { Controller, useForm } from "react-hook-form";
-import { responseHandler } from "@/lib/tools/responseHandler";
-import { useState } from "react";
 import { Button } from "@heroui/button";
-import { temateServices } from "@/lib/services/teamates";
-import { ITeamate } from "@/lib/types/teamate";
 import CustomSelect from "@/components/ui/CustomSelect";
+import { isActiveOptions } from "@/lib/config/isActive";
+import { useQueryClient } from "@tanstack/react-query";
+import { responseHandler } from "@/lib/tools/responseHandler";
+import { ITeamate } from "@/lib/types/teamate";
+import { useCreateTeamate, useUpdateTeamate } from "@/lib/hooks/temates";
+import { TeamatesRoute } from "@/lib/routes/apiRoutes";
 
 interface IFormContainerProps {
   teamate?: ITeamate;
+  onOpenChage: () => void;
 }
 
 type TformValues = {
   title: string;
-  position: string;
   description: string;
   pictureId: string;
   isActive: "0" | "1";
+  alt: string;
+  position: string;
 };
 
-const options = [
-  {
-    label: "غیر فعال",
-    key: "0",
-  },
-  {
-    label: "قعال",
-    key: "1",
-  },
-];
-
-const FormContainer: React.FC<IFormContainerProps> = ({ teamate }) => {
-  const [loading, setLoading] = useState(false);
+const FormContainer: React.FC<IFormContainerProps> = ({
+  teamate,
+  onOpenChage,
+}) => {
+  const queryClient = useQueryClient();
+  const { mutate: createMutate, isPending: isCreatePending } =
+    useCreateTeamate();
+  const { mutate: updateMutate, isPending: isUpdatePending } =
+    useUpdateTeamate();
   const { handleSubmit, setValue, watch, control, reset } =
     useForm<TformValues>({
       defaultValues: {
         title: "",
-        position: "",
         pictureId: "",
         description: "",
         isActive: "1",
+        alt: "",
+        position: "",
       },
       values: {
         title: teamate?.title || "",
-        description: teamate?.description || "",
-        pictureId: teamate?.pictureId.id || "",
         position: teamate?.position || "",
-        isActive: !teamate ? "1" : teamate?.isActive === true ? "1" : "0",
+        description: teamate?.description || "",
+        pictureId: teamate?.pictureId?.id || "",
+        alt: teamate?.alt || "",
+        isActive: teamate?.isActive === false ? "0" : "1",
       },
     });
   const { pictureId } = watch();
   const onSubmit = async (data: TformValues) => {
-    let res;
-    const payload = {
+    const createPayload = {
       ...data,
       isActive: data?.isActive === "1" ? true : false,
     };
-    try {
-      setLoading(true);
-      if (teamate) {
-        res = await temateServices.update(teamate?.id, payload);
-      } else {
-        res = await temateServices.create(payload);
-      }
-      responseHandler.success(res.data?.message);
-      if (!teamate) {
-        reset();
-      }
-    } catch (err) {
-      responseHandler.fail(err);
-    } finally {
-      setLoading(false);
+    const updatePayload = {
+      ...createPayload,
+      id: teamate?.id as string,
+    };
+    if (teamate) {
+      updateMutate(updatePayload, {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: [TeamatesRoute.getAll()],
+          });
+          responseHandler.success("عصو تیم با موفقیت ایجاد شد");
+          onOpenChage();
+        },
+      });
+    } else {
+      createMutate(createPayload, {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: [TeamatesRoute.getAll()],
+          });
+          responseHandler.success("عصو تیم با موفقیت ایجاد شد");
+          reset();
+        },
+      });
     }
   };
   return (
@@ -81,13 +91,21 @@ const FormContainer: React.FC<IFormContainerProps> = ({ teamate }) => {
       <div>
         <Controller
           control={control}
+          rules={{
+            required: {
+              value: true,
+              message: "title is required!",
+            },
+          }}
           name="title"
-          render={({ field: { value, onChange } }) => (
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
             <CustomInput
+              isInvalid={Boolean(error?.message)}
+              errorMessage={error?.message}
               value={value}
               onChange={onChange}
               labelPlacement="outside-top"
-              label="نام و نام خانوادگی"
+              label="نام عضو تیم"
             />
           )}
         />
@@ -95,13 +113,21 @@ const FormContainer: React.FC<IFormContainerProps> = ({ teamate }) => {
       <div>
         <Controller
           control={control}
+          rules={{
+            required: {
+              value: true,
+              message: "position is required!",
+            },
+          }}
           name="position"
-          render={({ field: { value, onChange } }) => (
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
             <CustomInput
+              isInvalid={Boolean(error?.message)}
+              errorMessage={error?.message}
               value={value}
               onChange={onChange}
               labelPlacement="outside-top"
-              label="عنوان شغلی"
+              label="موقعیت عضو تیم"
             />
           )}
         />
@@ -109,9 +135,42 @@ const FormContainer: React.FC<IFormContainerProps> = ({ teamate }) => {
       <div>
         <Controller
           control={control}
+          rules={{
+            required: {
+              value: true,
+              message: "description is required!",
+            },
+          }}
           name="description"
-          render={({ field: { value, onChange } }) => (
-            <CustomTextArea value={value} onChange={onChange} />
+          render={({ field: { value, onChange }, formState: { errors } }) => (
+            <CustomTextArea
+              value={value}
+              onChange={onChange}
+              isInvalid={Boolean(errors.description)}
+              errorMessage={errors?.description?.message}
+            />
+          )}
+        />
+      </div>
+      <div>
+        <Controller
+          control={control}
+          rules={{
+            required: {
+              value: true,
+              message: "alt is required!",
+            },
+          }}
+          name="alt"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              isInvalid={Boolean(error?.message)}
+              errorMessage={error?.message}
+              value={value}
+              onChange={onChange}
+              labelPlacement="outside-top"
+              label="توضیحات غکس"
+            />
           )}
         />
       </div>
@@ -124,13 +183,19 @@ const FormContainer: React.FC<IFormContainerProps> = ({ teamate }) => {
       <div>
         <CustomSelect
           selectLabel="وضعیت"
-          options={options}
+          options={isActiveOptions}
           control={control}
           name="isActive"
         />
       </div>
       <div>
-        <Button isLoading={loading} fullWidth type="submit" color="primary">
+        <Button
+          className="font-bold"
+          isLoading={isCreatePending || isUpdatePending}
+          fullWidth
+          type="submit"
+          color={teamate ? "warning" : "success"}
+        >
           {teamate ? "ویرایش" : "ثبت"}
         </Button>
       </div>

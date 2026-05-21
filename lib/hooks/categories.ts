@@ -54,11 +54,9 @@ export const useDeleteCategory = () => {
 export const useUpdateCategory = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (payload: UpdateCategoryPayload) =>
-      await categoryServices.update(payload?.id, payload),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [categoriesRoute.getAll()] });
-      responseHandler.success("دسته بندی با موفقیت ویرایش شد");
+    mutationFn: async (payload: UpdateCategoryPayload) => {
+      const { id, ...rest } = payload;
+      return await categoryServices.update(payload?.id, rest);
     },
     onError: () => {
       responseHandler.fail("خطا در ویرایش دسته بندی");

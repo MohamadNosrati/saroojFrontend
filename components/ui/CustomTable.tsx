@@ -16,6 +16,7 @@ import Image from "next/image";
 import { dateConvertor } from "@/lib/tools/dateConvertor";
 import { Spinner } from "@heroui/spinner";
 import { Button } from "@heroui/button";
+import { uploadUrl } from "@/lib/tools/upload";
 
 interface IProps {
   items: any[];
@@ -36,21 +37,22 @@ export default function CustomTable({
   deleteHandler,
   isLoading,
   isPending,
+  editHandler,
 }: IProps) {
   type Item = (typeof items)[0];
   const renderCell = React.useCallback((item: Item, columnKey: React.Key) => {
     const cellValue = item[columnKey as keyof Item];
 
     switch (columnKey) {
-      case "image":
+      case "pictureId":
         return (
           <div className="flex justify-center">
             {cellValue ? (
               <Image
-                src={cellValue}
+                src={uploadUrl(cellValue?.image)}
                 width={100}
                 height={100}
-                className="rounded-full w-20 h-20 object-cover"
+                className="rounded-full size-20 min-w-20 object-cover"
                 alt={item?.id || "image"}
               />
             ) : (
@@ -59,6 +61,12 @@ export default function CustomTable({
           </div>
         );
       case "name":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">{cellValue}</p>
+          </div>
+        );
+      case "position":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-sm capitalize">{cellValue}</p>
@@ -102,7 +110,7 @@ export default function CustomTable({
           <div className="relative flex justify-center items-center gap-2">
             <Tooltip color="warning" content="Edit">
               <Button
-                onPress={() => deleteHandler && deleteHandler(item.id)}
+                onPress={() => editHandler && editHandler(item.id)}
                 color="warning"
               >
                 <EditIcon width={20} height={20} />

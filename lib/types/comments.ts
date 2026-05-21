@@ -13,3 +13,8 @@ interface IComment {
     updatedAt:Date;
     isActive:boolean;
 }
+
+
+interface IUpdateCommentPayload extends Partial<ICommentPayload> {
+    id:string;
+}
