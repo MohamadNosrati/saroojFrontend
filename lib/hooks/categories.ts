@@ -1,6 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { categoriesRoute } from "../routes/apiRoutes";
-import { getAll } from "../services/categories";
+import { categoryServices, findOne, getAll } from "../services/categories";
+import { ICategoryPayload, UpdateCategoryPayload } from "../types/categories";
+import { responseHandler } from "../tools/responseHandler";
 
 export const useGetCategories = () => {
   const { data, isLoading } = useQuery({
@@ -11,4 +13,58 @@ export const useGetCategories = () => {
     data: data?.data,
     isLoading,
   };
+};
+
+export const useGetCategory = (id: string) => {
+  const { data, isLoading } = useQuery({
+    queryKey: [categoriesRoute.findOne(id)],
+    queryFn: async () => await findOne(id),
+  });
+  return {
+    data: data?.data,
+    isLoading,
+  };
+};
+
+export const useCreateCategory = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (payload: ICategoryPayload) => await categoryServices.create(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [categoriesRoute.getAll()] });
+      responseHandler.success("دسته بندی با موفقیت ایجاد شد");
+    },
+    onError: () => {
+      responseHandler.fail("خطا در ایجاد دسته بندی");
+    },
+  });
+};
+
+export const useDeleteCategory = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => await categoryServices.delete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [categoriesRoute.getAll()] });
+      responseHandler.success("دسته بندی با موفقیت حذف شد");
+    },
+    onError: () => {
+      responseHandler.fail("خطا در حذف دسته بندی");
+    },
+  });
+};
+
+export const useUpdateCategory = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (payload: UpdateCategoryPayload) =>
+      await categoryServices.update(payload?.id, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [categoriesRoute.getAll()] });
+      responseHandler.success("دسته بندی با موفقیت ویرایش شد");
+    },
+    onError: () => {
+      responseHandler.fail("خطا در ویرایش دسته بندی"); 
+    },
+  });
 };

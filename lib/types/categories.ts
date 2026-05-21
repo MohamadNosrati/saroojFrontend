@@ -14,4 +14,9 @@ export interface ICategory {
   createdAt: Date;
   updatedAt: Date;
   isActive: boolean;
+  alt:string;
 }
+
+export interface UpdateCategoryPayload extends Partial<ICategoryPayload> {
+  id: string;
+} 

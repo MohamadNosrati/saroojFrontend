@@ -33,7 +33,7 @@ const SideBar = () => {
       <nav className="select-none rounded-2xl h-full p-6 flex flex-col gap-y-5">
         {pages?.map((page) => (
           <div key={page?.href}>
-            <Link href={page?.href} className={cn("flex items-center font-bold text-white gap-3 text-base")}>
+            <Link href={page?.href} className={cn("flex items-center font-bold gap-3 text-base text-white")}>
               {page?.label}
             </Link>
           </div>

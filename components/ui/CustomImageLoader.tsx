@@ -1,10 +1,9 @@
-import { fileServices } from "@/lib/services/file";
-import { responseHandler } from "@/lib/tools/responseHandler";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import { DeleteIcon } from "../icons";
 import { Button } from "@heroui/button";
 import { Spinner } from "@heroui/spinner";
 import CustomImage from "./CustomImage";
+import { useUpload } from "@/lib/hooks/upload";
 
 interface ICustomImageLoaderProps {
   value: string;
@@ -15,28 +14,22 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
   value,
   setValue,
 }) => {
-  const [isUploading, setIsUploading] = useState(false);
+  const { isPending, mutateAsync } = useUpload();
   const onChangeImage = async (e: ChangeEvent<HTMLInputElement>) => {
-    try {
-      if (e.target.files?.length) {
-        setIsUploading(true);
-        const formData = new FormData();
-        formData.set("images", e.target.files[0]);
-        const res = await fileServices.upload(formData);
-        if (res?.data?.data) {
-          setValue(res.data?.data[0].id);
-        }
+    const files = e?.target?.files;
+    if (files?.length) {
+      const res = await mutateAsync(files[0]);
+      if (res?.data?.data) setValue(res?.data?.data[0]?.id);
+      try {
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      responseHandler.fail(err);
-    } finally {
-      setIsUploading(false);
     }
   };
 
-  const deleteImage = ()=>{
-    setValue("")
-  }
+  const deleteImage = () => {
+    setValue("");
+  };
 
   return (
     <>
@@ -45,9 +38,9 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
         className="flex flex-col gap-y-2 cursor-pointer"
       >
         <div>
-          <span className="text-small text-foreground">{`آپلود عکس`}</span>
+          <span className="text-small text-white">{`آپلود عکس`}</span>
         </div>
-        <div className="h-10 bg-shark-950 rounded-xl flex items-center justify-between p-4">
+        <div className="h-10 bg-white rounded-xl flex items-center justify-between p-4">
           <div className="flex items-center gap-x-2">
             {value && <CustomImage width={32} height={32} id={value} />}
           </div>
@@ -55,7 +48,7 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
             <div>
               {!value && (
                 <>
-                  {isUploading && (
+                  {isPending && (
                     <div>
                       <Spinner size="sm" />
                     </div>
@@ -65,7 +58,10 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
             </div>
             <div className="w-6">
               {value && (
-                <Button onPress={deleteImage} className="bg-transparent min-w-0 w-fit min-h-0 p-0">
+                <Button
+                  onPress={deleteImage}
+                  className="bg-transparent min-w-0 w-fit min-h-0 p-0"
+                >
                   <span>
                     <DeleteIcon
                       width={24}

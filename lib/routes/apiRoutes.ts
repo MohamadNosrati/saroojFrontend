@@ -14,7 +14,7 @@ class Auth {
   }
 }
 
-class File {
+class Upload {
   private readonly base: string;
 
   constructor() {
@@ -159,6 +159,5 @@ export const categoriesRoute = new Catgories();
 export const ProjectsRoute = new Projects();
 export const CommentsRoute = new Comments();
 export const TeamatesRoute = new Temates();
-export const PictresRoute = new Pictures();
 export const AuthRoute = new Auth();
-export const filesRoute = new File();
+export const uploadRoutes = new Upload();

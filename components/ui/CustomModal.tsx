@@ -7,7 +7,6 @@ import {
 } from "@heroui/modal";
 import { Button } from "@heroui/button";
 import { Divider } from "@heroui/divider";
-import { ITeamate } from "@/lib/types/teamate";
 
 interface ICustomMoalProps {
   isOpen: boolean;
@@ -16,7 +15,6 @@ interface ICustomMoalProps {
   buttonTitle: string;
   modalTitle: string;
   children: React.ReactNode;
-
 }
 
 const CustomModal: React.FC<ICustomMoalProps> = ({
@@ -32,12 +30,14 @@ const CustomModal: React.FC<ICustomMoalProps> = ({
       <Button
         onPress={onOpen}
         size="lg"
-        className=" bg-sky-400 text-slate-50 text-sm font-bold"
+        className=" bg-primary text-sm font-bold"
       >
         {buttonTitle}
       </Button>
       <Modal
         classNames={{
+          header:"text-white-gray font-bold text-xl",
+          base:"bg-gray",
           body: "py-10 flex flex-col gap-y-12",
         }}
         dir="rtl"

@@ -11,6 +11,7 @@
   "dependencies": {
     "@heroui/accordion": "^2.2.24",
     "@heroui/button": "2.2.25",
+    "@heroui/chip": "^2.2.25",
     "@heroui/code": "2.2.19",
     "@heroui/drawer": "^2.2.29",
     "@heroui/dropdown": "^2.3.27",
@@ -27,6 +28,7 @@
     "@heroui/spinner": "^2.2.23",
     "@heroui/switch": "^2.2.23",
     "@heroui/system": "2.4.21",
+    "@heroui/table": "^2.2.32",
     "@heroui/theme": "^2.4.26",
     "@react-aria/ssr": "3.9.10",
     "@react-aria/visually-hidden": "3.8.27",

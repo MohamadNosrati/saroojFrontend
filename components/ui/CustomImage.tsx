@@ -1,6 +1,7 @@
-import { useFindFile } from "@/lib/services/file";
+import { useFindUpload } from "@/lib/hooks/upload";
 import { Spinner } from "@heroui/spinner";
 import Image, { ImageProps } from "next/image";
+import { CustomWhen } from "./CustomWhen";
 
 interface ICustomImageProps extends ImageProps {
   id: string;
@@ -16,27 +17,31 @@ const CustomImage: React.FC<Partial<ICustomImageProps>> = ({
   height,
   ...props
 }) => {
-  const { data, isLoading } = useFindFile(id || "");
+  const { data, isLoading } = useFindUpload(id || "");
   const src = `${process.env.NEXT_PUBLIC_BACKEND_URL}uploads/${data?.data?.image}`;
   console.log(src);
   return (
-    <>
-      {data?.data?.image ? (
-        <div className="flex gap-x-2 items-center">
-          <Image
-            {...props}
-            className={`w-full h-full ${props.className}`}
-            alt={alt || ""}
-            src={src}
-            width={width}
-            height={height}
-          />
-          <span className="text-xs font-bold text-foreground">{data?.data?.image.split("-")[1]}</span>
-        </div>
-      ) : (
-        <Spinner size="sm" />
-      )}
-    </>
+    <CustomWhen condition={Boolean(data?.data?.image)}>
+      <>
+        {isLoading ? (
+          <Spinner size="sm" />
+        ) : (
+          <div className="flex gap-x-2 items-center">
+            <Image
+              className={`w-full h-full ${props.className}`}
+              alt={alt || ""}
+              src={src}
+              width={width}
+              height={height}
+              {...props}
+            />
+            <span className="text-xs font-bold text-foreground">
+              {data?.data?.image.split("-")[1]}
+            </span>
+          </div>
+        )}
+      </>
+    </CustomWhen>
   );
 };
 

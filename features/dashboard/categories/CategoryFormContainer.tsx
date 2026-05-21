@@ -3,12 +3,11 @@ import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
 import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import { Controller, useForm } from "react-hook-form";
-import { responseHandler } from "@/lib/tools/responseHandler";
-import { useState } from "react";
 import { Button } from "@heroui/button";
 import CustomSelect from "@/components/ui/CustomSelect";
-import { categoryServices } from "@/lib/services/categories";
 import { ICategory } from "@/lib/types/categories";
+import { useCreateCategory } from "@/lib/hooks/categories";
+import { isActiveOptions } from "@/lib/config/isActive";
 
 interface IFormContainerProps {
   category?: ICategory;
@@ -19,21 +18,11 @@ type TformValues = {
   description: string;
   pictureId: string;
   isActive: "0" | "1";
+  alt: string;
 };
 
-const options = [
-  {
-    label: "غیر فعال",
-    key: "0",
-  },
-  {
-    label: "قعال",
-    key: "1",
-  },
-];
-
 const FormContainer: React.FC<IFormContainerProps> = ({ category }) => {
-  const [loading, setLoading] = useState(false);
+  const { mutate, isPending, isSuccess } = useCreateCategory();
   const { handleSubmit, setValue, watch, control, reset } =
     useForm<TformValues>({
       defaultValues: {
@@ -41,36 +30,25 @@ const FormContainer: React.FC<IFormContainerProps> = ({ category }) => {
         pictureId: "",
         description: "",
         isActive: "1",
+        alt: "",
       },
       values: {
         title: category?.title || "",
         description: category?.description || "",
         pictureId: category?.pictureId.id || "",
-        isActive: !category ? "1" : category?.isActive === true ? "1" : "0",
+        alt: category?.alt || "",
+        isActive: category?.isActive === false ? "0" : "1",
       },
     });
   const { pictureId } = watch();
   const onSubmit = async (data: TformValues) => {
-    let res;
     const payload = {
       ...data,
       isActive: data?.isActive === "1" ? true : false,
     };
-    try {
-      setLoading(true);
-      if (category) {
-        res = await categoryServices.update(category?.id, payload);
-      } else {
-        res = await categoryServices.create(payload);
-      }
-      responseHandler.success(res.data?.message);
-      if (!category) {
-        reset();
-      }
-    } catch (err) {
-      responseHandler.fail(err);
-    } finally {
-      setLoading(false);
+    mutate(payload);
+    if (isSuccess) {
+      reset();
     }
   };
   return (
@@ -78,9 +56,17 @@ const FormContainer: React.FC<IFormContainerProps> = ({ category }) => {
       <div>
         <Controller
           control={control}
+          rules={{
+            required: {
+              value: true,
+              message: "title is required!",
+            },
+          }}
           name="title"
-          render={({ field: { value, onChange } }) => (
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
             <CustomInput
+              isInvalid={Boolean(error?.message)}
+              errorMessage={error?.message}
               value={value}
               onChange={onChange}
               labelPlacement="outside-top"
@@ -92,9 +78,42 @@ const FormContainer: React.FC<IFormContainerProps> = ({ category }) => {
       <div>
         <Controller
           control={control}
+          rules={{
+            required: {
+              value: true,
+              message: "description is required!",
+            },
+          }}
           name="description"
-          render={({ field: { value, onChange } }) => (
-            <CustomTextArea value={value} onChange={onChange} />
+          render={({ field: { value, onChange }, formState: { errors } }) => (
+            <CustomTextArea
+              value={value}
+              onChange={onChange}
+              isInvalid={Boolean(errors.description)}
+              errorMessage={errors?.description?.message}
+            />
+          )}
+        />
+      </div>
+      <div>
+        <Controller
+          control={control}
+          rules={{
+            required: {
+              value: true,
+              message: "alt is required!",
+            },
+          }}
+          name="alt"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              isInvalid={Boolean(error?.message)}
+              errorMessage={error?.message}
+              value={value}
+              onChange={onChange}
+              labelPlacement="outside-top"
+              label="توضیحات غکس"
+            />
           )}
         />
       </div>
@@ -107,13 +126,13 @@ const FormContainer: React.FC<IFormContainerProps> = ({ category }) => {
       <div>
         <CustomSelect
           selectLabel="وضعیت"
-          options={options}
+          options={isActiveOptions}
           control={control}
           name="isActive"
         />
       </div>
       <div>
-        <Button isLoading={loading} fullWidth type="submit" color="primary">
+        <Button isLoading={isPending} fullWidth type="submit" color="primary">
           {category ? "ویرایش" : "ثبت"}
         </Button>
       </div>
