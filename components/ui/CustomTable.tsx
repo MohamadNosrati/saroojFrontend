@@ -23,6 +23,7 @@ interface IProps {
   isLoading?: boolean;
   isPending?: boolean;
   deleteHandler?: (id: string) => void;
+  editHandler?: (id: string) => void;
 }
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {

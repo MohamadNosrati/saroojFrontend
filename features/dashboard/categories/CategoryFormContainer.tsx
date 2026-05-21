@@ -8,6 +8,9 @@ import CustomSelect from "@/components/ui/CustomSelect";
 import { ICategory } from "@/lib/types/categories";
 import { useCreateCategory } from "@/lib/hooks/categories";
 import { isActiveOptions } from "@/lib/config/isActive";
+import { useQueryClient } from "@tanstack/react-query";
+import { categoriesRoute } from "@/lib/routes/apiRoutes";
+import { responseHandler } from "@/lib/tools/responseHandler";
 
 interface IFormContainerProps {
   category?: ICategory;
@@ -22,6 +25,7 @@ type TformValues = {
 };
 
 const FormContainer: React.FC<IFormContainerProps> = ({ category }) => {
+  const queryClient = useQueryClient();
   const { mutate, isPending, isSuccess } = useCreateCategory();
   const { handleSubmit, setValue, watch, control, reset } =
     useForm<TformValues>({
@@ -42,14 +46,20 @@ const FormContainer: React.FC<IFormContainerProps> = ({ category }) => {
     });
   const { pictureId } = watch();
   const onSubmit = async (data: TformValues) => {
+    console.log("inHere", data);
     const payload = {
       ...data,
       isActive: data?.isActive === "1" ? true : false,
     };
-    mutate(payload);
-    if (isSuccess) {
-      reset();
-    }
+    mutate(payload, {
+      onSuccess: (res) => {
+        queryClient.invalidateQueries({
+          queryKey: [categoriesRoute.getAll()],
+        });
+        responseHandler.success("دسته بندی با موفقیت ایجاد شد");
+        reset();
+      },
+    });
   };
   return (
     <form className="flex flex-col gap-y-10" onSubmit={handleSubmit(onSubmit)}>
@@ -132,7 +142,13 @@ const FormContainer: React.FC<IFormContainerProps> = ({ category }) => {
         />
       </div>
       <div>
-        <Button isLoading={isPending} fullWidth type="submit" color="primary">
+        <Button
+          className="font-bold"
+          isLoading={isPending}
+          fullWidth
+          type="submit"
+          color="success"
+        >
           {category ? "ویرایش" : "ثبت"}
         </Button>
       </div>

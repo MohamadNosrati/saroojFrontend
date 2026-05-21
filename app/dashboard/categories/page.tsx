@@ -3,8 +3,11 @@ import CustomContainer from "@/components/ui/CustomContainer";
 import CustomModal from "@/components/ui/CustomModal";
 import CustomTable from "@/components/ui/CustomTable";
 import FormContainer from "@/features/dashboard/categories/CategoryFormContainer";
-import { useDeleteCategory, useGetCategories } from "@/lib/hooks/categories";
-import { ICategory } from "@/lib/types/categories";
+import {
+  useDeleteCategory,
+  useGetCategories,
+  useGetCategory,
+} from "@/lib/hooks/categories";
 import { useDisclosure } from "@heroui/modal";
 import { useState } from "react";
 
@@ -21,10 +24,17 @@ const columns = [
 const CategoriesPage = () => {
   const { data, isLoading } = useGetCategories();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [editData, setEditData] = useState<ICategory | undefined>(undefined);
   const { isPending, mutate: deleteCategory } = useDeleteCategory();
+  const [editId, setEditId] = useState<string | undefined>(undefined);
+  const { data: editData } = useGetCategory(editId);
+
+  console.log("ed",editData)
+
   const deleteHandler = (id: string) => {
     deleteCategory(id);
+  };
+  const editHandler = (id: string) => {
+    setEditId(id);
   };
   return (
     <CustomContainer className="flex flex-col gap-y-8">
@@ -40,7 +50,7 @@ const CategoriesPage = () => {
           onOpenChange={onOpenChange}
           buttonTitle="افزودن دسته بندی"
           modalTitle={
-            editData ? `ویرایش دسته بندی ${editData?.title}` : "ساخت دسته بندی"
+            editId ? `ویرایش دسته بندی ${editData?.title}` : "ساخت دسته بندی"
           }
         >
           <FormContainer category={editData} />
@@ -48,7 +58,9 @@ const CategoriesPage = () => {
       </div>
       <div className="bg-component-base-2 rounded-2xl">
         <CustomTable
+          isLoading={isLoading}
           isPending={isPending}
+          editHandler={editHandler}
           deleteHandler={deleteHandler}
           items={data?.data || []}
           columns={columns}

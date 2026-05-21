@@ -15,10 +15,11 @@ export const useGetCategories = () => {
   };
 };
 
-export const useGetCategory = (id: string) => {
+export const useGetCategory = (id?: string) => {
   const { data, isLoading } = useQuery({
-    queryKey: [categoriesRoute.findOne(id)],
-    queryFn: async () => await findOne(id),
+    queryKey: [categoriesRoute.findOne(String(id))],
+    queryFn: async () => await findOne(String(id)),
+    enabled: Boolean(id),
   });
   return {
     data: data?.data,
@@ -27,15 +28,11 @@ export const useGetCategory = (id: string) => {
 };
 
 export const useCreateCategory = () => {
-  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (payload: ICategoryPayload) => await categoryServices.create(payload),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [categoriesRoute.getAll()] });
-      responseHandler.success("دسته بندی با موفقیت ایجاد شد");
-    },
-    onError: () => {
-      responseHandler.fail("خطا در ایجاد دسته بندی");
+    mutationFn: async (payload: ICategoryPayload) =>
+      await categoryServices.create(payload),
+    onError: (error) => {
+      responseHandler.fail(error?.message || "خطا در ایجاد دسته بندی");
     },
   });
 };
@@ -64,7 +61,7 @@ export const useUpdateCategory = () => {
       responseHandler.success("دسته بندی با موفقیت ویرایش شد");
     },
     onError: () => {
-      responseHandler.fail("خطا در ویرایش دسته بندی"); 
+      responseHandler.fail("خطا در ویرایش دسته بندی");
     },
   });
 };
