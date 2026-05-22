@@ -25,6 +25,10 @@ const pages = [
     label: "نظرات",
     href: dashboardRoutes.comments(),
   },
+  {
+    label: "اسلایدر ها",
+    href: dashboardRoutes.sliders(),
+  },
 ];
 
 const SideBar = () => {

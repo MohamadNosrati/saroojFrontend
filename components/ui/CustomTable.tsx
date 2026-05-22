@@ -66,6 +66,24 @@ export default function CustomTable({
             <p className="text-bold text-sm capitalize">{cellValue}</p>
           </div>
         );
+      case "startDate":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">{dateConvertor(cellValue)}</p>
+          </div>
+        );
+      case "endDate":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">{dateConvertor(cellValue)}</p>
+          </div>
+        );
+      case "area":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">{cellValue}</p>
+          </div>
+        );
       case "position":
         return (
           <div className="flex flex-col">

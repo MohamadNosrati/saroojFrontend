@@ -1,7 +1,10 @@
 import SwiperContainer from "./SwiperContainer";
 
 
-const HomeCarousel = () => {
+const HomeCarousel = async () => {
+   
+  // const data = await fetch()
+
   return (
     <section className="">
         <SwiperContainer/>

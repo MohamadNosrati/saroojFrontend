@@ -74,6 +74,10 @@ class DashboardRoute {
   categories() {
     return `${this.base}/categories`;
   }
+
+  sliders() {
+    return `${this.base}/sliders`;
+  }
 }
 
 export const dashboardRoutes = new DashboardRoute();

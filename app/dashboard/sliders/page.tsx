@@ -2,8 +2,12 @@
 import CustomContainer from "@/components/ui/CustomContainer";
 import CustomModal from "@/components/ui/CustomModal";
 import CustomTable from "@/components/ui/CustomTable";
-import FormContainer from "@/features/dashboard/projects/ProjectsFormContainer";
-import { useDeleteProject, useGetProject, useGetProjects } from "@/lib/hooks/projects";
+import FormContainer from "@/features/dashboard/sliders/SlidersFormContainer";
+import {
+  useDeleteSlider,
+  useGetSlider,
+  useGetSliders,
+} from "@/lib/hooks/sliders";
 import { useDisclosure } from "@heroui/modal";
 import { useState } from "react";
 
@@ -11,21 +15,20 @@ const columns = [
   { name: "عکس", uid: "pictureId" },
   { name: "عنوان", uid: "title" },
   { name: "توضیحات عکس", uid: "alt" },
+  { name: "لینک", uid: "link" },
+  { name: "توضیحات", uid: "description" },
   { name: "وضعیت", uid: "isActive" },
-  { name: "دسته بندی", uid: "categoryId" },
-  { name: "تاریخ شروع", uid: "startDate" },
-  { name: "تاریخ پایان", uid: "endDate" },
   { name: "تاریخ ساخت", uid: "createdAt" },
   { name: "تاریخ ویرایش", uid: "updatedAt" },
   { name: "عملیات", uid: "actions" },
 ];
 
-const ProjectsPage = () => {
-  const { data, isLoading } = useGetProjects();
+const SlidersPage = () => {
+  const { data, isLoading } = useGetSliders();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { isPending, mutate: deleteCategory } = useDeleteProject();
+  const { isPending, mutate: deleteCategory } = useDeleteSlider();
   const [editId, setEditId] = useState<string | undefined>(undefined);
-  const { data: editData } = useGetProject(editId);
+  const { data: editData } = useGetSlider(editId);
 
   const deleteHandler = (id: string) => {
     deleteCategory(id);
@@ -39,21 +42,21 @@ const ProjectsPage = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white-gray">
-            لیست پروژه ها
+            لیست اسلایدر ها
           </h1>
         </div>
         <CustomModal
           isOpen={isOpen}
           onOpen={onOpen}
           onOpenChange={onOpenChange}
-          buttonTitle="افزودن پروژه"
+          buttonTitle="افزودن اسلایدر"
           modalTitle={
             editId
-              ? `ویرایش پروژه ${editData?.data?.title}`
-              : "ساخت پروژه"
+              ? `ویرایش اسلایدر ${editData?.data?.title}`
+              : "ساخت اسلایدر"
           }
         >
-          <FormContainer onOpenChage={onOpenChange} project={editData?.data} />
+          <FormContainer onOpenChage={onOpenChange} slider={editData?.data} />
         </CustomModal>
       </div>
       <div className="bg-component-base-2 rounded-2xl">
@@ -70,4 +73,4 @@ const ProjectsPage = () => {
   );
 };
 
-export default ProjectsPage;
+export default SlidersPage;

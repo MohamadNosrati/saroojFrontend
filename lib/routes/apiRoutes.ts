@@ -58,6 +58,33 @@ class Catgories {
     return `${this.base}/${id}`;
   }
 }
+class Sliders {
+  private readonly base: string;
+
+  constructor() {
+    this.base = "sliders";
+  }
+
+  getAll() {
+    return `${this.base}`;
+  }
+
+  create() {
+    return `${this.base}`;
+  }
+
+  findOne(id: string) {
+    return `${this.base}/${id}`;
+  }
+
+  delete(id: string) {
+    return `${this.base}/${id}`;
+  }
+
+  update(id: string) {
+    return `${this.base}/${id}`;
+  }
+}
 
 class Projects {
   private readonly base: string;
@@ -143,17 +170,6 @@ class Temates {
   }
 }
 
-class Pictures {
-  private readonly base: string;
-
-  constructor() {
-    this.base = "pictures";
-  }
-
-  uploadMany() {
-    return `${this.base}/upload`;
-  }
-}
 
 export const categoriesRoute = new Catgories();
 export const ProjectsRoute = new Projects();
@@ -161,3 +177,4 @@ export const CommentsRoute = new Comments();
 export const TeamatesRoute = new Temates();
 export const AuthRoute = new Auth();
 export const uploadRoutes = new Upload();
+export const sliderRoutes = new Sliders();
