@@ -30,15 +30,15 @@ const CustomModal: React.FC<ICustomMoalProps> = ({
       <Button
         onPress={onOpen}
         size="lg"
-        className=" bg-primary text-sm font-bold"
+        className=" bg-primary text-sm font-bold "
       >
         {buttonTitle}
       </Button>
       <Modal
         classNames={{
-          header:"text-white-gray font-bold text-xl",
-          base:"bg-gray",
-          body: "py-10 flex flex-col gap-y-12",
+          header:"text-white-gray font-bold text-xl ",
+          base:"bg-gray ove",
+          body: "py-10 flex flex-col gap-y-12 !overflow-visible",
         }}
         dir="rtl"
         size="5xl"

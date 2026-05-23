@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "dev:network": "next dev -H 0.0.0.0 --turbopack",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
@@ -44,6 +45,7 @@
     "react-compare-image": "^3.5.17",
     "react-dom": "18.3.1",
     "react-hook-form": "^7.62.0",
+    "react-multi-date-picker": "^4.5.2",
     "react-toastify": "^11.0.5",
     "swiper": "^12.0.3"
   },
