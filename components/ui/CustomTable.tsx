@@ -69,13 +69,17 @@ export default function CustomTable({
       case "startDate":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-sm capitalize">{dateConvertor(cellValue)}</p>
+            <p className="text-bold text-sm capitalize">
+              {dateConvertor(cellValue)}
+            </p>
           </div>
         );
       case "endDate":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-sm capitalize">{dateConvertor(cellValue)}</p>
+            <p className="text-bold text-sm capitalize">
+              {dateConvertor(cellValue)}
+            </p>
           </div>
         );
       case "area":
@@ -123,6 +127,22 @@ export default function CustomTable({
             </p>
           </div>
         );
+      case "startDate":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">
+              {dateConvertor(cellValue)}
+            </p>
+          </div>
+        );
+      case "endDate":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">
+              {dateConvertor(cellValue)}
+            </p>
+          </div>
+        );
       case "actions":
         return (
           <div className="relative flex justify-center items-center gap-2">
@@ -145,7 +165,7 @@ export default function CustomTable({
           </div>
         );
       default:
-        return cellValue;
+        return null;
     }
   }, []);
 

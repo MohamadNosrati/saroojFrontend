@@ -2,8 +2,8 @@
 import CustomContainer from "@/components/ui/CustomContainer";
 import CustomModal from "@/components/ui/CustomModal";
 import CustomTable from "@/components/ui/CustomTable";
-import FormContainer from "@/features/dashboard/projects/ProjectsFormContainer";
-import { useDeleteProject, useGetProject, useGetProjects } from "@/lib/hooks/projects";
+import FormContainer from "@/features/dashboard/blog/blogFormContainer";
+import { useDeleteBlog, useGetBlog, useGetBlogs } from "@/lib/hooks/blog";
 import { useDisclosure } from "@heroui/modal";
 import { useState } from "react";
 
@@ -12,21 +12,17 @@ const columns = [
   { name: "عنوان", uid: "title" },
   { name: "توضیحات عکس", uid: "alt" },
   { name: "وضعیت", uid: "isActive" },
-  { name: "دسته بندی", uid: "categoryId" },
-  { name: "تاریخ شروع", uid: "startDate" },
-  { name: "تاریخ پایان", uid: "endDate" },
   { name: "تاریخ ساخت", uid: "createdAt" },
   { name: "تاریخ ویرایش", uid: "updatedAt" },
-  { name: "استایل معماری", uid: "artitectureStyle" },
   { name: "عملیات", uid: "actions" },
 ];
 
-const ProjectsPage = () => {
-  const { data, isLoading } = useGetProjects();
+const BlogsPage = () => {
+  const { data, isLoading } = useGetBlogs();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { isPending, mutate: deleteCategory } = useDeleteProject();
+  const { isPending, mutate: deleteCategory } = useDeleteBlog();
   const [editId, setEditId] = useState<string | undefined>(undefined);
-  const { data: editData } = useGetProject(editId);
+  const { data: editData } = useGetBlog(editId);
 
   const deleteHandler = (id: string) => {
     deleteCategory(id);
@@ -39,22 +35,18 @@ const ProjectsPage = () => {
     <CustomContainer className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white-gray">
-            لیست پروژه ها
-          </h1>
+          <h1 className="text-2xl font-bold text-white-gray">لیست مقالات</h1>
         </div>
         <CustomModal
           isOpen={isOpen}
           onOpen={onOpen}
           onOpenChange={onOpenChange}
-          buttonTitle="افزودن پروژه"
+          buttonTitle="افزودن مقاله"
           modalTitle={
-            editId
-              ? `ویرایش پروژه ${editData?.data?.title}`
-              : "ساخت پروژه"
+            editId ? `ویرایش مقاله ${editData?.data?.title}` : "ساخت مقاله"
           }
         >
-          <FormContainer onOpenChage={onOpenChange} project={editData?.data} />
+          <FormContainer onOpenChage={onOpenChange} blog={editData?.data} />
         </CustomModal>
       </div>
       <div className="bg-component-base-2 rounded-2xl">
@@ -71,4 +63,4 @@ const ProjectsPage = () => {
   );
 };
 
-export default ProjectsPage;
+export default BlogsPage;

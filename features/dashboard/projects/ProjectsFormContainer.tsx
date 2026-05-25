@@ -8,7 +8,7 @@ import CustomSelect from "@/components/ui/CustomSelect";
 import { isActiveOptions } from "@/lib/config/isActive";
 import { useQueryClient } from "@tanstack/react-query";
 import { responseHandler } from "@/lib/tools/responseHandler";
-import { ImageItem, ImageType, IProject } from "@/lib/types/project";
+import { ImageItem, IProject } from "@/lib/types/project";
 import { useCreateProject, useUpdateProject } from "@/lib/hooks/projects";
 import { ProjectsRoute } from "@/lib/routes/apiRoutes";
 import persian from "react-date-object/calendars/persian";
@@ -32,6 +32,7 @@ export type TformValues = {
   endDate?: number;
   description: string;
   isActive: "0" | "1";
+  artitectureStyle:string;
 };
 
 const FormContainer: React.FC<IFormContainerProps> = ({
@@ -56,12 +57,14 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         endDate: 0,
         startDate: 0,
         images: [],
+        artitectureStyle:"",
       },
       values: {
         title: project?.title || "",
         description: project?.description || "",
         pictureId: project?.pictureId?.id || "",
         alt: project?.alt || "",
+        artitectureStyle: project?.artitectureStyle || "",
         isActive: project?.isActive === false ? "0" : "1",
         area: project?.area || 0,
         startDate: project?.startDate || 0,
@@ -81,7 +84,12 @@ const FormContainer: React.FC<IFormContainerProps> = ({
   const onSubmit = async (data: TformValues) => {
     const createPayload = {
       ...data,
-      startData: data?.startDate,
+      images: data?.images?.map((item) => ({
+        before: item?.before,
+        after: item?.after,
+      })),
+      categoryId: "6a0f500544a58423b6f26ffb",
+      startDate: data?.startDate,
       endDate: data?.startDate,
       isActive: data?.isActive === "1" ? true : false,
     };
@@ -183,12 +191,35 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           rules={{
             required: {
               value: true,
+              message: "alt is required!",
+            },
+          }}
+          name="artitectureStyle"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              isInvalid={Boolean(error?.message)}
+              errorMessage={error?.message}
+              value={value}
+              onChange={onChange}
+              labelPlacement="outside-top"
+              label="استایل معماری"
+            />
+          )}
+        />
+      </div>
+      <div>
+        <Controller
+          control={control}
+          rules={{
+            required: {
+              value: true,
               message: "area is required!",
             },
           }}
           name="area"
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <CustomInput
+              step={10}
               type="number"
               isInvalid={Boolean(error?.message)}
               errorMessage={error?.message}
@@ -212,9 +243,38 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           name="startDate"
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <DatePicker
+              inputMode=""
               containerClassName="w-full"
               className="w-full"
-              //   portal={true}\
+              // render={()=><CustomInput/>}
+              required={true}
+              locale={persian_fa}
+              calendar={persian}
+              calendarPosition="top-left"
+              inputClass="w-full"
+              value={value}
+              onChange={onChange}
+              zIndex={10000000}
+            />
+          )}
+        />
+      </div>
+      <div className="w-full">
+        <Controller
+          control={control}
+          rules={{
+            required: {
+              value: true,
+              message: "alt is required!",
+            },
+          }}
+          name="endDate"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <DatePicker
+              inputMode=""
+              containerClassName="w-full"
+              className="w-full"
+              // render={()=><CustomInput/>}
               required={true}
               locale={persian_fa}
               calendar={persian}
@@ -261,16 +321,12 @@ const FormContainer: React.FC<IFormContainerProps> = ({
               append({
                 id: crypto.randomUUID(),
                 before: {
-                  alt: "",
                   name: "",
                   pictureId: "",
-                  type: ImageType.BEFORE,
                 },
                 after: {
-                  alt: "",
                   name: "",
                   pictureId: "",
-                  type: ImageType.AFTER,
                 },
               });
             }}

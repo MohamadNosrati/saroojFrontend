@@ -58,6 +58,34 @@ class Catgories {
     return `${this.base}/${id}`;
   }
 }
+
+class Blogs {
+  private readonly base: string;
+
+  constructor() {
+    this.base = "blogs";
+  }
+
+  getAll() {
+    return `${this.base}`;
+  }
+
+  create() {
+    return `${this.base}`;
+  }
+
+  findOne(id: string) {
+    return `${this.base}/${id}`;
+  }
+
+  delete(id: string) {
+    return `${this.base}/${id}`;
+  }
+
+  update(id: string) {
+    return `${this.base}/${id}`;
+  }
+}
 class Sliders {
   private readonly base: string;
 
@@ -178,3 +206,4 @@ export const TeamatesRoute = new Temates();
 export const AuthRoute = new Auth();
 export const uploadRoutes = new Upload();
 export const sliderRoutes = new Sliders();
+export const blogsRoutes = new Blogs();
