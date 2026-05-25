@@ -176,8 +176,9 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       </div>
       <div>
         <CustomImageLoader
+          htmlFor="teamateMainImage"
           value={pictureId}
-          setValue={(value: string) => setValue("pictureId", value)}
+          changeImageHandler={(value: string) => setValue("pictureId", value)}
         />
       </div>
       <div>

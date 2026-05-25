@@ -2,38 +2,37 @@
 import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
 import CustomImageLoader from "@/components/ui/CustomImageLoader";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { Button } from "@heroui/button";
 import CustomSelect from "@/components/ui/CustomSelect";
 import { isActiveOptions } from "@/lib/config/isActive";
 import { useQueryClient } from "@tanstack/react-query";
 import { responseHandler } from "@/lib/tools/responseHandler";
-import { IBFImage, IProject } from "@/lib/types/project";
+import { ImageItem, ImageType, IProject } from "@/lib/types/project";
 import { useCreateProject, useUpdateProject } from "@/lib/hooks/projects";
 import { ProjectsRoute } from "@/lib/routes/apiRoutes";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import DatePicker from "react-multi-date-picker";
+import Dragable from "./Dragable";
 
 interface IFormContainerProps {
   project?: IProject;
   onOpenChage: () => void;
 }
 
-type TformValues = {
+export type TformValues = {
   title: string;
   categoryId: string;
   pictureId: string;
-  images: IBFImage[];
+  images: ImageItem[];
   alt: string;
   area: number;
-  startDate: Date;
-  endDate?: Date;
+  startDate: number;
+  endDate?: number;
   description: string;
   isActive: "0" | "1";
 };
-
-const date = new Date();
 
 const FormContainer: React.FC<IFormContainerProps> = ({
   project,
@@ -54,8 +53,9 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         alt: "",
         area: 0,
         categoryId: "",
-        endDate: date,
-        startDate: date,
+        endDate: 0,
+        startDate: 0,
+        images: [],
       },
       values: {
         title: project?.title || "",
@@ -64,18 +64,25 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         alt: project?.alt || "",
         isActive: project?.isActive === false ? "0" : "1",
         area: project?.area || 0,
-        startDate: project?.startDate || date,
+        startDate: project?.startDate || 0,
         categoryId: project?.categoryId?.id || "",
         images: project?.images || [],
-        endDate: project?.endDate || date,
+        endDate: project?.endDate || 0,
       },
     });
-  const { pictureId } = watch();
+
+  const { append, fields, update, remove } = useFieldArray({
+    control: control,
+    name: "images",
+  });
+  console.log("fields", fields);
+  const { pictureId, images } = watch();
+  console.log("imagessss", images);
   const onSubmit = async (data: TformValues) => {
     const createPayload = {
       ...data,
-      startData: data?.startDate.getTime(),
-      endDate: data?.startDate.getTime(),
+      startData: data?.startDate,
+      endDate: data?.startDate,
       isActive: data?.isActive === "1" ? true : false,
     };
     const updatePayload = {
@@ -222,10 +229,12 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       </div>
       <div>
         <CustomImageLoader
+          htmlFor="projectMainImage"
           value={pictureId}
-          setValue={(value: string) => setValue("pictureId", value)}
+          changeImageHandler={(value: string) => setValue("pictureId", value)}
         />
       </div>
+
       <div>
         <CustomSelect
           selectLabel="وضعیت"
@@ -233,6 +242,43 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           control={control}
           name="isActive"
         />
+      </div>
+      <div>
+        <p>عکس های مربوط به قبل و بعد پروژه را وارد کنید.</p>
+      </div>
+      <div className="flex flex-col gap-10">
+        <Dragable
+          setValue={setValue}
+          control={control}
+          fields={fields}
+          remove={remove}
+          update={update}
+        />
+        <div>
+          <Button
+            fullWidth
+            onPress={() => {
+              append({
+                id: crypto.randomUUID(),
+                before: {
+                  alt: "",
+                  name: "",
+                  pictureId: "",
+                  type: ImageType.BEFORE,
+                },
+                after: {
+                  alt: "",
+                  name: "",
+                  pictureId: "",
+                  type: ImageType.AFTER,
+                },
+              });
+            }}
+            color="primary"
+          >
+            افزودن عکس{" "}
+          </Button>
+        </div>
       </div>
       <div>
         <Button

@@ -14,3 +14,7 @@
   --gray: #2f2f2f;
 }
 
+.custom-modal-font, 
+.custom-modal-font * {
+  font-family: 'font-yekan', sans-serif !important;
+}

@@ -1,12 +1,8 @@
 "use client";
-import {
-  Modal,
-  ModalBody,
-  ModalHeader,
-  ModalContent,
-} from "@heroui/modal";
+import { Modal, ModalBody, ModalHeader, ModalContent } from "@heroui/modal";
 import { Button } from "@heroui/button";
 import { Divider } from "@heroui/divider";
+import { yekanBakh } from "@/lib/config/fonts";
 
 interface ICustomMoalProps {
   isOpen: boolean;
@@ -35,10 +31,16 @@ const CustomModal: React.FC<ICustomMoalProps> = ({
         {buttonTitle}
       </Button>
       <Modal
+        
+        style={
+          { "--font-yekan": yekanBakh.style.fontFamily } as React.CSSProperties
+        }
+
+        scrollBehavior="outside"
         classNames={{
-          header:"text-white-gray font-bold text-xl ",
-          base:"bg-gray ove",
-          body: "py-10 flex flex-col gap-y-12 !overflow-visible",
+          header: "text-white-gray font-bold text-xl ",
+          base: "bg-gray font-yekan",
+          body: "py-10  flex flex-col gap-y-12 !overflow-visible",
         }}
         dir="rtl"
         size="5xl"

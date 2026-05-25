@@ -5,6 +5,7 @@ export interface IFile {
     id:string
 }
 
+
 // export interface IFilePayload {
 //     images: FileList
 // }

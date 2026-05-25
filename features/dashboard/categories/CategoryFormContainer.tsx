@@ -148,8 +148,9 @@ const FormContainer: React.FC<IFormContainerProps> = ({ category,onOpenChage }) 
       </div>
       <div>
         <CustomImageLoader
+          htmlFor="categoryMainImage"
           value={pictureId}
-          setValue={(value: string) => setValue("pictureId", value)}
+          changeImageHandler={(value: string) => setValue("pictureId", value)}
         />
       </div>
       <div>

@@ -7,19 +7,23 @@ import { useUpload } from "@/lib/hooks/upload";
 
 interface ICustomImageLoaderProps {
   value: string;
-  setValue: (value: string) => void;
+  changeImageHandler: (value: string) => void;
+  htmlFor: string;
+  label?:string;
 }
 
 const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
   value,
-  setValue,
+  changeImageHandler,
+  htmlFor,
+  label
 }) => {
   const { isPending, mutateAsync } = useUpload();
   const onChangeImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = e?.target?.files;
     if (files?.length) {
       const res = await mutateAsync(files[0]);
-      if (res?.data?.data) setValue(res?.data?.data[0]?.id);
+      if (res?.data?.data) changeImageHandler(res?.data?.data[0]?.id);
       try {
       } catch (err) {
         console.log(err);
@@ -28,21 +32,18 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
   };
 
   const deleteImage = () => {
-    setValue("");
+    changeImageHandler("");
   };
 
   return (
     <>
-      <label
-        htmlFor="uploader"
-        className="flex flex-col gap-y-2 cursor-pointer"
-      >
+      <label htmlFor={htmlFor} className="flex flex-col gap-y-2 cursor-pointer">
         <div>
-          <span className="text-small text-white">{`آپلود عکس`}</span>
+          <span className="text-small text-white">{label || `آپلود عکس`}</span>
         </div>
         <div className="h-10 bg-white rounded-xl flex items-center justify-between p-4">
           <div className="flex items-center gap-x-2">
-            {value && <CustomImage width={32} height={32} id={value} />}
+            {value && <CustomImage width={32} className="w-8 h-8 rounded-full" height={32} id={value} />}
           </div>
           <div className="flex gap-x-2 items-center">
             <div>
@@ -76,7 +77,7 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
         </div>
       </label>
       <input
-        id="uploader"
+        id={htmlFor}
         multiple
         onChange={onChangeImage}
         className="hidden"
