@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   DndContext,
@@ -15,7 +14,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import BeforeAfterItem from "./BeforeAfterItem";
-import { ImageItem } from "@/lib/types/project";
+import { ImageItemPayload } from "@/lib/types/project";
 import {
   Control,
   UseFieldArrayRemove,
@@ -25,7 +24,7 @@ import {
 import { TformValues } from "./ProjectsFormContainer";
 
 interface IProps {
-  fields: ImageItem[];
+  fields: ImageItemPayload[];
   remove: UseFieldArrayRemove;
   update: UseFieldArrayUpdate<TformValues, "images">;
   control: Control<TformValues, any, TformValues>;
@@ -50,7 +49,7 @@ export default function Dragable({
         delay: 200,
         tolerance: 5,
       },
-    })
+    }),
   );
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -75,7 +74,7 @@ export default function Dragable({
       sensors={sensors}
     >
       <SortableContext
-        items={fields.map((item) => item.id)}
+        items={fields.map((item) => item.id as string)}
         strategy={verticalListSortingStrategy}
       >
         <div className="flex flex-col gap-10">

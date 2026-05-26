@@ -7,7 +7,7 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 import { TformValues } from "./ProjectsFormContainer";
-import { ImageItem } from "@/lib/types/project";
+import { ImageItem, ImageItemPayload } from "@/lib/types/project";
 // import CustomInput from "@/components/ui/CustomInput";
 import { Button } from "@heroui/button";
 import { DeleteIcon } from "@/components/icons";
@@ -16,7 +16,7 @@ import { Tooltip } from "@heroui/tooltip";
 // import { useRef } from "react";
 
 interface IProps {
-  item: ImageItem;
+  item: ImageItemPayload;
   update: UseFieldArrayUpdate<TformValues, "images">;
   index: number;
   remove: UseFieldArrayRemove;
@@ -142,7 +142,7 @@ export default function BeforeAfterItem({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: item.id });
+  } = useSortable({ id: item.id as string });
 
   const style = {
     transform: CSS.Transform.toString(transform),

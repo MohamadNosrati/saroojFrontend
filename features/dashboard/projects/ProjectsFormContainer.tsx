@@ -8,7 +8,7 @@ import CustomSelect from "@/components/ui/CustomSelect";
 import { isActiveOptions } from "@/lib/constants/isActive";
 import { useQueryClient } from "@tanstack/react-query";
 import { responseHandler } from "@/lib/tools/responseHandler";
-import { ImageItem, IProject } from "@/lib/types/project";
+import { ImageItem, ImageItemPayload, IProject } from "@/lib/types/project";
 import { useCreateProject, useUpdateProject } from "@/lib/hooks/projects";
 import { ProjectsRoute } from "@/lib/routes/apiRoutes";
 import persian from "react-date-object/calendars/persian";
@@ -25,7 +25,7 @@ export type TformValues = {
   title: string;
   categoryId: string;
   pictureId: string;
-  images: ImageItem[];
+  images: ImageItemPayload[];
   alt: string;
   area: number;
   startDate: number;
@@ -69,7 +69,16 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         area: project?.area || 0,
         startDate: project?.startDate || 0,
         categoryId: project?.categoryId?.id || "",
-        images: project?.images || [],
+        images: project?.images?.map(item=>({
+          after: {
+            name:item?.after?.name,
+            pictureId:item?.after?.pictureId?.id
+          },
+          before: {
+            name:item?.before?.name,
+            pictureId:item?.before?.pictureId?.id
+          }
+        })) || [],
         endDate: project?.endDate || 0,
       },
     });
@@ -88,7 +97,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         before: item?.before,
         after: item?.after,
       })),
-      categoryId: "6a0f500544a58423b6f26ffb",
+      categoryId: "6a15ecfe2e5844c080bdd73a",
       startDate: data?.startDate,
       endDate: data?.startDate,
       isActive: data?.isActive === "1" ? true : false,

@@ -4,6 +4,14 @@ import { IFile } from "./file";
 
 export interface ImageInfo {
   name: string;
+  pictureId: {
+    image:string;
+    id:string;
+  };
+}
+
+export interface ImageInfoPayload {
+  name: string;
   pictureId: string;
 }
 
@@ -13,6 +21,11 @@ export interface ImageItem {
   before: ImageInfo;
   after: ImageInfo;
   id:string;
+}
+export interface ImageItemPayload {
+  before: ImageInfoPayload;
+  after: ImageInfoPayload;
+  id?:string;
 }
 
 export interface IProject {
@@ -34,7 +47,7 @@ export interface IProjectPayload {
   title: string;
   categoryId: string;
   pictureId: string;
-  images: Omit<ImageItem,"id">[];
+  images: Omit<ImageItemPayload,"id">[];
   alt: string;
   area: number;
   startDate: number;
