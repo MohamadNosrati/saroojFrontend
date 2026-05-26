@@ -5,7 +5,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import CommentItem from "./CommentItem";
 import { Autoplay } from "swiper/modules";
 
-const Container = () => {
+interface IProps {
+  data:IComment[];
+}
+
+const Container : React.FC<IProps> = ({data}) => {
   return (
     <Swiper
       breakpoints={{
@@ -35,9 +39,9 @@ const Container = () => {
       loop
       modules={[Autoplay]}
     >
-      {[1, 2, 3, 4, 5]?.map((item) => (
-        <SwiperSlide className="!pt-12" key={item}>
-          <CommentItem />
+      {data?.map((item) => (
+        <SwiperSlide className="!pt-12" key={item?.id}>
+          <CommentItem item={item} />
         </SwiperSlide>
       ))}
     </Swiper>

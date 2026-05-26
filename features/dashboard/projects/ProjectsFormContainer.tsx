@@ -5,7 +5,7 @@ import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { Button } from "@heroui/button";
 import CustomSelect from "@/components/ui/CustomSelect";
-import { isActiveOptions } from "@/lib/config/isActive";
+import { isActiveOptions } from "@/lib/constants/isActive";
 import { useQueryClient } from "@tanstack/react-query";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { ImageItem, IProject } from "@/lib/types/project";
@@ -32,7 +32,7 @@ export type TformValues = {
   endDate?: number;
   description: string;
   isActive: "0" | "1";
-  artitectureStyle:string;
+  artitectureStyle: string;
 };
 
 const FormContainer: React.FC<IFormContainerProps> = ({
@@ -57,7 +57,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         endDate: 0,
         startDate: 0,
         images: [],
-        artitectureStyle:"",
+        artitectureStyle: "",
       },
       values: {
         title: project?.title || "",

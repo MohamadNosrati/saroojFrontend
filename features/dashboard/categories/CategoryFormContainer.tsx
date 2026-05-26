@@ -7,14 +7,14 @@ import { Button } from "@heroui/button";
 import CustomSelect from "@/components/ui/CustomSelect";
 import { ICategory } from "@/lib/types/categories";
 import { useCreateCategory, useUpdateCategory } from "@/lib/hooks/categories";
-import { isActiveOptions } from "@/lib/config/isActive";
+import { isActiveOptions } from "@/lib/constants/isActive";
 import { useQueryClient } from "@tanstack/react-query";
 import { categoriesRoute } from "@/lib/routes/apiRoutes";
 import { responseHandler } from "@/lib/tools/responseHandler";
 
 interface IFormContainerProps {
   category?: ICategory;
-  onOpenChage: ()=>void;
+  onOpenChage: () => void;
 }
 
 type TformValues = {
@@ -25,7 +25,10 @@ type TformValues = {
   alt: string;
 };
 
-const FormContainer: React.FC<IFormContainerProps> = ({ category,onOpenChage }) => {
+const FormContainer: React.FC<IFormContainerProps> = ({
+  category,
+  onOpenChage,
+}) => {
   const queryClient = useQueryClient();
   const { mutate: createMutate, isPending: isCreatePending } =
     useCreateCategory();

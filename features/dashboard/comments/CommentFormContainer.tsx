@@ -4,7 +4,7 @@ import CustomTextArea from "@/components/ui/customTextArea";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "@heroui/button";
 import CustomSelect from "@/components/ui/CustomSelect";
-import { isActiveOptions } from "@/lib/config/isActive";
+import { isActiveOptions } from "@/lib/constants/isActive";
 import { useQueryClient } from "@tanstack/react-query";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { useCreateComment, useUpdateComment } from "@/lib/hooks/comments";

@@ -1,4 +1,3 @@
-import { url } from "inspector";
 import FaqsContainer from "./FaqsContainer";
 import HouseImage from "@/public/images/house.png";
 
