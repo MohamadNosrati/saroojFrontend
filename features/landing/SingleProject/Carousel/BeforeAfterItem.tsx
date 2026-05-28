@@ -1,20 +1,31 @@
-import ReactCompareImage from 'react-compare-image';
-import StaticImage from "@/public/images/banner.png";
-import sStaticImage from "@/public/images/GHAB MEDIA DESKTOP 348.jpg";
+import { uploadUrl } from "@/lib/tools/upload";
+import { ImageItem } from "@/lib/types/project";
+import ReactCompareImage from "react-compare-image";
 
+interface IProps {
+  item: ImageItem;
+}
 
-export default function BeforeAfterItem() {
-    return (
-        <div className=' bg-red-400'>
-            <ReactCompareImage leftImageCss={{
-                height: "100%",
-                objectFit:"cover"
+export default function BeforeAfterItem({ item }: IProps) {
+  return (
+    <div className="aspect-video">
+      <ReactCompareImage
+        leftImageAlt={item?.after?.name}
+        rightImageAlt={item?.before?.name}
+        aspectRatio="wider"
+        leftImageCss={{
+          height: "100% !important",
+          objectFit: "cover",
+        }}
+        rightImageCss={{
+          height: "100% !important",
 
-            }} rightImageCss={{
-                height: "100%",
-                objectFit:"cover",
-                filter: "grayscale(100%)"
-            }} aspectRatio='wider' leftImage={StaticImage?.src} rightImage={sStaticImage?.src} />
-        </div>
-    )
+          objectFit: "cover",
+          filter: "grayscale(100%)",
+        }}
+        leftImage={uploadUrl(item?.after?.pictureId?.image)}
+        rightImage={uploadUrl(item?.before?.pictureId?.image)}
+      />
+    </div>
+  );
 }

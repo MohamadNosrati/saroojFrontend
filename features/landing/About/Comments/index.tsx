@@ -1,12 +1,11 @@
 import { CommentsRoute } from "@/lib/routes/apiRoutes";
 import Container from "./Container";
 import CommentsBg from "@/public/images/commentsBg.png";
+import { getData } from "@/lib/services/data";
+import { IBaseResponse } from "@/lib/types/base";
 
 const Comments = async () => {
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_BACKEND_URL + CommentsRoute.getAll(),
-  );
-  const data = await res.json();
+  const data = await getData<IBaseResponse<IComment[]>>(CommentsRoute.getAll());
   return (
     <section
       style={{
@@ -25,7 +24,7 @@ const Comments = async () => {
             لطفا در ارسال پیام به ما تردید نکنید !
           </p>
           <div className="lg:mt-20 md:mt-16 mt-10 container">
-            <Container data={data?.data} />
+            <Container data={data?.data || []} />
           </div>
         </div>
       </div>

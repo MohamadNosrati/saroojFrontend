@@ -40,7 +40,7 @@ export default function RelatedProjectsContainer() {
     >
       {[1, 2, 3, 4, 5]?.map((item) => (
         <SwiperSlide key={item}>
-          <ProjectItem/>
+          {/* <ProjectItem/> */}
         </SwiperSlide>
       ))}
     </Swiper>

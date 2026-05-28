@@ -33,6 +33,7 @@ export type TformValues = {
   description: string;
   isActive: "0" | "1";
   artitectureStyle: string;
+  address: string;
 };
 
 const FormContainer: React.FC<IFormContainerProps> = ({
@@ -58,6 +59,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         startDate: 0,
         images: [],
         artitectureStyle: "",
+        address: "",
       },
       values: {
         title: project?.title || "",
@@ -69,17 +71,19 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         area: project?.area || 0,
         startDate: project?.startDate || 0,
         categoryId: project?.categoryId?.id || "",
-        images: project?.images?.map(item=>({
-          after: {
-            name:item?.after?.name,
-            pictureId:item?.after?.pictureId?.id
-          },
-          before: {
-            name:item?.before?.name,
-            pictureId:item?.before?.pictureId?.id
-          }
-        })) || [],
+        images:
+          project?.images?.map((item) => ({
+            after: {
+              name: item?.after?.name,
+              pictureId: item?.after?.pictureId?.id,
+            },
+            before: {
+              name: item?.before?.name,
+              pictureId: item?.before?.pictureId?.id,
+            },
+          })) || [],
         endDate: project?.endDate || 0,
+        address: project?.address || "",
       },
     });
 
@@ -190,6 +194,28 @@ const FormContainer: React.FC<IFormContainerProps> = ({
               onChange={onChange}
               labelPlacement="outside-top"
               label="توضیحات عکس"
+            />
+          )}
+        />
+      </div>
+      <div>
+        <Controller
+          control={control}
+          rules={{
+            required: {
+              value: true,
+              message: "address is required!",
+            },
+          }}
+          name="address"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              isInvalid={Boolean(error?.message)}
+              errorMessage={error?.message}
+              value={value}
+              onChange={onChange}
+              labelPlacement="outside-top"
+              label="آدرس"
             />
           )}
         />

@@ -1,34 +1,52 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { DeleteIcon } from "../icons";
 import { Button } from "@heroui/button";
 import { Spinner } from "@heroui/spinner";
 import CustomImage from "./CustomImage";
 import { useUpload } from "@/lib/hooks/upload";
+import ImageCropper from "./Cropper";
+import { CustomWhen } from "./CustomWhen";
+import { useDisclosure } from "@heroui/modal";
 
 interface ICustomImageLoaderProps {
   value: string;
   changeImageHandler: (value: string) => void;
   htmlFor: string;
-  label?:string;
+  label?: string;
 }
 
 const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
   value,
   changeImageHandler,
   htmlFor,
-  label
+  label,
 }) => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [croppedImageUrl, setCroppedImageUrl] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<
+    ArrayBuffer | null | string
+  >(null);
   const { isPending, mutateAsync } = useUpload();
   const onChangeImage = async (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e?.target?.files;
-    if (files?.length) {
-      const res = await mutateAsync(files[0]);
-      if (res?.data?.data) changeImageHandler(res?.data?.data[0]?.id);
-      try {
-      } catch (err) {
-        console.log(err);
-      }
+    const file = e?.target?.files ? e?.target?.files[0] : null;
+
+    if (file) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        setSelectedImage(reader.result);
+        onOpen(); // 🎯 Open cropper after upload
+        setCroppedImageUrl(null); // Clear previous cropped image
+      });
+      reader.readAsDataURL(file);
     }
+    // if (files?.length) {
+    //   const res = await mutateAsync(files[0]);
+    //   if (res?.data?.data) changeImageHandler(res?.data?.data[0]?.id);
+    //   try {
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // }
   };
 
   const deleteImage = () => {
@@ -43,7 +61,14 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
         </div>
         <div className="h-10 bg-white rounded-xl flex items-center justify-between p-4">
           <div className="flex items-center gap-x-2">
-            {value && <CustomImage width={32} className="w-8 h-8 rounded-full" height={32} id={value} />}
+            {value && (
+              <CustomImage
+                width={32}
+                className="w-8 h-8 rounded-full"
+                height={32}
+                id={value}
+              />
+            )}
           </div>
           <div className="flex gap-x-2 items-center">
             <div>
@@ -82,6 +107,12 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
         onChange={onChangeImage}
         className="hidden"
         type="file"
+      />
+
+      <ImageCropper
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onOpenChange={onOpenChange}
       />
     </>
   );

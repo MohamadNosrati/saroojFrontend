@@ -1,18 +1,27 @@
 import { HomeIcon } from "@/components/icons";
 
 interface IProps {
-  item: number;
+  item: {
+    title: string;
+    description: string;
+    icon: any;
+  };
 }
 
 const ServiceItem: React.FC<IProps> = ({ item }) => {
+  const Icon = item?.icon;
   return (
     <div className="flex gap-4">
       <div>
-        <HomeIcon width={40} height={40} className="text-primary" />
+        <Icon width={40} height={40} className="text-primary max-sm:size-7" />
       </div>
       <div className="flex flex-col ">
-        <span className="leading-11 font-bold text-3xl text-white block">خدمات</span>
-        <p className="max-sm:text-sm font-medium text-gray-lighter ">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و </p>
+        <span className="leading-11 font-bold sm:text-3xl text-2xl text-white block">
+          {item?.title}
+        </span>
+        <p className="max-sm:text-sm font-medium text-justify text-gray-lighter ">
+          {item?.description}
+        </p>
       </div>
     </div>
   );

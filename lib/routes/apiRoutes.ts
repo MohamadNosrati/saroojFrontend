@@ -133,6 +133,10 @@ class Projects {
     return `${this.base}/${id}`;
   }
 
+    findBySlug(slug:string){
+    return `${this.base}/find-by-slug/${slug}`
+  }
+
   delete(id: string) {
     return `${this.base}/${id}`;
   }
@@ -188,6 +192,8 @@ class Temates {
   findOne(id: string) {
     return `${this.base}/${id}`;
   }
+
+
 
   delete(id: string) {
     return `${this.base}/${id}`;

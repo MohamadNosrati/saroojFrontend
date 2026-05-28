@@ -11,6 +11,10 @@ class PersianNavigationRoutes {
     return "/projects";
   }
 
+  categoryProjectsPage(categoryTitle: string) {
+    return `/projects?categoryTitle=${categoryTitle}`;
+  }
+
   singleProjectPage(slug: string) {
     return `/projects/${slug}`;
   }
@@ -22,7 +26,6 @@ class PersianNavigationRoutes {
   singleBlogPage(slug: string) {
     return `/blogs/${slug}`;
   }
-
 }
 
 class EnglishNavigationRoutes {
@@ -42,6 +45,10 @@ class EnglishNavigationRoutes {
 
   projectsPage() {
     return `${this.base}/projects`;
+  }
+
+  categoryProjectsPage(categoryTitle: string) {
+    return `${this.base}/projects?categoryTitle=${categoryTitle}`;
   }
 
   singleProjectPage(id: string) {

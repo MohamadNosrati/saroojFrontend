@@ -62,6 +62,12 @@ export default function CustomTable({
         );
       case "name":
         return (
+          <div className="flex flex-col max-w-20">
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">{cellValue}</p>
+          </div>
+        );
+      case "title":
+        return (
           <div className="flex flex-col">
             <p className="text-bold text-sm capitalize">{cellValue}</p>
           </div>

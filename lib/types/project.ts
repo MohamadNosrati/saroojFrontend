@@ -41,6 +41,7 @@ export interface IProject {
   description: string;
   isActive: boolean;
   artitectureStyle:string;
+  address:string;
 }
 
 export interface IProjectPayload {
@@ -55,6 +56,7 @@ export interface IProjectPayload {
   description: string;
   isActive: boolean;
   artitectureStyle:string;
+  address:string;
 }
 
 export interface IUpdateProjectPayload extends IProjectPayload {
