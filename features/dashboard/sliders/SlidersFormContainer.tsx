@@ -11,6 +11,7 @@ import { responseHandler } from "@/lib/tools/responseHandler";
 import { ISlider } from "@/lib/types/slider";
 import { useCreateSlider, useUpdateSlider } from "@/lib/hooks/sliders";
 import { sliderRoutes } from "@/lib/routes/apiRoutes";
+import { CustomWhen } from "@/components/ui/CustomWhen";
 
 interface IFormContainerProps {
   slider?: ISlider;
@@ -175,19 +176,51 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         />
       </div>
       <div>
-        <CustomImageLoader
-          
-          htmlFor={"sliderMainImage"}
-          value={pictureId}
-          changeImageHandler={(value: string) => setValue("pictureId", value)}
+        <Controller
+          control={control}
+          name="pictureId"
+          rules={{
+            required: {
+              value: true,
+              message: "pictureId is required!",
+            },
+          }}
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <div>
+              <CustomImageLoader
+                aspect={1}
+                htmlFor="projectMainImage"
+                value={value}
+                changeImageHandler={onChange}
+              />
+              <CustomWhen condition={Boolean(error?.message)}>
+                <p className="text-danger mt-1 text-sm font-bold">
+                  {error?.message}
+                </p>
+              </CustomWhen>
+            </div>
+          )}
         />
       </div>
       <div>
-        <CustomSelect
-          selectLabel="وضعیت"
-          options={isActiveOptions}
+        <Controller
+          rules={{
+            required: {
+              value: true,
+              message: "alt is required!",
+            },
+          }}
+          name={"isActive"}
           control={control}
-          name="isActive"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomSelect
+              error={error?.message}
+              selectLabel="وضعیت"
+              options={isActiveOptions}
+              onSelectionChange={onChange}
+              value={value}
+            />
+          )}
         />
       </div>
       <div>

@@ -3,7 +3,11 @@ import CustomContainer from "@/components/ui/CustomContainer";
 import CustomModal from "@/components/ui/CustomModal";
 import CustomTable from "@/components/ui/CustomTable";
 import FormContainer from "@/features/dashboard/teamates/TeamateFormContainer";
-import { useDeleteTeamate, useGetTeamate, useGetTemates } from "@/lib/hooks/temates";
+import {
+  useDeleteTeamate,
+  useGetTeamate,
+  useGetTemates,
+} from "@/lib/hooks/temates";
 import { useDisclosure } from "@heroui/modal";
 import { useState } from "react";
 
@@ -32,6 +36,12 @@ const TematesPage = () => {
     onOpenChange();
     setEditId(id);
   };
+
+  const handleModalClose = () => {
+    setEditId(undefined);
+    onOpenChange();
+  };
+
   return (
     <CustomContainer className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
@@ -40,6 +50,7 @@ const TematesPage = () => {
         </div>
         <CustomModal
           isOpen={isOpen}
+          onClose={handleModalClose}
           onOpen={onOpen}
           onOpenChange={onOpenChange}
           buttonTitle="افزودن عضو تیم"

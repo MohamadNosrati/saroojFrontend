@@ -8,7 +8,7 @@ import CustomSelect from "@/components/ui/CustomSelect";
 import { isActiveOptions } from "@/lib/constants/isActive";
 import { useQueryClient } from "@tanstack/react-query";
 import { responseHandler } from "@/lib/tools/responseHandler";
-import { ImageItem, ImageItemPayload, IProject } from "@/lib/types/project";
+import { ImageItemPayload, IProject } from "@/lib/types/project";
 import { useCreateProject, useUpdateProject } from "@/lib/hooks/projects";
 import { ProjectsRoute } from "@/lib/routes/apiRoutes";
 import persian from "react-date-object/calendars/persian";
@@ -17,11 +17,10 @@ import DatePicker from "react-multi-date-picker";
 import Dragable from "./Dragable";
 import { useRef } from "react";
 import { CustomWhen } from "@/components/ui/CustomWhen";
-import { divider } from "@heroui/theme";
+import { useGetCategories } from "@/lib/hooks/categories";
 
 interface IFormContainerProps {
   project?: IProject;
-  onOpenChage: () => void;
 }
 
 export type TformValues = {
@@ -41,7 +40,6 @@ export type TformValues = {
 
 const FormContainer: React.FC<IFormContainerProps> = ({
   project,
-  onOpenChage,
 }) => {
   const queryClient = useQueryClient();
   const datePickerRef = useRef<any>(null);
@@ -49,7 +47,8 @@ const FormContainer: React.FC<IFormContainerProps> = ({
     useCreateProject();
   const { mutate: updateMutate, isPending: isUpdatePending } =
     useUpdateProject();
-  const { handleSubmit, setValue, watch, control, reset, formState } =
+  const { data, isLoading } = useGetCategories();
+  const { handleSubmit, setValue, control, reset } =
     useForm<TformValues>({
       defaultValues: {
         title: "",
@@ -95,9 +94,6 @@ const FormContainer: React.FC<IFormContainerProps> = ({
     control: control,
     name: "images",
   });
-  console.log("fields", fields);
-  const { pictureId, images } = watch();
-  console.log("imagessss", images);
   const onSubmit = async (data: TformValues) => {
     const createPayload = {
       ...data,
@@ -105,7 +101,6 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         before: item?.before,
         after: item?.after,
       })),
-      categoryId: "6a15ecfe2e5844c080bdd73a",
       startDate: data?.startDate,
       endDate: data?.startDate,
       isActive: data?.isActive === "1" ? true : false,
@@ -364,13 +359,19 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           )}
         />
       </div>
-
       <div>
         <Controller
+          rules={{
+            required: {
+              value: true,
+              message: "status is required!",
+            },
+          }}
           name={"isActive"}
           control={control}
-          render={({ field: { value, onChange } }) => (
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
             <CustomSelect
+              error={error?.message}
               selectLabel="وضعیت"
               options={isActiveOptions}
               onSelectionChange={onChange}
@@ -379,8 +380,37 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           )}
         />
       </div>
-      <div >
-        <p className="text-white font-bold text-center">عکس های مربوط به قبل و بعد پروژه را وارد کنید.</p>
+      <div>
+        <Controller
+          rules={{
+            required: {
+              value: true,
+              message: "category is required!",
+            },
+          }}
+          name={"categoryId"}
+          control={control}
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomSelect
+              error={error?.message}
+              selectLabel="دسته بندی"
+              disabled={isLoading}
+              options={
+                data?.data?.map((item) => ({
+                  key: item?.id,
+                  label: item?.title,
+                })) || []
+              }
+              onSelectionChange={onChange}
+              value={value}
+            />
+          )}
+        />
+      </div>
+      <div>
+        <p className="text-white font-bold text-center">
+          عکس های مربوط به قبل و بعد پروژه را وارد کنید.
+        </p>
       </div>
       <div className="flex flex-col gap-10">
         <Dragable

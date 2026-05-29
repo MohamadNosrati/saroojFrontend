@@ -35,6 +35,11 @@ const CategoriesPage = () => {
     onOpenChange();
     setEditId(id);
   };
+
+  const handleModalClose = () => {
+    setEditId(undefined);
+    onOpenChange();
+  };
   return (
     <CustomContainer className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
@@ -45,6 +50,7 @@ const CategoriesPage = () => {
         </div>
         <CustomModal
           isOpen={isOpen}
+          onClose={handleModalClose}
           onOpen={onOpen}
           onOpenChange={onOpenChange}
           buttonTitle="افزودن دسته بندی"

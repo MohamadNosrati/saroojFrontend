@@ -124,11 +124,24 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         />
       </div>
       <div>
-        <CustomSelect
-          selectLabel="وضعیت"
-          options={isActiveOptions}
+        <Controller
+          rules={{
+            required: {
+              value: true,
+              message: "status is required!",
+            },
+          }}
+          name={"isActive"}
           control={control}
-          name="isActive"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomSelect
+              error={error?.message}
+              selectLabel="وضعیت"
+              options={isActiveOptions}
+              onSelectionChange={onChange}
+              value={value}
+            />
+          )}
         />
       </div>
       <div>

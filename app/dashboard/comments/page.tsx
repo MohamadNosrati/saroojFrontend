@@ -35,6 +35,11 @@ const CommentsPage = () => {
     onOpenChange();
     setEditId(id);
   };
+
+  const handleModalClose = () => {
+    setEditId(undefined);
+    onOpenChange();
+  };
   return (
     <CustomContainer className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
@@ -44,6 +49,7 @@ const CommentsPage = () => {
         <CustomModal
           isOpen={isOpen}
           onOpen={onOpen}
+          onClose={handleModalClose}
           onOpenChange={onOpenChange}
           buttonTitle="افزودن نظر"
           modalTitle={

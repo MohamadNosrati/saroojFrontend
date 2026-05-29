@@ -11,6 +11,7 @@ import { isActiveOptions } from "@/lib/constants/isActive";
 import { useQueryClient } from "@tanstack/react-query";
 import { categoriesRoute } from "@/lib/routes/apiRoutes";
 import { responseHandler } from "@/lib/tools/responseHandler";
+import { CustomWhen } from "@/components/ui/CustomWhen";
 
 interface IFormContainerProps {
   category?: ICategory;
@@ -150,18 +151,51 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         />
       </div>
       <div>
-        <CustomImageLoader
-          htmlFor="categoryMainImage"
-          value={pictureId}
-          changeImageHandler={(value: string) => setValue("pictureId", value)}
+        <Controller
+          control={control}
+          name="pictureId"
+          rules={{
+            required: {
+              value: true,
+              message: "pictureId is required!",
+            },
+          }}
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <div>
+              <CustomImageLoader
+                aspect={1}
+                htmlFor="projectMainImage"
+                value={value}
+                changeImageHandler={onChange}
+              />
+              <CustomWhen condition={Boolean(error?.message)}>
+                <p className="text-danger mt-1 text-sm font-bold">
+                  {error?.message}
+                </p>
+              </CustomWhen>
+            </div>
+          )}
         />
       </div>
       <div>
-        <CustomSelect
-          selectLabel="وضعیت"
-          options={isActiveOptions}
+        <Controller
+          rules={{
+            required: {
+              value: true,
+              message: "status is required!",
+            },
+          }}
+          name={"isActive"}
           control={control}
-          name="isActive"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomSelect
+              error={error?.message}
+              selectLabel="وضعیت"
+              options={isActiveOptions}
+              onSelectionChange={onChange}
+              value={value}
+            />
+          )}
         />
       </div>
       <div>

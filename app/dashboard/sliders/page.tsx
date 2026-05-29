@@ -37,6 +37,11 @@ const SlidersPage = () => {
     onOpenChange();
     setEditId(id);
   };
+
+  const handleModalClose = () => {
+    setEditId(undefined);
+    onOpenChange();
+  };
   return (
     <CustomContainer className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
@@ -47,13 +52,12 @@ const SlidersPage = () => {
         </div>
         <CustomModal
           isOpen={isOpen}
+          onClose={handleModalClose}
           onOpen={onOpen}
           onOpenChange={onOpenChange}
           buttonTitle="افزودن اسلایدر"
           modalTitle={
-            editId
-              ? `ویرایش اسلایدر ${editData?.data?.title}`
-              : "ساخت اسلایدر"
+            editId ? `ویرایش اسلایدر ${editData?.data?.title}` : "ساخت اسلایدر"
           }
         >
           <FormContainer onOpenChage={onOpenChange} slider={editData?.data} />

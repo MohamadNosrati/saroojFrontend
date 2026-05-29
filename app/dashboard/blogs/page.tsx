@@ -31,6 +31,11 @@ const BlogsPage = () => {
     onOpenChange();
     setEditId(id);
   };
+
+  const handleModalClose = () => {
+    setEditId(undefined);
+    onOpenChange();
+  };
   return (
     <CustomContainer className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
@@ -38,6 +43,7 @@ const BlogsPage = () => {
           <h1 className="text-2xl font-bold text-white-gray">لیست مقالات</h1>
         </div>
         <CustomModal
+          onClose={handleModalClose}
           isOpen={isOpen}
           onOpen={onOpen}
           onOpenChange={onOpenChange}

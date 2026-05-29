@@ -3,9 +3,13 @@ import CustomContainer from "@/components/ui/CustomContainer";
 import CustomModal from "@/components/ui/CustomModal";
 import CustomTable from "@/components/ui/CustomTable";
 import FormContainer from "@/features/dashboard/projects/ProjectsFormContainer";
-import { useDeleteProject, useGetProject, useGetProjects } from "@/lib/hooks/projects";
+import {
+  useDeleteProject,
+  useGetProject,
+  useGetProjects,
+} from "@/lib/hooks/projects";
 import { useDisclosure } from "@heroui/modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const columns = [
   { name: "عکس", uid: "pictureId" },
@@ -35,26 +39,29 @@ const ProjectsPage = () => {
     onOpenChange();
     setEditId(id);
   };
+
+  const handleModalClose = () => {
+    setEditId(undefined);
+    onOpenChange();
+  };
+
   return (
     <CustomContainer className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white-gray">
-            لیست پروژه ها
-          </h1>
+          <h1 className="text-2xl font-bold text-white-gray">لیست پروژه ها</h1>
         </div>
         <CustomModal
+          onClose={handleModalClose}
           isOpen={isOpen}
           onOpen={onOpen}
           onOpenChange={onOpenChange}
           buttonTitle="افزودن پروژه"
           modalTitle={
-            editId
-              ? `ویرایش پروژه ${editData?.data?.title}`
-              : "ساخت پروژه"
+            editId ? `ویرایش پروژه ${editData?.data?.title}` : "ساخت پروژه"
           }
         >
-          <FormContainer onOpenChage={onOpenChange} project={editData?.data} />
+          <FormContainer project={editData?.data} />
         </CustomModal>
       </div>
       <div className="bg-component-base-2 rounded-2xl">

@@ -127,6 +127,7 @@ interface IProps {
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import CustomInput from "@/components/ui/CustomInput";
+import { CustomWhen } from "@/components/ui/CustomWhen";
 
 export default function BeforeAfterItem({
   item,
@@ -176,20 +177,29 @@ export default function BeforeAfterItem({
       </div>
       <div className="flex grow justify-between gap-20">
         <div className="flex-1/2 flex flex-col gap-2.5">
-          <CustomImageLoader
-            aspect={16 / 9}
-            label="آپلود عکس قبل اجباری"
-            htmlFor={`beforeAfterItem-before-${item?.id}-${index}`}
-            value={item?.before?.pictureId}
-            changeImageHandler={(beforImagePictureId) => {
-              update(index, {
-                ...item,
-                before: {
-                  ...item?.before,
-                  pictureId: beforImagePictureId,
-                },
-              });
+          <Controller
+            control={control}
+            name={`images.${index}.before.pictureId`}
+            rules={{
+              required: {
+                value: true,
+                message: "image upload is required!",
+              },
             }}
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <div>
+                <CustomImageLoader
+                  aspect={16 / 9}
+                  label="آپلود عکس قبل اجباری"
+                  htmlFor={`beforeAfterItem-before-${item?.id}-${index}`}
+                  value={value}
+                  changeImageHandler={onChange}
+                />
+                <CustomWhen condition={Boolean(error?.message)}>
+                  <p className="mt-0.5 text-sm text-danger">{error?.message}</p>
+                </CustomWhen>
+              </div>
+            )}
           />
           <Controller
             control={control}
@@ -213,20 +223,29 @@ export default function BeforeAfterItem({
           />
         </div>
         <div className="flex-1/2 flex flex-col gap-2.5">
-          <CustomImageLoader
-            aspect={16 / 9}
-            label="آپلود عکس بعد (اختیاری)"
-            htmlFor={`beforeAfterItem-after-${item?.id}-${index}`}
-            value={item?.after?.pictureId}
-            changeImageHandler={(afterImagePictureId) => {
-              update(index, {
-                ...item,
-                after: {
-                  ...item?.after,
-                  pictureId: afterImagePictureId,
-                },
-              });
+          <Controller
+            control={control}
+            name={`images.${index}.after.pictureId`}
+            rules={{
+              required: {
+                value: true,
+                message: "image upload is required!",
+              },
             }}
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <div>
+                <CustomImageLoader
+                  aspect={16 / 9}
+                  label="آپلود عکس بعد (اختیاری)"
+                  htmlFor={`beforeAfterItem-after-${item?.id}-${index}`}
+                  value={value}
+                  changeImageHandler={onChange}
+                />
+                <CustomWhen condition={Boolean(error?.message)}>
+                  <p className="mt-0.5 text-sm text-danger">{error?.message}</p>
+                </CustomWhen>
+              </div>
+            )}
           />
           <Controller
             control={control}
