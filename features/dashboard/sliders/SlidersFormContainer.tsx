@@ -176,6 +176,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       </div>
       <div>
         <CustomImageLoader
+          
           htmlFor={"sliderMainImage"}
           value={pictureId}
           changeImageHandler={(value: string) => setValue("pictureId", value)}

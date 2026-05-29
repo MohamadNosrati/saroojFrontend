@@ -41,7 +41,7 @@ const Carousel: React.FC<IProps> = ({ images }) => {
         }}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[Thumbs]}
-        className="sm:mb-5 !h-fit aspect-video mb-3"
+        className="sm:mb-5 aspect-video mb-3"
         slidesPerView={1}
       >
         {images?.map((item) => (

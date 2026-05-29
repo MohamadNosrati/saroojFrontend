@@ -15,6 +15,9 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import DatePicker from "react-multi-date-picker";
 import Dragable from "./Dragable";
+import { useRef } from "react";
+import { CustomWhen } from "@/components/ui/CustomWhen";
+import { divider } from "@heroui/theme";
 
 interface IFormContainerProps {
   project?: IProject;
@@ -41,11 +44,12 @@ const FormContainer: React.FC<IFormContainerProps> = ({
   onOpenChage,
 }) => {
   const queryClient = useQueryClient();
+  const datePickerRef = useRef<any>(null);
   const { mutate: createMutate, isPending: isCreatePending } =
     useCreateProject();
   const { mutate: updateMutate, isPending: isUpdatePending } =
     useUpdateProject();
-  const { handleSubmit, setValue, watch, control, reset } =
+  const { handleSubmit, setValue, watch, control, reset, formState } =
     useForm<TformValues>({
       defaultValues: {
         title: "",
@@ -116,8 +120,10 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           queryClient.invalidateQueries({
             queryKey: [ProjectsRoute.getAll()],
           });
-          responseHandler.success("پروژه با ویرایش ایجاد شد");
-          onOpenChage();
+          queryClient.invalidateQueries({
+            queryKey: [ProjectsRoute.findOne(updatePayload?.id)],
+          });
+          responseHandler.success("پروژه با موفقیت ویرایش شد");
         },
       });
     } else {
@@ -132,6 +138,9 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       });
     }
   };
+
+  console.log("pictureId");
+
   return (
     <form className="flex flex-col gap-y-10" onSubmit={handleSubmit(onSubmit)}>
       <div>
@@ -164,10 +173,15 @@ const FormContainer: React.FC<IFormContainerProps> = ({
               value: true,
               message: "description is required!",
             },
+            min: {
+              value: 1,
+              message: "min value is 1",
+            },
           }}
           name="description"
           render={({ field: { value, onChange }, formState: { errors } }) => (
             <CustomTextArea
+              min={1}
               value={value}
               onChange={onChange}
               isInvalid={Boolean(errors.description)}
@@ -192,6 +206,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
               errorMessage={error?.message}
               value={value}
               onChange={onChange}
+              onFocus={() => datePickerRef.current?.openCalendar()}
               labelPlacement="outside-top"
               label="توضیحات عکس"
             />
@@ -267,6 +282,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         />
       </div>
       <div className="w-full">
+        <label htmlFor="startDate">تاریخ شروع</label>
         <Controller
           control={control}
           rules={{
@@ -278,15 +294,14 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           name="startDate"
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <DatePicker
-              inputMode=""
+              id="startDate"
               containerClassName="w-full"
               className="w-full"
-              // render={()=><CustomInput/>}
               required={true}
               locale={persian_fa}
               calendar={persian}
               calendarPosition="top-left"
-              inputClass="w-full"
+              inputClass="w-full bg-white mt-1 h-10 rounded-xl text-dark p-2.5 font-bold"
               value={value}
               onChange={onChange}
               zIndex={10000000}
@@ -295,26 +310,26 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         />
       </div>
       <div className="w-full">
+        <label htmlFor="endDate">تاریخ پایان</label>
         <Controller
           control={control}
           rules={{
             required: {
               value: true,
-              message: "alt is required!",
+              message: "endDate is required!",
             },
           }}
           name="endDate"
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <DatePicker
-              inputMode=""
+              id="endDate"
               containerClassName="w-full"
               className="w-full"
-              // render={()=><CustomInput/>}
               required={true}
               locale={persian_fa}
               calendar={persian}
               calendarPosition="top-left"
-              inputClass="w-full"
+              inputClass="w-full bg-white mt-1 h-10 rounded-xl text-dark p-2.5 font-bold"
               value={value}
               onChange={onChange}
               zIndex={10000000}
@@ -323,23 +338,49 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         />
       </div>
       <div>
-        <CustomImageLoader
-          htmlFor="projectMainImage"
-          value={pictureId}
-          changeImageHandler={(value: string) => setValue("pictureId", value)}
+        <Controller
+          control={control}
+          name="pictureId"
+          rules={{
+            required: {
+              value: true,
+              message: "pictureId is required!",
+            },
+          }}
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <div>
+              <CustomImageLoader
+                aspect={1}
+                htmlFor="projectMainImage"
+                value={value}
+                changeImageHandler={onChange}
+              />
+              <CustomWhen condition={Boolean(error?.message)}>
+                <p className="text-danger mt-1 text-sm font-bold">
+                  {error?.message}
+                </p>
+              </CustomWhen>
+            </div>
+          )}
         />
       </div>
 
       <div>
-        <CustomSelect
-          selectLabel="وضعیت"
-          options={isActiveOptions}
+        <Controller
+          name={"isActive"}
           control={control}
-          name="isActive"
+          render={({ field: { value, onChange } }) => (
+            <CustomSelect
+              selectLabel="وضعیت"
+              options={isActiveOptions}
+              onSelectionChange={onChange}
+              value={value}
+            />
+          )}
         />
       </div>
-      <div>
-        <p>عکس های مربوط به قبل و بعد پروژه را وارد کنید.</p>
+      <div >
+        <p className="text-white font-bold text-center">عکس های مربوط به قبل و بعد پروژه را وارد کنید.</p>
       </div>
       <div className="flex flex-col gap-10">
         <Dragable
@@ -387,3 +428,23 @@ const FormContainer: React.FC<IFormContainerProps> = ({
 };
 
 export default FormContainer;
+
+interface IProps {
+  value: any;
+  onChange: any;
+}
+
+const CustomDatePickerInput = ({ value, onChange }: IProps) => {
+  return (
+    <div className="w-full">
+      <CustomInput
+        value={String(value)}
+        onChange={onChange}
+        labelPlacement="outside-top"
+        fullWidth
+        label=" تاریخ پایان"
+        className="w-full"
+      />
+    </div>
+  );
+};

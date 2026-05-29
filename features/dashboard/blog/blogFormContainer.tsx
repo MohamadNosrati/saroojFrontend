@@ -149,6 +149,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       </div>
       <div>
         <CustomImageLoader
+          aspect={384/456}
           htmlFor="categoryMainImage"
           value={pictureId}
           changeImageHandler={(value: string) => setValue("pictureId", value)}

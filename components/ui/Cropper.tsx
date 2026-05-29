@@ -1,42 +1,90 @@
-import { useState } from "react";
-import Cropper from "react-easy-crop";
-import StaticImage from "@/public/images/serviceImage.png";
-import { Modal } from "@heroui/modal";
-
-type Crop = {
-  x: number;
-  y: number;
-};
+import Cropper, { Point } from "react-easy-crop";
+import { Button } from "@heroui/button";
+import { Slider } from "@heroui/slider";
+import sliderMarks from "@/lib/config/marks";
+import { Crop, CroppedPixels } from "./CustomImageLoader";
 
 interface IProps {
-  onOpen: () => void;
-  isOpen: boolean;
-  onOpenChange: () => void;
+  zoom: number;
+  setZoom: (value: number | number[]) => void;
+  selectedImagePreview: string;
+  crop: Crop;
+  setCrop: (location: Point) => void;
+  handleSave: () => void;
+  handleCancel: () => void;
+  handleReset: () => void;
+  onCropComplete: (_: CroppedPixels, croppedAreaPixels: CroppedPixels) => void;
+  aspect: number;
 }
 
-const ImageCropper: React.FC<IProps> = ({ isOpen, onOpen, onOpenChange }) => {
-  const [crop, setCrop] = useState<Crop>({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
-
-  const onCropComplete = (croppedArea, croppedAreaPixels) => {
-    console.log(croppedArea, croppedAreaPixels);
-  };
+const ImageCropper: React.FC<IProps> = ({
+  selectedImagePreview,
+  zoom,
+  crop,
+  setZoom,
+  setCrop,
+  handleCancel,
+  handleReset,
+  handleSave,
+  onCropComplete,
+  aspect,
+}) => {
   return (
-    <Cropper
-      classes={{
-        containerClassName:
-          "w-full flex justify-center items-center aspect-square",
-        cropAreaClassName: "",
-      }}
-      image={StaticImage?.src}
-      crop={crop}
-      zoom={zoom}
-      aspect={4 / 3}
-      onCropChange={setCrop}
-      onCropComplete={onCropComplete}
-      onZoomChange={setZoom}
-      zoomWithScroll={false}
-    />
+    <div className="flex justify-center z-[100000000] items-end p-6 fixed left-0 top-0 gap-4 w-full min-h-screen bg-black/75">
+      <Cropper
+        classes={{
+          containerClassName:
+            "w-full h-full flex relative justify-center items-center bg-black/75",
+          cropAreaClassName: "size-full",
+        }}
+        image={String(selectedImagePreview)}
+        crop={crop}
+        aspect={aspect}
+        zoom={Number(zoom)}
+        onCropChange={setCrop}
+        onCropComplete={onCropComplete}
+        zoomWithScroll={true}
+      />
+      <div className="flex flex-col gap-3">
+        <div className="w-full flex justify-center gap-2.5">
+          <Button
+            onPress={handleSave}
+            color="success"
+            size="lg"
+            className="text-white text-xl font-bold"
+          >
+            SAVE
+          </Button>
+          <Button
+            onPress={handleCancel}
+            color="danger"
+            size="lg"
+            className="text-white text-xl font-bold"
+          >
+            CANCEL
+          </Button>
+          <Button
+            onPress={handleReset}
+            color="warning"
+            size="lg"
+            className="text-white text-xl font-bold"
+          >
+            RESET
+          </Button>
+        </div>
+        <Slider
+          label="zoom level"
+          marks={sliderMarks}
+          dir="ltr"
+          className="max-w-md"
+          maxValue={2}
+          minValue={0}
+          step={0.1}
+          value={zoom}
+          onChange={setZoom}
+        />
+      </div>
+    </div>
   );
 };
 

@@ -177,7 +177,8 @@ export default function BeforeAfterItem({
       <div className="flex grow justify-between gap-20">
         <div className="flex-1/2 flex flex-col gap-2.5">
           <CustomImageLoader
-            label="عکس قبل (اجباری)"
+            aspect={16 / 9}
+            label="آپلود عکس قبل اجباری"
             htmlFor={`beforeAfterItem-before-${item?.id}-${index}`}
             value={item?.before?.pictureId}
             changeImageHandler={(beforImagePictureId) => {
@@ -193,19 +194,28 @@ export default function BeforeAfterItem({
           <Controller
             control={control}
             name={`images.${index}.before.name`}
-            render={({ field: { value, onChange } }) => (
+            rules={{
+              required: {
+                value: true,
+                message: "image before name (alt) is required!",
+              },
+            }}
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
               <CustomInput
-                labelPlacement="outside"
+                isInvalid={Boolean(error?.message)}
+                errorMessage={error?.message}
+                labelPlacement="outside-top"
                 label="نام عکس"
                 value={value}
-                onChange={(e) => onChange(e.target?.value)}
+                onChange={onChange}
               />
             )}
           />
         </div>
         <div className="flex-1/2 flex flex-col gap-2.5">
           <CustomImageLoader
-            label="عکس بعد (اختیاری)"
+            aspect={16 / 9}
+            label="آپلود عکس بعد (اختیاری)"
             htmlFor={`beforeAfterItem-after-${item?.id}-${index}`}
             value={item?.after?.pictureId}
             changeImageHandler={(afterImagePictureId) => {
@@ -221,12 +231,20 @@ export default function BeforeAfterItem({
           <Controller
             control={control}
             name={`images.${index}.after.name`}
-            render={({ field: { value, onChange } }) => (
+            rules={{
+              required: {
+                value: true,
+                message: "image after name (alt) is required!",
+              },
+            }}
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
               <CustomInput
-                labelPlacement="outside"
+                isInvalid={Boolean(error?.message)}
+                errorMessage={error?.message}
+                labelPlacement="outside-top"
                 label="نام عکس"
                 value={value}
-                onChange={(e) => onChange(e.target?.value)}
+                onChange={onChange}
               />
             )}
           />

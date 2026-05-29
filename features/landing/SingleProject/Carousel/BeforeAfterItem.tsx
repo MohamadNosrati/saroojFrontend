@@ -14,12 +14,11 @@ export default function BeforeAfterItem({ item }: IProps) {
         rightImageAlt={item?.before?.name}
         aspectRatio="wider"
         leftImageCss={{
-          height: "100% !important",
+          height: "100%",
           objectFit: "cover",
         }}
         rightImageCss={{
-          height: "100% !important",
-
+          height: "100%",
           objectFit: "cover",
           filter: "grayscale(100%)",
         }}

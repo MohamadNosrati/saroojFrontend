@@ -6,6 +6,11 @@ export interface IFile {
 }
 
 
-// export interface IFilePayload {
-//     images: FileList
-// }
+export interface IFilePayload {
+    image: File;
+    // x:number;
+    // y:number;
+    // width:number;
+    // height:number;
+    // zoom:number;
+}

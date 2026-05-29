@@ -35,12 +35,11 @@ const CustomModal: React.FC<ICustomMoalProps> = ({
         style={
           { "--font-yekan": yekanBakh.style.fontFamily } as React.CSSProperties
         }
-
-        scrollBehavior="outside"
+      
         classNames={{
           header: "text-white-gray font-bold text-xl ",
-          base: "bg-gray font-yekan",
-          body: "py-10  flex flex-col gap-y-12 !overflow-visible",
+          base: "bg-gray font-yekan ",
+          body: "py-10  flex flex-col gap-y-12 !overflow-visible !overflow-y-auto max-h-[80vh] sm:max-h-[75vh]",
         }}
         dir="rtl"
         size="5xl"

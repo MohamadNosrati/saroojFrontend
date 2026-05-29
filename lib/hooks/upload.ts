@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { uploadRoutes } from "../routes/apiRoutes";
 import { findUpload, uploadServices } from "../services/upload";
 import { responseHandler } from "../tools/responseHandler";
+import { IFilePayload } from "../types/file";
 
 export const useFindUpload = (id: string) => {
   const { data, isLoading } = useQuery({
@@ -17,7 +18,8 @@ export const useFindUpload = (id: string) => {
 
 export const useUpload = () => {
   return useMutation({
-    mutationFn: async (files: Blob) => await uploadServices.upload(files),
+    mutationFn: async (payload: IFilePayload) =>
+      await uploadServices.upload(payload),
     onSuccess: () => {
       responseHandler.success("فایل با موفقیت آپلود شد");
     },

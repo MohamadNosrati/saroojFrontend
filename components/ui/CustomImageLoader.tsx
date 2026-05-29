@@ -1,18 +1,34 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { DeleteIcon } from "../icons";
 import { Button } from "@heroui/button";
 import { Spinner } from "@heroui/spinner";
 import CustomImage from "./CustomImage";
 import { useUpload } from "@/lib/hooks/upload";
-import ImageCropper from "./Cropper";
 import { CustomWhen } from "./CustomWhen";
-import { useDisclosure } from "@heroui/modal";
+import type { SliderValue } from "@heroui/slider";
+import ImageCropper from "./Cropper";
+import { getCroppedImg } from "@/lib/tools/croppedImage";
+
+export type CroppedPixels = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+export type Crop = {
+  x: number;
+  y: number;
+};
+
+const DEFAULTCROP = { x: 0, y: 0 };
 
 interface ICustomImageLoaderProps {
   value: string;
   changeImageHandler: (value: string) => void;
   htmlFor: string;
   label?: string;
+  aspect: number;
 }
 
 const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
@@ -20,38 +36,100 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
   changeImageHandler,
   htmlFor,
   label,
+  aspect,
 }) => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [croppedImageUrl, setCroppedImageUrl] = useState(null);
-  const [selectedImage, setSelectedImage] = useState<
-    ArrayBuffer | null | string
+  const [zoom, setZoom] = useState<SliderValue>(1);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedImagePreview, setSelectedImagePreview] = useState<
+    string | null
   >(null);
+  const [showCropper, setShowCropper] = useState(false);
+  const [crop, setCrop] = useState<Crop>(DEFAULTCROP);
+  const [croppedAreaPixels, setCroppedAreaPixels] =
+    useState<CroppedPixels | null>(null);
+
+  const onCropComplete = (
+    _: CroppedPixels,
+    croppedAreaPixels: CroppedPixels,
+  ) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  };
   const { isPending, mutateAsync } = useUpload();
   const onChangeImage = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e?.target?.files ? e?.target?.files[0] : null;
-
-    if (file) {
-      const reader = new FileReader();
-      reader.addEventListener("load", () => {
-        setSelectedImage(reader.result);
-        onOpen(); // 🎯 Open cropper after upload
-        setCroppedImageUrl(null); // Clear previous cropped image
-      });
-      reader.readAsDataURL(file);
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setSelectedFile(file);
+    if (selectedImagePreview) {
+      URL.revokeObjectURL(selectedImagePreview);
     }
-    // if (files?.length) {
-    //   const res = await mutateAsync(files[0]);
-    //   if (res?.data?.data) changeImageHandler(res?.data?.data[0]?.id);
-    //   try {
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // }
+    const previewUrl = URL.createObjectURL(file);
+    setSelectedImagePreview(previewUrl);
+    setShowCropper(true);
+  };
+
+  const handleSave = async () => {
+    if (!croppedAreaPixels || !selectedFile) {
+      alert("Please select a crop area");
+      return;
+    }
+    try {
+      const croppedImageUrl = await getCroppedImg(
+        String(selectedImagePreview),
+        croppedAreaPixels,
+      );
+      const blob = await fetch(croppedImageUrl).then((r) => r.blob());
+      const file = new File([blob], "cropped-image.jpg", {
+        type: "image/jpeg",
+      });
+
+      const formData = new FormData();
+      formData.append("image", file);
+      const res = await mutateAsync({
+        image: selectedFile,
+        // height: croppedAreaPixels?.height,
+        // width: croppedAreaPixels?.width,
+        // x: croppedAreaPixels?.x,
+        // y: croppedAreaPixels?.y,
+        // zoom: Number(zoom),
+      });
+      if (res?.data?.data) {
+        changeImageHandler(res?.data?.data?.id);
+        if (selectedImagePreview) {
+          URL.revokeObjectURL(selectedImagePreview);
+        }
+        setShowCropper(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const deleteImage = () => {
     changeImageHandler("");
   };
+
+  const handleCancel = () => {
+    setShowCropper(false);
+    setSelectedFile(null);
+    setSelectedImagePreview(null);
+    setCrop(DEFAULTCROP);
+    setZoom(1);
+    setCroppedAreaPixels(null);
+  };
+
+  const handleReset = () => {
+    setCrop(DEFAULTCROP);
+    setZoom(1);
+    setCroppedAreaPixels(null);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (selectedImagePreview) {
+        URL.revokeObjectURL(selectedImagePreview);
+      }
+    };
+  }, [selectedImagePreview]);
 
   return (
     <>
@@ -108,12 +186,24 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
         className="hidden"
         type="file"
       />
-
-      <ImageCropper
-        isOpen={isOpen}
-        onOpen={onOpen}
-        onOpenChange={onOpenChange}
-      />
+      <CustomWhen
+        condition={
+          showCropper && Boolean(selectedFile) && Boolean(selectedImagePreview)
+        }
+      >
+        <ImageCropper
+          setCrop={setCrop}
+          setZoom={setZoom}
+          crop={crop}
+          handleCancel={handleCancel}
+          handleReset={handleReset}
+          handleSave={handleSave}
+          onCropComplete={onCropComplete}
+          selectedImagePreview={String(selectedImagePreview)}
+          zoom={Number(zoom)}
+          aspect={aspect}
+        />
+      </CustomWhen>
     </>
   );
 };

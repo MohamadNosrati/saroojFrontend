@@ -38,7 +38,7 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
         className="!w-full bg-black h-screen"
       >
         {data?.map((item) => (
-          <SwiperSlide className="!relative" key={item?.id}>
+          <SwiperSlide className="!relative hfu" key={item?.id}>
             <Image src={StaticImage} alt="" fill />
             <Link
               href={item?.link}
