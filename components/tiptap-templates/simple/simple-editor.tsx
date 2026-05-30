@@ -13,7 +13,11 @@ import { Highlight } from "@tiptap/extension-highlight";
 import { Subscript } from "@tiptap/extension-subscript";
 import { Superscript } from "@tiptap/extension-superscript";
 import { Selection } from "@tiptap/extensions";
-import { Button } from "@/components/tiptap-ui-primitive/button";
+import { FontFamily } from "@tiptap/extension-font-family";
+import { TextStyle } from "@tiptap/extension-text-style";
+import { Color } from "@tiptap/extension-color";
+import { Placeholder } from "@tiptap/extension-placeholder";
+import { Button } from "@heroui/button";
 import { Spacer } from "@/components/tiptap-ui-primitive/spacer";
 import {
   Toolbar,
@@ -62,16 +66,88 @@ import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
 
 // --- Styles ---
 import "@/components/tiptap-templates/simple/simple-editor.scss";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@heroui/dropdown";
+
+// Font size options
+const FONT_SIZES = [
+  { label: "Small", value: "12px" },
+  { label: "Normal", value: "16px" },
+  { label: "Medium", value: "18px" },
+  { label: "Large", value: "24px" },
+  { label: "Huge", value: "32px" },
+];
+
+// Custom FontSize extension
+const FontSize = TextStyle.extend({
+  addAttributes() {
+    return {
+      fontSize: {
+        default: null,
+        parseHTML: (element) => element.style.fontSize,
+        renderHTML: (attributes) => {
+          if (!attributes.fontSize) {
+            return {};
+          }
+          return {
+            style: `font-size: ${attributes.fontSize}`,
+          };
+        },
+      },
+    };
+  },
+});
 
 const MainToolbarContent = ({
   onHighlighterClick,
   onLinkClick,
   isMobile,
+  editor,
 }: {
   onHighlighterClick: () => void;
   onLinkClick: () => void;
   isMobile: boolean;
+  editor: any;
 }) => {
+  const [showFontSizeMenu, setShowFontSizeMenu] = useState(false);
+  const [showFontFamilyMenu, setShowFontFamilyMenu] = useState(false);
+  const fontSizeMenuRef = useRef<HTMLDivElement>(null);
+  const fontFamilyMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close menus when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        fontSizeMenuRef.current &&
+        !fontSizeMenuRef.current.contains(event.target as Node)
+      ) {
+        setShowFontSizeMenu(false);
+      }
+      if (
+        fontFamilyMenuRef.current &&
+        !fontFamilyMenuRef.current.contains(event.target as Node)
+      ) {
+        setShowFontFamilyMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const setFontSize = (size: string) => {
+    editor.chain().focus().setMark("textStyle", { fontSize: size }).run();
+    setShowFontSizeMenu(false);
+  };
+
+  const setFontFamily = (family: string) => {
+    editor.chain().focus().setFontFamily(family).run();
+    setShowFontFamilyMenu(false);
+  };
+
   return (
     <>
       <Spacer />
@@ -84,13 +160,40 @@ const MainToolbarContent = ({
       <ToolbarSeparator />
 
       <ToolbarGroup>
-        <HeadingDropdownMenu modal={false} levels={[1, 2, 3, 4]} />
+        <HeadingDropdownMenu modal={false} levels={[1, 2, 3, 4, 5, 6]} />
         <ListDropdownMenu
           modal={false}
           types={["bulletList", "orderedList", "taskList"]}
         />
         <BlockquoteButton />
         <CodeBlockButton />
+      </ToolbarGroup>
+
+      <ToolbarSeparator />
+
+      {/* Font Size Dropdown */}
+      <ToolbarGroup>
+        <div className="relative" ref={fontSizeMenuRef}>
+          <Dropdown>
+            <DropdownTrigger>
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => setShowFontSizeMenu(!showFontSizeMenu)}
+              >
+                <span className="text-sm">Size</span>
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu
+              onSelectionChange={(key) => setFontSize(String(key))}
+              aria-label="Static Actions"
+            >
+              {FONT_SIZES.map((size) => (
+                <DropdownItem key={size?.value}>{size.label}</DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+        </div>
       </ToolbarGroup>
 
       <ToolbarSeparator />
@@ -118,6 +221,7 @@ const MainToolbarContent = ({
 
       <ToolbarSeparator />
 
+      {/* Text Alignment - Fixed */}
       <ToolbarGroup>
         <TextAlignButton align="left" />
         <TextAlignButton align="center" />
@@ -126,6 +230,21 @@ const MainToolbarContent = ({
       </ToolbarGroup>
 
       <ToolbarSeparator />
+
+      {/* Clear formatting button */}
+      <ToolbarGroup>
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={() =>
+            editor.chain().focus().clearNodes().unsetAllMarks().run()
+          }
+          className="tiptap-button"
+          title="Clear formatting"
+        >
+          <span className="text-sm">Clear</span>
+        </Button>
+      </ToolbarGroup>
 
       <Spacer />
 
@@ -143,7 +262,7 @@ const MobileToolbarContent = ({
 }) => (
   <>
     <ToolbarGroup>
-      <Button variant="ghost" onClick={onBack}>
+      <Button type="button" variant="ghost" onClick={onBack}>
         <ArrowLeftIcon className="tiptap-button-icon" />
         {type === "highlighter" ? (
           <HighlighterIcon className="tiptap-button-icon" />
@@ -166,9 +285,14 @@ const MobileToolbarContent = ({
 interface IProps {
   onChange: (...event: any[]) => void;
   initialContent: string;
+  placeholder?: string;
 }
 
-export function SimpleEditor({ onChange, initialContent }: IProps) {
+export function SimpleEditor({
+  onChange,
+  initialContent,
+  placeholder = "Start writing...",
+}: IProps) {
   console.log("initi", initialContent);
   const isMobile = useIsBreakpoint();
   const { height } = useWindowSize();
@@ -191,13 +315,19 @@ export function SimpleEditor({ onChange, initialContent }: IProps) {
     extensions: [
       StarterKit.configure({
         horizontalRule: false,
+        heading: {
+          levels: [1, 2, 3, 4, 5, 6],
+        },
         link: {
           openOnClick: false,
           enableClickSelection: true,
         },
       }),
       HorizontalRule,
-      TextAlign.configure({ types: ["heading", "paragraph"] }),
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+        alignments: ["left", "center", "right", "justify"],
+      }),
       TaskList,
       TaskItem.configure({ nested: true }),
       Highlight.configure({ multicolor: true }),
@@ -206,6 +336,14 @@ export function SimpleEditor({ onChange, initialContent }: IProps) {
       Superscript,
       Subscript,
       Selection,
+      TextStyle, // Required for font size and color
+      FontSize, // Custom font size extension
+      FontFamily, // Font family extension
+      Color, // Text color extension
+      Placeholder.configure({
+        placeholder,
+        emptyEditorClass: "is-editor-empty",
+      }),
       ImageUploadNode.configure({
         accept: "image/*",
         maxSize: MAX_FILE_SIZE,
@@ -216,7 +354,9 @@ export function SimpleEditor({ onChange, initialContent }: IProps) {
     ],
     content: initialContent,
     onUpdate: ({ editor }) => {
-      onChange(editor?.getHTML());
+      const html = editor.getHTML();
+      console.log("Content updated:", html);
+      onChange(html);
     },
   });
 
@@ -231,15 +371,21 @@ export function SimpleEditor({ onChange, initialContent }: IProps) {
     }
   }, [isMobile, mobileView]);
 
-  // const handleSave = () => {
-  //   if (editor?.getHTML()) onChange(editor?.getHTML());
-  // }
-
   useEffect(() => {
     if (editor && initialContent && editor.getHTML() !== initialContent) {
       editor.commands.setContent(initialContent);
     }
   }, [editor, initialContent]);
+
+  // Debug heading commands
+  useEffect(() => {
+    if (editor) {
+      console.log("Editor commands available:", {
+        toggleHeading: editor.commands.toggleHeading,
+        setParagraph: editor.commands.setParagraph,
+      });
+    }
+  }, [editor]);
 
   return (
     <div>
@@ -260,6 +406,7 @@ export function SimpleEditor({ onChange, initialContent }: IProps) {
                 onHighlighterClick={() => setMobileView("highlighter")}
                 onLinkClick={() => setMobileView("link")}
                 isMobile={isMobile}
+                editor={editor}
               />
             ) : (
               <MobileToolbarContent
@@ -275,7 +422,6 @@ export function SimpleEditor({ onChange, initialContent }: IProps) {
           />
         </EditorContext.Provider>
       </div>
-      {/* <HeroButton isDisabled={!(editor?.getHTML())} onPress={handleSave} color="primary" size="sm" className="w-full mt-2.5">SAVE</HeroButton> */}
     </div>
   );
 }

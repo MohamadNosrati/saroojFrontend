@@ -27,3 +27,51 @@
     padding: 1rem 1.5rem 30vh;
   }
 }
+
+
+// Font size and family styles
+.simple-editor {
+  .tiptap-button {
+    min-width: 40px;
+    padding: 8px 12px;
+    
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+  
+  // Placeholder styling
+  .is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    float: left;
+    color: #adb5bd;
+    pointer-events: none;
+    height: 0;
+  }
+  
+  // Ensure text alignment works properly
+  p, h1, h2, h3, h4, h5, h6 {
+    &.has-text-align-left {
+      text-align: left;
+    }
+    &.has-text-align-center {
+      text-align: center;
+    }
+    &.has-text-align-right {
+      text-align: right;
+    }
+    &.has-text-align-justify {
+      text-align: justify;
+    }
+  }
+  
+  // Font size styles
+  [style*="font-size"] {
+    display: inline-block;
+  }
+  
+  // Font family styles
+  [style*="font-family"] {
+    display: inline-block;
+  }
+}
