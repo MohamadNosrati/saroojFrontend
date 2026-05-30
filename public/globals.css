@@ -5,7 +5,7 @@
 :root {
   --primary: #AE8649;
   --primaryLight: #b6915a;
-  --primaryDark:#473B29;
+  --primaryDark: #473B29;
   --white: #F1F1F2;
   --whiteGray: #FCFCFD;
   --grayLighter: #D6D6D6;
@@ -14,7 +14,11 @@
   --gray: #2f2f2f;
 }
 
-.custom-modal-font, 
+.custom-modal-font,
 .custom-modal-font * {
   font-family: 'font-yekan', sans-serif !important;
 }
+
+
+@import '../styles/_variables.scss';
+@import '../styles/_keyframe-animations.scss';

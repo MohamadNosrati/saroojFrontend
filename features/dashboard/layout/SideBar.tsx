@@ -29,6 +29,10 @@ const pages = [
     label: "اسلایدر ها",
     href: dashboardRoutes.sliders(),
   },
+  {
+    label: "مقالات",
+    href: dashboardRoutes.blogs(),
+  },
 ];
 
 const SideBar = () => {

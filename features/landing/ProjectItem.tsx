@@ -3,19 +3,12 @@ import ServiceImage from "@/public/images/serviceImage.png";
 import Link from "next/link";
 import { persianRoutes } from "@/lib/routes/navigationRoutes";
 import { IProject } from "@/lib/types/project";
+import { slugify } from "@/lib/tools/slugify";
 
 interface IProps {
   item: IProject;
 }
 
-function slugify(text: string) {
-  return text
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, "-") // spaces -> -
-    .replace(/[^\u0600-\u06FFa-z0-9-]/g, "") // remove invalid chars
-    .replace(/-+/g, "-"); // remove duplicate -
-}
 
 const ProjectItem: React.FC<IProps> = ({ item }) => {
   return (

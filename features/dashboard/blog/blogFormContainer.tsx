@@ -1,6 +1,5 @@
 "use client";
 import CustomInput from "@/components/ui/CustomInput";
-import CustomTextArea from "@/components/ui/customTextArea";
 import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "@heroui/button";
@@ -12,13 +11,14 @@ import { IBlog } from "@/lib/types/blog";
 import { useCreateBlog, useUpdateBlog } from "@/lib/hooks/blog";
 import { blogsRoutes } from "@/lib/routes/apiRoutes";
 import { CustomWhen } from "@/components/ui/CustomWhen";
+import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
 
 interface IFormContainerProps {
   blog?: IBlog;
   onOpenChage: () => void;
 }
 
-type TformValues = {
+export type TformValues = {
   title: string;
   description: string;
   pictureId: string;
@@ -33,7 +33,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
   const queryClient = useQueryClient();
   const { mutate: createMutate, isPending: isCreatePending } = useCreateBlog();
   const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateBlog();
-  const { handleSubmit, setValue, watch, control, reset } =
+  const { handleSubmit, control, reset , watch } =
     useForm<TformValues>({
       defaultValues: {
         title: "",
@@ -50,7 +50,6 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         isActive: blog?.isActive === false ? "0" : "1",
       },
     });
-  const { pictureId } = watch();
   const onSubmit = async (data: TformValues) => {
     const createPayload = {
       ...data,
@@ -66,8 +65,10 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           queryClient.invalidateQueries({
             queryKey: [blogsRoutes.getAll()],
           });
+          queryClient.invalidateQueries({
+            queryKey: [blogsRoutes.findOne(blog?.id)],
+          });
           responseHandler.success("مقاله با ویرایش ایجاد شد");
-          onOpenChage();
         },
       });
     } else {
@@ -78,10 +79,15 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           });
           responseHandler.success("مقاله با موفقیت ایجاد شد");
           reset();
+          onOpenChage();
         },
       });
     }
   };
+
+  console.log("desc",watch("description"))
+  console.log("img",watch("pictureId"))
+
   return (
     <form className="flex flex-col gap-y-10" onSubmit={handleSubmit(onSubmit)}>
       <div>
@@ -112,17 +118,41 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           rules={{
             required: {
               value: true,
+              message: "alt is required!",
+            },
+          }}
+          name="alt"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              isInvalid={Boolean(error?.message)}
+              errorMessage={error?.message}
+              value={value}
+              onChange={onChange}
+              labelPlacement="outside-top"
+              label="توضیحات عکس"
+            />
+          )}
+        />
+      </div>
+      <div>
+        <Controller
+          control={control}
+          rules={{
+            required: {
+              value: true,
               message: "description is required!",
             },
           }}
           name="description"
-          render={({ field: { value, onChange }, formState: { errors } }) => (
-            <CustomTextArea
-              value={value}
-              onChange={onChange}
-              isInvalid={Boolean(errors.description)}
-              errorMessage={errors?.description?.message}
-            />
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <div>
+              <SimpleEditor initialContent={value} onChange={onChange} />
+              <CustomWhen condition={Boolean(error?.message)}>
+                <p className="text-danger mt-1 text-sm font-bold">
+                  {error?.message}
+                </p>
+              </CustomWhen>
+            </div>
           )}
         />
       </div>
@@ -151,14 +181,6 @@ const FormContainer: React.FC<IFormContainerProps> = ({
               </CustomWhen>
             </div>
           )}
-        />
-      </div>
-      <div>
-        <CustomImageLoader
-          aspect={384 / 456}
-          htmlFor="categoryMainImage"
-          value={pictureId}
-          changeImageHandler={(value: string) => setValue("pictureId", value)}
         />
       </div>
       <div>

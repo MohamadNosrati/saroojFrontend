@@ -61,6 +61,9 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           queryClient.invalidateQueries({
             queryKey: [CommentsRoute.getAll()],
           });
+          queryClient.invalidateQueries({
+            queryKey: [CommentsRoute.findOne(comment?.id)],
+          });
           responseHandler.success(" نظر با ویرایش ایجاد شد");
           onOpenChage();
         },

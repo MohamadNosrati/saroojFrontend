@@ -35,7 +35,7 @@ const CustomImage: React.FC<Partial<ICustomImageProps>> = ({
                 height={height}
                 {...props}
               />
-              <span className="text-xs font-bold text-foreground">
+              <span className="text-xs font-bold text-dark">
                 {data?.data?.image.split("-")[1]}
               </span>
             </CustomWhen>

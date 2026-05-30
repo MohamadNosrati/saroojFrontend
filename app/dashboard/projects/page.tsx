@@ -16,6 +16,7 @@ const columns = [
   { name: "عنوان", uid: "title" },
   { name: "توضیحات عکس", uid: "alt" },
   { name: "وضعیت", uid: "isActive" },
+  { name: "مساحت", uid: "area" },
   { name: "دسته بندی", uid: "categoryId" },
   { name: "تاریخ شروع", uid: "startDate" },
   { name: "تاریخ پایان", uid: "endDate" },

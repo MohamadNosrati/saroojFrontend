@@ -24,7 +24,7 @@ const Comments = async () => {
             لطفا در ارسال پیام به ما تردید نکنید !
           </p>
           <div className="lg:mt-20 md:mt-16 mt-10 container">
-            <Container data={data?.data || []} />
+            <Container data={data?.data?.filter(item=> item?.isActive ) || []} />
           </div>
         </div>
       </div>

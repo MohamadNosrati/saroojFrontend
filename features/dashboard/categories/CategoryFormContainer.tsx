@@ -68,6 +68,9 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           queryClient.invalidateQueries({
             queryKey: [categoriesRoute.getAll()],
           });
+          queryClient.invalidateQueries({
+            queryKey: [categoriesRoute.findOne(category?.id)],
+          });
           responseHandler.success("دسته بندی با ویرایش ایجاد شد");
           onOpenChage();
         },

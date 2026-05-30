@@ -85,6 +85,10 @@ class DashboardRoute {
   sliders() {
     return `${this.base}/sliders`;
   }
+
+  blogs() {
+    return `${this.base}/blogs`;
+  }
 }
 
 export const dashboardRoutes = new DashboardRoute();

@@ -55,7 +55,6 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         link: slider?.link || "",
       },
     });
-  const { pictureId } = watch();
   const onSubmit = async (data: TformValues) => {
     const createPayload = {
       ...data,
@@ -70,6 +69,9 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         onSuccess: () => {
           queryClient.invalidateQueries({
             queryKey: [sliderRoutes.getAll()],
+          });
+          queryClient.invalidateQueries({
+            queryKey: [sliderRoutes.findOne(slider?.id)],
           });
           responseHandler.success("اسلایدر  با موفقیت ویرایش ایجاد شد");
           onOpenChage();

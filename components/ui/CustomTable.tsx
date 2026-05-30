@@ -66,6 +66,36 @@ export default function CustomTable({
             <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">{cellValue}</p>
           </div>
         );
+      case "description":
+        return (
+          <div className="flex flex-col max-w-20">
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">{cellValue}</p>
+          </div>
+        );
+      case "categoryId":
+        return (
+          <div className="flex flex-col max-w-20">
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">{cellValue?.title}</p>
+          </div>
+        );
+      case "artitectureStyle":
+        return (
+          <div className="flex flex-col max-w-20">
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">{cellValue}</p>
+          </div>
+        );
+      case "area":
+        return (
+          <div className="flex flex-col max-w-20">
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">{cellValue}</p>
+          </div>
+        );
+      case "link":
+        return (
+          <div className="flex flex-col max-w-20">
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">{cellValue}</p>
+          </div>
+        );
       case "title":
         return (
           <div className="flex flex-col">
