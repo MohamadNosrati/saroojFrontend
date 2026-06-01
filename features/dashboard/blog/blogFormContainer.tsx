@@ -85,8 +85,6 @@ const FormContainer: React.FC<IFormContainerProps> = ({
     }
   };
 
-  console.log("desc",watch("description"))
-  console.log("img",watch("pictureId"))
 
   return (
     <form className="flex flex-col gap-y-10" onSubmit={handleSubmit(onSubmit)}>

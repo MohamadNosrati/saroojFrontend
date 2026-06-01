@@ -114,7 +114,6 @@ const MainToolbarContent = ({
   editor: any;
 }) => {
   const [showFontSizeMenu, setShowFontSizeMenu] = useState(false);
-  const [showFontFamilyMenu, setShowFontFamilyMenu] = useState(false);
   const fontSizeMenuRef = useRef<HTMLDivElement>(null);
   const fontFamilyMenuRef = useRef<HTMLDivElement>(null);
 
@@ -131,7 +130,6 @@ const MainToolbarContent = ({
         fontFamilyMenuRef.current &&
         !fontFamilyMenuRef.current.contains(event.target as Node)
       ) {
-        setShowFontFamilyMenu(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -141,11 +139,6 @@ const MainToolbarContent = ({
   const setFontSize = (size: string) => {
     editor.chain().focus().setMark("textStyle", { fontSize: size }).run();
     setShowFontSizeMenu(false);
-  };
-
-  const setFontFamily = (family: string) => {
-    editor.chain().focus().setFontFamily(family).run();
-    setShowFontFamilyMenu(false);
   };
 
   return (
@@ -174,7 +167,7 @@ const MainToolbarContent = ({
       {/* Font Size Dropdown */}
       <ToolbarGroup>
         <div className="relative" ref={fontSizeMenuRef}>
-          <Dropdown>
+          {/* <Dropdown>
             <DropdownTrigger>
               <Button
                 type="button"
@@ -185,14 +178,13 @@ const MainToolbarContent = ({
               </Button>
             </DropdownTrigger>
             <DropdownMenu
-              onSelectionChange={(key) => setFontSize(String(key))}
               aria-label="Static Actions"
             >
               {FONT_SIZES.map((size) => (
                 <DropdownItem key={size?.value}>{size.label}</DropdownItem>
               ))}
             </DropdownMenu>
-          </Dropdown>
+          </Dropdown> */}
         </div>
       </ToolbarGroup>
 
@@ -293,7 +285,6 @@ export function SimpleEditor({
   initialContent,
   placeholder = "Start writing...",
 }: IProps) {
-  console.log("initi", initialContent);
   const isMobile = useIsBreakpoint();
   const { height } = useWindowSize();
   const [mobileView, setMobileView] = useState<"main" | "highlighter" | "link">(
@@ -355,7 +346,6 @@ export function SimpleEditor({
     content: initialContent,
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
-      console.log("Content updated:", html);
       onChange(html);
     },
   });

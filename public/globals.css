@@ -20,5 +20,11 @@
 }
 
 
+.dark input:-webkit-autofill,
+.dark input:autofill {
+  font-weight: 700;
+  -webkit-text-fill-color: #1D1D1D !important;
+}
+
 @import '../styles/_variables.scss';
 @import '../styles/_keyframe-animations.scss';

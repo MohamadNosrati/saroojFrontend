@@ -3,7 +3,6 @@
 import Image from "next/image";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import StaticImage from "@/public/images/carouselStatic.png";
 import { Button } from "@heroui/button";
 import { useRef, useState } from "react";
 import type { Swiper as SwiperType } from "swiper/types";
@@ -11,6 +10,7 @@ import cn from "@/lib/tools/cn";
 import { Autoplay } from "swiper/modules";
 import { ISlider } from "@/lib/types/slider";
 import Link from "next/link";
+import { uploadUrl } from "@/lib/tools/upload";
 
 interface IProps {
   data: ISlider[];
@@ -39,7 +39,7 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
       >
         {data?.map((item) => (
           <SwiperSlide className="!relative hfu" key={item?.id}>
-            <Image src={StaticImage} alt="" fill />
+            <Image src={uploadUrl(item?.pictureId?.image)} alt="" fill />
             <Link
               href={item?.link}
               className="absolute left-0 gap-3 h-fit top-0 bottom-0 my-auto w-full flex flex-col items-center"

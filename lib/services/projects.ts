@@ -1,13 +1,21 @@
 import { ProjectsRoute } from "../routes/apiRoutes";
-import { IProjectPayload } from "../types/project";
+import { IBaseResponse, IPaginatedResponse } from "../types/base";
+import { IProject, IProjectParams, IProjectPayload } from "../types/project";
 import axiosInstance from "./base";
 
-export const getAll = async () => {
-  return await axiosInstance.get(ProjectsRoute.getAll());
+export const getAll = async (params: IProjectParams) => {
+  return await axiosInstance.get<IBaseResponse<IPaginatedResponse<IProject>>>(
+    ProjectsRoute.getAll(),
+    {
+      params,
+    },
+  );
 };
 
 export const findOne = async (id: string) => {
-  return await axiosInstance.get(ProjectsRoute.findOne(id));
+  return await axiosInstance.get<IBaseResponse<IProject>>(
+    ProjectsRoute.findOne(id),
+  );
 };
 
 // export const findProjectBySlug = async (slug: string) => {

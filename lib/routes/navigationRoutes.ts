@@ -91,6 +91,13 @@ class DashboardRoute {
   }
 }
 
+class FrontAuthRoutes {
+  signIn(){
+    return (`/signin`)
+  }
+}
+
 export const dashboardRoutes = new DashboardRoute();
 export const persianRoutes = new PersianNavigationRoutes();
 export const englishRoutes = new EnglishNavigationRoutes();
+export const frontAuthRoutes = new FrontAuthRoutes();

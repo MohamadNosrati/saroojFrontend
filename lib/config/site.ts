@@ -1,3 +1,5 @@
+import { dashboardRoutes } from "../routes/navigationRoutes";
+
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
@@ -67,3 +69,34 @@ export const siteConfig = {
     sponsor: "https://patreon.com/jrgarciadev",
   },
 };
+
+export const dashboardPages = [
+  {
+    label: "اعضای تیم",
+    href: dashboardRoutes.teamates(),
+  },
+  {
+    label: "پروژه ها",
+    href: dashboardRoutes.projects(),
+  },
+  {
+    label: "دسته بندی ها",
+    href: dashboardRoutes.categories(),
+  },
+  {
+    label: "داشبورد",
+    href: dashboardRoutes.dashboard(),
+  },
+  {
+    label: "نظرات",
+    href: dashboardRoutes.comments(),
+  },
+  {
+    label: "اسلایدر ها",
+    href: dashboardRoutes.sliders(),
+  },
+  {
+    label: "مقالات",
+    href: dashboardRoutes.blogs(),
+  },
+];

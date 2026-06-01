@@ -61,11 +61,13 @@
     "@tiptap/starter-kit": "^3.23.6",
     "axios": "^1.11.0",
     "clsx": "2.1.1",
+    "dompurify": "^3.4.7",
     "framer-motion": "11.18.2",
     "intl-messageformat": "10.7.16",
     "lodash.throttle": "^4.1.1",
-    "next": "15.3.1",
+    "next": "^15.3.8",
     "next-themes": "0.4.6",
+    "nextjs-toploader": "^3.9.17",
     "react": "18.3.1",
     "react-before-after-slider-component": "^1.1.8",
     "react-compare-image": "^3.5.17",
@@ -75,7 +77,8 @@
     "react-hotkeys-hook": "^5.3.2",
     "react-multi-date-picker": "^4.5.2",
     "react-toastify": "^11.0.5",
-    "swiper": "^12.0.3"
+    "swiper": "^12.0.3",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@base-ui/react": "^1.5.0",
@@ -83,6 +86,7 @@
     "@react-types/shared": "3.30.0",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "4.1.11",
+    "@types/dompurify": "^3.0.5",
     "@types/lodash.throttle": "^4.1.9",
     "@types/node": "20.5.7",
     "@types/react": "18.3.3",

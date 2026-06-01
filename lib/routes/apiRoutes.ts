@@ -1,3 +1,6 @@
+import { queryStringCreator } from "../tools/searchParams";
+import { IProjectParams } from "../types/project";
+
 class Auth {
   private readonly base: string;
 
@@ -21,14 +24,13 @@ class Upload {
     this.base = "pictures";
   }
 
-  upload(){
-    return `${this.base}/upload`
+  upload() {
+    return `${this.base}/upload`;
   }
 
-  find(id:string){
-    return `${this.base}/${id}`
+  find(id: string) {
+    return `${this.base}/${id}`;
   }
-
 }
 
 class Catgories {
@@ -85,6 +87,10 @@ class Blogs {
   update(id: string) {
     return `${this.base}/${id}`;
   }
+
+  findBySlug(slug: string) {
+    return `${this.base}/find-by-slug/${slug}`;
+  }
 }
 class Sliders {
   private readonly base: string;
@@ -121,8 +127,9 @@ class Projects {
     this.base = "projects";
   }
 
-  getAll() {
-    return `${this.base}`;
+  getAll(params?: IProjectParams) {
+    const queryString = queryStringCreator(params);
+    return `${this.base}?${queryString}`;
   }
 
   create() {
@@ -133,8 +140,8 @@ class Projects {
     return `${this.base}/${id}`;
   }
 
-    findBySlug(slug:string){
-    return `${this.base}/find-by-slug/${slug}`
+  findBySlug(slug: string) {
+    return `${this.base}/find-by-slug/${slug}`;
   }
 
   delete(id: string) {
@@ -193,8 +200,6 @@ class Temates {
     return `${this.base}/${id}`;
   }
 
-
-
   delete(id: string) {
     return `${this.base}/${id}`;
   }
@@ -203,7 +208,6 @@ class Temates {
     return `${this.base}/${id}`;
   }
 }
-
 
 export const categoriesRoute = new Catgories();
 export const ProjectsRoute = new Projects();

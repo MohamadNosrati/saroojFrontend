@@ -4,11 +4,11 @@ import Link from "next/link";
 import { persianRoutes } from "@/lib/routes/navigationRoutes";
 import { IProject } from "@/lib/types/project";
 import { slugify } from "@/lib/tools/slugify";
+import { uploadUrl } from "@/lib/tools/upload";
 
 interface IProps {
   item: IProject;
 }
-
 
 const ProjectItem: React.FC<IProps> = ({ item }) => {
   return (
@@ -19,7 +19,12 @@ const ProjectItem: React.FC<IProps> = ({ item }) => {
             {item?.title}
           </span>
         </div>
-        <Image src={ServiceImage} className="size-full" fill alt="" />
+        <Image
+          src={uploadUrl(item?.pictureId?.image)}
+          className="size-full"
+          fill
+          alt={item?.alt}
+        />
       </div>
     </Link>
   );

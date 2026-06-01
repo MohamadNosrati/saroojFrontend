@@ -9,7 +9,7 @@ import {
   useGetProjects,
 } from "@/lib/hooks/projects";
 import { useDisclosure } from "@heroui/modal";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 
 const columns = [
   { name: "عکس", uid: "pictureId" },
@@ -71,7 +71,7 @@ const ProjectsPage = () => {
           isPending={isPending}
           editHandler={editHandler}
           deleteHandler={deleteHandler}
-          items={data?.data || []}
+          items={data?.data?.result || []}
           columns={columns}
         />
       </div>

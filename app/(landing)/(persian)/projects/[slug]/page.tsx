@@ -17,7 +17,6 @@ export default async function SingleProjectPage({
   const slug = (await params)?.slug;
   const decodedSlug = decodeURIComponent(slug).replaceAll("-", " ");
 
-  console.log(decodedSlug);
 
   const data = await getData<IBaseResponse<IProject>>(
     ProjectsRoute.findBySlug(decodedSlug),
