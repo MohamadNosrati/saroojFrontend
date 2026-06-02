@@ -21,6 +21,7 @@ interface IFormContainerProps {
 type TformValues = {
   title: string;
   pictureId: string;
+  mobilePictureId: string;
   link: string;
   alt: string;
   description: string;
@@ -45,6 +46,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         isActive: "1",
         alt: "",
         link: "",
+        mobilePictureId: "",
       },
       values: {
         title: slider?.title || "",
@@ -53,6 +55,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         alt: slider?.alt || "",
         isActive: slider?.isActive === false ? "0" : "1",
         link: slider?.link || "",
+        mobilePictureId: slider?.mobilePictureId?.id || "",
       },
     });
   const onSubmit = async (data: TformValues) => {
@@ -191,9 +194,37 @@ const FormContainer: React.FC<IFormContainerProps> = ({
             <div>
               <CustomImageLoader
                 aspect={1}
-                htmlFor="projectMainImage"
+                htmlFor="sliderImage"
                 value={value}
                 changeImageHandler={onChange}
+              />
+              <CustomWhen condition={Boolean(error?.message)}>
+                <p className="text-danger mt-1 text-sm font-bold">
+                  {error?.message}
+                </p>
+              </CustomWhen>
+            </div>
+          )}
+        />
+      </div>
+      <div>
+        <Controller
+          control={control}
+          name="mobilePictureId"
+          rules={{
+            required: {
+              value: true,
+              message: "mobilePictureId is required!",
+            },
+          }}
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <div>
+              <CustomImageLoader
+                aspect={1}
+                htmlFor="sliderMobileImage"
+                value={value}
+                changeImageHandler={onChange}
+                label="آپلود عکس موبایل"
               />
               <CustomWhen condition={Boolean(error?.message)}>
                 <p className="text-danger mt-1 text-sm font-bold">

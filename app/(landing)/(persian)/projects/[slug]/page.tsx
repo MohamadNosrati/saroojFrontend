@@ -4,8 +4,20 @@ import RelatedProjects from "@/features/landing/SingleProject/RelatedProjects";
 import Video from "@/features/landing/SingleProject/Video";
 import { ProjectsRoute } from "@/lib/routes/apiRoutes";
 import { getData } from "@/lib/services/data";
+import { slugify } from "@/lib/tools/slugify";
 import { IBaseResponse } from "@/lib/types/base";
 import { IProject } from "@/lib/types/project";
+
+
+export async function generateStaticParams() {
+  const projects = await getData<IBaseResponse<{
+    id: string,
+    title: string;
+  }[]>>(ProjectsRoute.getAllSlugs());
+  return projects?.data?.map(item => ({
+    slug: slugify(item?.title)
+  }))
+}
 
 export default async function SingleProjectPage({
   params,
@@ -14,6 +26,10 @@ export default async function SingleProjectPage({
     slug: string;
   }>;
 }) {
+
+
+
+
   const slug = (await params)?.slug;
   const decodedSlug = decodeURIComponent(slug).replaceAll("-", " ");
 

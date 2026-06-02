@@ -13,6 +13,7 @@ export interface ISlider {
   id: string;
   title: string;
   pictureId: IFile;
+  mobilePictureId: IFile;
   description: string;
   createdAt: Date;
   alt: string;

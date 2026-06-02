@@ -132,6 +132,10 @@ class Projects {
     return `${this.base}?${queryString}`;
   }
 
+  getAllSlugs() {
+    return `${this.base}/get-all-slugs`;
+  }
+
   create() {
     return `${this.base}`;
   }

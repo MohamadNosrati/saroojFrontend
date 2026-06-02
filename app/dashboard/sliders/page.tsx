@@ -13,6 +13,7 @@ import { useState } from "react";
 
 const columns = [
   { name: "عکس", uid: "pictureId" },
+  { name: "غکس موبایل", uid: "mobilePictureId" },
   { name: "عنوان", uid: "title" },
   { name: "توضیحات عکس", uid: "alt" },
   { name: "لینک", uid: "link" },
