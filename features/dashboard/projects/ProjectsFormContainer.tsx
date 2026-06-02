@@ -277,7 +277,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         />
       </div>
       <div className="w-full">
-        <label htmlFor="startDate">تاریخ شروع</label>
+        <label htmlFor="startDate" className="text-white font-bold">تاریخ شروع</label>
         <Controller
           control={control}
           rules={{
@@ -305,7 +305,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         />
       </div>
       <div className="w-full">
-        <label htmlFor="endDate">تاریخ پایان</label>
+        <label htmlFor="endDate" className="text-white font-bold">تاریخ پایان</label>
         <Controller
           control={control}
           rules={{
@@ -345,7 +345,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <div>
               <CustomImageLoader
-                aspect={1}
+                aspect={570 / 403}
                 htmlFor="projectMainImage"
                 value={value}
                 changeImageHandler={onChange}

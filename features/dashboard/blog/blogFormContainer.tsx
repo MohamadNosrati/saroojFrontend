@@ -167,7 +167,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <div>
               <CustomImageLoader
-                aspect={1}
+                aspect={610/352}
                 htmlFor="projectMainImage"
                 value={value}
                 changeImageHandler={onChange}

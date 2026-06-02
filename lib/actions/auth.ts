@@ -101,3 +101,8 @@ export async function logout(): Promise<{
     };
   }
 }
+
+export async function getCookie() {
+  const cookiesStore = await cookies();
+  return cookiesStore.get(AUTH_COOKIE_KEY)
+}

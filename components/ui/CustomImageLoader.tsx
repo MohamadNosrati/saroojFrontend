@@ -86,11 +86,6 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
       formData.append("image", file);
       const res = await mutateAsync({
         image: selectedFile,
-        // height: croppedAreaPixels?.height,
-        // width: croppedAreaPixels?.width,
-        // x: croppedAreaPixels?.x,
-        // y: croppedAreaPixels?.y,
-        // zoom: Number(zoom),
       });
       if (res?.data?.data) {
         changeImageHandler(res?.data?.data?.id);
@@ -135,7 +130,7 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
     <>
       <label htmlFor={htmlFor} className="flex flex-col gap-y-2 cursor-pointer">
         <div>
-          <span className="text-small text-white">{label || `آپلود عکس`}</span>
+          <span className="text-small text-white font-bold">{label || `آپلود عکس`}</span>
         </div>
         <div className="h-10 bg-white rounded-xl flex items-center justify-between p-4">
           <div className="flex items-center gap-x-2">

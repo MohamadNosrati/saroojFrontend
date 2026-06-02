@@ -60,46 +60,76 @@ export default function CustomTable({
             )}
           </div>
         );
+      case "mobilePictureId":
+        return (
+          <div className="flex justify-center">
+            {cellValue ? (
+              <Image
+                src={uploadUrl(cellValue?.image)}
+                width={100}
+                height={100}
+                className="rounded-full size-20 min-w-20 object-cover"
+                alt={item?.id || "image"}
+              />
+            ) : (
+              <div className="w-20 rounded-full h-20 bg-dark"></div>
+            )}
+          </div>
+        );
       case "name":
         return (
-          <div className="flex flex-col max-w-20">
-            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">{cellValue}</p>
+          <div className="flex flex-col max-w-20 truncate">
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
+              {cellValue}
+            </p>
           </div>
         );
       case "description":
         return (
           <div className="flex flex-col max-w-20">
-            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">{cellValue}</p>
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
+              {cellValue}
+            </p>
           </div>
         );
       case "categoryId":
         return (
           <div className="flex flex-col max-w-20">
-            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">{cellValue?.title}</p>
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
+              {cellValue?.title}
+            </p>
           </div>
         );
       case "artitectureStyle":
         return (
           <div className="flex flex-col max-w-20">
-            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">{cellValue}</p>
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
+              {cellValue}
+            </p>
           </div>
         );
       case "area":
         return (
           <div className="flex flex-col max-w-20">
-            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">{cellValue}</p>
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
+              {cellValue}
+            </p>
           </div>
         );
       case "link":
         return (
           <div className="flex flex-col max-w-20">
-            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">{cellValue}</p>
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
+              {cellValue}
+            </p>
           </div>
         );
       case "title":
         return (
-          <div className="flex flex-col">
-            <p className="text-bold text-sm capitalize">{cellValue}</p>
+          <div className="flex flex-col max-w-20 truncate">
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
+              {cellValue}
+            </p>
           </div>
         );
       case "startDate":
