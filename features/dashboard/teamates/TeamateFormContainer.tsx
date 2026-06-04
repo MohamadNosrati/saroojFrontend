@@ -55,7 +55,6 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         isActive: teamate?.isActive === false ? "0" : "1",
       },
     });
-  const { pictureId } = watch();
   const onSubmit = async (data: TformValues) => {
     const createPayload = {
       ...data,

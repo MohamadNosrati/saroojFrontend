@@ -7,36 +7,93 @@ import { getData } from "@/lib/services/data";
 import { slugify } from "@/lib/tools/slugify";
 import { IBaseResponse } from "@/lib/types/base";
 import { IProject } from "@/lib/types/project";
+import notFound from "../../not-found";
+import { Metadata } from "next";
+import { createMetadata } from "@/lib/config/site";
 
+type Props = {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
 export async function generateStaticParams() {
-  const projects = await getData<IBaseResponse<{
-    id: string,
-    title: string;
-  }[]>>(ProjectsRoute.getAllSlugs());
-  return projects?.data?.map(item => ({
-    slug: slugify(item?.title)
-  }))
+  const projects = await getData<
+    IBaseResponse<
+      {
+        id: string;
+        title: string;
+      }[]
+    >
+  >(ProjectsRoute.getAllSlugs());
+  return projects?.data?.map((item) => ({
+    slug: slugify(item?.title),
+  }));
 }
 
-export default async function SingleProjectPage({
-  params,
-}: {
-  params: Promise<{
-    slug: string;
-  }>;
-}) {
+const baseUrl =
+  process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
 
-
-
-
-  const slug = (await params)?.slug;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug).replaceAll("-", " ");
-
 
   const data = await getData<IBaseResponse<IProject>>(
     ProjectsRoute.findBySlug(decodedSlug),
   );
+
+  const project = data?.data;
+
+  if (!project) {
+    return {
+      title: "پروژه یافت نشد | شرکت ساخت و ساز ساروج",
+      description: "پروژه مورد نظر یافت نشد.",
+    };
+  }
+
+  return createMetadata({
+    title: `${project.title} | پروژه‌های شرکت ساروج`,
+    description:
+      project.description ||
+      `مشاهده پروژه ${project.title} -  توسط شرکت ساخت و ساز ساروج`,
+    metadataBase: new URL(baseUrl),
+    keywords: `${project.title}, پروژه ${project.address}, ساخت و ساز,`,
+    authors: [{ name: "شرکت ساخت و ساز ساروج" }],
+    creator: "شرکت ساخت و ساز ساروج",
+    publisher: "شرکت ساخت و ساز ساروج",
+    robots: "index, follow",
+    alternates: {
+      canonical: `${baseUrl}/projects/${slug}`,
+    },
+    openGraph: {
+      title: `${project.title} | پروژه شرکت ساروج`,
+      description: project.description,
+      url: `${baseUrl}/projects/${slug}`,
+      siteName: "شرکت ساخت و ساز ساروج",
+      locale: "fa_IR",
+      type: "article",
+      publishedTime: project.createdAt,
+      modifiedTime: project.updatedAt,
+      authors: ["شرکت ساخت و ساز ساروج"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} | پروژه شرکت ساروج`,
+      description: project.description,
+    },
+  });
+}
+
+export default async function SingleProjectPage({ params }: Props) {
+  const { slug } = await params;
+  const decodedSlug = decodeURIComponent(slug).replaceAll("-", " ");
+
+  const data = await getData<IBaseResponse<IProject>>(
+    ProjectsRoute.findBySlug(decodedSlug),
+  );
+
+  if (!data) {
+    notFound();
+  }
 
   return (
     <main>

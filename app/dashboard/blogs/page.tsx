@@ -61,7 +61,7 @@ const BlogsPage = () => {
           isPending={isPending}
           editHandler={editHandler}
           deleteHandler={deleteHandler}
-          items={data?.data || []}
+          items={data?.data?.result || []}
           columns={columns}
         />
       </div>

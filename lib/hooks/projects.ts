@@ -7,7 +7,11 @@ import { IProjectPayload, IUpdateProjectPayload } from "../types/project";
 export const useGetProjects = () => {
   const { data, isLoading } = useQuery({
     queryKey: [ProjectsRoute.getAll()],
-    queryFn: async () => await getAll(),
+    queryFn: async () =>
+      await getAll({
+        limit: 100,
+        page: 1,
+      }),
   });
   return {
     data: data?.data,

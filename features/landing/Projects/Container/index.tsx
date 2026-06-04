@@ -13,8 +13,6 @@ import { Spinner } from "@heroui/spinner";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 
 const Container = () => {
-  const loadMoreRef = useRef<HTMLDivElement | null>(null);
-
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: [ProjectsRoute.getAll()],
@@ -34,6 +32,7 @@ const Container = () => {
         return undefined;
       },
     });
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const element = loadMoreRef.current;

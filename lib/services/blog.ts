@@ -1,10 +1,12 @@
 import { blogsRoutes } from "../routes/apiRoutes";
-import { IBaseResponse } from "../types/base";
+import { IBaseResponse, IPaginatedResponse } from "../types/base";
 import { IBlog, IBlogPayload } from "../types/blog";
 import axiosInstance from "./base";
 
 export const getAll = async () => {
-  return await axiosInstance.get<IBaseResponse<IBlog[]>>(blogsRoutes.getAll());
+  return await axiosInstance.get<IBaseResponse<IPaginatedResponse<IBlog>>>(
+    blogsRoutes.getAll(),
+  );
 };
 
 export const findOne = async (id: string) => {
@@ -13,11 +15,11 @@ export const findOne = async (id: string) => {
 
 class BlogServices {
   create(payload: IBlogPayload) {
-  return  axiosInstance.post(blogsRoutes.create(), payload);
+    return axiosInstance.post(blogsRoutes.create(), payload);
   }
 
   delete(id: string) {
-    return  axiosInstance.delete(blogsRoutes.delete(id));
+    return axiosInstance.delete(blogsRoutes.delete(id));
   }
 
   update(id: string, payload: Partial<IBlogPayload>) {

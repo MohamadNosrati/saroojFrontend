@@ -37,7 +37,7 @@ const data = [
 
 const Header = () => {
   return (
-    <section className="h-20 sticky bg-white dark:bg-dark bg-opacity-20 backdrop-blur-sm  w-full top-0 z-[10000] flex items-center">
+    <section className="h-20 sticky bg-white dark:bg-dark bg-opacity-20 backdrop-blur-sm  w-full top-0 z-[10] flex items-center">
       <div className="container flex items-center justify-between">
         <div className="flex items-center  xl:gap-24 lg:gap-12 gap-6">
           <MobileNavigation />

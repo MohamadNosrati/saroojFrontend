@@ -89,6 +89,10 @@ class DashboardRoute {
   blogs() {
     return `${this.base}/blogs`;
   }
+
+  notification() {
+    return `${this.base}/notifications`;
+  }
 }
 
 class FrontAuthRoutes {

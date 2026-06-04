@@ -1,3 +1,5 @@
+import { IFile } from "./file";
+
 type TUserRole = "admin" | "superAdmin";
 
 export interface IUser {
@@ -8,4 +10,12 @@ export interface IUser {
   role: TUserRole;
   updatedAt: Date;
   userName: string;
+  pictureId: IFile;
+}
+
+export interface IUserPayload {
+  pictureId: string;
+}
+export interface IUpdateUserPayload extends IUserPayload {
+  id: string;
 }

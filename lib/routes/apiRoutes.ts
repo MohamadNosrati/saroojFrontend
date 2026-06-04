@@ -1,4 +1,5 @@
 import { queryStringCreator } from "../tools/searchParams";
+import { IBlogParams } from "../types/blog";
 import { IProjectParams } from "../types/project";
 
 class Auth {
@@ -14,6 +15,17 @@ class Auth {
 
   signup() {
     return `${this.base}/signup`;
+  }
+}
+class User {
+  private readonly base: string;
+
+  constructor() {
+    this.base = "users";
+  }
+
+  update(id: string) {
+    return `${this.base}/${id}`;
   }
 }
 
@@ -68,8 +80,14 @@ class Blogs {
     this.base = "blogs";
   }
 
-  getAll() {
-    return `${this.base}`;
+  getAll(params?: IBlogParams) {
+    const queryString = queryStringCreator(params);
+    console.log("queryString", queryString);
+    return `${this.base}?${queryString}`;
+  }
+
+  getAllSlugs() {
+    return `${this.base}/get-all-slugs`;
   }
 
   create() {
@@ -196,6 +214,10 @@ class Temates {
     return `${this.base}`;
   }
 
+  getAllSlugs() {
+    return `${this.base}/get-all-slugs`;
+  }
+
   create() {
     return `${this.base}`;
   }
@@ -212,6 +234,32 @@ class Temates {
     return `${this.base}/${id}`;
   }
 }
+class Subscription {
+  private readonly base: string;
+
+  constructor() {
+    this.base = "subscriptions";
+  }
+
+  getAll() {
+    return `${this.base}`;
+  }
+}
+class Notification {
+  private readonly base: string;
+
+  constructor() {
+    this.base = "notifications";
+  }
+
+  getAll() {
+    return `${this.base}`;
+  }
+
+  create() {
+    return `${this.base}`;
+  }
+}
 
 export const categoriesRoute = new Catgories();
 export const ProjectsRoute = new Projects();
@@ -221,3 +269,6 @@ export const AuthRoute = new Auth();
 export const uploadRoutes = new Upload();
 export const sliderRoutes = new Sliders();
 export const blogsRoutes = new Blogs();
+export const userRoutes = new User();
+export const subscriptionRoutes = new Subscription();
+export const notificationRoutes = new Notification();

@@ -1,3 +1,5 @@
+"use client";
+
 import type { Key, SVGProps } from "react";
 
 import React from "react";
@@ -84,6 +86,14 @@ export default function CustomTable({
             </p>
           </div>
         );
+      case "link":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize  line-clamp-1">
+              {cellValue}
+            </p>
+          </div>
+        );
       case "description":
         return (
           <div className="flex flex-col max-w-20">
@@ -117,6 +127,14 @@ export default function CustomTable({
           </div>
         );
       case "link":
+        return (
+          <div className="flex flex-col max-w-20">
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
+              {cellValue}
+            </p>
+          </div>
+        );
+      case "url":
         return (
           <div className="flex flex-col max-w-20">
             <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
@@ -161,6 +179,24 @@ export default function CustomTable({
           </div>
         );
       case "alt":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">{cellValue}</p>
+          </div>
+        );
+      case "fullName":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">{cellValue}</p>
+          </div>
+        );
+      case "email":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">{cellValue}</p>
+          </div>
+        );
+      case "text":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-sm capitalize">{cellValue}</p>
@@ -247,7 +283,7 @@ export default function CustomTable({
       <TableBody
         isLoading={isLoading || isPending}
         loadingContent={<Spinner size="lg" />}
-        items={items}
+        items={items || []}
       >
         {(item: Item) => (
           <TableRow key={item.id}>

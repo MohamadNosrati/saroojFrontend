@@ -42,6 +42,8 @@ export interface IProject {
   isActive: boolean;
   artitectureStyle:string;
   address:string;
+  createdAt:number;
+  updatedAt:number;
 }
 
 export interface IProjectPayload {

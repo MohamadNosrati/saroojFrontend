@@ -22,3 +22,10 @@ export interface IBlog {
 export interface UpdateBlogPayload extends Partial<IBlogPayload> {
   id: string;
 } 
+
+export interface IBlogParams {
+  page:number;
+  limit:number;
+  asc:boolean;
+  sort:string;
+}
