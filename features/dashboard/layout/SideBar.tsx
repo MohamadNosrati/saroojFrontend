@@ -4,8 +4,8 @@ import Link from "next/link";
 
 const SideBar = () => {
   return (
-    <div className="border-2 min-h-full border-primary rounded-2xl">
-      <nav className="select-none rounded-2xl h-full p-6 flex flex-col gap-y-5">
+    <div className="border-2 sticky border-primary rounded-2xl">
+      <nav className="select-none rounded-2xl  p-6 flex flex-col gap-y-5">
         {dashboardPages?.map((page) => (
           <div key={page?.href}>
             <Link

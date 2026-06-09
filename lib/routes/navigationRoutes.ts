@@ -93,6 +93,10 @@ class DashboardRoute {
   notification() {
     return `${this.base}/notifications`;
   }
+
+  chatroom() {
+    return `${this.base}/chatroom`;
+  }
 }
 
 class FrontAuthRoutes {

@@ -24,6 +24,10 @@ class User {
     this.base = "users";
   }
 
+  getAll(){
+    return this.base;
+  }
+
   update(id: string) {
     return `${this.base}/${id}`;
   }
@@ -261,6 +265,29 @@ class Notification {
   }
 }
 
+class Conversation {
+  private readonly base: string;
+
+  constructor() {
+    this.base = "conversations";
+  }
+
+  getUserConversations(userId?:string) {
+    return `${this.base}?participants=${userId}`;
+  }
+}
+class Message {
+  private readonly base: string;
+
+  constructor() {
+    this.base = "messages";
+  }
+
+  getConversationMessages(conversationId?:string) {
+    return `${this.base}?conversationId=${conversationId}`;
+  }
+}
+
 export const categoriesRoute = new Catgories();
 export const ProjectsRoute = new Projects();
 export const CommentsRoute = new Comments();
@@ -272,3 +299,5 @@ export const blogsRoutes = new Blogs();
 export const userRoutes = new User();
 export const subscriptionRoutes = new Subscription();
 export const notificationRoutes = new Notification();
+export const conversationRoutes = new Conversation();
+export const messageRoutes = new Message();

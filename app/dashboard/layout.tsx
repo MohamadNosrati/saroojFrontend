@@ -18,13 +18,13 @@ export default function Layout({
         { "--font-yekan": yekanBakh.style.fontFamily } as React.CSSProperties
       }
       dir="rtl"
-      className="bg-gray-darker p-6 min-h-screen !font-yekan flex flex-col  w-full gap-4 "
+      className="bg-gray-darker p-6 h-screen flex !font-yekan flex-col  w-full gap-4 "
     >
-      <div className="p-6 border-primary border-2 rounded-2xl flex justify-between items-center">
+      <div className="p-6 border-primary h-32 border-2 rounded-2xl flex justify-between items-center">
         <User/>
         <LogoutButton/>
       </div>
-      <div className="flex gap-4 grow">
+      <div className="flex gap-4 grow overflow-auto relative">
         <SideBar />
         <div className="z-1 grow flex-col border-2 border-primary rounded-2xl justify-start overflow-y-auto overflow-x-hidden scroll-smooth">
           {children}

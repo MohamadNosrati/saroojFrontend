@@ -52,4 +52,8 @@ export const dashboardPages = [
     label: "نوتیفیکیشن ها",
     href: dashboardRoutes.notification(),
   },
+  {
+    label: "چتروم",
+    href: dashboardRoutes.chatroom(),
+  },
 ];

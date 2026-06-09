@@ -9,3 +9,9 @@ export interface IPaginatedResponse<T> {
   totalCount: number;
   totalPages: number;
 }
+
+export interface ISocketAcknowledgement<T = any> {
+  success: boolean;
+  data?: T;
+  message?: string;
+}

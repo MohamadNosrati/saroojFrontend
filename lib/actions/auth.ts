@@ -8,7 +8,7 @@ import { IUser } from "../types/user";
 import { AUTH_COOKIE_KEY } from "../constants/user";
 
 const loginSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
+  email: z.string(),
   password: z.string().min(1, "Password is required"),
 });
 
@@ -104,5 +104,5 @@ export async function logout(): Promise<{
 
 export async function getCookie() {
   const cookiesStore = await cookies();
-  return cookiesStore.get(AUTH_COOKIE_KEY)
+  return cookiesStore.get(AUTH_COOKIE_KEY)?.value
 }
