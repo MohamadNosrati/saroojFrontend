@@ -9,27 +9,29 @@ import { dashboardRoutes } from "@/lib/routes/navigationRoutes";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { useFormStatus } from "react-dom";
 import { login, LoginState } from "@/lib/actions/auth";
+import { useAuthStore } from "@/lib/stores/auth";
 
 const SiginPage = () => {
   const router = useRouter();
   const { pending } = useFormStatus();
+  const setUser = useAuthStore((store) => store.setUser);
   const [state, formAction] = useActionState<LoginState, FormData>(login, {
     errors: {},
   });
-  const handleSuccessLogin = () => {
-    localStorage.setItem(String(process.env.NEXT_PUBLIC_USER_LOCAL_STORAGE_KEY), JSON.stringify(state?.user));
-    responseHandler.success("ورود با موفقیت انجام شد");
-    router?.push(dashboardRoutes.dashboard());
-  };
 
   useEffect(() => {
     if (state.success) {
-      handleSuccessLogin();
+      if (state.user) {
+        setUser(state.user);
+      }
+
+      responseHandler.success("ورود با موفقیت انجام شد");
+      router?.push(dashboardRoutes.dashboard());
     }
     if (state.errors?._form?.length) {
       responseHandler.fail(state.errors?._form[0]);
     }
-  }, [state.success, state?.errors?._form]);
+  }, [router, setUser, state.errors?._form, state.success, state.user]);
   return (
     <div className="min-h-screen flex justify-center items-center">
       <CustomContainer>

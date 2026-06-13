@@ -6,7 +6,6 @@ const useUpdateCache = () => {
   const updateCache = (key: string, item: any) => {
     queryClient.setQueryData([key], (old: any) => {
       if (!old) return old;
-      
       return {
         ...old,
         data: {

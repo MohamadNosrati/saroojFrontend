@@ -3,8 +3,8 @@ import { CustomWhen } from "@/components/ui/CustomWhen";
 import { eventNames } from "@/lib/config/socket";
 import { useGetConversationMessages } from "@/lib/hooks/message";
 import useUpdateCache from "@/lib/hooks/updateCache";
-import { useGetUser } from "@/lib/hooks/user";
 import { conversationRoutes, messageRoutes } from "@/lib/routes/apiRoutes";
+import { useAuthStore } from "@/lib/stores/auth";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { ISocketAcknowledgement } from "@/lib/types/base";
 import { IConversation } from "@/lib/types/conversation";
@@ -42,7 +42,8 @@ const Chat: React.FC<IProps> = ({
   setSelectedConversation,
 }) => {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
-  const user = useGetUser();
+  const queryClient = useQueryClient();
+  const user = useAuthStore((state) => state?.user);
   const { data: messages, isLoading } = useGetConversationMessages(
     selectedConversation?.id,
   );
@@ -76,10 +77,9 @@ const Chat: React.FC<IProps> = ({
           );
           if (!selectedConversation) {
             setSelectedConversation(response?.data?.conversation);
-            updateCache(
-              conversationRoutes.getUserConversations(user?.id),
-              response?.data?.conversation,
-            );
+            queryClient.invalidateQueries({
+              queryKey: [conversationRoutes.getUserConversations(user?.id)],
+            });
           }
         } else {
           responseHandler.fail("Failed to send message");
@@ -105,15 +105,6 @@ const Chat: React.FC<IProps> = ({
   }, [isConnected, messages?.length]);
 
   useEffect(() => {
-    socketRef.current?.on(eventNames.receiveMessage, (response) => {
-      updateCache(
-        messageRoutes.getConversationMessages(selectedConversation?.id),
-        response?.data?.message,
-      );
-    });
-  }, []);
-
-  useEffect(() => {
     const handleClick = (e: KeyboardEvent) => {
       if (e?.key === "Enter") {
         buttonRef.current?.click();
@@ -124,6 +115,8 @@ const Chat: React.FC<IProps> = ({
   }, []);
 
   const ChateSelected = selectedContact || selectedConversation;
+
+  console.log("messages", messages);
 
   return (
     <>

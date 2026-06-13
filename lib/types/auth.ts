@@ -9,3 +9,10 @@ export interface ISigninRes {
     user:IUser;
     token:string
 }
+
+
+export interface IAuthStore {
+  user?: IUser;
+  setUser: (user?: IUser) => void;
+  clearUser: () => void;
+}

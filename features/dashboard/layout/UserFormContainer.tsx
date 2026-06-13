@@ -3,18 +3,16 @@ import { Button } from "@heroui/button";
 import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import { Controller, useForm } from "react-hook-form";
 import { responseHandler } from "@/lib/tools/responseHandler";
-import { useQueryClient } from "@tanstack/react-query";
 import { useUpdateUser } from "@/lib/hooks/user";
 import { IUser } from "@/lib/types/user";
-import { Dispatch, SetStateAction } from "react";
+import { useAuthStore } from "@/lib/stores/auth";
 
 type TFormValues = {
   pictureId: string;
 };
 
 interface IProps {
-  user: IUser | null;
-  setUser: Dispatch<SetStateAction<IUser | null>>;
+  user: IUser | undefined;
   isOpen: boolean;
   onOpenChange: () => void;
 }
@@ -23,9 +21,9 @@ export default function UserFormContainer({
   isOpen,
   onOpenChange,
   user,
-  setUser,
 }: IProps) {
   const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateUser();
+  const setUser = useAuthStore((store) => store.setUser);
   const { handleSubmit, control } = useForm<TFormValues>({
     defaultValues: {
       pictureId: "",
@@ -42,21 +40,13 @@ export default function UserFormContainer({
       },
       {
         onSuccess: ({ data }) => {
-          console.log(data?.data?.pictureId);
-          if (user !== null)
-            [
-              setUser({
-                ...user,
-                pictureId: data?.data?.pictureId,
-              }),
-              localStorage.setItem(
-                String(process.env.NEXT_PUBLIC_USER_LOCAL_STORAGE_KEY),
-                JSON.stringify({
-                  ...user,
-                  pictureId: data?.data?.pictureId,
-                }),
-              ),
-            ];
+          if (user) {
+            setUser({
+              ...user,
+              pictureId: data?.data?.pictureId,
+            });
+          }
+
           responseHandler.success("اطلاعات کاریر با موفقیت ویرایش شد.");
           onOpenChange();
         },

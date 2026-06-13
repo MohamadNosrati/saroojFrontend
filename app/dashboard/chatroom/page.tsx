@@ -10,7 +10,9 @@ import { IConversation } from "@/lib/types/conversation";
 import { IUser } from "@/lib/types/user";
 import { getCookie } from "@/lib/actions/auth";
 import useUpdateCache from "@/lib/hooks/updateCache";
-import { messageRoutes } from "@/lib/routes/apiRoutes";
+import { conversationRoutes, messageRoutes } from "@/lib/routes/apiRoutes";
+import { useAuthStore } from "@/lib/stores/auth";
+import { useQueryClient } from "@tanstack/react-query";
 
 const eventNames = {
   sendMessage: "send_message",
@@ -23,7 +25,7 @@ const eventNames = {
 export default function Chatroom() {
   const [isConnected, setIsConnected] = useState(false);
   const [isConnecting, setIsConnecting] = useState(true);
-  const {updateCache} = useUpdateCache()
+  const { updateCache } = useUpdateCache();
   const [selectedConversation, setSelectedConversation] = useState<
     IConversation | undefined
   >(undefined);
@@ -31,12 +33,14 @@ export default function Chatroom() {
     undefined,
   );
 
+  const user = useAuthStore((state) => state?.user);
+  const queryClient = useQueryClient();
+
   const chatBottomRef = useRef<HTMLDivElement | null>(null);
   const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
-    let isMounted = true;
-
+    if (!user?.id) return;
     async function initializeSocket() {
       try {
         const token = await getCookie();
@@ -47,7 +51,7 @@ export default function Chatroom() {
           return;
         }
 
-        const socket = io("http://localhost:8000", {
+        const socket = io(process.env.NEXT_PUBLIC_BACKEND_URL, {
           withCredentials: true,
           auth: {
             token: token,
@@ -58,56 +62,48 @@ export default function Chatroom() {
 
         socket.on(eventNames.connect, () => {
           console.log("Connected to server");
-          if (isMounted) {
-            setIsConnected(true);
-            setIsConnecting(false);
-          }
+          setIsConnected(true);
+          setIsConnecting(false);
         });
 
-        socket?.on(eventNames.receiveMessage, (response) => {
-          console.log("a pm cameeee")
+        socket?.on(eventNames.receiveMessage, (data) => {
+          console.log("recievedMessage", data);
           updateCache(
-            messageRoutes.getConversationMessages(selectedConversation?.id),
-            response?.data?.message,
+            messageRoutes.getConversationMessages(data?.conversationId),
+            data,
           );
+          queryClient.invalidateQueries({
+            queryKey: [conversationRoutes.getUserConversations(user?.id)],
+          });
         });
-
-
 
         socket.on(eventNames.disconnect, () => {
-          if (isMounted) {
-            setIsConnected(false);
-          }
+          setIsConnected(false);
         });
 
         socket.on(eventNames.connectError, (error) => {
-          if (isMounted) {
-            setIsConnecting(false);
-            if (socket.active) {
-              setIsConnected(false);
-            } else {
-              responseHandler.fail(error.message || "Connection failed");
-            }
+          setIsConnecting(false);
+          if (socket.active) {
+            setIsConnected(false);
+          } else {
+            responseHandler.fail(error.message || "Connection failed");
           }
         });
       } catch (error) {
         console.error("Error initializing socket:", error);
-        if (isMounted) {
-          setIsConnecting(false);
-          responseHandler.fail("Failed to connect to chat server");
-        }
+        setIsConnecting(false);
+        responseHandler.fail("Failed to connect to chat server");
       }
     }
 
     initializeSocket();
 
     return () => {
-      isMounted = false;
       if (socketRef.current) {
         socketRef.current.disconnect();
       }
     };
-  }, []);
+  }, [user?.id]);
 
   return (
     <div className="flex h-full bg-gray-900 overflow-hidden">

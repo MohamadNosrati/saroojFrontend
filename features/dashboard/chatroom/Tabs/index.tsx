@@ -5,8 +5,8 @@ import Contacts from "./Contacts";
 import Conversations from "./Conversations";
 import { IUser } from "@/lib/types/user";
 import { IConversation } from "@/lib/types/conversation";
-import { useGetUser } from "@/lib/hooks/user";
 import { useGetConversations } from "@/lib/hooks/conversation";
+import { useAuthStore } from "@/lib/stores/auth";
 
 type TTabType = "conversations" | "contacts";
 type TabItem = {
@@ -39,10 +39,10 @@ const Tabs: React.FC<IProps> = ({
   setSelectedConversation,
 }) => {
   const [selected, setSelected] = useState<TTabType>("conversations");
-  const userId = useGetUser()?.id;
-  const { data } = useGetConversations(userId);
+  const user = useAuthStore((state) => state?.user);
+  const { data } = useGetConversations(user?.id);
   const converstions = data?.data?.map((item) => {
-    const otherUser = item?.participants?.find((elem) => elem?.id !== userId);
+    const otherUser = item?.participants?.find((elem) => elem?.id !== user?.id);
     item.otherUser = otherUser as {
       id: string;
       userName: string;

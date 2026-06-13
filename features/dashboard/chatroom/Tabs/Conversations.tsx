@@ -1,7 +1,4 @@
 import { CustomWhen } from "@/components/ui/CustomWhen";
-import { useGetConversations } from "@/lib/hooks/conversation";
-import { useGetUser } from "@/lib/hooks/user";
-import getUser from "@/lib/tools/localstorage";
 import { uploadUrl } from "@/lib/tools/upload";
 import { IConversation } from "@/lib/types/conversation";
 import { IUser } from "@/lib/types/user";
@@ -13,17 +10,14 @@ interface IProps {
   selectedConversation?: IConversation;
   setSelectedConversation: Dispatch<SetStateAction<IConversation | undefined>>;
   setSelectedContact: Dispatch<SetStateAction<IUser | undefined>>;
-  conversations:IConversation[];
+  conversations: IConversation[];
 }
 
 const Conversations: React.FC<IProps> = ({
   setSelectedConversation,
   selectedConversation,
-  setSelectedContact,
-  conversations
+  conversations,
 }) => {
-
-
   const handleClick = (item: IConversation) => {
     setSelectedConversation(item);
     // setSelectedContact(undefined);

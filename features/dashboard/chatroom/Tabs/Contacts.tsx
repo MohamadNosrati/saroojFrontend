@@ -1,5 +1,6 @@
 import { CustomWhen } from "@/components/ui/CustomWhen";
-import { useGetUser, useGetUsers } from "@/lib/hooks/user";
+import { useGetUsers } from "@/lib/hooks/user";
+import { useAuthStore } from "@/lib/stores/auth";
 import { uploadUrl } from "@/lib/tools/upload";
 import { IConversation } from "@/lib/types/conversation";
 import { IUser } from "@/lib/types/user";
@@ -22,8 +23,8 @@ const Contacts: React.FC<IProps> = ({
   conversations,
 }) => {
   const { data, isLoading } = useGetUsers();
-  const userId = useGetUser()?.id;
-  const otherUsers = data?.data?.filter((item) => item?.id !== userId);
+  const user = useAuthStore((state) => state?.user);
+  const otherUsers = data?.data?.filter((item) => item?.id !== user?.id);
   const conversationsOtherUserIds = conversations?.map(
     (item) => item?.otherUser?.id,
   );
@@ -33,7 +34,7 @@ const Contacts: React.FC<IProps> = ({
     if (!conversationsOtherUserIds?.includes(item?.id)) {
       setSelectedConversation(undefined);
     } else {
-      console.log("oomd inja")
+      console.log("oomd inja");
       setSelectedConversation(
         conversations?.find((elem) => elem?.otherUser?.id === item?.id),
       );
