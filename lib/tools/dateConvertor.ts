@@ -14,3 +14,12 @@ export const timeConvertor = (timestamp: number | string | Date) => {
     hour12: false,
   });
 };
+
+export const toPersianReadable = (gregorianDateStr:string) => {
+  const date = new Date(gregorianDateStr);
+  return new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(date);
+};

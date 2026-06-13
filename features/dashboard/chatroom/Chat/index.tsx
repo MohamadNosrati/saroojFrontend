@@ -125,20 +125,9 @@ const Chat: React.FC<IProps> = ({
         <>
           <div className="grow flex flex-col gap-y-1 p-4 w-full max-h-[calc(100%-80px)] overflow-auto">
             <CustomWhen condition={Boolean(messages?.length)}>
-              <div className="flex justify-center">
-                <div className="bg-sky-400 rounded-4xl px-4 py-2.5 mb-4">
-                  <span>
-                    {messages
-                      ? dateConvertor(messages[0]?.createdAt as number)
-                      : null}
-                  </span>
-                </div>
-              </div>
-              <>
-                {messages?.map((item) => (
-                  <MessageItem key={item.id} item={item} />
-                ))}
-              </>
+              {messages?.map((item) => (
+                <MessageItem key={item.date} item={item} />
+              ))}
             </CustomWhen>
             <CustomWhen condition={!Boolean(messages?.length) && !isLoading}>
               <div className="size-full flex justify-center items-center">

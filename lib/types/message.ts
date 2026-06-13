@@ -114,4 +114,9 @@ export interface IMessage {
     createdAt?: number;
     updatedAt?: number;
   }
+
+  export interface GroupedMessageItem {
+    date:string;
+    messages:IMessage[];
+  }
   
