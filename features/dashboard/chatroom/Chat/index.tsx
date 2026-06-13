@@ -13,7 +13,6 @@ import { IUser } from "@/lib/types/user";
 import { Button } from "@heroui/button";
 import { Spinner } from "@heroui/spinner";
 import { useQueryClient } from "@tanstack/react-query";
-import clsx from "clsx";
 import React, {
   Dispatch,
   Ref,
@@ -23,6 +22,8 @@ import React, {
   useState,
 } from "react";
 import { Socket } from "socket.io-client";
+import MessageItem from "./MessageItem";
+import { dateConvertor } from "@/lib/tools/dateConvertor";
 
 interface IProps {
   isConnected: boolean;
@@ -124,17 +125,20 @@ const Chat: React.FC<IProps> = ({
         <>
           <div className="grow flex flex-col gap-y-1 p-4 w-full max-h-[calc(100%-80px)] overflow-auto">
             <CustomWhen condition={Boolean(messages?.length)}>
-              {messages?.map((item) => (
-                <div
-                  key={item?.id}
-                  className={clsx([
-                    "bg-green-900 text-white flex items-center p-2 rounded-xl",
-                    item?.senderId === user?.id ? "self-start" : "self-end",
-                  ])}
-                >
-                  <span className="font-bold">{item?.content}</span>
+              <div className="flex justify-center">
+                <div className="bg-sky-400 rounded-4xl px-4 py-2.5 mb-4">
+                  <span>
+                    {messages
+                      ? dateConvertor(messages[0]?.createdAt as number)
+                      : null}
+                  </span>
                 </div>
-              ))}
+              </div>
+              <>
+                {messages?.map((item) => (
+                  <MessageItem key={item.id} item={item} />
+                ))}
+              </>
             </CustomWhen>
             <CustomWhen condition={!Boolean(messages?.length) && !isLoading}>
               <div className="size-full flex justify-center items-center">

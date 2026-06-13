@@ -13,14 +13,9 @@ import useUpdateCache from "@/lib/hooks/updateCache";
 import { conversationRoutes, messageRoutes } from "@/lib/routes/apiRoutes";
 import { useAuthStore } from "@/lib/stores/auth";
 import { useQueryClient } from "@tanstack/react-query";
+import { eventNames } from "@/lib/config/socket";
 
-const eventNames = {
-  sendMessage: "send_message",
-  receiveMessage: "receive_message",
-  connect: "connect",
-  disconnect: "disconnect",
-  connectError: "connect_error",
-};
+
 
 export default function Chatroom() {
   const [isConnected, setIsConnected] = useState(false);
@@ -74,6 +69,9 @@ export default function Chatroom() {
           );
           queryClient.invalidateQueries({
             queryKey: [conversationRoutes.getUserConversations(user?.id)],
+          });
+          socket.emit(eventNames.messageDelivered, {
+            messageId: data.id,
           });
         });
 

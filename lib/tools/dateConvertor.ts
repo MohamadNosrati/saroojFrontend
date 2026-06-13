@@ -6,3 +6,11 @@ export const dateConvertor = (timestamp: number | string | Date) => {
     formatMatcher: "basic",
   });
 };
+
+export const timeConvertor = (timestamp: number | string | Date) => {
+  return new Date(timestamp).toLocaleTimeString("fa-IR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+};
