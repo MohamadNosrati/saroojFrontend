@@ -1,4 +1,5 @@
 import CustomImageLoader from "@/components/ui/CustomImageLoader";
+
 import {
   Control,
   Controller,
@@ -6,11 +7,16 @@ import {
   UseFieldArrayUpdate,
   UseFormSetValue,
 } from "react-hook-form";
+
 import { TformValues } from "./ProjectsFormContainer";
-import { ImageItem, ImageItemPayload } from "@/lib/types/project";
+
+import { ImageItemPayload } from "@/lib/types/project";
+
 // import CustomInput from "@/components/ui/CustomInput";
 import { Button } from "@heroui/button";
+
 import { DeleteIcon } from "@/components/icons";
+
 import { Tooltip } from "@heroui/tooltip";
 // import { useSortable } from "@dnd-kit/react/sortable";
 // import { useRef } from "react";
@@ -126,6 +132,7 @@ interface IProps {
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+
 import CustomInput from "@/components/ui/CustomInput";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 
@@ -154,8 +161,8 @@ export default function BeforeAfterItem({
   return (
     <div
       ref={setNodeRef}
-      style={style}
       className="flex flex-col px-4 py-6 rounded-2xl bg-dark w-full justify-between gap-4"
+      style={style}
     >
       <div className="flex justify-between items-center">
         <Button
@@ -168,10 +175,10 @@ export default function BeforeAfterItem({
         <Tooltip color="danger" content="Delete">
           <Button
             className="rounded-full size-10 !p-0 min-w-0 !flex !justify-center items-center"
-            onPress={() => remove(index)}
             color="danger"
+            onPress={() => remove(index)}
           >
-            <DeleteIcon width={20} height={20} />
+            <DeleteIcon height={20} width={20} />
           </Button>
         </Tooltip>
       </div>
@@ -180,92 +187,92 @@ export default function BeforeAfterItem({
           <Controller
             control={control}
             name={`images.${index}.before.pictureId`}
-            rules={{
-              required: {
-                value: true,
-                message: "image upload is required!",
-              },
-            }}
             render={({ field: { value, onChange }, fieldState: { error } }) => (
               <div>
                 <CustomImageLoader
                   aspect={16 / 9}
-                  label="آپلود عکس قبل اجباری"
-                  htmlFor={`beforeAfterItem-before-${item?.id}-${index}`}
-                  value={value}
                   changeImageHandler={onChange}
+                  htmlFor={`beforeAfterItem-before-${item?.id}-${index}`}
+                  label="آپلود عکس قبل اجباری"
+                  value={value}
                 />
                 <CustomWhen condition={Boolean(error?.message)}>
                   <p className="mt-0.5 text-sm text-danger">{error?.message}</p>
                 </CustomWhen>
               </div>
             )}
+            rules={{
+              required: {
+                value: true,
+                message: "image upload is required!",
+              },
+            }}
           />
           <Controller
             control={control}
             name={`images.${index}.before.name`}
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <CustomInput
+                errorMessage={error?.message}
+                isInvalid={Boolean(error?.message)}
+                label="نام عکس"
+                labelPlacement="outside-top"
+                value={value}
+                onChange={onChange}
+              />
+            )}
             rules={{
               required: {
                 value: true,
                 message: "image before name (alt) is required!",
               },
             }}
-            render={({ field: { value, onChange }, fieldState: { error } }) => (
-              <CustomInput
-                isInvalid={Boolean(error?.message)}
-                errorMessage={error?.message}
-                labelPlacement="outside-top"
-                label="نام عکس"
-                value={value}
-                onChange={onChange}
-              />
-            )}
           />
         </div>
         <div className="flex-1/2 flex flex-col gap-2.5">
           <Controller
             control={control}
             name={`images.${index}.after.pictureId`}
-            rules={{
-              required: {
-                value: true,
-                message: "image upload is required!",
-              },
-            }}
             render={({ field: { value, onChange }, fieldState: { error } }) => (
               <div>
                 <CustomImageLoader
                   aspect={16 / 9}
-                  label="آپلود عکس بعد (اختیاری)"
-                  htmlFor={`beforeAfterItem-after-${item?.id}-${index}`}
-                  value={value}
                   changeImageHandler={onChange}
+                  htmlFor={`beforeAfterItem-after-${item?.id}-${index}`}
+                  label="آپلود عکس بعد (اختیاری)"
+                  value={value}
                 />
                 <CustomWhen condition={Boolean(error?.message)}>
                   <p className="mt-0.5 text-sm text-danger">{error?.message}</p>
                 </CustomWhen>
               </div>
             )}
+            rules={{
+              required: {
+                value: true,
+                message: "image upload is required!",
+              },
+            }}
           />
           <Controller
             control={control}
             name={`images.${index}.after.name`}
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <CustomInput
+                errorMessage={error?.message}
+                isInvalid={Boolean(error?.message)}
+                label="نام عکس"
+                labelPlacement="outside-top"
+                value={value}
+                onChange={onChange}
+              />
+            )}
             rules={{
               required: {
                 value: true,
                 message: "image after name (alt) is required!",
               },
             }}
-            render={({ field: { value, onChange }, fieldState: { error } }) => (
-              <CustomInput
-                isInvalid={Boolean(error?.message)}
-                errorMessage={error?.message}
-                labelPlacement="outside-top"
-                label="نام عکس"
-                value={value}
-                onChange={onChange}
-              />
-            )}
           />
         </div>
       </div>

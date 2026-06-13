@@ -1,12 +1,13 @@
 "use client";
-import CustomInput from "@/components/ui/CustomInput";
-import CustomTextArea from "@/components/ui/customTextArea";
 import { Controller, useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
+import { Button } from "@heroui/button";
+
+import CustomInput from "@/components/ui/CustomInput";
+import CustomTextArea from "@/components/ui/customTextArea";
 import { notificationRoutes } from "@/lib/routes/apiRoutes";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { useCreateNotification } from "@/lib/hooks/notications";
-import { Button } from "@heroui/button";
 
 interface IFormContainerProps {
   onOpenChage: () => void;
@@ -33,6 +34,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({ onOpenChage }) => {
     const createPayload = {
       ...data,
     };
+
     mutate(createPayload, {
       onSuccess: () => {
         queryClient.invalidateQueries({
@@ -43,79 +45,80 @@ const FormContainer: React.FC<IFormContainerProps> = ({ onOpenChage }) => {
       },
     });
   };
+
   return (
     <form className="flex flex-col gap-y-10" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <Controller
           control={control}
+          name="title"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              errorMessage={error?.message}
+              isInvalid={Boolean(error?.message)}
+              label="عنوان"
+              labelPlacement="outside-top"
+              value={value}
+              onChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "title is required!",
             },
           }}
-          name="title"
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <CustomInput
-              isInvalid={Boolean(error?.message)}
-              errorMessage={error?.message}
-              value={value}
-              onChange={onChange}
-              labelPlacement="outside-top"
-              label="عنوان"
-            />
-          )}
         />
       </div>
       <div>
         <Controller
           control={control}
+          name="url"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              errorMessage={error?.message}
+              isInvalid={Boolean(error?.message)}
+              label="لینک"
+              labelPlacement="outside-top"
+              value={value}
+              onChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "url is required!",
             },
           }}
-          name="url"
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <CustomInput
-              isInvalid={Boolean(error?.message)}
-              errorMessage={error?.message}
-              value={value}
-              onChange={onChange}
-              labelPlacement="outside-top"
-              label="لینک"
-            />
-          )}
         />
       </div>
       <div>
         <Controller
           control={control}
+          name="description"
+          render={({ field: { value, onChange }, formState: { errors } }) => (
+            <CustomTextArea
+              errorMessage={errors?.description?.message}
+              isInvalid={Boolean(errors.description)}
+              value={value}
+              onChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "description is required!",
             },
           }}
-          name="description"
-          render={({ field: { value, onChange }, formState: { errors } }) => (
-            <CustomTextArea
-              value={value}
-              onChange={onChange}
-              isInvalid={Boolean(errors.description)}
-              errorMessage={errors?.description?.message}
-            />
-          )}
         />
       </div>
       <div>
         <Button
-          className="font-bold"
-          isLoading={isPending}
           fullWidth
-          type="submit"
+          className="font-bold"
           color={"success"}
+          isLoading={isPending}
+          type="submit"
         >
           {"ارسال"}
         </Button>

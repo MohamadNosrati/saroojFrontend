@@ -1,4 +1,7 @@
 "use client";
+import { useDisclosure } from "@heroui/modal";
+import { useState } from "react";
+
 import CustomContainer from "@/components/ui/CustomContainer";
 import CustomModal from "@/components/ui/CustomModal";
 import CustomTable from "@/components/ui/CustomTable";
@@ -8,8 +11,6 @@ import {
   useGetCategories,
   useGetCategory,
 } from "@/lib/hooks/categories";
-import { useDisclosure } from "@heroui/modal";
-import { useState } from "react";
 
 const columns = [
   { name: "عکس", uid: "pictureId" },
@@ -40,6 +41,7 @@ const CategoriesPage = () => {
     setEditId(undefined);
     onOpenChange();
   };
+
   return (
     <CustomContainer className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
@@ -49,28 +51,28 @@ const CategoriesPage = () => {
           </h1>
         </div>
         <CustomModal
-          isOpen={isOpen}
-          onClose={handleModalClose}
-          onOpen={onOpen}
-          onOpenChange={onOpenChange}
           buttonTitle="افزودن دسته بندی"
+          isOpen={isOpen}
           modalTitle={
             editId
               ? `ویرایش دسته بندی ${editData?.data?.title}`
               : "ساخت دسته بندی"
           }
+          onClose={handleModalClose}
+          onOpen={onOpen}
+          onOpenChange={onOpenChange}
         >
-          <FormContainer onOpenChage={onOpenChange} category={editData?.data} />
+          <FormContainer category={editData?.data} onOpenChage={onOpenChange} />
         </CustomModal>
       </div>
       <div className="bg-component-base-2 rounded-2xl">
         <CustomTable
+          columns={columns}
+          deleteHandler={deleteHandler}
+          editHandler={editHandler}
           isLoading={isLoading}
           isPending={isPending}
-          editHandler={editHandler}
-          deleteHandler={deleteHandler}
           items={data?.data || []}
-          columns={columns}
         />
       </div>
     </CustomContainer>

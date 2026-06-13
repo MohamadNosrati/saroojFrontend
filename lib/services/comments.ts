@@ -1,10 +1,11 @@
 import { CommentsRoute } from "../routes/apiRoutes";
 import { IBaseResponse } from "../types/base";
+
 import axiosInstance from "./base";
 
 export const getAll = async () => {
   return await axiosInstance.get<IBaseResponse<IComment[]>>(
-    CommentsRoute.getAll()
+    CommentsRoute.getAll(),
   );
 };
 

@@ -1,4 +1,7 @@
 "use client";
+import { useDisclosure } from "@heroui/modal";
+import { useState } from "react";
+
 import CustomContainer from "@/components/ui/CustomContainer";
 import CustomModal from "@/components/ui/CustomModal";
 import CustomTable from "@/components/ui/CustomTable";
@@ -8,8 +11,6 @@ import {
   useGetSlider,
   useGetSliders,
 } from "@/lib/hooks/sliders";
-import { useDisclosure } from "@heroui/modal";
-import { useState } from "react";
 
 const columns = [
   { name: "عکس", uid: "pictureId" },
@@ -43,6 +44,7 @@ const SlidersPage = () => {
     setEditId(undefined);
     onOpenChange();
   };
+
   return (
     <CustomContainer className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
@@ -52,26 +54,26 @@ const SlidersPage = () => {
           </h1>
         </div>
         <CustomModal
-          isOpen={isOpen}
-          onClose={handleModalClose}
-          onOpen={onOpen}
-          onOpenChange={onOpenChange}
           buttonTitle="افزودن اسلایدر"
+          isOpen={isOpen}
           modalTitle={
             editId ? `ویرایش اسلایدر ${editData?.data?.title}` : "ساخت اسلایدر"
           }
+          onClose={handleModalClose}
+          onOpen={onOpen}
+          onOpenChange={onOpenChange}
         >
-          <FormContainer onOpenChage={onOpenChange} slider={editData?.data} />
+          <FormContainer slider={editData?.data} onOpenChage={onOpenChange} />
         </CustomModal>
       </div>
       <div className="bg-component-base-2 rounded-2xl">
         <CustomTable
+          columns={columns}
+          deleteHandler={deleteHandler}
+          editHandler={editHandler}
           isLoading={isLoading}
           isPending={isPending}
-          editHandler={editHandler}
-          deleteHandler={deleteHandler}
           items={data?.data || []}
-          columns={columns}
         />
       </div>
     </CustomContainer>

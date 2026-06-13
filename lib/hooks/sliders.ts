@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import { responseHandler } from "../tools/responseHandler";
 import { sliderRoutes } from "../routes/apiRoutes";
 import { findOne, getAll, sliderServices } from "../services/sliders";
@@ -9,6 +10,7 @@ export const useGetSliders = () => {
     queryKey: [sliderRoutes.getAll()],
     queryFn: async () => await getAll(),
   });
+
   return {
     data: data?.data,
     isLoading,
@@ -21,6 +23,7 @@ export const useGetSlider = (id?: string) => {
     queryFn: async () => await findOne(String(id)),
     enabled: Boolean(id),
   });
+
   return {
     data: data?.data,
     isLoading,
@@ -39,6 +42,7 @@ export const useCreateSlider = () => {
 
 export const useDeleteSlider = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async (id: string) => await sliderServices.delete(id),
     onSuccess: () => {
@@ -55,6 +59,7 @@ export const useUpdateSlider = () => {
   return useMutation({
     mutationFn: async (payload: UpdateSliderPayload) => {
       const { id, ...rest } = payload;
+
       return await sliderServices.update(payload?.id, rest);
     },
     onError: () => {

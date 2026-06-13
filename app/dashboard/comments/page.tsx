@@ -1,4 +1,7 @@
 "use client";
+import { useDisclosure } from "@heroui/modal";
+import { useState } from "react";
+
 import CustomContainer from "@/components/ui/CustomContainer";
 import CustomModal from "@/components/ui/CustomModal";
 import CustomTable from "@/components/ui/CustomTable";
@@ -8,8 +11,6 @@ import {
   useGetComment,
   useGetComments,
 } from "@/lib/hooks/comments";
-import { useDisclosure } from "@heroui/modal";
-import { useState } from "react";
 
 const columns = [
   { name: "نام", uid: "fullName" },
@@ -40,6 +41,7 @@ const CommentsPage = () => {
     setEditId(undefined);
     onOpenChange();
   };
+
   return (
     <CustomContainer className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
@@ -47,27 +49,27 @@ const CommentsPage = () => {
           <h1 className="text-2xl font-bold text-white-gray">لیست نظرات</h1>
         </div>
         <CustomModal
-          isOpen={isOpen}
-          onOpen={onOpen}
-          onClose={handleModalClose}
-          onOpenChange={onOpenChange}
           buttonTitle="افزودن نظر"
+          isOpen={isOpen}
           modalTitle={
             editId ? `ویرایش نظر ${editData?.data?.title}` : "ساخت نظر"
           }
+          onClose={handleModalClose}
+          onOpen={onOpen}
+          onOpenChange={onOpenChange}
         >
           <></>
-          <FormContainer onOpenChage={onOpenChange} comment={editData?.data} />
+          <FormContainer comment={editData?.data} onOpenChage={onOpenChange} />
         </CustomModal>
       </div>
       <div className="bg-component-base-2 rounded-2xl">
         <CustomTable
+          columns={columns}
+          deleteHandler={deleteHandler}
+          editHandler={editHandler}
           isLoading={isLoading}
           isPending={isPending}
-          editHandler={editHandler}
-          deleteHandler={deleteHandler}
           items={data?.data || []}
-          columns={columns}
         />
       </div>
     </CustomContainer>

@@ -7,12 +7,8 @@ export const viewport: Viewport = {
   ],
 };
 
-const EnglishLayout = ()=>{
-    return (
-        <main className="">
-
-        </main>
-    )
-}
+const EnglishLayout = () => {
+  return <main className="" />;
+};
 
 export default EnglishLayout;

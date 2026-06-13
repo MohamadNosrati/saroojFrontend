@@ -1,14 +1,15 @@
 "use client";
+import { Controller, useForm } from "react-hook-form";
+import { Button } from "@heroui/button";
+import { useQueryClient } from "@tanstack/react-query";
+
 import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
 import CustomImageLoader from "@/components/ui/CustomImageLoader";
-import { Controller, useForm } from "react-hook-form";
-import { Button } from "@heroui/button";
 import CustomSelect from "@/components/ui/CustomSelect";
 import { ICategory } from "@/lib/types/categories";
 import { useCreateCategory, useUpdateCategory } from "@/lib/hooks/categories";
 import { isActiveOptions } from "@/lib/constants/isActive";
-import { useQueryClient } from "@tanstack/react-query";
 import { categoriesRoute } from "@/lib/routes/apiRoutes";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { CustomWhen } from "@/components/ui/CustomWhen";
@@ -35,24 +36,22 @@ const FormContainer: React.FC<IFormContainerProps> = ({
     useCreateCategory();
   const { mutate: updateMutate, isPending: isUpdatePending } =
     useUpdateCategory();
-  const { handleSubmit, setValue, watch, control, reset } =
-    useForm<TformValues>({
-      defaultValues: {
-        title: "",
-        pictureId: "",
-        description: "",
-        isActive: "1",
-        alt: "",
-      },
-      values: {
-        title: category?.title || "",
-        description: category?.description || "",
-        pictureId: category?.pictureId?.id || "",
-        alt: category?.alt || "",
-        isActive: category?.isActive === false ? "0" : "1",
-      },
-    });
-  const { pictureId } = watch();
+  const { handleSubmit, watch, control, reset } = useForm<TformValues>({
+    defaultValues: {
+      title: "",
+      pictureId: "",
+      description: "",
+      isActive: "1",
+      alt: "",
+    },
+    values: {
+      title: category?.title || "",
+      description: category?.description || "",
+      pictureId: category?.pictureId?.id || "",
+      alt: category?.alt || "",
+      isActive: category?.isActive === false ? "0" : "1",
+    },
+  });
   const onSubmit = async (data: TformValues) => {
     const createPayload = {
       ...data,
@@ -62,6 +61,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       ...createPayload,
       id: category?.id as string,
     };
+
     if (category) {
       updateMutate(updatePayload, {
         onSuccess: () => {
@@ -87,89 +87,84 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       });
     }
   };
+
   return (
     <form className="flex flex-col gap-y-10" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <Controller
           control={control}
+          name="title"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              errorMessage={error?.message}
+              isInvalid={Boolean(error?.message)}
+              label="نام دسته بندی"
+              labelPlacement="outside-top"
+              value={value}
+              onChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "title is required!",
             },
           }}
-          name="title"
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <CustomInput
-              isInvalid={Boolean(error?.message)}
-              errorMessage={error?.message}
-              value={value}
-              onChange={onChange}
-              labelPlacement="outside-top"
-              label="نام دسته بندی"
-            />
-          )}
         />
       </div>
       <div>
         <Controller
           control={control}
+          name="description"
+          render={({ field: { value, onChange }, formState: { errors } }) => (
+            <CustomTextArea
+              errorMessage={errors?.description?.message}
+              isInvalid={Boolean(errors.description)}
+              value={value}
+              onChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "description is required!",
             },
           }}
-          name="description"
-          render={({ field: { value, onChange }, formState: { errors } }) => (
-            <CustomTextArea
-              value={value}
-              onChange={onChange}
-              isInvalid={Boolean(errors.description)}
-              errorMessage={errors?.description?.message}
-            />
-          )}
         />
       </div>
       <div>
         <Controller
           control={control}
+          name="alt"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              errorMessage={error?.message}
+              isInvalid={Boolean(error?.message)}
+              label="توضیحات غکس"
+              labelPlacement="outside-top"
+              value={value}
+              onChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "alt is required!",
             },
           }}
-          name="alt"
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <CustomInput
-              isInvalid={Boolean(error?.message)}
-              errorMessage={error?.message}
-              value={value}
-              onChange={onChange}
-              labelPlacement="outside-top"
-              label="توضیحات غکس"
-            />
-          )}
         />
       </div>
       <div>
         <Controller
           control={control}
           name="pictureId"
-          rules={{
-            required: {
-              value: true,
-              message: "pictureId is required!",
-            },
-          }}
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <div>
               <CustomImageLoader
-                aspect={570/403}
+                aspect={570 / 403}
+                changeImageHandler={onChange}
                 htmlFor="projectMainImage"
                 value={value}
-                changeImageHandler={onChange}
               />
               <CustomWhen condition={Boolean(error?.message)}>
                 <p className="text-danger mt-1 text-sm font-bold">
@@ -178,36 +173,42 @@ const FormContainer: React.FC<IFormContainerProps> = ({
               </CustomWhen>
             </div>
           )}
+          rules={{
+            required: {
+              value: true,
+              message: "pictureId is required!",
+            },
+          }}
         />
       </div>
       <div>
         <Controller
+          control={control}
+          name={"isActive"}
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomSelect
+              error={error?.message}
+              options={isActiveOptions}
+              selectLabel="وضعیت"
+              value={value}
+              onSelectionChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "status is required!",
             },
           }}
-          name={"isActive"}
-          control={control}
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <CustomSelect
-              error={error?.message}
-              selectLabel="وضعیت"
-              options={isActiveOptions}
-              onSelectionChange={onChange}
-              value={value}
-            />
-          )}
         />
       </div>
       <div>
         <Button
-          className="font-bold"
-          isLoading={isCreatePending || isUpdatePending}
           fullWidth
-          type="submit"
+          className="font-bold"
           color={category ? "warning" : "success"}
+          isLoading={isCreatePending || isUpdatePending}
+          type="submit"
         >
           {category ? "ویرایش" : "ثبت"}
         </Button>

@@ -1,23 +1,28 @@
 import { categoriesRoute } from "../routes/apiRoutes";
 import { IBaseResponse } from "../types/base";
 import { ICategory, ICategoryPayload } from "../types/categories";
+
 import axiosInstance from "./base";
 
 export const getAll = async () => {
-  return await axiosInstance.get<IBaseResponse<ICategory[]>>(categoriesRoute.getAll());
+  return await axiosInstance.get<IBaseResponse<ICategory[]>>(
+    categoriesRoute.getAll(),
+  );
 };
 
 export const findOne = async (id: string) => {
-  return await axiosInstance.get<IBaseResponse<ICategory>>(categoriesRoute.findOne(id));
+  return await axiosInstance.get<IBaseResponse<ICategory>>(
+    categoriesRoute.findOne(id),
+  );
 };
 
 class CategoryServices {
   create(payload: ICategoryPayload) {
-  return  axiosInstance.post(categoriesRoute.create(), payload);
+    return axiosInstance.post(categoriesRoute.create(), payload);
   }
 
   delete(id: string) {
-    return  axiosInstance.delete(categoriesRoute.delete(id));
+    return axiosInstance.delete(categoriesRoute.delete(id));
   }
 
   update(id: string, payload: Partial<ICategoryPayload>) {

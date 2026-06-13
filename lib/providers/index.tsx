@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+
 import HeroUiProvider from "./HeroUiProvider";
 import ReactQueryProvider from "./ReactQueryProvider";
 import { NotificationProvider } from "./NotificationProvider";

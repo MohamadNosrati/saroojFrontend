@@ -1,11 +1,10 @@
 "use client";
+import React from "react";
+
 import LogoutButton from "@/features/dashboard/layout/Logout";
 import SideBar from "@/features/dashboard/layout/SideBar";
 import User from "@/features/dashboard/layout/User";
 import { yekanBakh } from "@/lib/config/fonts";
-import React from "react";
-
-
 
 export default function Layout({
   children,
@@ -14,15 +13,15 @@ export default function Layout({
 }>) {
   return (
     <main
+      className="bg-gray-darker p-6 h-screen flex !font-yekan flex-col  w-full gap-4 "
+      dir="rtl"
       style={
         { "--font-yekan": yekanBakh.style.fontFamily } as React.CSSProperties
       }
-      dir="rtl"
-      className="bg-gray-darker p-6 h-screen flex !font-yekan flex-col  w-full gap-4 "
     >
       <div className="p-6 border-primary h-32 border-2 rounded-2xl flex justify-between items-center">
-        <User/>
-        <LogoutButton/>
+        <User />
+        <LogoutButton />
       </div>
       <div className="flex gap-4 grow overflow-auto relative">
         <SideBar />

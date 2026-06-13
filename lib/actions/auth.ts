@@ -2,8 +2,9 @@
 
 import { cookies } from "next/headers";
 import { z } from "zod";
-import { authServices } from "../services/auth";
 import { AxiosError } from "axios";
+
+import { authServices } from "../services/auth";
 import { IUser } from "../types/user";
 import { AUTH_COOKIE_KEY } from "../constants/user";
 
@@ -39,11 +40,13 @@ export async function login(
   }
 
   const { email, password } = validatedFields.data;
+
   try {
     const response = await authServices.signin({
       email,
       password,
     });
+
     (await cookies()).set(
       String(AUTH_COOKIE_KEY),
       String(response?.data?.data?.token),
@@ -55,6 +58,7 @@ export async function login(
         path: "/",
       },
     );
+
     return {
       success: true,
       user: response?.data?.data?.user,
@@ -90,12 +94,15 @@ export async function logout(): Promise<{
 }> {
   try {
     const cookieStore = await cookies();
-     cookieStore.delete(AUTH_COOKIE_KEY);
+
+    cookieStore.delete(AUTH_COOKIE_KEY);
+
     return {
       success: true,
     };
   } catch (error) {
     console.log(error);
+
     return {
       success: false,
     };
@@ -104,5 +111,6 @@ export async function logout(): Promise<{
 
 export async function getCookie() {
   const cookiesStore = await cookies();
-  return cookiesStore.get(AUTH_COOKIE_KEY)?.value
+
+  return cookiesStore.get(AUTH_COOKIE_KEY)?.value;
 }

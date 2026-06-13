@@ -1,10 +1,11 @@
 "use client";
+import { useDisclosure } from "@heroui/modal";
+
 import CustomContainer from "@/components/ui/CustomContainer";
 import CustomModal from "@/components/ui/CustomModal";
 import CustomTable from "@/components/ui/CustomTable";
 import FormContainer from "@/features/dashboard/notification/NotificationFormContainer";
 import { useGetNotifications } from "@/lib/hooks/notications";
-import { useDisclosure } from "@heroui/modal";
 
 const columns = [
   { name: "عنوان", uid: "title" },
@@ -19,6 +20,7 @@ const SlidersPage = () => {
   const handleModalClose = () => {
     onOpenChange();
   };
+
   return (
     <CustomContainer className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
@@ -28,21 +30,21 @@ const SlidersPage = () => {
           </h1>
         </div>
         <CustomModal
+          buttonTitle="ارسال نوتیفیکشن"
           isOpen={isOpen}
+          modalTitle={`ساخت نوتیفیکیشن`}
           onClose={handleModalClose}
           onOpen={onOpen}
           onOpenChange={onOpenChange}
-          buttonTitle="ارسال نوتیفیکشن"
-          modalTitle={`ساخت نوتیفیکیشن`}
         >
-          <FormContainer onOpenChage={onOpenChange}  />
+          <FormContainer onOpenChage={onOpenChange} />
         </CustomModal>
       </div>
       <div className="bg-component-base-2 rounded-2xl">
         <CustomTable
+          columns={columns}
           isLoading={isLoading}
           items={data?.data || []}
-          columns={columns}
         />
       </div>
     </CustomContainer>

@@ -1,9 +1,11 @@
 "use client";
 
-import BlogItem from "./BlogItem";
 import { Select, SelectItem } from "@heroui/select";
 import { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
+
+import BlogItem from "./BlogItem";
+
 import { blogsRoutes } from "@/lib/routes/apiRoutes";
 import { getData } from "@/lib/services/data";
 import { IBaseResponse, IPaginatedResponse } from "@/lib/types/base";
@@ -42,7 +44,7 @@ export default function BlogsList() {
             page: pageParam,
             limit: 6,
             asc: selected === SortByEnum.NEWEST ? false : true,
-            sort:"createdAt"
+            sort: "createdAt",
           }),
         ),
       initialPageParam: 1,
@@ -55,8 +57,7 @@ export default function BlogsList() {
       },
     });
 
-
-  // console.log("data",data)  
+  // console.log("data",data)
 
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
@@ -80,6 +81,7 @@ export default function BlogsList() {
 
     return () => observer.disconnect();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
   return (
     <section className="relative  dark:bg-dark bg-white lg:pb-24  md:pb-20 sm:pt-10 sm:pb-16 pb-12">
       <div className="container flex flex-col gap-4">
@@ -91,17 +93,17 @@ export default function BlogsList() {
           </div>
           <div className="w-60">
             <Select
-              dir="rtl"
+              fullWidth
+              aria-label="fdsf"
               classNames={{
                 trigger: "dark:bg-gray-darker bg-white dark:text-white",
                 innerWrapper: "text-white",
-                listboxWrapper:"dark:bg-gray-darker dark:text-white",
-                base:"border-1 rounded-lg"
+                listboxWrapper: "dark:bg-gray-darker dark:text-white",
+                base: "border-1 rounded-lg",
               }}
-              aria-label="fdsf"
-              fullWidth
-              selectedKeys={[selected]}
               defaultSelectedKeys={[SortByEnum.NEWEST]}
+              dir="rtl"
+              selectedKeys={[selected]}
               onChange={(e) => {
                 if (e.target.value) {
                   setSelected(e?.target.value as SortByEnum);
@@ -109,7 +111,9 @@ export default function BlogsList() {
               }}
             >
               {options.map((animal) => (
-                <SelectItem dir="rtl" key={animal.key}>{animal.label}</SelectItem>
+                <SelectItem key={animal.key} dir="rtl">
+                  {animal.label}
+                </SelectItem>
               ))}
             </Select>
           </div>
@@ -117,7 +121,7 @@ export default function BlogsList() {
         <div className="grid gap-5 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1">
           {data?.pages
             ?.flatMap((page) => page?.data?.result)
-            ?.map((item) => <BlogItem item={item as IBlog} key={item?.id} />)}
+            ?.map((item) => <BlogItem key={item?.id} item={item as IBlog} />)}
         </div>
         <CustomWhen condition={hasNextPage}>
           <div ref={loadMoreRef} className="w-full h-20" />

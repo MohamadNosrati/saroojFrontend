@@ -1,7 +1,7 @@
 import Image from "next/image";
-import StaticImage from "@/public/images/serviceImage.png";
-import { CalandarIcon } from "@/components/icons";
 import Link from "next/link";
+
+import { CalandarIcon } from "@/components/icons";
 import { persianRoutes } from "@/lib/routes/navigationRoutes";
 import { dateConvertor } from "@/lib/tools/dateConvertor";
 import { IBlog } from "@/lib/types/blog";
@@ -16,10 +16,10 @@ export default function BlogItem({ item }: IProps) {
     <Link href={persianRoutes.singleBlogPage("fdsfsdg")}>
       <div className="aspect-video relative">
         <Image
-          src={uploadUrl(item?.pictureId?.image)}
           fill
-          className="absolute"
           alt={item?.alt}
+          className="absolute"
+          src={uploadUrl(item?.pictureId?.image)}
         />
       </div>
       <div className="sm:p-6 p-4 text-dark bg-primary flex flex-col gap-1.5">
@@ -30,7 +30,7 @@ export default function BlogItem({ item }: IProps) {
         </div>
         <div className="flex items-center gap-2">
           <span>
-            <CalandarIcon width={20} height={20} />
+            <CalandarIcon height={20} width={20} />
           </span>
           <span className="font-bold">{dateConvertor(item?.createdAt)}</span>
         </div>

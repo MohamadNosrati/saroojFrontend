@@ -1,9 +1,10 @@
-import { logout } from "@/lib/actions/auth";
-import { frontAuthRoutes } from "@/lib/routes/navigationRoutes";
-import { useAuthStore } from "@/lib/stores/auth";
 import { Button } from "@heroui/button";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+
+import { logout } from "@/lib/actions/auth";
+import { frontAuthRoutes } from "@/lib/routes/navigationRoutes";
+import { useAuthStore } from "@/lib/stores/auth";
 
 export default function LogoutButton() {
   const router = useRouter();
@@ -20,8 +21,9 @@ export default function LogoutButton() {
       }
     });
   };
+
   return (
-    <Button onPress={handleLogout} color="danger" isLoading={isPending}>
+    <Button color="danger" isLoading={isPending} onPress={handleLogout}>
       خروج
     </Button>
   );

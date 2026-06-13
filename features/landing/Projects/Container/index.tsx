@@ -1,15 +1,15 @@
 "use client";
 
-import { ProjectsRoute } from "@/lib/routes/apiRoutes";
-import ProjectItem from "../../ProjectItem";
-import { Button } from "@heroui/button";
-import { IProject } from "@/lib/types/project";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getAll } from "@/lib/services/projects";
-import { getData } from "@/lib/services/data";
-import { IBaseResponse, IPaginatedResponse } from "@/lib/types/base";
 import { useEffect, useRef } from "react";
 import { Spinner } from "@heroui/spinner";
+
+import ProjectItem from "../../ProjectItem";
+
+import { ProjectsRoute } from "@/lib/routes/apiRoutes";
+import { IProject } from "@/lib/types/project";
+import { getData } from "@/lib/services/data";
+import { IBaseResponse, IPaginatedResponse } from "@/lib/types/base";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 
 const Container = () => {
@@ -61,7 +61,7 @@ const Container = () => {
         {data?.pages
           ?.flatMap((page) => page?.data?.result)
           ?.map((item) => (
-            <ProjectItem item={item as IProject} key={item?.id} />
+            <ProjectItem key={item?.id} item={item as IProject} />
           ))}
       </div>
       <CustomWhen condition={hasNextPage}>

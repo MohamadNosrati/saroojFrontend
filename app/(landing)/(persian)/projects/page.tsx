@@ -1,8 +1,3 @@
-import Banner from "@/features/landing/Projects/Banner";
-import Container from "@/features/landing/Projects/Container";
-import { createMetadata } from "@/lib/config/site";
-import { ProjectsRoute } from "@/lib/routes/apiRoutes";
-import { getData } from "@/lib/services/data";
 import {
   dehydrate,
   HydrationBoundary,
@@ -10,6 +5,11 @@ import {
 } from "@tanstack/react-query";
 import { Metadata } from "next";
 
+import Banner from "@/features/landing/Projects/Banner";
+import Container from "@/features/landing/Projects/Container";
+import { createMetadata } from "@/lib/config/site";
+import { ProjectsRoute } from "@/lib/routes/apiRoutes";
+import { getData } from "@/lib/services/data";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
@@ -47,6 +47,7 @@ export const metadata: Metadata = createMetadata({
 
 const ProjectsPage = async () => {
   const queryClient = new QueryClient();
+
   await queryClient.prefetchInfiniteQuery({
     queryKey: [ProjectsRoute.getAll()],
     queryFn: ({ pageParam = 1 }) =>

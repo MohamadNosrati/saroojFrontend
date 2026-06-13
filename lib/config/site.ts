@@ -1,6 +1,5 @@
 import { dashboardRoutes } from "../routes/navigationRoutes";
 
-
 export const SITE_CONFIG = {
   name: "شرکت ساخت و ساز ساروج",
   domain: process.env.NEXT_PUBLIC_FRONT_URL || "https://saroog-construction.ir",
@@ -15,9 +14,6 @@ export const createMetadata = (overrides?: any) => ({
   },
   ...overrides,
 });
-
-
-
 
 export const dashboardPages = [
   {

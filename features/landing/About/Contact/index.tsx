@@ -1,6 +1,8 @@
-import { EnvelopeIcon, CallIcon, LocationIcon } from "@/components/icons";
 import Link from "next/link";
+
 import ContactItem from "./ContactItem";
+
+import { EnvelopeIcon, CallIcon, LocationIcon } from "@/components/icons";
 import { phones, saroojAddress, saroojEmail } from "@/lib/constants/info";
 
 const Contact = () => {
@@ -12,7 +14,7 @@ const Contact = () => {
         </h5>
       </div>
       <div className="flex container md:divide-x-2 max-md:divide-y-2 divide-primary max-md:flex-col justify-between">
-        <ContactItem title="ایمیل" icon={EnvelopeIcon}>
+        <ContactItem icon={EnvelopeIcon} title="ایمیل">
           <div className="flex flex-col gap-2.5">
             <Link
               className="dark:text-gray-lighter text-dark font-medium"
@@ -22,14 +24,14 @@ const Contact = () => {
             </Link>
           </div>
         </ContactItem>
-        <ContactItem title="ایمیل" icon={LocationIcon}>
+        <ContactItem icon={LocationIcon} title="ایمیل">
           <div className="flex flex-col items-center gap-2.5">
             <p className="max-sm:text-sm font-medium text-dark text-center dark:text-gray-lighter">
               {saroojAddress}
             </p>
           </div>
         </ContactItem>
-        <ContactItem title="ایمیل" icon={CallIcon}>
+        <ContactItem icon={CallIcon} title="ایمیل">
           <div className="flex flex-col gap-2.5">
             {phones?.map((item) => (
               <Link

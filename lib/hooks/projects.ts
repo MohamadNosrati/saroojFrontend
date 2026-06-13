@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import { responseHandler } from "../tools/responseHandler";
 import { ProjectsRoute } from "../routes/apiRoutes";
 import { findOne, getAll, projectServices } from "../services/projects";
@@ -13,6 +14,7 @@ export const useGetProjects = () => {
         page: 1,
       }),
   });
+
   return {
     data: data?.data,
     isLoading,
@@ -25,6 +27,7 @@ export const useGetProject = (id?: string) => {
     queryFn: async () => await findOne(String(id)),
     enabled: Boolean(id),
   });
+
   return {
     data: data?.data,
     isLoading,
@@ -43,6 +46,7 @@ export const useCreateProject = () => {
 
 export const useDeleteProject = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async (id: string) => await projectServices.delete(id),
     onSuccess: () => {
@@ -59,6 +63,7 @@ export const useUpdateProject = () => {
   return useMutation({
     mutationFn: async (payload: IUpdateProjectPayload) => {
       const { id, ...rest } = payload;
+
       return await projectServices.update(payload?.id, rest);
     },
     onError: () => {

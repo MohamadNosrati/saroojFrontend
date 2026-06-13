@@ -1,11 +1,13 @@
-import { categoriesRoute, TeamatesRoute } from "@/lib/routes/apiRoutes";
-import { temateServices } from "@/lib/services/teamates";
-import { responseHandler } from "@/lib/tools/responseHandler";
 import { Button } from "@heroui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+
 import { DeleteIcon } from "../icons";
+
+import { responseHandler } from "@/lib/tools/responseHandler";
+import { temateServices } from "@/lib/services/teamates";
+import { categoriesRoute, TeamatesRoute } from "@/lib/routes/apiRoutes";
 import { categoryServices } from "@/lib/services/categories";
 
 export type TEntity = "category" | "teamate" | "comment" | "project";
@@ -42,6 +44,7 @@ const CustomDelete: React.FC<ICustomDeleteProps> = ({ id, title, entity }) => {
     try {
       setIsDeleting(true);
       const res = await config[entity].service.delete(id);
+
       responseHandler.success(res?.data?.message);
       queryClient.invalidateQueries({
         queryKey: [config[entity].route.getAll()],
@@ -53,14 +56,15 @@ const CustomDelete: React.FC<ICustomDeleteProps> = ({ id, title, entity }) => {
       setIsDeleting(false);
     }
   };
+
   return (
     <Popover
       showArrow
-      isOpen={isDeleteOpen}
-      onOpenChange={(open) => setIsDeleteOpen(open)}
       classNames={{
         content: "border border-white/10",
       }}
+      isOpen={isDeleteOpen}
+      onOpenChange={(open) => setIsDeleteOpen(open)}
     >
       <PopoverTrigger>
         <Button
@@ -68,9 +72,9 @@ const CustomDelete: React.FC<ICustomDeleteProps> = ({ id, title, entity }) => {
           className="w-auto min-w-0 bg-transparent px-0 text-woodSmoke-600 hover:text-danger aria-[expanded~=true]:text-danger data-[aria-expanded~=true]:text-danger"
         >
           <DeleteIcon
-            width={24}
-            height={24}
             className="text-charade-600 hover:text-rose-500"
+            height={24}
+            width={24}
           />
         </Button>
       </PopoverTrigger>
@@ -80,20 +84,20 @@ const CustomDelete: React.FC<ICustomDeleteProps> = ({ id, title, entity }) => {
           <div className="flex justify-end">
             <Button
               as="span"
+              className="h-auto min-w-0 rounded-l-none p-1 px-2"
               size="sm"
               variant="flat"
-              className="h-auto min-w-0 rounded-l-none p-1 px-2"
               onClick={() => setIsDeleteOpen(false)}
             >
               انصراف
             </Button>
             <Button
-              isLoading={isDeleting}
               as="span"
-              color="danger"
-              variant="flat"
-              size="sm"
               className="h-auto min-w-0 rounded-r-none p-1 px-2"
+              color="danger"
+              isLoading={isDeleting}
+              size="sm"
+              variant="flat"
               onClick={deleteHandler}
             >
               تایید

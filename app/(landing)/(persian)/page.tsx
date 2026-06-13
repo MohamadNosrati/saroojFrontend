@@ -1,10 +1,11 @@
+import { Metadata } from "next";
+
 import HomeCarousel from "@/features/landing/Home/Carousel";
 import Categories from "@/features/landing/Home/Categories";
 import Faqs from "@/features/landing/Home/Faq";
 import Services from "@/features/landing/Home/Services";
 import Team from "@/features/landing/Home/Team.tsx";
 import { createMetadata } from "@/lib/config/site";
-import { Metadata } from "next";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
@@ -39,11 +40,11 @@ export const metadata: Metadata = createMetadata({
 export default function Home() {
   return (
     <section>
-      <HomeCarousel/>
-      <Categories/>
-      <Services/>
-      <Faqs/>
-      <Team/>
+      <HomeCarousel />
+      <Categories />
+      <Services />
+      <Faqs />
+      <Team />
     </section>
   );
 }

@@ -1,5 +1,7 @@
 import Image from "next/image";
+
 import ServiceItem from "./ServiceItem";
+
 import ServiceImage from "@/public/images/serviceImage.png";
 import { BreakIcon, HomeCowch, HomeIcon, RullerIcon } from "@/components/icons";
 
@@ -38,10 +40,10 @@ const Services = () => {
       </h5>
       <div className="container max-lg:flex-col lg:mt-12 sm:mt-8 mt-4 flex gap-x-12">
         <div className="basis-1/3 max-lg:hidden aspect-square relative">
-          <Image alt="" fill src={ServiceImage} />
+          <Image fill alt="" src={ServiceImage} />
         </div>
         <div className="basis-2/3 grid sm:grid-cols-2 lg:gap-14 md:gap-10 sm:gap-8 gap-6">
-          {data?.map((item, index) => <ServiceItem item={item} key={index} />)}
+          {data?.map((item, index) => <ServiceItem key={index} item={item} />)}
         </div>
       </div>
     </section>

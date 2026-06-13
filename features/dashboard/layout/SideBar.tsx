@@ -1,6 +1,7 @@
+import Link from "next/link";
+
 import { dashboardPages } from "@/lib/config/site";
 import cn from "@/lib/tools/cn";
-import Link from "next/link";
 
 const SideBar = () => {
   return (
@@ -9,10 +10,10 @@ const SideBar = () => {
         {dashboardPages?.map((page) => (
           <div key={page?.href}>
             <Link
-              href={page?.href}
               className={cn(
                 "flex items-center font-bold gap-3 text-base text-white",
               )}
+              href={page?.href}
             >
               {page?.label}
             </Link>
@@ -22,4 +23,5 @@ const SideBar = () => {
     </div>
   );
 };
+
 export default SideBar;

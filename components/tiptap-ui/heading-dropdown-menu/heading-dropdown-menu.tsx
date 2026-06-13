@@ -1,39 +1,42 @@
-"use client"
+"use client";
 
-import { forwardRef, useCallback, useState } from "react"
+import type { UseHeadingDropdownMenuConfig } from "@/components/tiptap-ui/heading-dropdown-menu";
+import type { ButtonProps } from "@/components/tiptap-ui-primitive/button";
+
+import { forwardRef, useCallback, useState } from "react";
 
 // --- Icons ---
-import { ChevronDownIcon } from "@/components/tiptap-icons/chevron-down-icon"
+import { ChevronDownIcon } from "@/components/tiptap-icons/chevron-down-icon";
 
 // --- Hooks ---
-import { useTiptapEditor } from "@/hooks/use-tiptap-editor"
+import { useTiptapEditor } from "@/hooks/use-tiptap-editor";
 
 // --- Tiptap UI ---
-import { HeadingButton } from "@/components/tiptap-ui/heading-button"
-import type { UseHeadingDropdownMenuConfig } from "@/components/tiptap-ui/heading-dropdown-menu"
-import { useHeadingDropdownMenu } from "@/components/tiptap-ui/heading-dropdown-menu"
+import { HeadingButton } from "@/components/tiptap-ui/heading-button";
+import { useHeadingDropdownMenu } from "@/components/tiptap-ui/heading-dropdown-menu";
 
 // --- UI Primitives ---
-import type { ButtonProps } from "@/components/tiptap-ui-primitive/button"
-import { Button } from "@/components/tiptap-ui-primitive/button"
+
+import { Button } from "@/components/tiptap-ui-primitive/button";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuGroup,
-} from "@/components/tiptap-ui-primitive/dropdown-menu"
+} from "@/components/tiptap-ui-primitive/dropdown-menu";
 
 export interface HeadingDropdownMenuProps
-  extends Omit<ButtonProps, "type">, UseHeadingDropdownMenuConfig {
+  extends Omit<ButtonProps, "type">,
+    UseHeadingDropdownMenuConfig {
   /**
    * Callback for when the dropdown opens or closes
    */
-  onOpenChange?: (isOpen: boolean) => void
+  onOpenChange?: (isOpen: boolean) => void;
   /**
    * Whether the dropdown should use a modal
    */
-  modal?: boolean
+  modal?: boolean;
 }
 
 /**
@@ -55,43 +58,43 @@ export const HeadingDropdownMenu = forwardRef<
       modal = true,
       ...buttonProps
     },
-    ref
+    ref,
   ) => {
-    const { editor } = useTiptapEditor(providedEditor)
-    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const { editor } = useTiptapEditor(providedEditor);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const { isVisible, isActive, canToggle, Icon } = useHeadingDropdownMenu({
       editor,
       levels,
       hideWhenUnavailable,
-    })
+    });
 
     const handleOpenChange = useCallback(
       (open: boolean) => {
-        if (!editor || !canToggle) return
-        setIsOpen(open)
-        onOpenChange?.(open)
+        if (!editor || !canToggle) return;
+        setIsOpen(open);
+        onOpenChange?.(open);
       },
-      [canToggle, editor, onOpenChange]
-    )
+      [canToggle, editor, onOpenChange],
+    );
 
     if (!isVisible) {
-      return null
+      return null;
     }
 
     return (
       <DropdownMenu modal={modal} open={isOpen} onOpenChange={handleOpenChange}>
         <DropdownMenuTrigger asChild>
           <Button
-            type="button"
-            variant="ghost"
-            data-active-state={isActive ? "on" : "off"}
-            role="button"
-            tabIndex={-1}
-            disabled={!canToggle}
-            data-disabled={!canToggle}
             aria-label="Format text as heading"
             aria-pressed={isActive}
+            data-active-state={isActive ? "on" : "off"}
+            data-disabled={!canToggle}
+            disabled={!canToggle}
+            role="button"
+            tabIndex={-1}
             tooltip="Heading"
+            type="button"
+            variant="ghost"
             {...buttonProps}
             ref={ref}
           >
@@ -113,18 +116,18 @@ export const HeadingDropdownMenu = forwardRef<
                 <HeadingButton
                   editor={editor}
                   level={level}
-                  text={`Heading ${level}`}
                   showTooltip={false}
+                  text={`Heading ${level}`}
                 />
               </DropdownMenuItem>
             ))}
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-    )
-  }
-)
+    );
+  },
+);
 
-HeadingDropdownMenu.displayName = "HeadingDropdownMenu"
+HeadingDropdownMenu.displayName = "HeadingDropdownMenu";
 
-export default HeadingDropdownMenu
+export default HeadingDropdownMenu;

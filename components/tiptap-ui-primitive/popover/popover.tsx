@@ -1,19 +1,20 @@
-"use client"
+"use client";
 
-import * as PopoverPrimitive from "@radix-ui/react-popover"
-import { cn } from "@/lib/tiptap-utils"
-import "@/components/tiptap-ui-primitive/popover/popover.scss"
+import * as PopoverPrimitive from "@radix-ui/react-popover";
+
+import { cn } from "@/lib/tiptap-utils";
+import "@/components/tiptap-ui-primitive/popover/popover.scss";
 
 function Popover({
   ...props
 }: React.ComponentProps<typeof PopoverPrimitive.Root>) {
-  return <PopoverPrimitive.Root {...props} />
+  return <PopoverPrimitive.Root {...props} />;
 }
 
 function PopoverTrigger({
   ...props
 }: React.ComponentProps<typeof PopoverPrimitive.Trigger>) {
-  return <PopoverPrimitive.Trigger {...props} />
+  return <PopoverPrimitive.Trigger {...props} />;
 }
 
 function PopoverContent({
@@ -26,12 +27,12 @@ function PopoverContent({
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content
         align={align}
-        sideOffset={sideOffset}
         className={cn("tiptap-popover", className)}
+        sideOffset={sideOffset}
         {...props}
       />
     </PopoverPrimitive.Portal>
-  )
+  );
 }
 
-export { Popover, PopoverTrigger, PopoverContent }
+export { Popover, PopoverTrigger, PopoverContent };

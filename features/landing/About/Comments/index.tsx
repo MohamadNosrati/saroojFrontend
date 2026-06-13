@@ -1,17 +1,19 @@
-import { CommentsRoute } from "@/lib/routes/apiRoutes";
 import Container from "./Container";
+
+import { CommentsRoute } from "@/lib/routes/apiRoutes";
 import CommentsBg from "@/public/images/commentsBg.png";
 import { getData } from "@/lib/services/data";
 import { IBaseResponse } from "@/lib/types/base";
 
 const Comments = async () => {
   const data = await getData<IBaseResponse<IComment[]>>(CommentsRoute.getAll());
+
   return (
     <section
+      className="lg:pt-20 lg:pb-48 bg-cover md:pt-14 md:pb-24 sm:pt-10 sm:pb-14 py-10 dark:bg-dark bg-white"
       style={{
         backgroundImage: `url(${CommentsBg.src})`,
       }}
-      className="lg:pt-20 lg:pb-48 bg-cover md:pt-14 md:pb-24 sm:pt-10 sm:pb-14 py-10 dark:bg-dark bg-white"
     >
       <div>
         <div className="container flex flex-col items-center">
@@ -24,7 +26,9 @@ const Comments = async () => {
             لطفا در ارسال پیام به ما تردید نکنید !
           </p>
           <div className="lg:mt-20 md:mt-16 mt-10 container">
-            <Container data={data?.data?.filter(item=> item?.isActive ) || []} />
+            <Container
+              data={data?.data?.filter((item) => item?.isActive) || []}
+            />
           </div>
         </div>
       </div>

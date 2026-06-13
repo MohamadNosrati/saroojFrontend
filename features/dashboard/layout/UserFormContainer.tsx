@@ -1,7 +1,8 @@
 import { Modal, ModalContent, ModalBody, ModalFooter } from "@heroui/modal";
 import { Button } from "@heroui/button";
-import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import { Controller, useForm } from "react-hook-form";
+
+import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { useUpdateUser } from "@/lib/hooks/user";
 import { IUser } from "@/lib/types/user";
@@ -53,14 +54,15 @@ export default function UserFormContainer({
       },
     );
   };
+
   return (
     <Modal
-      dir="rtl"
       classNames={{
         base: "bg-gray font-yekan py-10",
       }}
-      size="lg"
+      dir="rtl"
       isOpen={isOpen}
+      size="lg"
       onOpenChange={onOpenChange}
     >
       <ModalContent>
@@ -73,20 +75,20 @@ export default function UserFormContainer({
                 render={({ field: { value, onChange } }) => (
                   <CustomImageLoader
                     aspect={1}
+                    changeImageHandler={onChange}
                     htmlFor="userProfile"
                     value={value}
-                    changeImageHandler={onChange}
                   />
                 )}
               />
             </ModalBody>
             <ModalFooter>
               <Button
-                type="submit"
-                isLoading={isUpdatePending}
                 fullWidth
-                color="warning"
                 className="font-bold"
+                color="warning"
+                isLoading={isUpdatePending}
+                type="submit"
                 onPress={onClose}
               >
                 ثبت

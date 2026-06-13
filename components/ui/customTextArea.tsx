@@ -11,10 +11,11 @@ const CustomTextArea: React.FC<TextAreaProps> = (props) => {
       }}
       {...props}
       fullWidth
-      labelPlacement="outside-top"
       label="توضبحات"
+      labelPlacement="outside-top"
       {...props}
     />
   );
 };
+
 export default CustomTextArea;

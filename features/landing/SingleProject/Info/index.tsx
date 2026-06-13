@@ -1,11 +1,11 @@
+import InfoItem from "./InfoItem";
+
 import {
-  HomeIcon,
   AreaIcon,
   EmptyCalendarIcon,
   BuildingIcon,
   DescriptionIcon,
 } from "@/components/icons";
-import InfoItem from "./InfoItem";
 import { IProject } from "@/lib/types/project";
 import { dateConvertor } from "@/lib/tools/dateConvertor";
 import { CustomWhen } from "@/components/ui/CustomWhen";
@@ -30,7 +30,7 @@ const Info: React.FC<IProps> = ({ project }) => {
         <InfoItem
           item={{
             icon: BuildingIcon,
-            key:"استایل معماری",
+            key: "استایل معماری",
             value: project?.artitectureStyle,
           }}
         />

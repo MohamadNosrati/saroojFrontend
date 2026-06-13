@@ -1,12 +1,13 @@
 "use client";
+import { Controller, useForm } from "react-hook-form";
+import { Button } from "@heroui/button";
+import { useQueryClient } from "@tanstack/react-query";
+
 import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
 import CustomImageLoader from "@/components/ui/CustomImageLoader";
-import { Controller, useForm } from "react-hook-form";
-import { Button } from "@heroui/button";
 import CustomSelect from "@/components/ui/CustomSelect";
 import { isActiveOptions } from "@/lib/constants/isActive";
-import { useQueryClient } from "@tanstack/react-query";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { ISlider } from "@/lib/types/slider";
 import { useCreateSlider, useUpdateSlider } from "@/lib/hooks/sliders";
@@ -67,6 +68,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       ...createPayload,
       id: slider?.id as string,
     };
+
     if (slider) {
       updateMutate(updatePayload, {
         onSuccess: () => {
@@ -92,139 +94,134 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       });
     }
   };
+
   return (
     <form className="flex flex-col gap-y-10" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <Controller
           control={control}
+          name="title"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              errorMessage={error?.message}
+              isInvalid={Boolean(error?.message)}
+              label="عنوان اسلایدر"
+              labelPlacement="outside-top"
+              value={value}
+              onChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "title is required!",
             },
           }}
-          name="title"
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <CustomInput
-              isInvalid={Boolean(error?.message)}
-              errorMessage={error?.message}
-              value={value}
-              onChange={onChange}
-              labelPlacement="outside-top"
-              label="عنوان اسلایدر"
-            />
-          )}
         />
       </div>
       <div>
         <Controller
           control={control}
+          name="description"
+          render={({ field: { value, onChange }, formState: { errors } }) => (
+            <CustomTextArea
+              errorMessage={errors?.description?.message}
+              isInvalid={Boolean(errors.description)}
+              value={value}
+              onChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "description is required!",
             },
           }}
-          name="description"
-          render={({ field: { value, onChange }, formState: { errors } }) => (
-            <CustomTextArea
-              value={value}
-              onChange={onChange}
-              isInvalid={Boolean(errors.description)}
-              errorMessage={errors?.description?.message}
-            />
-          )}
         />
       </div>
       <div>
         <Controller
           control={control}
+          name="alt"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              errorMessage={error?.message}
+              isInvalid={Boolean(error?.message)}
+              label="توضیحات عکس"
+              labelPlacement="outside-top"
+              value={value}
+              onChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "alt is required!",
             },
           }}
-          name="alt"
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <CustomInput
-              isInvalid={Boolean(error?.message)}
-              errorMessage={error?.message}
-              value={value}
-              onChange={onChange}
-              labelPlacement="outside-top"
-              label="توضیحات عکس"
-            />
-          )}
         />
       </div>
       <div>
         <Controller
           control={control}
+          name="link"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              errorMessage={error?.message}
+              isInvalid={Boolean(error?.message)}
+              label="لینک جزییات"
+              labelPlacement="outside-top"
+              value={value}
+              onChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "link is required!",
             },
           }}
-          name="link"
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <CustomInput
-              isInvalid={Boolean(error?.message)}
-              errorMessage={error?.message}
-              value={value}
-              onChange={onChange}
-              labelPlacement="outside-top"
-              label="لینک جزییات"
-            />
-          )}
         />
       </div>
       <div>
         <Controller
           control={control}
           name="pictureId"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <div>
+              <CustomImageLoader
+                aspect={1}
+                changeImageHandler={onChange}
+                htmlFor="sliderImage"
+                value={value}
+              />
+              <CustomWhen condition={Boolean(error?.message)}>
+                <p className="text-danger mt-1 text-sm font-bold">
+                  {error?.message}
+                </p>
+              </CustomWhen>
+            </div>
+          )}
           rules={{
             required: {
               value: true,
               message: "pictureId is required!",
             },
           }}
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <div>
-              <CustomImageLoader
-                aspect={1}
-                htmlFor="sliderImage"
-                value={value}
-                changeImageHandler={onChange}
-              />
-              <CustomWhen condition={Boolean(error?.message)}>
-                <p className="text-danger mt-1 text-sm font-bold">
-                  {error?.message}
-                </p>
-              </CustomWhen>
-            </div>
-          )}
         />
       </div>
       <div>
         <Controller
           control={control}
           name="mobilePictureId"
-          rules={{
-            required: {
-              value: true,
-              message: "mobilePictureId is required!",
-            },
-          }}
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <div>
               <CustomImageLoader
                 aspect={1}
-                htmlFor="sliderMobileImage"
-                value={value}
                 changeImageHandler={onChange}
+                htmlFor="sliderMobileImage"
                 label="آپلود عکس موبایل"
+                value={value}
               />
               <CustomWhen condition={Boolean(error?.message)}>
                 <p className="text-danger mt-1 text-sm font-bold">
@@ -233,36 +230,42 @@ const FormContainer: React.FC<IFormContainerProps> = ({
               </CustomWhen>
             </div>
           )}
+          rules={{
+            required: {
+              value: true,
+              message: "mobilePictureId is required!",
+            },
+          }}
         />
       </div>
       <div>
         <Controller
+          control={control}
+          name={"isActive"}
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomSelect
+              error={error?.message}
+              options={isActiveOptions}
+              selectLabel="وضعیت"
+              value={value}
+              onSelectionChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "alt is required!",
             },
           }}
-          name={"isActive"}
-          control={control}
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <CustomSelect
-              error={error?.message}
-              selectLabel="وضعیت"
-              options={isActiveOptions}
-              onSelectionChange={onChange}
-              value={value}
-            />
-          )}
         />
       </div>
       <div>
         <Button
-          className="font-bold"
-          isLoading={isCreatePending || isUpdatePending}
           fullWidth
-          type="submit"
+          className="font-bold"
           color={slider ? "warning" : "success"}
+          isLoading={isCreatePending || isUpdatePending}
+          type="submit"
         >
           {slider ? "ویرایش" : "ثبت"}
         </Button>

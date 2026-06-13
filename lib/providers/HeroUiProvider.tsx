@@ -1,6 +1,9 @@
 import { HeroUIProvider } from "@heroui/system";
 import { useRouter } from "next/navigation";
-import { ThemeProvider as NextThemesProvider, ThemeProviderProps } from "next-themes";
+import {
+  ThemeProvider as NextThemesProvider,
+  ThemeProviderProps,
+} from "next-themes";
 
 declare module "@react-types/shared" {
   interface RouterConfig {
@@ -15,10 +18,14 @@ export interface HeroUiProviderProps {
   themeProps?: ThemeProviderProps;
 }
 
-const HeroUiProvider : React.FC<HeroUiProviderProps> = ({children,themeProps}) => {
+const HeroUiProvider: React.FC<HeroUiProviderProps> = ({
+  children,
+  themeProps,
+}) => {
   const router = useRouter();
+
   return (
-    <HeroUIProvider  navigate={router.push}>
+    <HeroUIProvider navigate={router.push}>
       <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
     </HeroUIProvider>
   );

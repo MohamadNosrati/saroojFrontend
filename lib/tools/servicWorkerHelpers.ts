@@ -1,5 +1,4 @@
 class ServicWorkerHelpers {
-
   registerServiceWorker() {
     if (!("serviceWorker" in navigator)) {
       throw new Error("Service Workers are not supported");

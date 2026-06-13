@@ -1,10 +1,10 @@
 export interface IKeys {
-    p256dh: string; 
-    auth: string;  
+  p256dh: string;
+  auth: string;
 }
 
 export interface ISubscriptionPayload {
   endpoint: string;
   expirationTime: number | null;
-  keys:IKeys;
+  keys: IKeys;
 }

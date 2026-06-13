@@ -1,10 +1,12 @@
 "use client";
 
 import { Accordion, AccordionItem } from "@heroui/accordion";
-import AccordionTitle from "./AccordionTitle";
-import { ArrowIcon } from "@/components/icons";
 import { useState } from "react";
 import clsx from "clsx";
+
+import AccordionTitle from "./AccordionTitle";
+
+import { ArrowIcon } from "@/components/icons";
 
 const data = [
   {
@@ -21,17 +23,17 @@ const data = [
 
 const FaqsContainer = () => {
   const [openedItem, setOpenedItem] = useState<Number>(0);
+
   return (
     <Accordion
-      className="divide-y  divide-secondary"
       fullWidth
+      className="divide-y  divide-secondary"
       showDivider={false}
     >
       {data?.map((item, index) => (
         <AccordionItem
-          onPress={() =>
-            setOpenedItem((prv) => (prv === index + 1 ? 0 : index + 1))
-          }
+          key={index}
+          aria-label={item?.question}
           classNames={{
             base: "",
             trigger: clsx([
@@ -44,9 +46,6 @@ const FaqsContainer = () => {
             ]),
             indicator: "text-primary",
           }}
-          key={index}
-          aria-label={item?.question}
-          title={<AccordionTitle question={item?.question} />}
           indicator={
             <ArrowIcon
               className={clsx([
@@ -54,6 +53,10 @@ const FaqsContainer = () => {
                 openedItem === index + 1 ? "" : "-rotate-90",
               ])}
             />
+          }
+          title={<AccordionTitle question={item?.question} />}
+          onPress={() =>
+            setOpenedItem((prv) => (prv === index + 1 ? 0 : index + 1))
           }
         >
           <p className="text-gray-lighter text-justify text-base font-medium">

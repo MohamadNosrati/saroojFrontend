@@ -16,7 +16,6 @@ export interface IConversation {
     userName: string;
   }[];
 
-
   otherUser?: {
     id: string;
     userName: string;

@@ -1,14 +1,15 @@
-import BlogsLatest from "@/features/landing/Blog/Latest";
-import BlogsList from "@/features/landing/Blog/List";
-import { createMetadata } from "@/lib/config/site";
-import { blogsRoutes } from "@/lib/routes/apiRoutes";
-import { getData } from "@/lib/services/data";
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
 import { Metadata } from "next";
+
+import BlogsLatest from "@/features/landing/Blog/Latest";
+import BlogsList from "@/features/landing/Blog/List";
+import { createMetadata } from "@/lib/config/site";
+import { blogsRoutes } from "@/lib/routes/apiRoutes";
+import { getData } from "@/lib/services/data";
 
 // app/blog/page.tsx
 
@@ -47,6 +48,7 @@ export const metadata: Metadata = createMetadata({
 
 export default async function BlogsPage() {
   const queryClient = new QueryClient();
+
   await queryClient.prefetchInfiniteQuery({
     queryKey: [blogsRoutes.getAll()],
     queryFn: ({ pageParam = 1 }) =>
@@ -55,7 +57,7 @@ export default async function BlogsPage() {
           page: pageParam,
           limit: 6,
           asc: false,
-          sort:"createdAt"
+          sort: "createdAt",
         }),
       ),
     initialPageParam: 1,

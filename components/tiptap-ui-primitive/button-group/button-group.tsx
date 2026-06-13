@@ -1,9 +1,10 @@
-import { mergeProps } from "@base-ui/react/merge-props"
-import { useRender } from "@base-ui/react/use-render"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "@/lib/tiptap-utils"
-import { Separator } from "@/components/tiptap-ui-primitive/separator"
-import "./button-group.scss"
+import { mergeProps } from "@base-ui/react/merge-props";
+import { useRender } from "@base-ui/react/use-render";
+import { cva, type VariantProps } from "class-variance-authority";
+
+import { cn } from "@/lib/tiptap-utils";
+import { Separator } from "@/components/tiptap-ui-primitive/separator";
+import "./button-group.scss";
 
 const buttonGroupVariants = cva("tiptap-button-group", {
   variants: {
@@ -15,7 +16,7 @@ const buttonGroupVariants = cva("tiptap-button-group", {
   defaultVariants: {
     orientation: "horizontal",
   },
-})
+});
 
 function ButtonGroup({
   className,
@@ -24,13 +25,13 @@ function ButtonGroup({
 }: React.ComponentProps<"div"> & VariantProps<typeof buttonGroupVariants>) {
   return (
     <div
-      role="group"
-      data-slot="tiptap-button-group"
-      data-orientation={orientation}
       className={cn(buttonGroupVariants({ orientation }), className)}
+      data-orientation={orientation}
+      data-slot="tiptap-button-group"
+      role="group"
       {...props}
     />
-  )
+  );
 }
 
 function ButtonGroupText({
@@ -42,11 +43,11 @@ function ButtonGroupText({
     defaultTagName: "div",
     props: mergeProps<"div">(
       { className: cn("tiptap-button-group-text", className) },
-      props
+      props,
     ),
     render,
     state: { slot: "tiptap-button-group-text" },
-  })
+  });
 }
 
 function ButtonGroupSeparator({
@@ -56,12 +57,12 @@ function ButtonGroupSeparator({
 }: React.ComponentProps<typeof Separator>) {
   return (
     <Separator
+      className={cn("tiptap-button-group-separator", className)}
       data-slot="tiptap-button-group-separator"
       orientation={orientation}
-      className={cn("tiptap-button-group-separator", className)}
       {...props}
     />
-  )
+  );
 }
 
 export {
@@ -69,4 +70,4 @@ export {
   ButtonGroupSeparator,
   ButtonGroupText,
   buttonGroupVariants,
-}
+};

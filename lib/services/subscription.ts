@@ -1,5 +1,6 @@
 import { subscriptionRoutes } from "../routes/apiRoutes";
 import { ISubscriptionPayload } from "../types/subscription";
+
 import axiosInstance from "./base";
 
 class SubscriptionServices {

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import ServiceImage from "@/public/images/serviceImage.png";
 import Link from "next/link";
+
 import { persianRoutes } from "@/lib/routes/navigationRoutes";
 import { IProject } from "@/lib/types/project";
 import { slugify } from "@/lib/tools/slugify";
@@ -20,10 +20,10 @@ const ProjectItem: React.FC<IProps> = ({ item }) => {
           </span>
         </div>
         <Image
-          src={uploadUrl(item?.pictureId?.image)}
-          className="size-full"
           fill
           alt={item?.alt}
+          className="size-full"
+          src={uploadUrl(item?.pictureId?.image)}
         />
       </div>
     </Link>

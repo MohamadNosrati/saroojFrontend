@@ -1,8 +1,10 @@
-import { CustomWhen } from "@/components/ui/CustomWhen";
 import { Button } from "@heroui/button";
 import React, { Dispatch, SetStateAction, useState } from "react";
+
 import Contacts from "./Contacts";
 import Conversations from "./Conversations";
+
+import { CustomWhen } from "@/components/ui/CustomWhen";
 import { IUser } from "@/lib/types/user";
 import { IConversation } from "@/lib/types/conversation";
 import { useGetConversations } from "@/lib/hooks/conversation";
@@ -43,6 +45,7 @@ const Tabs: React.FC<IProps> = ({
   const { data } = useGetConversations(user?.id);
   const converstions = data?.data?.map((item) => {
     const otherUser = item?.participants?.find((elem) => elem?.id !== user?.id);
+
     item.otherUser = otherUser as {
       id: string;
       userName: string;
@@ -51,19 +54,21 @@ const Tabs: React.FC<IProps> = ({
         image: string;
       };
     };
+
     return item;
   });
+
   return (
     <div className="flex w-full h-full overflow-auto relative">
       <div className="flex flex-col relative w-full ">
         <div className="flex gap-2 sticky top-0">
           {tabs?.map((item, index) => (
             <Button
-              variant={item?.key === selected ? "solid" : "faded"}
               key={index}
               className="grow"
-              onPress={() => setSelected(item?.key)}
               color="success"
+              variant={item?.key === selected ? "solid" : "faded"}
+              onPress={() => setSelected(item?.key)}
             >
               {item?.label}
             </Button>
@@ -72,17 +77,17 @@ const Tabs: React.FC<IProps> = ({
         <CustomWhen condition={selected === "contacts"}>
           <Contacts
             conversations={converstions || []}
-            setSelectedConversation={setSelectedConversation}
-            setSelectedContact={setSelectedContact}
             selectedContact={selectedContact}
+            setSelectedContact={setSelectedContact}
+            setSelectedConversation={setSelectedConversation}
           />
         </CustomWhen>
         <CustomWhen condition={selected === "conversations"}>
           <Conversations
             conversations={converstions || []}
+            selectedConversation={selectedConversation}
             setSelectedContact={setSelectedContact}
             setSelectedConversation={setSelectedConversation}
-            selectedConversation={selectedConversation}
           />
         </CustomWhen>
       </div>

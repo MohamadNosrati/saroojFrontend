@@ -1,6 +1,7 @@
 import { blogsRoutes } from "../routes/apiRoutes";
 import { IBaseResponse, IPaginatedResponse } from "../types/base";
 import { IBlog, IBlogPayload } from "../types/blog";
+
 import axiosInstance from "./base";
 
 export const getAll = async () => {

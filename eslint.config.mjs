@@ -56,7 +56,7 @@ export default defineConfig([globalIgnores([
         "unused-imports": unusedImports,
         import: fixupPluginRules(_import),
         "@typescript-eslint": typescriptEslint,
-        "jsx-a11y": fixupPluginRules(jsxA11Y),
+        // "jsx-a11y": fixupPluginRules(jsxA11Y),
         prettier: fixupPluginRules(prettier),
     },
 
@@ -93,10 +93,10 @@ export default defineConfig([globalIgnores([
         "react-hooks/exhaustive-deps": "off",
         "jsx-a11y/click-events-have-key-events": "warn",
         "jsx-a11y/interactive-supports-focus": "warn",
-        "prettier/prettier": "warn",
-        "no-unused-vars": "off",
-        "unused-imports/no-unused-vars": "off",
-        "unused-imports/no-unused-imports": "warn",
+        "prettier/prettier": "error",
+        "no-unused-vars": "warn",
+        "unused-imports/no-unused-vars": "warn",
+        "unused-imports/no-unused-imports": "error",
 
         "@typescript-eslint/no-unused-vars": ["warn", {
             args: "after-used",

@@ -18,6 +18,7 @@ import { TextStyle } from "@tiptap/extension-text-style";
 import { Color } from "@tiptap/extension-color";
 import { Placeholder } from "@tiptap/extension-placeholder";
 import { Button } from "@heroui/button";
+
 import { Spacer } from "@/components/tiptap-ui-primitive/spacer";
 import {
   Toolbar,
@@ -66,12 +67,6 @@ import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
 
 // --- Styles ---
 import "@/components/tiptap-templates/simple/simple-editor.scss";
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from "@heroui/dropdown";
 
 // Font size options
 const FONT_SIZES = [
@@ -93,6 +88,7 @@ const FontSize = TextStyle.extend({
           if (!attributes.fontSize) {
             return {};
           }
+
           return {
             style: `font-size: ${attributes.fontSize}`,
           };
@@ -132,7 +128,9 @@ const MainToolbarContent = ({
       ) {
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
+
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
@@ -153,7 +151,7 @@ const MainToolbarContent = ({
       <ToolbarSeparator />
 
       <ToolbarGroup>
-        <HeadingDropdownMenu modal={false} levels={[1, 2, 3, 4, 5, 6]} />
+        <HeadingDropdownMenu levels={[1, 2, 3, 4, 5, 6]} modal={false} />
         <ListDropdownMenu
           modal={false}
           types={["bulletList", "orderedList", "taskList"]}
@@ -166,7 +164,7 @@ const MainToolbarContent = ({
 
       {/* Font Size Dropdown */}
       <ToolbarGroup>
-        <div className="relative" ref={fontSizeMenuRef}>
+        <div ref={fontSizeMenuRef} className="relative">
           {/* <Dropdown>
             <DropdownTrigger>
               <Button
@@ -226,13 +224,13 @@ const MainToolbarContent = ({
       {/* Clear formatting button */}
       <ToolbarGroup>
         <Button
+          className="tiptap-button"
+          title="Clear formatting"
           type="button"
           variant="ghost"
           onClick={() =>
             editor.chain().focus().clearNodes().unsetAllMarks().run()
           }
-          className="tiptap-button"
-          title="Clear formatting"
         >
           <span className="text-sm">Clear</span>
         </Button>
@@ -346,6 +344,7 @@ export function SimpleEditor({
     content: initialContent,
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
+
       onChange(html);
     },
   });
@@ -393,10 +392,10 @@ export function SimpleEditor({
           >
             {mobileView === "main" ? (
               <MainToolbarContent
+                editor={editor}
+                isMobile={isMobile}
                 onHighlighterClick={() => setMobileView("highlighter")}
                 onLinkClick={() => setMobileView("link")}
-                isMobile={isMobile}
-                editor={editor}
               />
             ) : (
               <MobileToolbarContent
@@ -406,9 +405,9 @@ export function SimpleEditor({
             )}
           </Toolbar>
           <EditorContent
+            className="simple-editor-content"
             editor={editor}
             role="presentation"
-            className="simple-editor-content"
           />
         </EditorContext.Provider>
       </div>

@@ -1,5 +1,6 @@
-import { getData } from "@/lib/services/data";
 import LatestBlogItem from "./LatestBlogItem";
+
+import { getData } from "@/lib/services/data";
 import { IBaseResponse, IPaginatedResponse } from "@/lib/types/base";
 import { IBlog } from "@/lib/types/blog";
 import { blogsRoutes } from "@/lib/routes/apiRoutes";
@@ -9,10 +10,11 @@ export default async function BlogsLatest() {
     blogsRoutes.getAll({
       limit: 4,
       page: 1,
-      asc:false,
-      sort:"createdAt"
+      asc: false,
+      sort: "createdAt",
     }),
   );
+
   // console.log(data?.data?.result)
   return (
     <section className="relative lg:pt-20 dark:bg-dark bg-white lg:pb-24 md:pt-14 md:pb-20 sm:pt-10 sm:pb-16 pt-6 pb-12">
@@ -20,7 +22,7 @@ export default async function BlogsLatest() {
       <div className="container grid sm:grid-cols-2 gap-5">
         {data?.data?.result
           ?.filter((item) => item?.isActive)
-          ?.map((item) => <LatestBlogItem item={item} key={item?.id} />)}
+          ?.map((item) => <LatestBlogItem key={item?.id} item={item} />)}
       </div>
     </section>
   );

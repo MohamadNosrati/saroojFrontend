@@ -1,12 +1,16 @@
+import type { SliderValue } from "@heroui/slider";
+
 import { ChangeEvent, useEffect, useState } from "react";
-import { DeleteIcon } from "../icons";
 import { Button } from "@heroui/button";
 import { Spinner } from "@heroui/spinner";
+
+import { DeleteIcon } from "../icons";
+
 import CustomImage from "./CustomImage";
-import { useUpload } from "@/lib/hooks/upload";
 import { CustomWhen } from "./CustomWhen";
-import type { SliderValue } from "@heroui/slider";
 import ImageCropper from "./Cropper";
+
+import { useUpload } from "@/lib/hooks/upload";
 import { getCroppedImg } from "@/lib/tools/croppedImage";
 
 export type CroppedPixels = {
@@ -57,12 +61,14 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
   const { isPending, mutateAsync } = useUpload();
   const onChangeImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+
     if (!file) return;
     setSelectedFile(file);
     if (selectedImagePreview) {
       URL.revokeObjectURL(selectedImagePreview);
     }
     const previewUrl = URL.createObjectURL(file);
+
     setSelectedImagePreview(previewUrl);
     setShowCropper(true);
   };
@@ -70,6 +76,7 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
   const handleSave = async () => {
     if (!croppedAreaPixels || !selectedFile) {
       alert("Please select a crop area");
+
       return;
     }
     try {
@@ -83,10 +90,12 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
       });
 
       const formData = new FormData();
+
       formData.append("image", file);
       const res = await mutateAsync({
         image: selectedFile,
       });
+
       if (res?.data?.data) {
         changeImageHandler(res?.data?.data?.id);
         if (selectedImagePreview) {
@@ -128,18 +137,21 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
 
   return (
     <>
-      <label htmlFor={htmlFor} className="flex flex-col gap-y-2 cursor-pointer">
+      <label className="flex flex-col gap-y-2 cursor-pointer" htmlFor={htmlFor}>
+        {""}
         <div>
-          <span className="text-small text-white font-bold">{label || `آپلود عکس`}</span>
+          <span className="text-small text-white font-bold">
+            {label || `آپلود عکس`}
+          </span>
         </div>
         <div className="h-10 bg-white rounded-xl flex items-center justify-between p-4">
           <div className="flex items-center gap-x-2">
             {value && (
               <CustomImage
-                width={32}
                 className="w-8 h-8 rounded-full"
                 height={32}
                 id={value}
+                width={32}
               />
             )}
           </div>
@@ -158,14 +170,14 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
             <div className="w-6">
               {value && (
                 <Button
-                  onPress={deleteImage}
                   className="bg-transparent min-w-0 w-fit min-h-0 p-0"
+                  onPress={deleteImage}
                 >
                   <span>
                     <DeleteIcon
-                      width={24}
-                      height={24}
                       className="text-red-500"
+                      height={24}
+                      width={24}
                     />
                   </span>
                 </Button>
@@ -175,11 +187,11 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
         </div>
       </label>
       <input
-        id={htmlFor}
         multiple
-        onChange={onChangeImage}
         className="hidden"
+        id={htmlFor}
         type="file"
+        onChange={onChangeImage}
       />
       <CustomWhen
         condition={
@@ -187,16 +199,16 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
         }
       >
         <ImageCropper
-          setCrop={setCrop}
-          setZoom={setZoom}
+          aspect={aspect}
           crop={crop}
           handleCancel={handleCancel}
           handleReset={handleReset}
           handleSave={handleSave}
-          onCropComplete={onCropComplete}
           selectedImagePreview={String(selectedImagePreview)}
+          setCrop={setCrop}
+          setZoom={setZoom}
           zoom={Number(zoom)}
-          aspect={aspect}
+          onCropComplete={onCropComplete}
         />
       </CustomWhen>
     </>

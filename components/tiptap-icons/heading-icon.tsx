@@ -1,15 +1,15 @@
-import { memo } from "react"
+import { memo } from "react";
 
-type SvgProps = React.ComponentPropsWithoutRef<"svg">
+type SvgProps = React.ComponentPropsWithoutRef<"svg">;
 
 export const HeadingIcon = memo(({ className, ...props }: SvgProps) => {
   return (
     <svg
-      width="24"
-      height="24"
       className={className}
-      viewBox="0 0 24 24"
       fill="currentColor"
+      height="24"
+      viewBox="0 0 24 24"
+      width="24"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -18,7 +18,7 @@ export const HeadingIcon = memo(({ className, ...props }: SvgProps) => {
         fill="currentColor"
       />
     </svg>
-  )
-})
+  );
+});
 
-HeadingIcon.displayName = "HeadingIcon"
+HeadingIcon.displayName = "HeadingIcon";

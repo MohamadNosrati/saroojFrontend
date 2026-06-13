@@ -1,14 +1,15 @@
 import { Button } from "@heroui/button";
 import { Input, Textarea } from "@heroui/input";
+
 import FormBg from "@/public/images/formBg.png";
 
 const Form = () => {
   return (
     <div
+      className="flex-col bg-cover gap-y-14 lg:py-20  md:py-14 py-10 flex items-center dark:bg-dark bg-white relative"
       style={{
         backgroundImage: `url(${FormBg?.src})`,
       }}
-      className="flex-col bg-cover gap-y-14 lg:py-20  md:py-14 py-10 flex items-center dark:bg-dark bg-white relative"
     >
       <p className="dark:text-white  text-dark text-center lg:text-xl font-bold text-base">
         اگر سوالی دارید <br />
@@ -17,36 +18,36 @@ const Form = () => {
       <form className="container flex justify-center">
         <div className="flex lg:w-2/3 sm:w-3/5  w-full flex-col items-center gap-5">
           <Input
-            type="email"
-            placeholder="Your Name"
+            fullWidth
             classNames={{
               inputWrapper:
                 "dark:bg-gray-darker rounded-none data-[hover=true]:dark:bg-gray-darker bg-gray-lighter data-[hover=true]:bg-gray-lighter text-gray-lighter font-medium",
             }}
-            fullWidth
+            placeholder="Your Name"
+            type="email"
           />
           <Input
-            type="email"
-            placeholder="Your Name"
+            fullWidth
             classNames={{
               inputWrapper:
                 "dark:bg-gray-darker rounded-none data-[hover=true]:dark:bg-gray-darker text-gray-lighter bg-gray-lighter data-[hover=true]:bg-gray-lighter font-medium",
             }}
-            fullWidth
+            placeholder="Your Name"
+            type="email"
           />
           <Textarea
-            size="lg"
-            placeholder="Message"
             classNames={{
               inputWrapper:
                 "rounded-none dark:bg-gray-darker dark:hover:bg-gray-darker bg-gray-lighter data-[hover=true]:bg-gray-lighter",
               input: "dark:text-gray-lighter font-medium",
             }}
+            placeholder="Message"
+            size="lg"
           />
           <Button
+            className="rounded-none font-bold max-sm:w-full"
             color="primary"
             type="submit"
-            className="rounded-none font-bold max-sm:w-full"
           >
             ارسال پیام
           </Button>

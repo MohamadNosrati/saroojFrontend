@@ -1,6 +1,7 @@
 import { notificationRoutes } from "../routes/apiRoutes";
 import { IBaseResponse } from "../types/base";
 import { INotification, INotificationPayload } from "../types/notification";
+
 import axiosInstance from "./base";
 
 export const getAll = async () => {

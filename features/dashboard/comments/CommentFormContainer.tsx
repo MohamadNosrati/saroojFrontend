@@ -1,11 +1,12 @@
 "use client";
-import CustomInput from "@/components/ui/CustomInput";
-import CustomTextArea from "@/components/ui/customTextArea";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "@heroui/button";
+import { useQueryClient } from "@tanstack/react-query";
+
+import CustomInput from "@/components/ui/CustomInput";
+import CustomTextArea from "@/components/ui/customTextArea";
 import CustomSelect from "@/components/ui/CustomSelect";
 import { isActiveOptions } from "@/lib/constants/isActive";
-import { useQueryClient } from "@tanstack/react-query";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { useCreateComment, useUpdateComment } from "@/lib/hooks/comments";
 import { CommentsRoute } from "@/lib/routes/apiRoutes";
@@ -55,6 +56,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       ...createPayload,
       id: comment?.id as string,
     };
+
     if (comment) {
       updateMutate(updatePayload, {
         onSuccess: () => {
@@ -80,100 +82,101 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       });
     }
   };
+
   return (
     <form className="flex flex-col gap-y-10" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <Controller
           control={control}
+          name="fullName"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              errorMessage={error?.message}
+              isInvalid={Boolean(error?.message)}
+              label="نام و نام خانوادگی"
+              labelPlacement="outside-top"
+              value={value}
+              onChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "title is required!",
             },
           }}
-          name="fullName"
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <CustomInput
-              isInvalid={Boolean(error?.message)}
-              errorMessage={error?.message}
-              value={value}
-              onChange={onChange}
-              labelPlacement="outside-top"
-              label="نام و نام خانوادگی"
-            />
-          )}
         />
       </div>
       <div>
         <Controller
           control={control}
+          name="email"
+          render={({ field: { value, onChange }, formState: { errors } }) => (
+            <CustomInput
+              errorMessage={errors?.email?.message}
+              isInvalid={Boolean(errors?.email)}
+              label="ایمیل"
+              labelPlacement="outside-top"
+              value={value}
+              onChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "email is required!",
             },
           }}
-          name="email"
-          render={({ field: { value, onChange }, formState: { errors } }) => (
-            <CustomInput
-              isInvalid={Boolean(errors?.email)}
-              errorMessage={errors?.email?.message}
-              value={value}
-              onChange={onChange}
-              labelPlacement="outside-top"
-              label="ایمیل"
-            />
-          )}
         />
       </div>
       <div>
         <Controller
+          control={control}
+          name={"isActive"}
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomSelect
+              error={error?.message}
+              options={isActiveOptions}
+              selectLabel="وضعیت"
+              value={value}
+              onSelectionChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "status is required!",
             },
           }}
-          name={"isActive"}
-          control={control}
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <CustomSelect
-              error={error?.message}
-              selectLabel="وضعیت"
-              options={isActiveOptions}
-              onSelectionChange={onChange}
-              value={value}
-            />
-          )}
         />
       </div>
       <div>
         <Controller
           control={control}
+          name="text"
+          render={({ field: { value, onChange }, formState: { errors } }) => (
+            <CustomTextArea
+              errorMessage={errors?.text?.message}
+              isInvalid={Boolean(errors?.text)}
+              value={value}
+              onChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "text is required!",
             },
           }}
-          name="text"
-          render={({ field: { value, onChange }, formState: { errors } }) => (
-            <CustomTextArea
-              value={value}
-              onChange={onChange}
-              isInvalid={Boolean(errors?.text)}
-              errorMessage={errors?.text?.message}
-            />
-          )}
         />
       </div>
       <div>
         <Button
-          className="font-bold"
-          isLoading={isCreatePending || isUpdatePending}
           fullWidth
-          type="submit"
+          className="font-bold"
           color={comment ? "warning" : "success"}
+          isLoading={isCreatePending || isUpdatePending}
+          type="submit"
         >
           {comment ? "ویرایش" : "ثبت"}
         </Button>

@@ -1,3 +1,5 @@
+import { Metadata } from "next";
+
 import AboutUs from "@/features/landing/About/AboutUs";
 import Comments from "@/features/landing/About/Comments";
 import Contact from "@/features/landing/About/Contact";
@@ -5,8 +7,6 @@ import Form from "@/features/landing/About/Form";
 import Map from "@/features/landing/About/Map";
 import Socials from "@/features/landing/About/Socials";
 import { createMetadata } from "@/lib/config/site";
-import { Metadata } from "next";
-
 
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
@@ -41,7 +41,6 @@ export const metadata: Metadata = createMetadata({
       "آشنایی با تیم متخصص، سابقه و افتخارات شرکت ساروج در صنعت ساخت و ساز ایران.",
   },
 });
-
 
 const AboutPage = () => {
   return (

@@ -1,10 +1,12 @@
 import Image from "next/image";
+
+import { SafeBlogContent } from "./SafeBlogContent";
+
 import StaticImage from "@/public/images/blogsStaticImage.png";
 import { CalandarIcon } from "@/components/icons";
 import { IBlog } from "@/lib/types/blog";
 import { dateConvertor } from "@/lib/tools/dateConvertor";
 import { uploadUrl } from "@/lib/tools/upload";
-import { SafeBlogContent } from "./SafeBlogContent";
 
 interface IProps {
   blog: IBlog;
@@ -20,11 +22,11 @@ export default function BlogDetails({ blog }: IProps) {
         <div className="flex items-center mt-2.5 justify-between">
           <div className="flex gap-2 items-center ">
             <Image
-              width={100}
-              height={100}
-              src={uploadUrl(blog?.pictureId?.image)}
               alt=""
               className="rounded-full size-12 object-cover"
+              height={100}
+              src={uploadUrl(blog?.pictureId?.image)}
+              width={100}
             />
             <span className="text-black sm:text-2xl text-lg font-bold">
               محمد نصرتی
@@ -32,7 +34,7 @@ export default function BlogDetails({ blog }: IProps) {
           </div>
           <div className="flex items-center gap-2">
             <span>
-              <CalandarIcon width={20} height={20} />
+              <CalandarIcon height={20} width={20} />
             </span>
             <span className="font-bold sm:text-lg text-sm">
               {dateConvertor(blog?.createdAt)}
@@ -40,7 +42,7 @@ export default function BlogDetails({ blog }: IProps) {
           </div>
         </div>
         <div className="lg:mt-8 sm:mt-6 mt-4 flex justify-center">
-          <Image src={StaticImage} className="aspect-video w-full" alt="" />
+          <Image alt="" className="aspect-video w-full" src={StaticImage} />
         </div>
         <div className="lg:mt-10 sm:mt-8 mt-6 dark:text-white">
           <SafeBlogContent html={blog?.description} />
@@ -48,9 +50,9 @@ export default function BlogDetails({ blog }: IProps) {
         <div className="bg-primary lg:mt-16 sm:mt-12 mt-8 sm:p-6 p-4 flex sm:gap-4 gap-2.5">
           <div className="min-w-fit">
             <Image
-              src={StaticImage}
-              className="lg:size-16 rounded-full sm:size-12 size-10"
               alt=""
+              className="lg:size-16 rounded-full sm:size-12 size-10"
+              src={StaticImage}
             />
           </div>
           <div className="flex flex-col">

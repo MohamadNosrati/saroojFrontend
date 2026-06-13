@@ -1,4 +1,5 @@
-import { useMutation} from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+
 import { responseHandler } from "../tools/responseHandler";
 import { subscriptionServices } from "../services/subscription";
 import { ISubscriptionPayload } from "../types/subscription";

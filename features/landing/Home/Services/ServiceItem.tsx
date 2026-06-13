@@ -1,5 +1,3 @@
-import { HomeIcon } from "@/components/icons";
-
 interface IProps {
   item: {
     title: string;
@@ -10,10 +8,11 @@ interface IProps {
 
 const ServiceItem: React.FC<IProps> = ({ item }) => {
   const Icon = item?.icon;
+
   return (
     <div className="flex gap-4">
       <div>
-        <Icon width={40} height={40} className="text-primary max-sm:size-7" />
+        <Icon className="text-primary max-sm:size-7" height={40} width={40} />
       </div>
       <div className="flex flex-col ">
         <span className="leading-11 font-bold sm:text-3xl text-2xl text-white block">

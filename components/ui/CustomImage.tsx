@@ -1,7 +1,9 @@
-import { useFindUpload } from "@/lib/hooks/upload";
 import { Spinner } from "@heroui/spinner";
 import Image, { ImageProps } from "next/image";
+
 import { CustomWhen } from "./CustomWhen";
+
+import { useFindUpload } from "@/lib/hooks/upload";
 import { uploadUrl } from "@/lib/tools/upload";
 
 interface ICustomImageProps extends ImageProps {
@@ -19,6 +21,7 @@ const CustomImage: React.FC<Partial<ICustomImageProps>> = ({
   ...props
 }) => {
   const { data, isLoading } = useFindUpload(id || "");
+
   return (
     <CustomWhen condition={Boolean(data?.data?.image)}>
       <>
@@ -28,11 +31,11 @@ const CustomImage: React.FC<Partial<ICustomImageProps>> = ({
           <div className="flex gap-x-2 items-center">
             <CustomWhen condition={Boolean(data?.data?.image)}>
               <Image
-                className={`w-full h-full ${props.className}`}
                 alt={alt || ""}
+                className={`w-full h-full ${props.className}`}
+                height={height}
                 src={uploadUrl(data?.data?.image as string)}
                 width={width}
-                height={height}
                 {...props}
               />
               <span className="text-xs font-bold text-dark">

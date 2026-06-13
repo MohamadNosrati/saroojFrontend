@@ -1,11 +1,8 @@
-import { useAuthStore } from "@/lib/stores/auth";
-import {
-  dateConvertor,
-  timeConvertor,
-  toPersianReadable,
-} from "@/lib/tools/dateConvertor";
-import { GroupedMessageItem, IMessage } from "@/lib/types/message";
 import clsx from "clsx";
+
+import { useAuthStore } from "@/lib/stores/auth";
+import { timeConvertor, toPersianReadable } from "@/lib/tools/dateConvertor";
+import { GroupedMessageItem } from "@/lib/types/message";
 
 interface IProps {
   item: GroupedMessageItem;
@@ -13,6 +10,7 @@ interface IProps {
 
 const MessageItem: React.FC<IProps> = ({ item }) => {
   const user = useAuthStore((state) => state?.user);
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex justify-center">
@@ -23,6 +21,7 @@ const MessageItem: React.FC<IProps> = ({ item }) => {
       <div className="flex gap-1.5 flex-col">
         {item?.messages?.map((elem) => (
           <div
+            key={elem?.id}
             className={clsx([
               "text-white flex items-center gap-1.5",
               elem?.senderId === user?.id
@@ -44,4 +43,5 @@ const MessageItem: React.FC<IProps> = ({ item }) => {
     </div>
   );
 };
+
 export default MessageItem;

@@ -34,6 +34,7 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+
 import { IAuthStore } from "../types/auth";
 
 export const useAuthStore = create<IAuthStore>()(

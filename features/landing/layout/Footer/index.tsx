@@ -1,9 +1,7 @@
-import {
-  CallIcon,
-  EmailIcon,
-  InstagramIcon,
-  PhoneIcon,
-} from "@/components/icons";
+import Image from "next/image";
+import Link from "next/link";
+
+import { CallIcon, EmailIcon, InstagramIcon } from "@/components/icons";
 import {
   phones,
   saroojAddress,
@@ -13,8 +11,6 @@ import {
 } from "@/lib/constants/info";
 import { persianRoutes } from "@/lib/routes/navigationRoutes";
 import Logo from "@/public/images/logo.png";
-import Image from "next/image";
-import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -22,7 +18,7 @@ const Footer = () => {
       <div className="container grid grid-cols-4 justify-between lg:gap-24 sm:gap-16 gap-8">
         <div className="flex flex-col gap-3.5 max-sm:items-center lg:col-span-1 sm:col-span-2 col-span-4 ">
           <Link href={persianRoutes.homePage()}>
-            <Image src={Logo} alt="ساروج" />
+            <Image alt="ساروج" src={Logo} />
           </Link>
           <p className="max-sm:text-sm  text-gray-lighter font-bold mt-1.5">
             {saroojDescription.substring(0, 98)}
@@ -33,11 +29,11 @@ const Footer = () => {
             شبکه های اجتمایی
           </span>
           <div className="flex gap-2.5">
-            <Link  href={saroojInstagram}>
+            <Link href={saroojInstagram}>
               <InstagramIcon
-                width={24}
-                height={24}
                 className="text-gray-lighter"
+                height={24}
+                width={24}
               />
             </Link>
           </div>
@@ -49,15 +45,15 @@ const Footer = () => {
           <div className="flex gap-4 flex-col">
             {phones?.map((item) => (
               <Link
+                key={item}
                 className="text-gray-lighter flex items-center gap-3 max-sm:text-sm font-bold"
                 href={`tel:${item}`}
-                key={item}
               >
                 <span>
                   <CallIcon
-                    width={24}
-                    height={24}
                     className="dark:text-white"
+                    height={24}
+                    width={24}
                   />
                 </span>
                 <span>{item}</span>
@@ -67,7 +63,7 @@ const Footer = () => {
               className="max-sm:text-sm flex items-center gap-2.5  font-bold text-gray-lighter"
               href={`mailto:${saroojEmail}`}
             >
-              <EmailIcon width={24} height={24} className="dark:text-white" />
+              <EmailIcon className="dark:text-white" height={24} width={24} />
               {saroojEmail}
             </Link>
           </div>

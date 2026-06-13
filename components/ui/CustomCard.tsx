@@ -1,8 +1,11 @@
 import Image from "next/image";
 import { Button } from "@heroui/button";
+import { Dispatch, SetStateAction } from "react";
+
 import { EditIcon } from "../icons";
+
 import CustomDelete, { TEntity } from "./CustomDelete";
-import { Dispatch, SetStateAction, useState } from "react";
+
 import { dateConvertor } from "@/lib/tools/dateConvertor";
 import { IFile } from "@/lib/types/file";
 
@@ -38,6 +41,7 @@ const CustomCard: React.FC<ICustomCardProps> = ({
     setEditData(item);
     onOpen();
   };
+
   return (
     <div className="rounded-xl border border-wood-smoke-200 p-4">
       <div className="flex justify-between">
@@ -45,11 +49,11 @@ const CustomCard: React.FC<ICustomCardProps> = ({
           <div className="w-20 h-20 bg-primary">
             {item?.pictureId && (
               <Image
+                alt={item?.title || ""}
                 className="w-20 h-20"
-                width={100}
                 height={100}
                 src={src}
-                alt={item?.title || ""}
+                width={100}
               />
             )}
           </div>
@@ -65,16 +69,20 @@ const CustomCard: React.FC<ICustomCardProps> = ({
         </div>
         <div className="flex flex-col justify-between items-end">
           <div className="flex items-center gap-3">
-            <CustomDelete entity={entity} id={item?.id} title={item?.title || item?.fullName || ""} />
+            <CustomDelete
+              entity={entity}
+              id={item?.id}
+              title={item?.title || item?.fullName || ""}
+            />
             <Button
-              onPress={editHandler}
               className="bg-transparent min-w-0 w-fit min-h-0 p-0"
+              onPress={editHandler}
             >
               <span>
                 <EditIcon
-                  width={24}
-                  height={24}
                   className="text-charade-600 hover:text-rose-500"
+                  height={24}
+                  width={24}
                 />
               </span>
             </Button>

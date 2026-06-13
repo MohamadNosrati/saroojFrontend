@@ -1,13 +1,14 @@
+import { Spinner } from "@heroui/spinner";
+import clsx from "clsx";
+import Image from "next/image";
+import { Dispatch, SetStateAction } from "react";
+
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { useGetUsers } from "@/lib/hooks/user";
 import { useAuthStore } from "@/lib/stores/auth";
 import { uploadUrl } from "@/lib/tools/upload";
 import { IConversation } from "@/lib/types/conversation";
 import { IUser } from "@/lib/types/user";
-import { Spinner } from "@heroui/spinner";
-import clsx from "clsx";
-import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
 
 interface IProps {
   selectedContact?: IUser;
@@ -47,21 +48,21 @@ const Contacts: React.FC<IProps> = ({
         <div className="h-full flex flex-col w-full">
           {otherUsers?.map((item) => (
             <button
-              onClick={() => handleClick(item)}
               key={item?.id}
               className={clsx(
                 " gap-2 p-2 flex items-center border-1 border-black",
                 item?.id === selectedContact?.id ? "bg-warning" : "",
               )}
+              onClick={() => handleClick(item)}
             >
               <div className="flex items-center gap-2.5 text-white   size-10 rounded-full bg-dark ">
                 <CustomWhen condition={Boolean(item?.pictureId?.image)}>
                   <Image
                     alt=""
+                    className="rounded-full size-full"
+                    height={40}
                     src={uploadUrl(item?.pictureId?.image)}
                     width={40}
-                    height={40}
-                    className="rounded-full size-full"
                   />
                 </CustomWhen>
               </div>

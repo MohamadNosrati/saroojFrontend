@@ -13,15 +13,17 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import BeforeAfterItem from "./BeforeAfterItem";
-import { ImageItemPayload } from "@/lib/types/project";
 import {
   Control,
   UseFieldArrayRemove,
   UseFieldArrayUpdate,
   UseFormSetValue,
 } from "react-hook-form";
+
+import BeforeAfterItem from "./BeforeAfterItem";
 import { TformValues } from "./ProjectsFormContainer";
+
+import { ImageItemPayload } from "@/lib/types/project";
 
 interface IProps {
   fields: ImageItemPayload[];
@@ -63,6 +65,7 @@ export default function Dragable({
 
     if (oldIndex !== -1 && newIndex !== -1 && oldIndex !== newIndex) {
       const reorderedFields = arrayMove(fields, oldIndex, newIndex);
+
       setValue("images", reorderedFields);
     }
   };
@@ -70,8 +73,8 @@ export default function Dragable({
   return (
     <DndContext
       collisionDetection={closestCenter}
-      onDragEnd={handleDragEnd}
       sensors={sensors}
+      onDragEnd={handleDragEnd}
     >
       <SortableContext
         items={fields.map((item) => item.id as string)}
@@ -80,13 +83,13 @@ export default function Dragable({
         <div className="flex flex-col gap-10">
           {fields.map((item, index) => (
             <BeforeAfterItem
-              setValue={setValue}
-              control={control}
-              remove={remove}
-              index={index}
-              update={update}
               key={item.id}
+              control={control}
+              index={index}
               item={item}
+              remove={remove}
+              setValue={setValue}
+              update={update}
             />
           ))}
         </div>

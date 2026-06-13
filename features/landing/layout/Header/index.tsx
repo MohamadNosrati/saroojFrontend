@@ -1,37 +1,40 @@
 import Image from "next/image";
-import Logo from "@/public/images/logo.png";
 import Link from "next/link";
-import { persianRoutes } from "@/lib/routes/navigationRoutes";
+
 import ToggleTheme from "./ToggleTheme";
 import SelectLanguage from "./SelectLanguage";
-import { AboutIcon, BlogsIcon, HouseIcon, ProjectsIcon } from "@/components/icons";
 import DeskTopNavigation from "./DesktopNavigation";
 import MobileNavigation from "./MobileNavigation";
 
+import {
+  AboutIcon,
+  BlogsIcon,
+  HouseIcon,
+  ProjectsIcon,
+} from "@/components/icons";
+import { persianRoutes } from "@/lib/routes/navigationRoutes";
+import Logo from "@/public/images/logo.png";
 
 const data = [
   {
     href: persianRoutes.homePage(),
     label: "خانه",
-    icon: HouseIcon
+    icon: HouseIcon,
   },
   {
     href: persianRoutes.projectsPage(),
     label: "پروژه ها",
-    icon: ProjectsIcon
-
+    icon: ProjectsIcon,
   },
   {
     href: persianRoutes.blogsPage(),
     label: "مقالات",
-    icon: BlogsIcon
-
+    icon: BlogsIcon,
   },
   {
     href: persianRoutes.aboutPage(),
     label: "درباره ما",
-    icon: AboutIcon
-
+    icon: AboutIcon,
   },
 ];
 
@@ -42,7 +45,7 @@ const Header = () => {
         <div className="flex items-center  xl:gap-24 lg:gap-12 gap-6">
           <MobileNavigation />
           <Link href={persianRoutes.homePage()}>
-            <Image src={Logo} className="max-sm:w-24 h-16" alt="ساروج" />
+            <Image alt="ساروج" className="max-sm:w-24 h-16" src={Logo} />
           </Link>
           <DeskTopNavigation data={data} />
         </div>

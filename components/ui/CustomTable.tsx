@@ -13,11 +13,13 @@ import {
 } from "@heroui/table";
 import { Chip } from "@heroui/chip";
 import { Tooltip } from "@heroui/tooltip";
-import { DeleteIcon, EditIcon } from "../icons";
 import Image from "next/image";
-import { dateConvertor } from "@/lib/tools/dateConvertor";
 import { Spinner } from "@heroui/spinner";
 import { Button } from "@heroui/button";
+
+import { DeleteIcon, EditIcon } from "../icons";
+
+import { dateConvertor } from "@/lib/tools/dateConvertor";
 import { uploadUrl } from "@/lib/tools/upload";
 
 interface IProps {
@@ -51,14 +53,14 @@ export default function CustomTable({
           <div className="flex justify-center">
             {cellValue ? (
               <Image
+                alt={item?.id || "image"}
+                className="rounded-full size-20 min-w-20 object-cover"
+                height={100}
                 src={uploadUrl(cellValue?.image)}
                 width={100}
-                height={100}
-                className="rounded-full size-20 min-w-20 object-cover"
-                alt={item?.id || "image"}
               />
             ) : (
-              <div className="w-20 rounded-full h-20 bg-dark"></div>
+              <div className="w-20 rounded-full h-20 bg-dark" />
             )}
           </div>
         );
@@ -67,14 +69,14 @@ export default function CustomTable({
           <div className="flex justify-center">
             {cellValue ? (
               <Image
+                alt={item?.id || "image"}
+                className="rounded-full size-20 min-w-20 object-cover"
+                height={100}
                 src={uploadUrl(cellValue?.image)}
                 width={100}
-                height={100}
-                className="rounded-full size-20 min-w-20 object-cover"
-                alt={item?.id || "image"}
               />
             ) : (
-              <div className="w-20 rounded-full h-20 bg-dark"></div>
+              <div className="w-20 rounded-full h-20 bg-dark" />
             )}
           </div>
         );
@@ -250,18 +252,18 @@ export default function CustomTable({
           <div className="relative flex justify-center items-center gap-2">
             <Tooltip color="warning" content="Edit">
               <Button
-                onPress={() => editHandler && editHandler(item.id)}
                 color="warning"
+                onPress={() => editHandler && editHandler(item.id)}
               >
-                <EditIcon width={20} height={20} />
+                <EditIcon height={20} width={20} />
               </Button>
             </Tooltip>
             <Tooltip color="danger" content="Delete">
               <Button
-                onPress={() => deleteHandler && deleteHandler(item.id)}
                 color="danger"
+                onPress={() => deleteHandler && deleteHandler(item.id)}
               >
-                <DeleteIcon width={20} height={20} />
+                <DeleteIcon height={20} width={20} />
               </Button>
             </Tooltip>
           </div>
@@ -282,8 +284,8 @@ export default function CustomTable({
       </TableHeader>
       <TableBody
         isLoading={isLoading || isPending}
-        loadingContent={<Spinner size="lg" />}
         items={items || []}
+        loadingContent={<Spinner size="lg" />}
       >
         {(item: Item) => (
           <TableRow key={item.id}>

@@ -1,7 +1,9 @@
-import { uploadUrl } from "@/lib/tools/upload";
 import Image from "next/image";
 import { useDisclosure } from "@heroui/modal";
+
 import UserFormContainer from "./UserFormContainer";
+
+import { uploadUrl } from "@/lib/tools/upload";
 import { useAuthStore } from "@/lib/stores/auth";
 
 export default function User() {
@@ -11,13 +13,13 @@ export default function User() {
   return (
     <div className="flex items-center gap-2.5">
       <div className="rounded-full size-24  bg-dark">
-        <button onClick={onOpen} className="size-full relative rounded-full">
+        <button className="size-full relative rounded-full" onClick={onOpen}>
           {user?.pictureId?.image ? (
             <Image
-              alt=""
               fill
-              src={uploadUrl(user?.pictureId?.image)}
+              alt=""
               className="rounded-full size-full"
+              src={uploadUrl(user?.pictureId?.image)}
             />
           ) : (
             <div className="size-full rounded-full flex justify-center items-center">
@@ -27,8 +29,8 @@ export default function User() {
         </button>
         <UserFormContainer
           isOpen={isOpen}
-          onOpenChange={onOpenChange}
           user={user}
+          onOpenChange={onOpenChange}
         />
       </div>
       <div>

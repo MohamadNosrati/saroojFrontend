@@ -1,4 +1,7 @@
 "use client";
+import { useDisclosure } from "@heroui/modal";
+import { useState } from "react";
+
 import CustomContainer from "@/components/ui/CustomContainer";
 import CustomModal from "@/components/ui/CustomModal";
 import CustomTable from "@/components/ui/CustomTable";
@@ -8,8 +11,6 @@ import {
   useGetProject,
   useGetProjects,
 } from "@/lib/hooks/projects";
-import { useDisclosure } from "@heroui/modal";
-import {useState } from "react";
 
 const columns = [
   { name: "عکس", uid: "pictureId" },
@@ -53,26 +54,26 @@ const ProjectsPage = () => {
           <h1 className="text-2xl font-bold text-white-gray">لیست پروژه ها</h1>
         </div>
         <CustomModal
-          onClose={handleModalClose}
-          isOpen={isOpen}
-          onOpen={onOpen}
-          onOpenChange={onOpenChange}
           buttonTitle="افزودن پروژه"
+          isOpen={isOpen}
           modalTitle={
             editId ? `ویرایش پروژه ${editData?.data?.title}` : "ساخت پروژه"
           }
+          onClose={handleModalClose}
+          onOpen={onOpen}
+          onOpenChange={onOpenChange}
         >
           <FormContainer project={editData?.data} />
         </CustomModal>
       </div>
       <div className="bg-component-base-2 rounded-2xl">
         <CustomTable
+          columns={columns}
+          deleteHandler={deleteHandler}
+          editHandler={editHandler}
           isLoading={isLoading}
           isPending={isPending}
-          editHandler={editHandler}
-          deleteHandler={deleteHandler}
           items={data?.data?.result || []}
-          columns={columns}
         />
       </div>
     </CustomContainer>

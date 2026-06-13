@@ -1,3 +1,7 @@
+import { Metadata } from "next";
+
+import notFound from "../../not-found";
+
 import Carousel from "@/features/landing/SingleProject/Carousel";
 import Info from "@/features/landing/SingleProject/Info";
 import RelatedProjects from "@/features/landing/SingleProject/RelatedProjects";
@@ -7,8 +11,6 @@ import { getData } from "@/lib/services/data";
 import { slugify } from "@/lib/tools/slugify";
 import { IBaseResponse } from "@/lib/types/base";
 import { IProject } from "@/lib/types/project";
-import notFound from "../../not-found";
-import { Metadata } from "next";
 import { createMetadata } from "@/lib/config/site";
 
 type Props = {
@@ -25,6 +27,7 @@ export async function generateStaticParams() {
       }[]
     >
   >(ProjectsRoute.getAllSlugs());
+
   return projects?.data?.map((item) => ({
     slug: slugify(item?.title),
   }));

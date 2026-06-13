@@ -1,3 +1,17 @@
+import { Button } from "@heroui/button";
+import { Spinner } from "@heroui/spinner";
+import { useQueryClient } from "@tanstack/react-query";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { Socket } from "socket.io-client";
+
+import MessageItem from "./MessageItem";
+
 import CustomInput from "@/components/ui/CustomInput";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { eventNames } from "@/lib/config/socket";
@@ -10,20 +24,6 @@ import { ISocketAcknowledgement } from "@/lib/types/base";
 import { IConversation } from "@/lib/types/conversation";
 import { IMessage, MessageStatus, MessageType } from "@/lib/types/message";
 import { IUser } from "@/lib/types/user";
-import { Button } from "@heroui/button";
-import { Spinner } from "@heroui/spinner";
-import { useQueryClient } from "@tanstack/react-query";
-import React, {
-  Dispatch,
-  Ref,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { Socket } from "socket.io-client";
-import MessageItem from "./MessageItem";
-import { dateConvertor } from "@/lib/tools/dateConvertor";
 
 interface IProps {
   isConnected: boolean;
@@ -111,7 +111,9 @@ const Chat: React.FC<IProps> = ({
         buttonRef.current?.click();
       }
     };
+
     document.addEventListener("keydown", handleClick);
+
     return () => document.removeEventListener("keydown", handleClick);
   }, []);
 
@@ -139,22 +141,22 @@ const Chat: React.FC<IProps> = ({
                 <Spinner size="lg" />
               </div>
             </CustomWhen>
-            <div ref={chatBottomRef}></div>
+            <div ref={chatBottomRef} />
           </div>
           <div className="p-1.5 absolute min-h-fit bottom-0 z-10 bg-white flex w-full">
             <Button
               ref={buttonRef}
-              isDisabled={text.trim() === ""}
               color="success"
+              isDisabled={text.trim() === ""}
               onClick={handleSendMessage}
             >
               ارسال پیام
             </Button>
             <CustomInput
+              className="w-full"
+              placeholder="پیام خود را بنویسید..."
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="پیام خود را بنویسید..."
-              className="w-full"
             />
           </div>
         </>

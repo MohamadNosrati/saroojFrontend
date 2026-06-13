@@ -3,4 +3,4 @@ export const saroojEmail = "rahsaz.dezh.sarooj@gmail.com";
 export const saroojAddress = `لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و`;
 export const saroojDescription = `شرکت رهساز دژ ساروج دارای گرید 5 ابنیه و راهسازی کشور با بیش از ده سال سابقه در صنعت ساختمان سازی و بازسازی واحد های مسکونی و تجاری و اداری و همچنین ویلا در نقاط مختلف ایران مشغول به کار است.این شرکت در زمینه های طراحی و اجرا با نیروهای مجرب با تحصیلات آکادمیک آماده ی انجام پروژه های ساختمانی است.`;
 
-export const saroojInstagram = "https://instagram.com/sarooj.arc"
+export const saroojInstagram = "https://instagram.com/sarooj.arc";

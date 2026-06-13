@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import { categoriesRoute } from "../routes/apiRoutes";
 import { categoryServices, findOne, getAll } from "../services/categories";
 import { ICategoryPayload, UpdateCategoryPayload } from "../types/categories";
@@ -9,6 +10,7 @@ export const useGetCategories = () => {
     queryKey: [categoriesRoute.getAll()],
     queryFn: async () => await getAll(),
   });
+
   return {
     data: data?.data,
     isLoading,
@@ -21,6 +23,7 @@ export const useGetCategory = (id?: string) => {
     queryFn: async () => await findOne(String(id)),
     enabled: Boolean(id),
   });
+
   return {
     data: data?.data,
     isLoading,
@@ -39,6 +42,7 @@ export const useCreateCategory = () => {
 
 export const useDeleteCategory = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async (id: string) => await categoryServices.delete(id),
     onSuccess: () => {
@@ -53,9 +57,11 @@ export const useDeleteCategory = () => {
 
 export const useUpdateCategory = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async (payload: UpdateCategoryPayload) => {
       const { id, ...rest } = payload;
+
       return await categoryServices.update(payload?.id, rest);
     },
     onError: () => {

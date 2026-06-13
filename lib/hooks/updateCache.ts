@@ -2,10 +2,11 @@ import { useQueryClient } from "@tanstack/react-query";
 
 const useUpdateCache = () => {
   const queryClient = useQueryClient();
-  
+
   const updateCache = (key: string, item: any) => {
     queryClient.setQueryData([key], (old: any) => {
       if (!old) return old;
+
       return {
         ...old,
         data: {
@@ -15,9 +16,8 @@ const useUpdateCache = () => {
       };
     });
   };
-  
+
   return { updateCache };
 };
 
 export default useUpdateCache;
-

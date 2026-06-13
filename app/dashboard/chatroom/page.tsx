@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { Spinner } from "@heroui/spinner";
+import { useQueryClient } from "@tanstack/react-query";
+
 import { responseHandler } from "@/lib/tools/responseHandler";
 import Tabs from "@/features/dashboard/chatroom/Tabs";
 import Chat from "@/features/dashboard/chatroom/Chat";
@@ -12,10 +14,7 @@ import { getCookie } from "@/lib/actions/auth";
 import useUpdateCache from "@/lib/hooks/updateCache";
 import { conversationRoutes, messageRoutes } from "@/lib/routes/apiRoutes";
 import { useAuthStore } from "@/lib/stores/auth";
-import { useQueryClient } from "@tanstack/react-query";
 import { eventNames } from "@/lib/config/socket";
-
-
 
 export default function Chatroom() {
   const [isConnected, setIsConnected] = useState(false);
@@ -39,10 +38,12 @@ export default function Chatroom() {
     async function initializeSocket() {
       try {
         const token = await getCookie();
+
         if (!token) {
           console.error("No authentication token found");
           responseHandler.fail("Authentication required");
           setIsConnecting(false);
+
           return;
         }
 
@@ -107,23 +108,23 @@ export default function Chatroom() {
     <div className="flex h-full bg-gray-900 overflow-hidden">
       <div className="h-full w-60">
         <Tabs
-          setSelectedConversation={setSelectedConversation}
+          selectedContact={selectedContact}
           selectedConversation={selectedConversation}
           setSelectedContact={setSelectedContact}
-          selectedContact={selectedContact}
+          setSelectedConversation={setSelectedConversation}
         />
       </div>
       <div className="h-full relative justify-center items-center grow flex flex-col">
         {isConnecting ? (
-          <Spinner size="lg" label="Connecting to chat..." />
+          <Spinner label="Connecting to chat..." size="lg" />
         ) : isConnected ? (
           <Chat
-            setSelectedConversation={setSelectedConversation}
+            chatBottomRef={chatBottomRef}
+            isConnected={isConnected}
             selectedContact={selectedContact}
             selectedConversation={selectedConversation}
+            setSelectedConversation={setSelectedConversation}
             socketRef={socketRef}
-            isConnected={isConnected}
-            chatBottomRef={chatBottomRef}
           />
         ) : (
           <div className="text-center text-red-500">

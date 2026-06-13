@@ -1,20 +1,19 @@
 interface ICommentPayload {
-    fullName:string;
-    email:string;
-    text:string;
+  fullName: string;
+  email: string;
+  text: string;
 }
 
 interface IComment {
-    id:string
-    fullName:string;
-    email:string;
-    text:string;
-    createdAt:Date;
-    updatedAt:Date;
-    isActive:boolean;
+  id: string;
+  fullName: string;
+  email: string;
+  text: string;
+  createdAt: Date;
+  updatedAt: Date;
+  isActive: boolean;
 }
 
-
 interface IUpdateCommentPayload extends Partial<ICommentPayload> {
-    id:string;
+  id: string;
 }

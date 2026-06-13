@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import { responseHandler } from "../tools/responseHandler";
 import { blogsRoutes } from "../routes/apiRoutes";
-import { IBlogPayload, UpdateBlogPayload, } from "../types/blog";
+import { IBlogPayload, UpdateBlogPayload } from "../types/blog";
 import { blogervices, findOne, getAll } from "../services/blog";
 
 export const useGetBlogs = () => {
@@ -9,6 +10,7 @@ export const useGetBlogs = () => {
     queryKey: [blogsRoutes.getAll()],
     queryFn: async () => await getAll(),
   });
+
   return {
     data: data?.data,
     isLoading,
@@ -21,6 +23,7 @@ export const useGetBlog = (id?: string) => {
     queryFn: async () => await findOne(String(id)),
     enabled: Boolean(id),
   });
+
   return {
     data: data?.data,
     isLoading,
@@ -39,6 +42,7 @@ export const useCreateBlog = () => {
 
 export const useDeleteBlog = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async (id: string) => await blogervices.delete(id),
     onSuccess: () => {
@@ -55,6 +59,7 @@ export const useUpdateBlog = () => {
   return useMutation({
     mutationFn: async (payload: UpdateBlogPayload) => {
       const { id, ...rest } = payload;
+
       return await blogervices.update(payload?.id, rest);
     },
     onError: () => {

@@ -100,8 +100,8 @@ class DashboardRoute {
 }
 
 class FrontAuthRoutes {
-  signIn(){
-    return (`/signin`)
+  signIn() {
+    return `/signin`;
   }
 }
 

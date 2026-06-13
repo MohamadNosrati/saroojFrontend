@@ -1,6 +1,7 @@
 import { ProjectsRoute } from "../routes/apiRoutes";
 import { IBaseResponse, IPaginatedResponse } from "../types/base";
 import { IProject, IProjectParams, IProjectPayload } from "../types/project";
+
 import axiosInstance from "./base";
 
 export const getAll = async (params: IProjectParams) => {

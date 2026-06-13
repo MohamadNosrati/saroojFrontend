@@ -1,8 +1,10 @@
 import Cropper, { Point } from "react-easy-crop";
 import { Button } from "@heroui/button";
 import { Slider } from "@heroui/slider";
-import sliderMarks from "@/lib/config/marks";
+
 import { Crop, CroppedPixels } from "./CustomImageLoader";
+
+import sliderMarks from "@/lib/config/marks";
 
 interface IProps {
   zoom: number;
@@ -32,51 +34,51 @@ const ImageCropper: React.FC<IProps> = ({
   return (
     <div className="flex justify-center z-[100000000] items-end p-6 fixed left-0 top-0 gap-4 w-full min-h-screen bg-black/75">
       <Cropper
+        aspect={aspect}
         classes={{
           containerClassName:
             "w-full h-full flex relative justify-center items-center bg-black/75",
           cropAreaClassName: "size-full",
         }}
-        image={String(selectedImagePreview)}
         crop={crop}
-        aspect={aspect}
+        image={String(selectedImagePreview)}
         zoom={Number(zoom)}
+        zoomWithScroll={true}
         onCropChange={setCrop}
         onCropComplete={onCropComplete}
-        zoomWithScroll={true}
       />
       <div className="flex flex-col gap-3">
         <div className="w-full flex justify-center gap-2.5">
           <Button
-            onPress={handleSave}
+            className="text-white text-xl font-bold"
             color="success"
             size="lg"
-            className="text-white text-xl font-bold"
+            onPress={handleSave}
           >
             SAVE
           </Button>
           <Button
-            onPress={handleCancel}
+            className="text-white text-xl font-bold"
             color="danger"
             size="lg"
-            className="text-white text-xl font-bold"
+            onPress={handleCancel}
           >
             CANCEL
           </Button>
           <Button
-            onPress={handleReset}
+            className="text-white text-xl font-bold"
             color="warning"
             size="lg"
-            className="text-white text-xl font-bold"
+            onPress={handleReset}
           >
             RESET
           </Button>
         </div>
         <Slider
+          className="max-w-md"
+          dir="ltr"
           label="zoom level"
           marks={sliderMarks}
-          dir="ltr"
-          className="max-w-md"
           maxValue={2}
           minValue={0}
           step={0.1}

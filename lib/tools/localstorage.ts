@@ -17,6 +17,7 @@ const getUser = (): IUser | undefined => {
     return JSON.parse(user) as IUser;
   } catch (error) {
     console.error("Failed to parse user from localStorage:", error);
+
     return undefined;
   }
 };

@@ -2,12 +2,13 @@
 
 import { useActionState, useEffect } from "react";
 import { Button } from "@heroui/button";
+import { useRouter } from "next/navigation";
+import { useFormStatus } from "react-dom";
+
 import CustomInput from "@/components/ui/CustomInput";
 import CustomContainer from "@/components/ui/CustomContainer";
-import { useRouter } from "next/navigation";
 import { dashboardRoutes } from "@/lib/routes/navigationRoutes";
 import { responseHandler } from "@/lib/tools/responseHandler";
-import { useFormStatus } from "react-dom";
 import { login, LoginState } from "@/lib/actions/auth";
 import { useAuthStore } from "@/lib/stores/auth";
 
@@ -32,6 +33,7 @@ const SiginPage = () => {
       responseHandler.fail(state.errors?._form[0]);
     }
   }, [router, setUser, state.errors?._form, state.success, state.user]);
+
   return (
     <div className="min-h-screen flex justify-center items-center">
       <CustomContainer>
@@ -41,28 +43,28 @@ const SiginPage = () => {
         <form action={formAction} className="space-y-4">
           <div className="w-96">
             <CustomInput
-              isInvalid={Boolean(state?.errors?.email)}
               errorMessage={state?.errors?.email ? state.errors.email[0] : ""}
+              isInvalid={Boolean(state?.errors?.email)}
               name="email"
               placeholder="Email ..."
             />
           </div>
           <div className="w-96">
             <CustomInput
-              isInvalid={Boolean(state?.errors?.password)}
               errorMessage={
                 state?.errors?.password ? state.errors.password[0] : ""
               }
+              isInvalid={Boolean(state?.errors?.password)}
               name="password"
-              type="password"
               placeholder="Password ..."
+              type="password"
             />
           </div>
           <Button
-            type="submit"
-            isLoading={pending}
             fullWidth
             className="!mt-10 bg-sky-400 font-bold"
+            isLoading={pending}
+            type="submit"
           >
             ورود
           </Button>

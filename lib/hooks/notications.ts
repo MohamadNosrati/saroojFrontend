@@ -1,7 +1,8 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
+
 import { notificationRoutes } from "../routes/apiRoutes";
 import { getAll, notificationServices } from "../services/notification";
-import {  INotificationPayload } from "../types/notification";
+import { INotificationPayload } from "../types/notification";
 import { responseHandler } from "../tools/responseHandler";
 
 export const useGetNotifications = () => {
@@ -9,6 +10,7 @@ export const useGetNotifications = () => {
     queryKey: [notificationRoutes.getAll()],
     queryFn: async () => await getAll(),
   });
+
   return {
     data: data?.data,
     isLoading,

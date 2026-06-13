@@ -1,4 +1,5 @@
 import { ISubscriptionPayload } from "../types/subscription";
+
 import { responseHandler } from "./responseHandler";
 
 class NotificationHelpers {
@@ -8,6 +9,7 @@ class NotificationHelpers {
     }
 
     const permission = await Notification.requestPermission();
+
     return permission;
   }
 
@@ -55,6 +57,7 @@ class NotificationHelpers {
     for (let i = 0; i < rawData.length; ++i) {
       outputArray[i] = rawData.charCodeAt(i);
     }
+
     return outputArray;
   }
 }

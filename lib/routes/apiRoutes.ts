@@ -24,7 +24,7 @@ class User {
     this.base = "users";
   }
 
-  getAll(){
+  getAll() {
     return this.base;
   }
 
@@ -86,7 +86,9 @@ class Blogs {
 
   getAll(params?: IBlogParams) {
     const queryString = queryStringCreator(params);
+
     console.log("queryString", queryString);
+
     return `${this.base}?${queryString}`;
   }
 
@@ -151,6 +153,7 @@ class Projects {
 
   getAll(params?: IProjectParams) {
     const queryString = queryStringCreator(params);
+
     return `${this.base}?${queryString}`;
   }
 
@@ -272,7 +275,7 @@ class Conversation {
     this.base = "conversations";
   }
 
-  getUserConversations(userId?:string) {
+  getUserConversations(userId?: string) {
     return `${this.base}?participants=${userId}`;
   }
 }
@@ -283,7 +286,7 @@ class Message {
     this.base = "messages";
   }
 
-  getConversationMessages(conversationId?:string) {
+  getConversationMessages(conversationId?: string) {
     return `${this.base}?conversationId=${conversationId}`;
   }
 }

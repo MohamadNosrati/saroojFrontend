@@ -10,6 +10,7 @@ interface IProps {
 
 export default function InfoItem({ item }: IProps) {
   const Icon = item?.icon;
+
   return (
     <div
       className={clsx([

@@ -11,10 +11,9 @@ const CustomLoader: React.FC<ICustomLoader> = ({
   ...props
 }) => {
   return (
-    <div className={clsx([
-      "w-full flex justify-center",
-      props?.className
-    ])}>{isLoading ? <Spinner size="lg" /> : <div {...props}>{children}</div>}</div>
+    <div className={clsx(["w-full flex justify-center", props?.className])}>
+      {isLoading ? <Spinner size="lg" /> : <div {...props}>{children}</div>}
+    </div>
   );
 };
 

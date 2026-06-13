@@ -1,3 +1,5 @@
+import { Metadata } from "next";
+
 import BlogDetails from "@/features/landing/SingleBlog/Details";
 import RelatedBlogs from "@/features/landing/SingleBlog/RelatedBlogs";
 import { createMetadata } from "@/lib/config/site";
@@ -6,7 +8,6 @@ import { getData } from "@/lib/services/data";
 import { slugify } from "@/lib/tools/slugify";
 import { IBaseResponse } from "@/lib/types/base";
 import { IBlog } from "@/lib/types/blog";
-import { Metadata } from "next";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -22,6 +23,7 @@ export async function generateStaticParams() {
       }[]
     >
   >(blogsRoutes.getAllSlugs());
+
   return blogs?.data?.map((item) => ({
     slug: slugify(item?.title),
   }));
@@ -46,7 +48,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: "مقاله مورد نظر یافت نشد.",
     };
   }
-
 
   const excerpt =
     post.description
@@ -93,7 +94,7 @@ export default async function SingleBlogPage({ params }: Props) {
   const data = await getData<IBaseResponse<IBlog>>(
     blogsRoutes.findBySlug(decodedSlug),
   );
-  
+
   return (
     <main>
       <BlogDetails blog={data?.data as IBlog} />

@@ -71,6 +71,7 @@ const CustomSelect: React.FC<ICustomSelectProps> = ({
   error,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+
   console.log("isOpen", isOpen);
   const [isFocused, setIsFocused] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -90,12 +91,14 @@ const CustomSelect: React.FC<ICustomSelectProps> = ({
     };
 
     document.addEventListener("mousedown", handleClickOutside);
+
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
     if (isOpen && dropdownRef.current && selectRef.current) {
       const selectRect = selectRef.current.getBoundingClientRect();
+
       dropdownRef.current.style.top = `${selectRect.height + 4}px`;
       dropdownRef.current.style.left = "0";
       dropdownRef.current.style.width = `${selectRect.width}px`;
@@ -109,7 +112,7 @@ const CustomSelect: React.FC<ICustomSelectProps> = ({
   };
 
   return (
-    <div className="w-full relative" ref={selectRef}>
+    <div ref={selectRef} className="w-full relative">
       {/* Label */}
       {selectLabel && (
         <label className="block text-sm font-medium text-white mb-1.5">
@@ -118,7 +121,7 @@ const CustomSelect: React.FC<ICustomSelectProps> = ({
       )}
 
       {/* Trigger Button */}
-      <div
+      <button
         className={`
           relative w-full min-h-[40px] px-3 py-2 
           bg-white rounded-lg 
@@ -150,14 +153,14 @@ const CustomSelect: React.FC<ICustomSelectProps> = ({
             viewBox="0 0 24 24"
           >
             <path
+              d="M19 9l-7 7-7-7"
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth={2}
-              d="M19 9l-7 7-7-7"
             />
           </svg>
         </div>
-      </div>
+      </button>
 
       {/* Error Message */}
       {error && <p className="mt-1 text-xs text-red-500 capitalize">{error}</p>}
@@ -175,7 +178,7 @@ const CustomSelect: React.FC<ICustomSelectProps> = ({
               </div>
             ) : (
               options.map((option) => (
-                <div
+                <button
                   key={option.key}
                   className={`
                     px-3 py-2 text-sm cursor-pointer transition-colors duration-150
@@ -184,7 +187,7 @@ const CustomSelect: React.FC<ICustomSelectProps> = ({
                   onClick={() => handleSelect(option.key)}
                 >
                   {option.label}
-                </div>
+                </button>
               ))
             )}
           </div>

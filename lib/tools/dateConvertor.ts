@@ -15,8 +15,9 @@ export const timeConvertor = (timestamp: number | string | Date) => {
   });
 };
 
-export const toPersianReadable = (gregorianDateStr:string) => {
+export const toPersianReadable = (gregorianDateStr: string) => {
   const date = new Date(gregorianDateStr);
+
   return new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
     year: "numeric",
     month: "long",

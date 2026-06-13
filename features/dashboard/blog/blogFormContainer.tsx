@@ -1,11 +1,12 @@
 "use client";
-import CustomInput from "@/components/ui/CustomInput";
-import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "@heroui/button";
+import { useQueryClient } from "@tanstack/react-query";
+
+import CustomInput from "@/components/ui/CustomInput";
+import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import CustomSelect from "@/components/ui/CustomSelect";
 import { isActiveOptions } from "@/lib/constants/isActive";
-import { useQueryClient } from "@tanstack/react-query";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { IBlog } from "@/lib/types/blog";
 import { useCreateBlog, useUpdateBlog } from "@/lib/hooks/blog";
@@ -33,23 +34,22 @@ const FormContainer: React.FC<IFormContainerProps> = ({
   const queryClient = useQueryClient();
   const { mutate: createMutate, isPending: isCreatePending } = useCreateBlog();
   const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateBlog();
-  const { handleSubmit, control, reset , watch } =
-    useForm<TformValues>({
-      defaultValues: {
-        title: "",
-        pictureId: "",
-        description: "",
-        isActive: "1",
-        alt: "",
-      },
-      values: {
-        title: blog?.title || "",
-        description: blog?.description || "",
-        pictureId: blog?.pictureId?.id || "",
-        alt: blog?.alt || "",
-        isActive: blog?.isActive === false ? "0" : "1",
-      },
-    });
+  const { handleSubmit, control, reset } = useForm<TformValues>({
+    defaultValues: {
+      title: "",
+      pictureId: "",
+      description: "",
+      isActive: "1",
+      alt: "",
+    },
+    values: {
+      title: blog?.title || "",
+      description: blog?.description || "",
+      pictureId: blog?.pictureId?.id || "",
+      alt: blog?.alt || "",
+      isActive: blog?.isActive === false ? "0" : "1",
+    },
+  });
   const onSubmit = async (data: TformValues) => {
     const createPayload = {
       ...data,
@@ -59,6 +59,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       ...createPayload,
       id: blog?.id as string,
     };
+
     if (blog) {
       updateMutate(updatePayload, {
         onSuccess: () => {
@@ -85,62 +86,55 @@ const FormContainer: React.FC<IFormContainerProps> = ({
     }
   };
 
-
   return (
     <form className="flex flex-col gap-y-10" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <Controller
           control={control}
+          name="title"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              errorMessage={error?.message}
+              isInvalid={Boolean(error?.message)}
+              label="نام مقاله"
+              labelPlacement="outside-top"
+              value={value}
+              onChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "title is required!",
             },
           }}
-          name="title"
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <CustomInput
-              isInvalid={Boolean(error?.message)}
-              errorMessage={error?.message}
-              value={value}
-              onChange={onChange}
-              labelPlacement="outside-top"
-              label="نام مقاله"
-            />
-          )}
         />
       </div>
       <div>
         <Controller
           control={control}
+          name="alt"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              errorMessage={error?.message}
+              isInvalid={Boolean(error?.message)}
+              label="توضیحات عکس"
+              labelPlacement="outside-top"
+              value={value}
+              onChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "alt is required!",
             },
           }}
-          name="alt"
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <CustomInput
-              isInvalid={Boolean(error?.message)}
-              errorMessage={error?.message}
-              value={value}
-              onChange={onChange}
-              labelPlacement="outside-top"
-              label="توضیحات عکس"
-            />
-          )}
         />
       </div>
       <div>
         <Controller
           control={control}
-          rules={{
-            required: {
-              value: true,
-              message: "description is required!",
-            },
-          }}
           name="description"
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <div>
@@ -152,25 +146,25 @@ const FormContainer: React.FC<IFormContainerProps> = ({
               </CustomWhen>
             </div>
           )}
+          rules={{
+            required: {
+              value: true,
+              message: "description is required!",
+            },
+          }}
         />
       </div>
       <div>
         <Controller
           control={control}
           name="pictureId"
-          rules={{
-            required: {
-              value: true,
-              message: "pictureId is required!",
-            },
-          }}
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <div>
               <CustomImageLoader
-                aspect={610/352}
+                aspect={610 / 352}
+                changeImageHandler={onChange}
                 htmlFor="projectMainImage"
                 value={value}
-                changeImageHandler={onChange}
               />
               <CustomWhen condition={Boolean(error?.message)}>
                 <p className="text-danger mt-1 text-sm font-bold">
@@ -179,36 +173,42 @@ const FormContainer: React.FC<IFormContainerProps> = ({
               </CustomWhen>
             </div>
           )}
+          rules={{
+            required: {
+              value: true,
+              message: "pictureId is required!",
+            },
+          }}
         />
       </div>
       <div>
         <Controller
+          control={control}
+          name={"isActive"}
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomSelect
+              error={error?.message}
+              options={isActiveOptions}
+              selectLabel="وضعیت"
+              value={value}
+              onSelectionChange={onChange}
+            />
+          )}
           rules={{
             required: {
               value: true,
               message: "status is required!",
             },
           }}
-          name={"isActive"}
-          control={control}
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <CustomSelect
-              error={error?.message}
-              selectLabel="وضعیت"
-              options={isActiveOptions}
-              onSelectionChange={onChange}
-              value={value}
-            />
-          )}
         />
       </div>
       <div>
         <Button
-          className="font-bold"
-          isLoading={isCreatePending || isUpdatePending}
           fullWidth
-          type="submit"
+          className="font-bold"
           color={blog ? "warning" : "success"}
+          isLoading={isCreatePending || isUpdatePending}
+          type="submit"
         >
           {blog ? "ویرایش" : "ثبت"}
         </Button>
