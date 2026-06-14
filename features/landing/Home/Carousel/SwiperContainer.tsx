@@ -30,7 +30,7 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
         autoplay={{
           delay: 2500,
         }}
-        className="!w-full bg-black h-screen"
+        className="!w-full bg-black h-[calc(100vh-80px)]"
         modules={[Autoplay]}
         slidesPerView={1}
         spaceBetween={0}
@@ -42,19 +42,21 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
         }}
       >
         {data?.map((item) => (
-          <SwiperSlide key={item?.id} className="!relative hfu">
+          <SwiperSlide key={item?.id} className="!relative">
             <Image fill alt="" src={uploadUrl(item?.pictureId?.image)} />
-            <Link
-              className="absolute left-0 gap-3 h-fit top-0 bottom-0 my-auto w-full flex flex-col items-center"
-              href={item?.link}
-            >
+            <div className="absolute bg-[#0E0E0E]/60 justify-center left-0 gap-3 h-full top-0 bottom-0 my-auto w-full flex flex-col items-center">
               <h1 className="text-3xl leading-11 text-white font-semibold">
                 {item?.title}
               </h1>
-              <p className="text-sm text-gray-lighter w-1/2 text-center">
+              <p className="max-sm:text-sm text-gray-lighter w-1/2 text-center">
                 {item?.description}
               </p>
-            </Link>
+              <Link className="r" href={item?.link}>
+                <Button color="primary" className="font-bold">
+                  مشاهده جزییات
+                </Button>
+              </Link>
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

@@ -8,6 +8,7 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
+    "noUncheckedSideEffectImports": false,
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
@@ -21,7 +22,7 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "public/*" : ["./public"]
+      "public/*": ["./public"]
     }
   },
   "include": [
@@ -29,7 +30,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "svgr.d.ts"
-, "public/sw.js"  ],
+    "svgr.d.ts",
+    "public/sw.js"
+  ],
   "exclude": ["node_modules"]
 }

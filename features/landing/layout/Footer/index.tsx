@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { CallIcon, EmailIcon, InstagramIcon } from "@/components/icons";
+import { CallIcon, EmailIcon, InstagramIcon, SaroojIcon } from "@/components/icons";
 import {
   phones,
   saroojAddress,
@@ -10,7 +10,6 @@ import {
   saroojInstagram,
 } from "@/lib/constants/info";
 import { persianRoutes } from "@/lib/routes/navigationRoutes";
-import Logo from "@/public/images/logo.png";
 
 const Footer = () => {
   return (
@@ -18,7 +17,7 @@ const Footer = () => {
       <div className="container grid grid-cols-4 justify-between lg:gap-24 sm:gap-16 gap-8">
         <div className="flex flex-col gap-3.5 max-sm:items-center lg:col-span-1 sm:col-span-2 col-span-4 ">
           <Link href={persianRoutes.homePage()}>
-            <Image alt="ساروج" src={Logo} />
+            <SaroojIcon className="sm:w-24 h-12 text-white" />
           </Link>
           <p className="max-sm:text-sm  text-gray-lighter font-bold mt-1.5">
             {saroojDescription.substring(0, 98)}
@@ -63,7 +62,7 @@ const Footer = () => {
               className="max-sm:text-sm flex items-center gap-2.5  font-bold text-gray-lighter"
               href={`mailto:${saroojEmail}`}
             >
-              <EmailIcon className="dark:text-white" height={24} width={24} />
+              <EmailIcon className="dark:text-white min-w-6" height={24} width={24} />
               {saroojEmail}
             </Link>
           </div>

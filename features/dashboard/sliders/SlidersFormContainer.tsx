@@ -190,7 +190,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <div>
               <CustomImageLoader
-                aspect={1}
+                aspect={1440 / 670}
                 changeImageHandler={onChange}
                 htmlFor="sliderImage"
                 value={value}
@@ -217,7 +217,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <div>
               <CustomImageLoader
-                aspect={1}
+                aspect={360 / 414}
                 changeImageHandler={onChange}
                 htmlFor="sliderMobileImage"
                 label="آپلود عکس موبایل"

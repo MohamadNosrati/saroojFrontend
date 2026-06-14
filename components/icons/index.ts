@@ -29,3 +29,5 @@ export { default as WriterIcon } from "./landing/writer.svg";
 export { default as RullerIcon } from "./landing/ruller.svg";
 export { default as HomeCowch } from "./landing/homeCowch.svg";
 export { default as BreakIcon } from "./landing/break.svg";
+export { default as AboutPageIcon } from "./landing/aboutPage.svg";
+export { default as SaroojIcon } from "./landing/sarooj.svg";

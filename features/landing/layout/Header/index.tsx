@@ -1,19 +1,17 @@
-import Image from "next/image";
-import Link from "next/link";
-
 import ToggleTheme from "./ToggleTheme";
 import SelectLanguage from "./SelectLanguage";
 import DeskTopNavigation from "./DesktopNavigation";
 import MobileNavigation from "./MobileNavigation";
-
 import {
-  AboutIcon,
+  AboutPageIcon,
   BlogsIcon,
   HouseIcon,
   ProjectsIcon,
+  SaroojIcon,
 } from "@/components/icons";
 import { persianRoutes } from "@/lib/routes/navigationRoutes";
-import Logo from "@/public/images/logo.png";
+import { Suspense } from "react";
+import Link from "next/link";
 
 const data = [
   {
@@ -34,7 +32,7 @@ const data = [
   {
     href: persianRoutes.aboutPage(),
     label: "درباره ما",
-    icon: AboutIcon,
+    icon: AboutPageIcon,
   },
 ];
 
@@ -45,7 +43,7 @@ const Header = () => {
         <div className="flex items-center  xl:gap-24 lg:gap-12 gap-6">
           <MobileNavigation />
           <Link href={persianRoutes.homePage()}>
-            <Image alt="ساروج" className="max-sm:w-24 h-16" src={Logo} />
+            <SaroojIcon className="sm:w-24 h-12 dark:text-white" />
           </Link>
           <DeskTopNavigation data={data} />
         </div>
