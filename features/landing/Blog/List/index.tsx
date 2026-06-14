@@ -8,30 +8,14 @@ import BlogItem from "./BlogItem";
 
 import { blogsRoutes } from "@/lib/routes/apiRoutes";
 import { getData } from "@/lib/services/data";
-import { IBaseResponse, IPaginatedResponse } from "@/lib/types/base";
+import {
+  IBaseResponse,
+  IPaginatedResponse,
+  SortByEnum,
+} from "@/lib/types/base";
 import { IBlog } from "@/lib/types/blog";
 import { CustomWhen } from "@/components/ui/CustomWhen";
-
-enum SortByEnum {
-  NEWEST = "newest",
-  OLDEST = "oldest",
-}
-
-type TOption = {
-  label: string;
-  key: SortByEnum;
-};
-
-const options: TOption[] = [
-  {
-    key: SortByEnum.NEWEST,
-    label: "جدیدترین",
-  },
-  {
-    key: SortByEnum.OLDEST,
-    label: "قدیمی ترین",
-  },
-];
+import { sortOptions } from "@/lib/config/sort";
 
 export default function BlogsList() {
   const [selected, setSelected] = useState<SortByEnum>(SortByEnum.NEWEST);
@@ -110,7 +94,7 @@ export default function BlogsList() {
                 }
               }}
             >
-              {options.map((animal) => (
+              {sortOptions.map((animal) => (
                 <SelectItem key={animal.key} dir="rtl">
                   {animal.label}
                 </SelectItem>

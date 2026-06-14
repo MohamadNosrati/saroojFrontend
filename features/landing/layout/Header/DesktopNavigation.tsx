@@ -1,4 +1,8 @@
+"use client";
+
+import clsx from "clsx";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface IProps {
   data: {
@@ -9,6 +13,8 @@ interface IProps {
 }
 
 export default function DeskTopNavigation({ data }: IProps) {
+  const pathName = usePathname();
+
   return (
     <div className="flex max-lg:hidden items-center gap-12">
       {data?.map((item) => {
@@ -17,7 +23,12 @@ export default function DeskTopNavigation({ data }: IProps) {
         return (
           <Link
             key={item?.label}
-            className="dark:text-white hover:text-primary hover:dark:text-primary transition-all duration-300 flex min-w-fit items-center gap-1 text-black font-bold"
+            className={clsx([
+              "dark:text-white  flex min-w-fit items-center gap-1 text-black font-bold",
+              item?.href === pathName
+                ? "bg-primary px-2.5 py-1.5 rounded-lg"
+                : "hover:text-primary hover:dark:text-primary transition-all duration-300",
+            ])}
             href={item?.href}
           >
             <span className="block pb-1">

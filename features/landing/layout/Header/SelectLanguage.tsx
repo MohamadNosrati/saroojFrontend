@@ -12,7 +12,7 @@ import { ArrowIcon, WorldIcon } from "@/components/icons";
 
 export default function SelectLanguage() {
   return (
-    <Dropdown>
+    <Dropdown isDisabled>
       <DropdownTrigger>
         <Button
           className="!border-primary  min-w-0 flex gap-2 items-center"

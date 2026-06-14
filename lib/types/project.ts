@@ -65,4 +65,6 @@ export interface IUpdateProjectPayload extends IProjectPayload {
 export interface IProjectParams {
   page: number;
   limit: number;
+  asc: boolean;
+  sort: string;
 }

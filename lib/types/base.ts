@@ -15,3 +15,13 @@ export interface ISocketAcknowledgement<T = any> {
   data?: T;
   message?: string;
 }
+
+export enum SortByEnum {
+  NEWEST = "newest",
+  OLDEST = "oldest",
+}
+
+export type TOption = {
+  label: string;
+  key: SortByEnum;
+};

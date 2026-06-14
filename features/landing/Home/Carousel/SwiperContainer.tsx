@@ -44,18 +44,24 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
         {data?.map((item) => (
           <SwiperSlide key={item?.id} className="!relative">
             <Image fill alt="" src={uploadUrl(item?.pictureId?.image)} />
-            <div className="absolute bg-[#0E0E0E]/60 justify-center left-0 gap-3 h-full top-0 bottom-0 my-auto w-full flex flex-col items-center">
-              <h1 className="text-3xl leading-11 text-white font-semibold">
-                {item?.title}
-              </h1>
-              <p className="max-sm:text-sm text-gray-lighter w-1/2 text-center">
-                {item?.description}
-              </p>
-              <Link className="r" href={item?.link}>
-                <Button color="primary" className="font-bold">
-                  مشاهده جزییات
-                </Button>
-              </Link>
+            <div className="absolute bg-[#0E0E0E]/60 justify-center  gap-3 h-full top-0 bottom-0 my-auto w-full flex flex-col items-center">
+              <div className="max-w-4/5 flex flex-col items-center">
+                <h1 className="text-3xl leading-11 text-white text-center font-semibold">
+                  {item?.title}
+                </h1>
+                <p className="max-sm:text-sm text-gray-lighter w-full text-center">
+                  {item?.description}
+                </p>
+                <Link className="mt-10" href={item?.link}>
+                  <Button
+                    className="font-bold text-lg"
+                    color="primary"
+                    variant="ghost"
+                  >
+                    مشاهده جزییات
+                  </Button>
+                </Link>
+              </div>
             </div>
           </SwiperSlide>
         ))}

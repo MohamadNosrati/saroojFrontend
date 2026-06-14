@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 import { persianRoutes } from "@/lib/routes/navigationRoutes";
 import {
-  AboutIcon,
+  AboutPageIcon,
   ArrowIcon,
   BlogsIcon,
   CloseIcon,
@@ -35,7 +35,7 @@ const data = [
   {
     href: persianRoutes.aboutPage(),
     label: "درباره ما",
-    icon: AboutIcon,
+    icon: AboutPageIcon,
   },
 ];
 
@@ -70,7 +70,7 @@ export default function MobileNavigation() {
       </Button>
       <div
         className={clsx([
-          "dark:bg-black w-full transition-all duration-300 container top-20 py-6 gap-6 fixed  right-0 flex-col bg-white h-fit border-t-2 z-10 border-gray ",
+          "dark:bg-black w-full transition-all duration-300 container top-20 py-6 gap-2.5 fixed flex  right-0 flex-col bg-white h-fit border-t-2 z-10 border-gray ",
           isOpen ? "opacity-100 visible" : "opacity-0 invisible",
         ])}
       >
@@ -80,15 +80,22 @@ export default function MobileNavigation() {
           return (
             <Link
               key={item?.href}
-              className="dark:text-white w-full hover:text-primary hover:dark:text-primary border-3 hover:border-primary border-transparent rounded-2xl transition-colors duration-300 py-1 px-2 flex min-w-fit items-center justify-center gap-2.5 text-black font-bold text-lg"
+              className={clsx([
+                "dark:text-white  border-transparent rounded-2xl transition-all duration-300 py-1 px-2 flex min-w-fit items-center w-full justify-center gap-2.5 text-black font-bold text-lg",
+                item?.href === pathname
+                  ? "bg-primary"
+                  : "hover:text-primary hover:dark:text-primary border-3 hover:border-primary",
+              ])}
               href={item?.href}
             >
-              <span className="block pb-1">
-                <Icon height={24} width={24} />
-              </span>
-              {item?.label}
-              <div>
-                <ArrowIcon className="rotate-180" height={20} width={20} />
+              <div className="flex items-center gap-1 w-24">
+                <span className="block pb-1">
+                  <Icon height={20} width={20} />
+                </span>
+                {item?.label}
+              </div>
+              <div className="pb-1">
+                <ArrowIcon className="rotate-180" height={12} width={16} />
               </div>
             </Link>
           );

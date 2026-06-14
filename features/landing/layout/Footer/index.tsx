@@ -1,7 +1,11 @@
-import Image from "next/image";
 import Link from "next/link";
 
-import { CallIcon, EmailIcon, InstagramIcon, SaroojIcon } from "@/components/icons";
+import {
+  CallIcon,
+  EmailIcon,
+  InstagramIcon,
+  SaroojIcon,
+} from "@/components/icons";
 import {
   phones,
   saroojAddress,
@@ -62,7 +66,11 @@ const Footer = () => {
               className="max-sm:text-sm flex items-center gap-2.5  font-bold text-gray-lighter"
               href={`mailto:${saroojEmail}`}
             >
-              <EmailIcon className="dark:text-white min-w-6" height={24} width={24} />
+              <EmailIcon
+                className="dark:text-white min-w-6"
+                height={24}
+                width={24}
+              />
               {saroojEmail}
             </Link>
           </div>

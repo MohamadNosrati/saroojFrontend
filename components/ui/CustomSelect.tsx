@@ -131,6 +131,7 @@ const CustomSelect: React.FC<ICustomSelectProps> = ({
           ${error ? "border-red-500" : ""}
           transition-all duration-200
         `}
+        type="button"
         onClick={() => {
           if (!disabled) {
             setIsOpen(!isOpen);
@@ -177,18 +178,21 @@ const CustomSelect: React.FC<ICustomSelectProps> = ({
                 گزینه‌ای موجود نیست
               </div>
             ) : (
-              options.map((option) => (
-                <button
-                  key={option.key}
-                  className={`
-                    px-3 py-2 text-sm cursor-pointer transition-colors duration-150
+              <div className="flex flex-col gap-1">
+                {options.map((option) => (
+                  <button
+                    key={option.key}
+                    className={`
+                    px-3 py-2 w-full text-sm text-right cursor-pointer transition-colors duration-150
                     ${option.key === value ? "bg-blue-50 text-blue-700" : "text-gray-700 hover:bg-gray-50"}
                   `}
-                  onClick={() => handleSelect(option.key)}
-                >
-                  {option.label}
-                </button>
-              ))
+                    type="button"
+                    onClick={() => handleSelect(option.key)}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
             )}
           </div>
         </div>

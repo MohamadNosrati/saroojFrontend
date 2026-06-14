@@ -1,7 +1,12 @@
+"use client";
+
+import Link from "next/link";
+
 import ToggleTheme from "./ToggleTheme";
 import SelectLanguage from "./SelectLanguage";
 import DeskTopNavigation from "./DesktopNavigation";
 import MobileNavigation from "./MobileNavigation";
+
 import {
   AboutPageIcon,
   BlogsIcon,
@@ -10,8 +15,6 @@ import {
   SaroojIcon,
 } from "@/components/icons";
 import { persianRoutes } from "@/lib/routes/navigationRoutes";
-import { Suspense } from "react";
-import Link from "next/link";
 
 const data = [
   {
