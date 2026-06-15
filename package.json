@@ -72,6 +72,7 @@
     "next": "^15.3.8",
     "next-themes": "0.4.6",
     "nextjs-toploader": "^3.9.17",
+    "posthog-js": "^1.386.6",
     "react": "18.3.1",
     "react-before-after-slider-component": "^1.1.8",
     "react-compare-image": "^3.5.17",
