@@ -1,11 +1,17 @@
 import Image from "next/image";
 
-import BannerImage from "@/public/images/banner.png";
+import BannerImage from "@/public/images/projectsBanner.png";
 
 const Banner = () => {
   return (
-    <section>
-      <Image alt="" className="object-cover w-full" src={BannerImage} />
+    <section className="dark:bg-black bg-white">
+      <div className="container mt-8 relative">
+        <Image
+          alt=""
+          className="h-full object-cover rounded-2xl  w-full"
+          src={BannerImage}
+        />
+      </div>
     </section>
   );
 };

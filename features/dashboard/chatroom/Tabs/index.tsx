@@ -59,15 +59,15 @@ const Tabs: React.FC<IProps> = ({
   });
 
   return (
-    <div className="flex w-full h-full overflow-auto relative">
+    <div className="flex w-full h-full overflow-auto relative bg-gray-darker">
       <div className="flex flex-col relative w-full ">
-        <div className="flex gap-2 sticky top-0">
+        <div className="flex sticky top-0">
           {tabs?.map((item, index) => (
             <Button
               key={index}
-              className="grow"
+              className="grow rounded-none"
               color="success"
-              variant={item?.key === selected ? "solid" : "faded"}
+              variant={item?.key === selected ? "solid" : "ghost"}
               onPress={() => setSelected(item?.key)}
             >
               {item?.label}

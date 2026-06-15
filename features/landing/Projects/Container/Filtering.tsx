@@ -1,5 +1,5 @@
 import { Checkbox, CheckboxGroup } from "@heroui/checkbox";
-import clsx from "clsx";
+import { motion } from "framer-motion";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { Select, SelectItem } from "@heroui/select";
 import { useSearchParams } from "next/navigation";
@@ -62,8 +62,19 @@ export default function Filtering({
   };
 
   return (
-    <div className="flex items-center gap-2.5">
-      <div className="w-60">
+    <motion.div
+      initial={{ opacity: 0, x: 30 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="flex items-center max-lg:flex-col gap-2.5"
+    >
+      <motion.div
+        whileHover={{
+          scale: 1.02,
+        }}
+        className="min-w-60 max-lg:w-full"
+      >
         <Select
           fullWidth
           classNames={{
@@ -77,7 +88,7 @@ export default function Filtering({
           selectedKeys={[selected]}
           onChange={(e) => {
             if (e.target.value) {
-              setSelected(e?.target.value as SortByEnum);
+              setSelected(e.target.value as SortByEnum);
             }
           }}
         >
@@ -87,29 +98,45 @@ export default function Filtering({
             </SelectItem>
           ))}
         </Select>
-      </div>
+      </motion.div>
+
       <CheckboxGroup
         isDisabled={isLoading}
         value={groupSelected}
         onValueChange={handleChangeCategories}
       >
-        <div className="flex h-full gap-4">
-          {data?.map((item) => (
-            <div
+        <div className="flex h-full sm:gap-4 gap-2.5 flex-wrap items-center justify-center">
+          {data?.map((item, index) => (
+            <motion.div
               key={item?.id}
-              className="flex !h-10 items-center rounded-xl bg-white px-2.5"
+              initial={{
+                opacity: 0,
+                y: 15,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                delay: index * 0.05,
+              }}
+              whileHover={{
+                y: -2,
+              }}
+              className="flex h-10 items-center rounded-xl bg-white px-2.5"
             >
               <Checkbox
                 classNames={{
-                  base: clsx([
+                  base: [
                     "inline-flex w-full !max-h-none !h-10 max-w-none text-no-wrap",
                     "justify-start",
                     "cursor-pointer rounded-lg data-[hover=true]:bg-transparent border-2 border-transparent",
-                  ]),
+                  ].join(" "),
                   label: "!h-full !min-w-fit",
                 }}
                 isDisabled={
-                  groupSelected?.length === 1 && groupSelected[0] === item?.id
+                  groupSelected?.length === 1 &&
+                  groupSelected[0] === item?.id
                 }
                 value={item?.id}
               >
@@ -117,10 +144,10 @@ export default function Filtering({
                   {item?.title}
                 </span>
               </Checkbox>
-            </div>
+            </motion.div>
           ))}
         </div>
       </CheckboxGroup>
-    </div>
+    </motion.div>
   );
 }

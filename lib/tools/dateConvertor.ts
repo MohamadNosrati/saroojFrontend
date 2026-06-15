@@ -22,5 +22,5 @@ export const toPersianReadable = (gregorianDateStr: string) => {
     year: "numeric",
     month: "long",
     day: "numeric",
-  }).format(date);
+  })?.format(date);
 };

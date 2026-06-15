@@ -71,11 +71,12 @@ const Chat: React.FC<IProps> = ({
         }>,
       ) => {
         if (response?.success === true) {
-          console.log("response", response);
           updateCache(
             messageRoutes.getConversationMessages(selectedConversation?.id),
-            response?.data?.message,
+            response?.data?.message as IMessage,
+            true,
           );
+          scrollToBottom()
           if (!selectedConversation) {
             setSelectedConversation(response?.data?.conversation);
             queryClient.invalidateQueries({
@@ -94,9 +95,9 @@ const Chat: React.FC<IProps> = ({
     setTimeout(() => {
       chatBottomRef?.current?.scrollIntoView({
         behavior: "smooth",
-        block: "end",
+        block: "center",
       });
-    }, 100);
+    }, 20);
   };
 
   useEffect(() => {
@@ -125,10 +126,10 @@ const Chat: React.FC<IProps> = ({
     <>
       {ChateSelected ? (
         <>
-          <div className="grow flex flex-col gap-y-1 p-4 w-full max-h-[calc(100%-80px)] overflow-auto">
+          <div className="grow flex flex-col gap-y-1 p-4 w-full max-h-[calc(100%-80px)] pb-6 overflow-auto">
             <CustomWhen condition={Boolean(messages?.length)}>
-              {messages?.map((item) => (
-                <MessageItem key={item.date} item={item} />
+              {messages?.map((item, index) => (
+                <MessageItem key={item?.date} item={item} />
               ))}
             </CustomWhen>
             <CustomWhen condition={!Boolean(messages?.length) && !isLoading}>
@@ -141,7 +142,7 @@ const Chat: React.FC<IProps> = ({
                 <Spinner size="lg" />
               </div>
             </CustomWhen>
-            <div ref={chatBottomRef} />
+            <div ref={chatBottomRef} className="h-3" />
           </div>
           <div className="p-1.5 absolute min-h-fit bottom-0 z-10 bg-white flex w-full">
             <Button

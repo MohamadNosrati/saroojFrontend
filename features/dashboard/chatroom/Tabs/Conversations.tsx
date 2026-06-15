@@ -46,7 +46,7 @@ const Conversations: React.FC<IProps> = ({
               />
             </CustomWhen>
           </div>
-          <span>{item?.otherUser?.userName}</span>
+          <span className="text-white">{item?.otherUser?.userName}</span>
         </button>
       ))}
     </div>

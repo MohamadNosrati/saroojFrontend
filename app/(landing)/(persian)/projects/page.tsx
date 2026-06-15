@@ -55,6 +55,8 @@ const ProjectsPage = async () => {
         ProjectsRoute.getAll({
           page: pageParam,
           limit: 9,
+          asc: false,
+          sort: "createdAt",
         }),
       ),
     initialPageParam: 1,

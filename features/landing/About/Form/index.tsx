@@ -10,6 +10,31 @@ import z from "zod";
 import FormBg from "@/public/images/formBg.png";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { commentServices } from "@/lib/services/comments";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+    },
+  },
+};
 
 const commentSchema = z.object({
   email: z
@@ -58,89 +83,158 @@ const Form = () => {
   };
 
   return (
-    <div
-      className="flex-col bg-cover gap-y-14 lg:py-20  md:py-14 py-10 flex items-center dark:bg-dark bg-white relative"
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="flex-col bg-cover gap-y-14 lg:py-20 md:py-14 py-10 flex items-center dark:bg-dark bg-white relative overflow-hidden"
       style={{
         backgroundImage: `url(${FormBg?.src})`,
       }}
     >
-      <p className="dark:text-white  text-dark text-center lg:text-xl font-bold text-base">
+      {/* Background Glow */}
+      <motion.div
+        animate={{
+          scale: [1, 1.15, 1],
+          opacity: [0.15, 0.3, 0.15],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="absolute w-[500px] h-[500px] rounded-full bg-primary/20 blur-3xl -z-10"
+      />
+
+      {/* Title */}
+      <motion.p
+        initial={{
+          opacity: 0,
+          y: 25,
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+        }}
+        viewport={{ once: true }}
+        transition={{
+          duration: 0.7,
+          ease: "easeOut",
+        }}
+        className="dark:text-white text-dark text-center lg:text-xl font-bold text-base"
+      >
         اگر سوالی دارید <br />
         لطفا در ارسال پیام به ما تردید نکنید !
-      </p>
+      </motion.p>
+
       <form
         className="container flex justify-center"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="flex lg:w-2/3 sm:w-3/5  w-full flex-col items-center gap-5">
-          <Controller
-            control={control}
-            name="fullname"
-            render={({ field: { value, onChange }, fieldState: { error } }) => (
-              <Input
-                fullWidth
-                classNames={{
-                  inputWrapper:
-                    "dark:bg-gray-darker rounded-none data-[hover=true]:dark:bg-gray-darker bg-gray-lighter data-[hover=true]:bg-gray-lighter text-gray-lighter font-medium",
-                }}
-                errorMessage={error?.message}
-                isInvalid={Boolean(error?.message)}
-                placeholder="نام و نام خانوادگی"
-                type="text"
-                value={value}
-                onChange={onChange}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name="email"
-            render={({ field: { value, onChange }, fieldState: { error } }) => (
-              <Input
-                fullWidth
-                classNames={{
-                  inputWrapper:
-                    "dark:bg-gray-darker rounded-none data-[hover=true]:dark:bg-gray-darker bg-gray-lighter data-[hover=true]:bg-gray-lighter text-gray-lighter font-medium",
-                }}
-                errorMessage={error?.message}
-                isInvalid={Boolean(error?.message)}
-                placeholder="ایمیل"
-                type="text"
-                value={value}
-                onChange={onChange}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name="text"
-            render={({ field: { value, onChange }, fieldState: { error } }) => (
-              <Input
-                fullWidth
-                classNames={{
-                  inputWrapper:
-                    "dark:bg-gray-darker rounded-none data-[hover=true]:dark:bg-gray-darker bg-gray-lighter data-[hover=true]:bg-gray-lighter text-gray-lighter font-medium",
-                }}
-                errorMessage={error?.message}
-                isInvalid={Boolean(error?.message)}
-                placeholder="متن پیام"
-                type="text"
-                value={value}
-                onChange={onChange}
-              />
-            )}
-          />
-          <Button
-            className="rounded-none font-bold max-sm:w-full"
-            color="primary"
-            isLoading={isPending}
-            type="submit"
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="flex lg:w-2/3 sm:w-3/5 w-full flex-col items-center gap-5"
+        >
+          <motion.div variants={itemVariants} className="w-full">
+            <Controller
+              control={control}
+              name="fullname"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <Input
+                  fullWidth
+                  classNames={{
+                    inputWrapper:
+                      "dark:bg-gray-darker rounded-none data-[hover=true]:dark:bg-gray-darker bg-gray-lighter data-[hover=true]:bg-gray-lighter text-gray-lighter font-medium",
+                  }}
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  placeholder="نام و نام خانوادگی"
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            />
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="w-full">
+            <Controller
+              control={control}
+              name="email"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <Input
+                  fullWidth
+                  classNames={{
+                    inputWrapper:
+                      "dark:bg-gray-darker rounded-none data-[hover=true]:dark:bg-gray-darker bg-gray-lighter data-[hover=true]:bg-gray-lighter text-gray-lighter font-medium",
+                  }}
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  placeholder="ایمیل"
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            />
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="w-full">
+            <Controller
+              control={control}
+              name="text"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <Input
+                  fullWidth
+                  classNames={{
+                    inputWrapper:
+                      "dark:bg-gray-darker rounded-none data-[hover=true]:dark:bg-gray-darker bg-gray-lighter data-[hover=true]:bg-gray-lighter text-gray-lighter font-medium",
+                  }}
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  placeholder="متن پیام"
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            />
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            whileHover={{
+              scale: 1.03,
+            }}
+            whileTap={{
+              scale: 0.96,
+            }}
           >
-            ارسال پیام
-          </Button>
-        </div>
+            <Button
+              className="rounded-none font-bold max-sm:w-full"
+              color="primary"
+              isLoading={isPending}
+              type="submit"
+            >
+              ارسال پیام
+            </Button>
+          </motion.div>
+        </motion.div>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

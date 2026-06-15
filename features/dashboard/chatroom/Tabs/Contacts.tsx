@@ -66,7 +66,7 @@ const Contacts: React.FC<IProps> = ({
                   />
                 </CustomWhen>
               </div>
-              <span>{item?.userName}</span>
+              <span className="text-white">{item?.userName}</span>
             </button>
           ))}
         </div>

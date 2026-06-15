@@ -20,6 +20,31 @@ import { CustomWhen } from "@/components/ui/CustomWhen";
 import { useGetCategories } from "@/lib/hooks/categories";
 import ProjectSclton from "@/components/ui/ProjectScleton";
 
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    y: 30,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+    },
+  },
+};
+
 const Container = () => {
   const [selected, setSelected] = useState<SortByEnum>(SortByEnum.NEWEST);
   const [groupSelected, setGroupSelected] = useState<string[]>([]);
@@ -79,42 +104,50 @@ const Container = () => {
   }, [groupSelected, data]);
 
   return (
-    <section className="py-20 items-center bg-black">
-      <div className="flex container items-center justify-between">
-        <div>
-          <span className="dark:text-white font-medium sm:text-2xl text-xl  text-white">
-            لیست مقالات
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.15 }}
+      variants={containerVariants}
+      className="lg:pb-20 sm:pb-14 pb-10 dark:bg-black bg-white overflow-hidden lg:mt-12 mt-6"
+    >
+      <div className="container flex max-lg:flex-col gap-2.5 items-center justify-between">
+        <motion.div variants={itemVariants}>
+          <span className="font-bold sm:text-4xl text-2xl dark:text-white">
+            پروژه های ساروج
           </span>
-        </div>
-        <Filtering
-          data={categoriesData?.data || []}
-          filtering={{
-            groupSelected: groupSelected,
-            setGroupSelected: setGroupSelected,
-          }}
-          isLoading={isLoadingCategories}
-          sort={{
-            selected: selected,
-            setSelected: setSelected,
-          }}
-        />
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <Filtering
+            data={categoriesData?.data || []}
+            filtering={{
+              groupSelected,
+              setGroupSelected,
+            }}
+            isLoading={isLoadingCategories}
+            sort={{
+              selected,
+              setSelected,
+            }}
+          />
+        </motion.div>
       </div>
-      <div className="container mt-10 grid lg:grid-cols-3 sm:grid-cols-2 gap-5">
-        {isLoading ? (
-          [1, 2, 3]?.map((item) => <ProjectSclton key={item} />)
-        ) : (
-          <>
-            {filteredProjects?.map((item) => (
+      <motion.div
+        variants={itemVariants}
+        className="container mt-10 grid lg:grid-cols-3 grid-cols-2 gap-5"
+      >
+        {isLoading
+          ? [1, 2, 3].map((item) => <ProjectSclton key={item} />)
+          : filteredProjects?.map((item) => (
               <ProjectItem key={item?.id} item={item as IProject} />
             ))}
-          </>
-        )}
-      </div>
+      </motion.div>
       <CustomWhen condition={hasNextPage}>
         <div ref={loadMoreRef} className="w-full h-20" />
       </CustomWhen>
       {isFetchingNextPage && <Spinner color="primary" />}
-    </section>
+    </motion.section>
   );
 };
 

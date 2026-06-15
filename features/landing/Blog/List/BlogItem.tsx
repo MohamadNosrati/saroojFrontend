@@ -9,9 +9,22 @@ import { uploadUrl } from "@/lib/tools/upload";
 
 interface IProps {
   item: IBlog;
+  itemVariants?: {
+    hidden: {
+      opacity: number;
+      y: number;
+    };
+    visible: {
+      opacity: number;
+      y: number;
+      transition: {
+        duration: number;
+      };
+    };
+  };
 }
 
-export default function BlogItem({ item }: IProps) {
+export default function BlogItem({ item, itemVariants }: IProps) {
   return (
     <Link href={persianRoutes.singleBlogPage("fdsfsdg")}>
       <div className="aspect-video relative">

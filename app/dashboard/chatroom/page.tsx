@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { Spinner } from "@heroui/spinner";
 import { useQueryClient } from "@tanstack/react-query";
-
 import { responseHandler } from "@/lib/tools/responseHandler";
 import Tabs from "@/features/dashboard/chatroom/Tabs";
 import Chat from "@/features/dashboard/chatroom/Chat";
@@ -105,7 +104,7 @@ export default function Chatroom() {
   }, [user?.id]);
 
   return (
-    <div className="flex h-full bg-gray-900 overflow-hidden">
+    <div className="flex h-full  overflow-hidden">
       <div className="h-full w-60">
         <Tabs
           selectedContact={selectedContact}

@@ -5,13 +5,10 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "@heroui/button";
 import { useRef, useState } from "react";
-
+import { motion, AnimatePresence } from "framer-motion";
 import type { Swiper as SwiperType } from "swiper/types";
-
 import { Autoplay } from "swiper/modules";
 import Link from "next/link";
-
-import cn from "@/lib/tools/cn";
 import { ISlider } from "@/lib/types/slider";
 import { uploadUrl } from "@/lib/tools/upload";
 
@@ -24,11 +21,17 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
   const swiperRef = useRef<SwiperType | null>(null);
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      className="relative"
+    >
       <Swiper
         loop
         autoplay={{
           delay: 2500,
+          disableOnInteraction: false,
         }}
         className="!w-full bg-black h-[calc(100vh-80px)]"
         modules={[Autoplay]}
@@ -41,46 +44,106 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
           swiperRef.current = swiper;
         }}
       >
-        {data?.map((item) => (
-          <SwiperSlide key={item?.id} className="!relative">
-            <Image fill alt="" src={uploadUrl(item?.pictureId?.image)} />
-            <div className="absolute bg-[#0E0E0E]/60 justify-center  gap-3 h-full top-0 bottom-0 my-auto w-full flex flex-col items-center">
-              <div className="max-w-4/5 flex flex-col items-center">
-                <h1 className="text-3xl leading-11 text-white text-center font-semibold">
+        {data?.map((item, index) => (
+          <SwiperSlide key={item?.id} className="!relative overflow-hidden">
+            {/* IMAGE ZOOM LAYER */}
+            <motion.div
+              initial={{ scale: 1.1 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 2, ease: "easeOut" }}
+              className="absolute inset-0"
+            >
+              <Image
+                fill
+                alt={item?.alt || ""}
+                src={uploadUrl(item?.pictureId?.image)}
+                // className="object-cover"
+              />
+            </motion.div>
+
+            {/* DARK OVERLAY */}
+            <div className="absolute inset-0 bg-[#0E0E0E]/60" />
+
+            {/* CONTENT */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="max-w-4/5 flex flex-col items-center text-center">
+                {/* TITLE */}
+                <motion.h1
+                  key={`title-${index}`}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{
+                    opacity: index === activeIndex ? 1 : 0,
+                    y: index === activeIndex ? 0 : 30,
+                  }}
+                  transition={{ duration: 0.6 }}
+                  className="text-3xl leading-11 text-white font-semibold"
+                >
                   {item?.title}
-                </h1>
-                <p className="max-sm:text-sm text-gray-lighter w-full text-center">
+                </motion.h1>
+
+                {/* DESCRIPTION */}
+                <motion.p
+                  key={`desc-${index}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{
+                    opacity: index === activeIndex ? 1 : 0,
+                    y: index === activeIndex ? 0 : 20,
+                  }}
+                  transition={{ duration: 0.7, delay: 0.1 }}
+                  className="max-sm:text-sm text-gray-lighter mt-3"
+                >
                   {item?.description}
-                </p>
-                <Link className="mt-10" href={item?.link}>
-                  <Button
-                    className="font-bold text-lg"
-                    color="primary"
-                    variant="ghost"
-                  >
-                    مشاهده جزییات
-                  </Button>
-                </Link>
+                </motion.p>
+
+                {/* BUTTON */}
+                <motion.div
+                  key={`btn-${index}`}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{
+                    opacity: index === activeIndex ? 1 : 0,
+                    scale: index === activeIndex ? 1 : 0.9,
+                  }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="mt-10"
+                >
+                  <Link href={item?.link}>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Button
+                        className="font-bold text-lg"
+                        color="primary"
+                        variant="ghost"
+                      >
+                        مشاهده جزییات
+                      </Button>
+                    </motion.div>
+                  </Link>
+                </motion.div>
               </div>
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
+
+      {/* DOT NAVIGATION */}
       <div className="w-full absolute z-10 gap-11 flex justify-center left-0 bottom-11">
         {data?.map((item, index) => (
-          <Button
+          <motion.button
             key={item?.id + index}
-            className={cn(
-              "min-h-0 min-w-0 border-2 border-white  h-3 w-3 rounded-full bg-transparent p-0",
-              {
-                "bg-white border-transparent": index === activeIndex,
-              },
-            )}
-            onPress={() => swiperRef.current?.slideTo(index)}
+            className="h-3 w-3 rounded-full border-2 border-white"
+            animate={{
+              scale: index === activeIndex ? 1.3 : 1,
+              backgroundColor:
+                index === activeIndex ? "#ffffff" : "transparent",
+            }}
+            transition={{ duration: 0.3 }}
+            onClick={() => swiperRef.current?.slideTo(index)}
           />
         ))}
       </div>
-    </>
+    </motion.div>
   );
 };
 

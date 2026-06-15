@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import { motion } from "framer-motion";
 
 import CommentImage from "@/public/images/commentImage.png";
 import { DobleQuatesIcon } from "@/components/icons";
@@ -10,21 +10,72 @@ interface IProps {
 
 const CommentItem: React.FC<IProps> = ({ item }) => {
   return (
-    <div className="w-full pt-14 pb-10 px-5 relative flex flex-col items-center bg-gray-darker">
-      <div className="absolute w-24 h-24 left-0 right-0 mx-auto -top-12 rounded-full">
+    <motion.div
+      whileHover={{
+        y: -8,
+      }}
+      transition={{
+        duration: 0.25,
+      }}
+      className="
+        relative
+        flex
+        flex-col
+        items-center
+        px-6
+        pt-16
+        pb-10
+        rounded-2xl
+bg-gradient-to-b
+from-gray-darker
+to-gray-darker/80
+        border
+        border-white/5
+      "
+    >
+      {/* Glow */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
+
+      {/* Avatar */}
+      <motion.div
+        animate={{
+          y: [0, -6, 0],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="absolute -top-12 left-0 right-0 mx-auto w-24 h-24 rounded-full"
+      >
         <Image alt="" src={CommentImage} />
-      </div>
-      <span className="text-base text-white-gray font-bold ">
-        {item?.fullName}
+      </motion.div>
+
+      <span className="text-base font-bold text-white-gray">
+        {item.fullName}
       </span>
-      <span className="text-gray-lighter block mt-1 text-sm font-medium">
-        {item?.email}
+
+      <span className="mt-1 text-sm font-medium text-gray-lighter">
+        {item.email}
       </span>
-      <span className="mt-5">
-        <DobleQuatesIcon className="text-primary" height={12} width={16} />
-      </span>
-      <p className="mt-5 text-center text-gray-lighter">{item?.text}</p>
-    </div>
+
+      <motion.div
+        animate={{
+          rotate: [-3, 3, -3],
+        }}
+        transition={{
+          duration: 5,
+          repeat: Infinity,
+        }}
+        className="mt-5"
+      >
+        <DobleQuatesIcon className="text-primary" height={14} width={18} />
+      </motion.div>
+
+      <p className="mt-5 text-center leading-8 text-gray-lighter">
+        {item.text}
+      </p>
+    </motion.div>
   );
 };
 

@@ -17,6 +17,31 @@ import { IBlog } from "@/lib/types/blog";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { sortOptions } from "@/lib/config/sort";
 
+import { motion } from "framer-motion";
+
+const sectionVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    y: 30,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+    },
+  },
+};
+
 export default function BlogsList() {
   const [selected, setSelected] = useState<SortByEnum>(SortByEnum.NEWEST);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -67,14 +92,24 @@ export default function BlogsList() {
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
-    <section className="relative  dark:bg-dark bg-white lg:pb-24  md:pb-20 sm:pt-10 sm:pb-16 pb-12">
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.15 }}
+      variants={sectionVariants}
+      className="relative dark:bg-dark bg-white lg:pb-24 md:pb-20 sm:pt-10 sm:pb-16 pb-12 overflow-hidden"
+    >
       <div className="container flex flex-col gap-4">
-        <div className="flex items-center justify-between">
+        <motion.div
+          variants={itemVariants}
+          className="flex items-center justify-between"
+        >
           <div>
-            <span className="dark:text-white font-medium sm:text-2xl text-xl  text-dark">
+            <span className="dark:text-white font-medium sm:text-4xl text-2l text-dark">
               لیست مقالات
             </span>
           </div>
+
           <div className="w-60">
             <Select
               fullWidth
@@ -90,7 +125,7 @@ export default function BlogsList() {
               selectedKeys={[selected]}
               onChange={(e) => {
                 if (e.target.value) {
-                  setSelected(e?.target.value as SortByEnum);
+                  setSelected(e.target.value as SortByEnum);
                 }
               }}
             >
@@ -101,17 +136,39 @@ export default function BlogsList() {
               ))}
             </Select>
           </div>
-        </div>
-        <div className="grid gap-5 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1">
+        </motion.div>
+
+        <motion.div
+          variants={itemVariants}
+          className="grid gap-5 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1"
+        >
           {data?.pages
             ?.flatMap((page) => page?.data?.result)
-            ?.map((item) => <BlogItem key={item?.id} item={item as IBlog} />)}
-        </div>
+            ?.map((item) => (
+              <BlogItem
+                key={item?.id}
+                item={item as IBlog}
+                itemVariants={itemVariants}
+              />
+            ))}
+        </motion.div>
+
         <CustomWhen condition={hasNextPage}>
           <div ref={loadMoreRef} className="w-full h-20" />
         </CustomWhen>
       </div>
-      <div className="absolute bottom-0 left-0 lg:h-80 h-40 bg-gradient-to-t from-primary via-primary/30 z-0 to-transparent w-full" />
-    </section>
+
+      <motion.div
+        animate={{
+          opacity: [0.5, 1, 0.5],
+        }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="absolute bottom-0 left-0 lg:h-80 h-40 bg-gradient-to-t from-primary via-primary/30 to-transparent w-full pointer-events-none"
+      />
+    </motion.section>
   );
 }
