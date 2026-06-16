@@ -78,7 +78,7 @@ export default function Filtering({
         <Select
           fullWidth
           classNames={{
-            trigger: "bg-white dark:!text-white",
+            trigger: "bg-white dark:bg-dark dark:!text-white",
             innerWrapper: "text-white",
             listboxWrapper: "dark:bg-gray-darker dark:text-white",
             base: "border-1 rounded-lg !font-yekan",
