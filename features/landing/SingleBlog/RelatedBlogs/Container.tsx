@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 
 import BlogItem from "../../Blog/List/BlogItem";
+
 import { IBlog } from "@/lib/types/blog";
 
 interface IProps {

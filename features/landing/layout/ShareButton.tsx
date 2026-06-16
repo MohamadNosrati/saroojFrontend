@@ -1,8 +1,9 @@
 "use client";
 
+import { Button } from "@heroui/button";
+
 import { ShareIcon } from "@/components/icons";
 import useShare from "@/lib/hooks/share";
-import { Button } from "@heroui/button";
 
 interface IProps {
   paylod: {
@@ -16,13 +17,14 @@ interface IProps {
 
 const ShareButton: React.FC<IProps> = ({ paylod }) => {
   const { shareHandler } = useShare(paylod);
+
   return (
     <Button
-      onPress={() => shareHandler()}
       className="min-w-0 size-8 !p-0"
       color="secondary"
+      onPress={() => shareHandler()}
     >
-      <ShareIcon width={20} height={20} className="text-dark" />
+      <ShareIcon className="text-dark" height={20} width={20} />
     </Button>
   );
 };

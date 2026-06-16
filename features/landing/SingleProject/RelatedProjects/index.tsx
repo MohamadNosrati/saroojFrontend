@@ -1,8 +1,10 @@
 "use client";
 
-import { IProject } from "@/lib/types/project";
-import RelatedProjectsContainer from "./Container";
 import { motion } from "framer-motion";
+
+import RelatedProjectsContainer from "./Container";
+
+import { IProject } from "@/lib/types/project";
 
 interface IProps {
   suggsetions: IProject[];
@@ -14,10 +16,10 @@ export default function RelatedProjects({ suggsetions }: IProps) {
       {/* Background glow */}
       <motion.div
         aria-hidden
-        className="absolute inset-0 pointer-events-none"
         animate={{
           opacity: [0.3, 0.5, 0.3],
         }}
+        className="absolute inset-0 pointer-events-none"
         transition={{
           duration: 6,
           repeat: Infinity,
@@ -30,36 +32,36 @@ export default function RelatedProjects({ suggsetions }: IProps) {
       <div className="container relative z-10">
         {/* Title */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6 }}
           className="mb-4"
+          initial={{ opacity: 0, y: 25 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.4 }}
+          whileInView={{ opacity: 1, y: 0 }}
         >
           <motion.span
-            whileInView={{ scale: [0.95, 1.05, 1] }}
-            transition={{ duration: 0.6 }}
             className="sm:text-2xl text-lg font-bold inline-block"
+            transition={{ duration: 0.6 }}
+            whileInView={{ scale: [0.95, 1.05, 1] }}
           >
             پروژه های پیشنهادی
           </motion.span>
 
           {/* underline animation */}
           <motion.div
-            initial={{ width: 0 }}
-            whileInView={{ width: "120px" }}
-            transition={{ duration: 0.8 }}
             className="h-1 bg-primary mt-2 rounded-full"
+            initial={{ width: 0 }}
+            transition={{ duration: 0.8 }}
+            whileInView={{ width: "120px" }}
           />
         </motion.div>
 
         {/* Container */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
           className="hover:scale-[1.01] transition-transform duration-300"
+          initial={{ opacity: 0, y: 40 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true, amount: 0.3 }}
+          whileInView={{ opacity: 1, y: 0 }}
         >
           <RelatedProjectsContainer suggsetions={suggsetions} />
         </motion.div>

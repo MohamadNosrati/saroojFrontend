@@ -1,5 +1,3 @@
-import CustomImageLoader from "@/components/ui/CustomImageLoader";
-
 import {
   Control,
   Controller,
@@ -8,19 +6,17 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 
-import { TformValues } from "./ProjectsFormContainer";
-
-import { ImageItemPayload } from "@/lib/types/project";
-
 // import CustomInput from "@/components/ui/CustomInput";
 import { Button } from "@heroui/button";
-
-import { DeleteIcon } from "@/components/icons";
-
 import { Tooltip } from "@heroui/tooltip";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
+import { TformValues } from "./ProjectsFormContainer";
+
+import { ImageItemPayload } from "@/lib/types/project";
+import { DeleteIcon } from "@/components/icons";
+import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import CustomInput from "@/components/ui/CustomInput";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 

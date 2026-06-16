@@ -1,4 +1,3 @@
-import { inertia } from "framer-motion";
 import { ICategory } from "./categories";
 import { IFile } from "./file";
 
@@ -71,6 +70,6 @@ export interface IProjectParams {
 }
 
 export interface IProjectWithSuggestions {
-  project:IProject;
-  suggestions:IProject[]
+  project: IProject;
+  suggestions: IProject[];
 }

@@ -1,4 +1,5 @@
 import { usePathname } from "next/navigation";
+
 import { responseHandler } from "../tools/responseHandler";
 
 interface SharePayload {
@@ -19,12 +20,14 @@ const useShare = (payload: SharePayload) => {
       url: process.env.NEXT_PUBLIC_BASE_URL + pathName,
       files: [],
     };
+
     if (image && navigator.canShare && navigator.canShare({ files: [] })) {
       try {
         const fullImageUrl = process.env.NEXT_PUBLIC_STORAGE_URL_MAIN + image;
         const response = await fetch(fullImageUrl);
         const blob = await response.blob();
         const file = new File([blob], title, { type: blob.type });
+
         shareData.files = [file];
       } catch (e) {
         console.warn("Image fetch failed, sharing without file", e);
@@ -44,6 +47,7 @@ const useShare = (payload: SharePayload) => {
       console.log(err);
     }
   };
+
   return { shareHandler };
 };
 

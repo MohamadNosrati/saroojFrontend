@@ -3,9 +3,11 @@
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import { IProject } from "@/lib/types/project";
-import ProjectItem from "../../ProjectItem";
 import { motion } from "framer-motion";
+
+import ProjectItem from "../../ProjectItem";
+
+import { IProject } from "@/lib/types/project";
 interface IProps {
   suggsetions: IProject[];
 }
@@ -30,11 +32,11 @@ const slideVariant = {
 export default function RelatedProjectsContainer({ suggsetions }: IProps) {
   return (
     <motion.div
-      variants={containerVariant}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.2 }}
       className="relative overflow-visible mt-6"
+      initial="hidden"
+      variants={containerVariant}
+      viewport={{ once: true, amount: 0.2 }}
+      whileInView="show"
     >
       {/* soft edge fade (premium touch) */}
       <div className="pointer-events-none absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-white/10 dark:from-dark to-transparent z-10" />
@@ -69,17 +71,11 @@ export default function RelatedProjectsContainer({ suggsetions }: IProps) {
         modules={[Autoplay]}
       >
         {suggsetions?.map((item) => (
-          <SwiperSlide key={item?.id} className="!overflow-visible !bg-transparent ">
+          <SwiperSlide
+            key={item?.id}
+            className="!overflow-visible !bg-transparent "
+          >
             <motion.div
-              variants={slideVariant}
-              whileHover={{
-                scale: 1.02,
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 200,
-                damping: 18,
-              }}
               className="
                 h-full
                 rounded-2xl
@@ -87,6 +83,15 @@ export default function RelatedProjectsContainer({ suggsetions }: IProps) {
                 duration-300
   
               "
+              transition={{
+                type: "spring",
+                stiffness: 200,
+                damping: 18,
+              }}
+              variants={slideVariant}
+              whileHover={{
+                scale: 1.02,
+              }}
             >
               <ProjectItem item={item} />
             </motion.div>

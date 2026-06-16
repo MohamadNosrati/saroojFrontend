@@ -1,5 +1,6 @@
 export function slugify(text: string) {
-  console.log("text",text)
+  console.log("text", text);
+
   return text
     .trim()
     .toLowerCase()

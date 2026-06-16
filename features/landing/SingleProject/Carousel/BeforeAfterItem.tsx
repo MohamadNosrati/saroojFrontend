@@ -1,8 +1,8 @@
-import ReactCompareImage from "react-compare-image";
 import {
   ReactCompareSlider,
   ReactCompareSliderImage,
 } from "react-compare-slider";
+
 import { uploadUrl } from "@/lib/tools/upload";
 import { ImageItem } from "@/lib/types/project";
 
@@ -17,16 +17,16 @@ export default function BeforeAfterItem({ item }: IProps) {
         className="relative"
         itemOne={
           <ReactCompareSliderImage
-            src={uploadUrl(item?.after?.pictureId?.image)}
             alt="Image one"
             className="object-cover"
+            src={uploadUrl(item?.after?.pictureId?.image)}
           />
         }
         itemTwo={
           <ReactCompareSliderImage
-            src={uploadUrl(item?.before?.pictureId?.image)}
             alt="Image two"
             className="object-cover"
+            src={uploadUrl(item?.before?.pictureId?.image)}
           />
         }
       />

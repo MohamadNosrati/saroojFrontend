@@ -1,5 +1,6 @@
-import { IBlog } from "@/lib/types/blog";
 import RelatedBlogsContainer from "./Container";
+
+import { IBlog } from "@/lib/types/blog";
 
 interface IProps {
   suggestions: IBlog[];

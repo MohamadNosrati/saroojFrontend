@@ -7,8 +7,8 @@ class ResponseHandler {
   fail(message: string) {
     toast.error(message);
   }
-  warning(message:string){
-    toast?.warning(message)
+  warning(message: string) {
+    toast?.warning(message);
   }
 }
 
