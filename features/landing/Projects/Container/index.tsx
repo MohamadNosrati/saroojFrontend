@@ -3,6 +3,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Spinner } from "@heroui/spinner";
+import { motion } from "framer-motion";
 
 import ProjectItem from "../../ProjectItem";
 
@@ -19,8 +20,6 @@ import {
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { useGetCategories } from "@/lib/hooks/categories";
 import ProjectSclton from "@/components/ui/ProjectScleton";
-
-import { motion } from "framer-motion";
 
 const containerVariants = {
   hidden: {},
@@ -105,11 +104,11 @@ const Container = () => {
 
   return (
     <motion.section
+      className="lg:pb-20 sm:pb-14 pb-10 dark:bg-dark bg-white overflow-hidden lg:mt-12 mt-6"
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.15 }}
       variants={containerVariants}
-      className="lg:pb-20 sm:pb-14 pb-10 dark:bg-black bg-white overflow-hidden lg:mt-12 mt-6"
+      viewport={{ once: true, amount: 0.15 }}
+      whileInView="visible"
     >
       <div className="container flex max-lg:flex-col gap-2.5 items-center justify-between">
         <motion.div variants={itemVariants}>
@@ -134,8 +133,8 @@ const Container = () => {
         </motion.div>
       </div>
       <motion.div
-        variants={itemVariants}
         className="container mt-10 grid lg:grid-cols-3 grid-cols-2 gap-5"
+        variants={itemVariants}
       >
         {isLoading
           ? [1, 2, 3].map((item) => <ProjectSclton key={item} />)

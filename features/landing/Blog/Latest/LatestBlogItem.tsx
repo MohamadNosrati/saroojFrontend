@@ -26,7 +26,9 @@ export default function LatestBlogItem({ item }: IProps) {
             <span>
               <WriterIcon className="text-primary" height={20} width={20} />
             </span>
-            <span className="text-sm text-white-gray">Mohammad Nosrati</span>
+            <span className="text-sm text-white-gray">
+              {item?.userId?.userName || "تعریف نشده"}
+            </span>
           </div>
         </div>
       </div>

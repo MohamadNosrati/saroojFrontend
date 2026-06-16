@@ -11,12 +11,6 @@ interface IProps {
 const CommentItem: React.FC<IProps> = ({ item }) => {
   return (
     <motion.div
-      whileHover={{
-        y: -8,
-      }}
-      transition={{
-        duration: 0.25,
-      }}
       className="
         relative
         flex
@@ -32,6 +26,12 @@ to-gray-darker/80
         border
         border-white/5
       "
+      transition={{
+        duration: 0.25,
+      }}
+      whileHover={{
+        y: -8,
+      }}
     >
       {/* Glow */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
@@ -41,12 +41,12 @@ to-gray-darker/80
         animate={{
           y: [0, -6, 0],
         }}
+        className="absolute -top-12 left-0 right-0 mx-auto w-24 h-24 rounded-full"
         transition={{
           duration: 4,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute -top-12 left-0 right-0 mx-auto w-24 h-24 rounded-full"
       >
         <Image alt="" src={CommentImage} />
       </motion.div>
@@ -63,11 +63,11 @@ to-gray-darker/80
         animate={{
           rotate: [-3, 3, -3],
         }}
+        className="mt-5"
         transition={{
           duration: 5,
           repeat: Infinity,
         }}
-        className="mt-5"
       >
         <DobleQuatesIcon className="text-primary" height={14} width={18} />
       </motion.div>

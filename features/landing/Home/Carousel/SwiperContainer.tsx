@@ -5,10 +5,13 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "@heroui/button";
 import { useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+
 import type { Swiper as SwiperType } from "swiper/types";
+
 import { Autoplay } from "swiper/modules";
 import Link from "next/link";
+
 import { ISlider } from "@/lib/types/slider";
 import { uploadUrl } from "@/lib/tools/upload";
 
@@ -22,10 +25,10 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
       className="relative"
+      initial={{ opacity: 0 }}
+      transition={{ duration: 0.8 }}
     >
       <Swiper
         loop
@@ -48,10 +51,10 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
           <SwiperSlide key={item?.id} className="!relative overflow-hidden">
             {/* IMAGE ZOOM LAYER */}
             <motion.div
-              initial={{ scale: 1.1 }}
               animate={{ scale: 1 }}
-              transition={{ duration: 2, ease: "easeOut" }}
               className="absolute inset-0"
+              initial={{ scale: 1.1 }}
+              transition={{ duration: 2, ease: "easeOut" }}
             >
               <Image
                 fill
@@ -70,13 +73,13 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
                 {/* TITLE */}
                 <motion.h1
                   key={`title-${index}`}
-                  initial={{ opacity: 0, y: 30 }}
                   animate={{
                     opacity: index === activeIndex ? 1 : 0,
                     y: index === activeIndex ? 0 : 30,
                   }}
-                  transition={{ duration: 0.6 }}
                   className="text-3xl leading-11 text-white font-semibold"
+                  initial={{ opacity: 0, y: 30 }}
+                  transition={{ duration: 0.6 }}
                 >
                   {item?.title}
                 </motion.h1>
@@ -84,13 +87,13 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
                 {/* DESCRIPTION */}
                 <motion.p
                   key={`desc-${index}`}
-                  initial={{ opacity: 0, y: 20 }}
                   animate={{
                     opacity: index === activeIndex ? 1 : 0,
                     y: index === activeIndex ? 0 : 20,
                   }}
-                  transition={{ duration: 0.7, delay: 0.1 }}
                   className="max-sm:text-sm text-gray-lighter mt-3"
+                  initial={{ opacity: 0, y: 20 }}
+                  transition={{ duration: 0.7, delay: 0.1 }}
                 >
                   {item?.description}
                 </motion.p>
@@ -98,13 +101,13 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
                 {/* BUTTON */}
                 <motion.div
                   key={`btn-${index}`}
-                  initial={{ opacity: 0, scale: 0.9 }}
                   animate={{
                     opacity: index === activeIndex ? 1 : 0,
                     scale: index === activeIndex ? 1 : 0.9,
                   }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
                   className="mt-10"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
                 >
                   <Link href={item?.link}>
                     <motion.div
@@ -132,12 +135,12 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
         {data?.map((item, index) => (
           <motion.button
             key={item?.id + index}
-            className="h-3 w-3 rounded-full border-2 border-white"
             animate={{
               scale: index === activeIndex ? 1.3 : 1,
               backgroundColor:
                 index === activeIndex ? "#ffffff" : "transparent",
             }}
+            className="h-3 w-3 rounded-full border-2 border-white"
             transition={{ duration: 0.3 }}
             onClick={() => swiperRef.current?.slideTo(index)}
           />

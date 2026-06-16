@@ -1,4 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
+
 import { GroupedMessageItem, IMessage } from "../types/message";
 const getDateKey = (timestamp: string | number | Date) =>
   new Date(timestamp).toISOString().split("T")[0];
@@ -24,21 +25,24 @@ const useUpdateCache = () => {
         if (groupIndex !== -1) {
           // Add to existing group
           const updatedGroups = [...groups];
+
           updatedGroups[groupIndex] = {
             ...updatedGroups[groupIndex],
             messages: [...updatedGroups[groupIndex].messages, newMessage],
           };
+
           return {
             ...old,
             data: { ...old.data, data: updatedGroups },
           };
         } else {
           // Create new group and insert in chronological order
-          const newGroup : GroupedMessageItem = {
+          const newGroup: GroupedMessageItem = {
             date: messageDate,
             messages: [newMessage],
           };
           const newGroups = [...groups, newGroup];
+
           return {
             ...old,
             data: { ...old.data, data: newGroups },

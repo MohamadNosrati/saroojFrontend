@@ -63,7 +63,7 @@ const ProjectsPage = async () => {
   });
 
   return (
-    <section>
+    <section className="dark:bg-dark bg-white">
       <Banner />
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Container />

@@ -5,8 +5,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 
 import BlogItem from "../../Blog/List/BlogItem";
+import { IBlog } from "@/lib/types/blog";
 
-export default function RelatedBlogsContainer() {
+interface IProps {
+  suggestions: IBlog[];
+}
+
+export default function RelatedBlogsContainer({ suggestions }: IProps) {
   return (
     <Swiper
       loop
@@ -35,9 +40,9 @@ export default function RelatedBlogsContainer() {
       }}
       modules={[Autoplay]}
     >
-      {[1, 2, 3, 4, 5]?.map((item) => (
-        <SwiperSlide key={item} className="">
-          <BlogItem />
+      {suggestions?.map((item) => (
+        <SwiperSlide key={item?.id} className="">
+          <BlogItem item={item} />
         </SwiperSlide>
       ))}
     </Swiper>

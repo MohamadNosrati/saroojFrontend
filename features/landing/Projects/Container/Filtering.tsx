@@ -63,17 +63,17 @@ export default function Filtering({
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 30 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
       className="flex items-center max-lg:flex-col gap-2.5"
+      initial={{ opacity: 0, x: 30 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+      whileInView={{ opacity: 1, x: 0 }}
     >
       <motion.div
+        className="min-w-60 max-lg:w-full"
         whileHover={{
           scale: 1.02,
         }}
-        className="min-w-60 max-lg:w-full"
       >
         <Select
           fullWidth
@@ -109,13 +109,10 @@ export default function Filtering({
           {data?.map((item, index) => (
             <motion.div
               key={item?.id}
+              className="flex h-10 items-center rounded-xl bg-white px-2.5"
               initial={{
                 opacity: 0,
                 y: 15,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
               }}
               transition={{
                 delay: index * 0.05,
@@ -123,7 +120,10 @@ export default function Filtering({
               whileHover={{
                 y: -2,
               }}
-              className="flex h-10 items-center rounded-xl bg-white px-2.5"
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
             >
               <Checkbox
                 classNames={{
@@ -135,8 +135,7 @@ export default function Filtering({
                   label: "!h-full !min-w-fit",
                 }}
                 isDisabled={
-                  groupSelected?.length === 1 &&
-                  groupSelected[0] === item?.id
+                  groupSelected?.length === 1 && groupSelected[0] === item?.id
                 }
                 value={item?.id}
               >

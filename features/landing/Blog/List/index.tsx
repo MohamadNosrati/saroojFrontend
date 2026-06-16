@@ -3,6 +3,7 @@
 import { Select, SelectItem } from "@heroui/select";
 import { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 
 import BlogItem from "./BlogItem";
 
@@ -16,8 +17,6 @@ import {
 import { IBlog } from "@/lib/types/blog";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { sortOptions } from "@/lib/config/sort";
-
-import { motion } from "framer-motion";
 
 const sectionVariants = {
   hidden: {},
@@ -93,16 +92,16 @@ export default function BlogsList() {
 
   return (
     <motion.section
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.15 }}
-      variants={sectionVariants}
       className="relative dark:bg-dark bg-white lg:pb-24 md:pb-20 sm:pt-10 sm:pb-16 pb-12 overflow-hidden"
+      initial="hidden"
+      variants={sectionVariants}
+      viewport={{ once: true, amount: 0.15 }}
+      whileInView="visible"
     >
       <div className="container flex flex-col gap-4">
         <motion.div
-          variants={itemVariants}
           className="flex items-center justify-between"
+          variants={itemVariants}
         >
           <div>
             <span className="dark:text-white font-medium sm:text-4xl text-2l text-dark">
@@ -115,7 +114,7 @@ export default function BlogsList() {
               fullWidth
               aria-label="fdsf"
               classNames={{
-                trigger: "dark:bg-gray-darker bg-white dark:text-white",
+                trigger: "dark:bg-gray-darker bg-white dark:!text-white",
                 innerWrapper: "text-white",
                 listboxWrapper: "dark:bg-gray-darker dark:text-white",
                 base: "border-1 rounded-lg",
@@ -139,8 +138,8 @@ export default function BlogsList() {
         </motion.div>
 
         <motion.div
-          variants={itemVariants}
           className="grid gap-5 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1"
+          variants={itemVariants}
         >
           {data?.pages
             ?.flatMap((page) => page?.data?.result)
@@ -162,12 +161,12 @@ export default function BlogsList() {
         animate={{
           opacity: [0.5, 1, 0.5],
         }}
+        className="absolute bottom-0 left-0 lg:h-80 h-40 bg-gradient-to-t from-primary via-primary/30 to-transparent w-full pointer-events-none"
         transition={{
           duration: 6,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute bottom-0 left-0 lg:h-80 h-40 bg-gradient-to-t from-primary via-primary/30 to-transparent w-full pointer-events-none"
       />
     </motion.section>
   );

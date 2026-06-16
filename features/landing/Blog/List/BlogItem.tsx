@@ -6,6 +6,7 @@ import { persianRoutes } from "@/lib/routes/navigationRoutes";
 import { dateConvertor } from "@/lib/tools/dateConvertor";
 import { IBlog } from "@/lib/types/blog";
 import { uploadUrl } from "@/lib/tools/upload";
+import { slugify } from "@/lib/tools/slugify";
 
 interface IProps {
   item: IBlog;
@@ -24,9 +25,9 @@ interface IProps {
   };
 }
 
-export default function BlogItem({ item, itemVariants }: IProps) {
+export default function BlogItem({ item }: IProps) {
   return (
-    <Link href={persianRoutes.singleBlogPage("fdsfsdg")}>
+    <Link href={persianRoutes.singleBlogPage(`${slugify(item?.title)}`)}>
       <div className="aspect-video relative">
         <Image
           fill

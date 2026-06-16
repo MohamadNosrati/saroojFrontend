@@ -1,3 +1,4 @@
+import { inertia } from "framer-motion";
 import { ICategory } from "./categories";
 import { IFile } from "./file";
 
@@ -65,6 +66,11 @@ export interface IUpdateProjectPayload extends IProjectPayload {
 export interface IProjectParams {
   page: number;
   limit: number;
-  asc: boolean;
-  sort: string;
+  asc?: boolean;
+  sort?: string;
+}
+
+export interface IProjectWithSuggestions {
+  project:IProject;
+  suggestions:IProject[]
 }

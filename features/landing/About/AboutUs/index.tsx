@@ -1,6 +1,7 @@
 // "use client";
 
 import Image from "next/image";
+
 // import { motion } from "framer-motion";
 import StaticImage from "@/public/images/serviceImage.png";
 import { saroojDescription } from "@/lib/constants/info";
@@ -15,8 +16,8 @@ const AboutUs = () => {
             <div>
               <Image
                 alt="Sarooj Architecture"
-                src={StaticImage}
                 className="aspect-square object-cover"
+                src={StaticImage}
               />
             </div>
           </div>

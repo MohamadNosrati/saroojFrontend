@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 
-
 import AboutUs from "@/features/landing/About/AboutUs";
 import Comments from "@/features/landing/About/Comments";
 import Contact from "@/features/landing/About/Contact";

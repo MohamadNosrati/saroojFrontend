@@ -4,6 +4,7 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { motion } from "framer-motion";
+
 import CommentItem from "./CommentItem";
 
 interface IProps {
@@ -13,7 +14,6 @@ interface IProps {
 const Container: React.FC<IProps> = ({ data }) => {
   return (
     <Swiper
-      className="!overflow-visible"
       loop
       autoplay={{
         delay: 2500,
@@ -38,6 +38,7 @@ const Container: React.FC<IProps> = ({ data }) => {
           centeredSlides: true,
         },
       }}
+      className="!overflow-visible"
       modules={[Autoplay]}
     >
       {data?.map((item) => (
@@ -47,16 +48,16 @@ const Container: React.FC<IProps> = ({ data }) => {
               opacity: 0,
               y: 30,
             }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
+            transition={{
+              duration: 0.6,
             }}
             viewport={{
               once: true,
               amount: 0.3,
             }}
-            transition={{
-              duration: 0.6,
+            whileInView={{
+              opacity: 1,
+              y: 0,
             }}
           >
             <CommentItem item={item} />

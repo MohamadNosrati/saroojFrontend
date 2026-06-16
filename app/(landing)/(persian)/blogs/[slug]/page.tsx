@@ -7,7 +7,7 @@ import { blogsRoutes } from "@/lib/routes/apiRoutes";
 import { getData } from "@/lib/services/data";
 import { slugify } from "@/lib/tools/slugify";
 import { IBaseResponse } from "@/lib/types/base";
-import { IBlog } from "@/lib/types/blog";
+import { IBlog, IBlogWithSuggestions } from "@/lib/types/blog";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -36,11 +36,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug).replaceAll("-", " ");
 
-  const data = await getData<IBaseResponse<IBlog>>(
+  const data = await getData<IBaseResponse<IBlogWithSuggestions>>(
     blogsRoutes.findBySlug(decodedSlug),
   );
 
-  const post = data?.data;
+  const post = data?.data?.blog;
 
   if (!post) {
     return {
@@ -91,14 +91,16 @@ export default async function SingleBlogPage({ params }: Props) {
   const slug = (await params)?.slug;
   const decodedSlug = decodeURIComponent(slug).replaceAll("-", " ");
 
-  const data = await getData<IBaseResponse<IBlog>>(
+  const data = await getData<IBaseResponse<IBlogWithSuggestions>>(
     blogsRoutes.findBySlug(decodedSlug),
   );
 
+  console.log("dataaaaaaa", data?.data);
+
   return (
     <main>
-      <BlogDetails blog={data?.data as IBlog} />
-      <RelatedBlogs />
+      <BlogDetails blog={data?.data?.blog as IBlog} />
+      <RelatedBlogs suggestions={data?.data?.suggestions || []} />
     </main>
   );
 }

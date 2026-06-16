@@ -6,11 +6,11 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
+import { motion } from "framer-motion";
 
 import FormBg from "@/public/images/formBg.png";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { commentServices } from "@/lib/services/comments";
-import { motion } from "framer-motion";
 
 const containerVariants = {
   hidden: {},
@@ -84,14 +84,14 @@ const Form = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
       className="flex-col bg-cover gap-y-14 lg:py-20 md:py-14 py-10 flex items-center dark:bg-dark bg-white relative overflow-hidden"
+      initial={{ opacity: 0 }}
       style={{
         backgroundImage: `url(${FormBg?.src})`,
       }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+      whileInView={{ opacity: 1 }}
     >
       {/* Background Glow */}
       <motion.div
@@ -99,30 +99,30 @@ const Form = () => {
           scale: [1, 1.15, 1],
           opacity: [0.15, 0.3, 0.15],
         }}
+        className="absolute w-[500px] h-[500px] rounded-full bg-primary/20 blur-3xl -z-10"
         transition={{
           duration: 8,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute w-[500px] h-[500px] rounded-full bg-primary/20 blur-3xl -z-10"
       />
 
       {/* Title */}
       <motion.p
+        className="dark:text-white text-dark text-center lg:text-xl font-bold text-base"
         initial={{
           opacity: 0,
           y: 25,
         }}
-        whileInView={{
-          opacity: 1,
-          y: 0,
-        }}
-        viewport={{ once: true }}
         transition={{
           duration: 0.7,
           ease: "easeOut",
         }}
-        className="dark:text-white text-dark text-center lg:text-xl font-bold text-base"
+        viewport={{ once: true }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+        }}
       >
         اگر سوالی دارید <br />
         لطفا در ارسال پیام به ما تردید نکنید !
@@ -133,13 +133,13 @@ const Form = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
           className="flex lg:w-2/3 sm:w-3/5 w-full flex-col items-center gap-5"
+          initial="hidden"
+          variants={containerVariants}
+          viewport={{ once: true }}
+          whileInView="visible"
         >
-          <motion.div variants={itemVariants} className="w-full">
+          <motion.div className="w-full" variants={itemVariants}>
             <Controller
               control={control}
               name="fullname"
@@ -164,7 +164,7 @@ const Form = () => {
             />
           </motion.div>
 
-          <motion.div variants={itemVariants} className="w-full">
+          <motion.div className="w-full" variants={itemVariants}>
             <Controller
               control={control}
               name="email"
@@ -189,7 +189,7 @@ const Form = () => {
             />
           </motion.div>
 
-          <motion.div variants={itemVariants} className="w-full">
+          <motion.div className="w-full" variants={itemVariants}>
             <Controller
               control={control}
               name="text"

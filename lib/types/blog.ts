@@ -17,6 +17,11 @@ export interface IBlog {
   updatedAt: Date;
   isActive: boolean;
   alt: string;
+  userId: {
+    userName: string;
+    id: string;
+    pictureId: IFile;
+  };
 }
 
 export interface UpdateBlogPayload extends Partial<IBlogPayload> {
@@ -28,4 +33,9 @@ export interface IBlogParams {
   limit: number;
   asc: boolean;
   sort: string;
+}
+
+export interface IBlogWithSuggestions {
+  blog: IBlog;
+  suggestions: IBlog[];
 }

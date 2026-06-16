@@ -31,3 +31,4 @@ export { default as HomeCowch } from "./landing/homeCowch.svg";
 export { default as BreakIcon } from "./landing/break.svg";
 export { default as AboutPageIcon } from "./landing/aboutPage.svg";
 export { default as SaroojIcon } from "./landing/sarooj.svg";
+export { default as ShareIcon } from "./landing/share.svg";

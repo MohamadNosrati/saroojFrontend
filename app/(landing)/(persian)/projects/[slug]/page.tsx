@@ -10,8 +10,10 @@ import { ProjectsRoute } from "@/lib/routes/apiRoutes";
 import { getData } from "@/lib/services/data";
 import { slugify } from "@/lib/tools/slugify";
 import { IBaseResponse } from "@/lib/types/base";
-import { IProject } from "@/lib/types/project";
+import { IProject, IProjectWithSuggestions } from "@/lib/types/project";
 import { createMetadata } from "@/lib/config/site";
+import ShareButton from "@/features/landing/layout/ShareButton";
+import { uploadUrl } from "@/lib/tools/upload";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -40,11 +42,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug).replaceAll("-", " ");
 
-  const data = await getData<IBaseResponse<IProject>>(
+  const data = await getData<IBaseResponse<IProjectWithSuggestions>>(
     ProjectsRoute.findBySlug(decodedSlug),
   );
 
-  const project = data?.data;
+  const project = data?.data?.project;
 
   if (!project) {
     return {
@@ -90,7 +92,7 @@ export default async function SingleProjectPage({ params }: Props) {
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug).replaceAll("-", " ");
 
-  const data = await getData<IBaseResponse<IProject>>(
+  const data = await getData<IBaseResponse<IProjectWithSuggestions>>(
     ProjectsRoute.findBySlug(decodedSlug),
   );
 
@@ -102,15 +104,26 @@ export default async function SingleProjectPage({ params }: Props) {
     <main>
       <section className="bg-gradient-to-b dark:bg-dark bg-white from-primary via-primary/25 to-transparent">
         <div className="container lg:pt-8 pt-6">
-          <h1 className="text-center lg:text-4xl sm:text-2xl text-xl font-bold lg:mb-6 mb-2.5">
-            {data?.data?.title}
-          </h1>
-          <Carousel images={data?.data?.images || []} />
-          <Info project={data?.data as IProject} />
+          <div className="flex items-center justify-between  lg:mb-6 mb-2.5">
+            <h1 className="text-center lg:text-4xl sm:text-2xl text-xl font-bold">
+              {data?.data?.project?.title}
+            </h1>
+            <ShareButton
+              paylod={{
+                text: "",
+                title: data?.data?.project?.title || "",
+                image: uploadUrl(
+                  data?.data?.project?.pictureId?.image as string,
+                ),
+              }}
+            />
+          </div>
+          <Carousel images={data?.data?.project?.images || []} />
+          <Info project={data?.data?.project as IProject} />
         </div>
       </section>
       <Video />
-      <RelatedProjects />
+      <RelatedProjects suggsetions={data?.data?.suggestions || []} />
     </main>
   );
 }

@@ -15,12 +15,16 @@ import type { Swiper as SwiperType } from "swiper/types";
 import { Button } from "@heroui/button";
 import clsx from "clsx";
 
-import BeforeAfterItem from "./BeforeAfterItem";
+const BeforeAfterItem = dynamic(
+  () => import("./BeforeAfterItem"),
+  { ssr: false }
+);
 
 import cn from "@/lib/tools/cn";
 import { ArrowIcon } from "@/components/icons";
 import { ImageItem } from "@/lib/types/project";
 import { uploadUrl } from "@/lib/tools/upload";
+import dynamic from "next/dynamic";
 
 interface IProps {
   images: ImageItem[];

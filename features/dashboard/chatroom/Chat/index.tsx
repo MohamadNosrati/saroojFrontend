@@ -76,7 +76,7 @@ const Chat: React.FC<IProps> = ({
             response?.data?.message as IMessage,
             true,
           );
-          scrollToBottom()
+          scrollToBottom();
           if (!selectedConversation) {
             setSelectedConversation(response?.data?.conversation);
             queryClient.invalidateQueries({
