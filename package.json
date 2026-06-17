@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev:network": "next dev -H 0.0.0.0 --turbopack",
-    "dev": "next dev --turbopack",
+    "dev:network": "next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint --fix",

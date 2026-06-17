@@ -9,6 +9,63 @@ import { slugify } from "@/lib/tools/slugify";
 import { IBaseResponse } from "@/lib/types/base";
 import { IBlog, IBlogWithSuggestions } from "@/lib/types/blog";
 
+const baseUrl =
+  process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const decodedSlug = decodeURIComponent(slug).replaceAll("-", " ");
+
+  const data = await getData<IBaseResponse<IBlogWithSuggestions>>(
+    blogsRoutes.findBySlug(decodedSlug),
+  );
+
+  const post = data?.data?.blog;
+
+  if (!post) {
+    return {
+      title: "مقاله یافت نشد | شرکت ساخت و ساز ساروج",
+      description: "مقاله مورد نظر یافت نشد.",
+    };
+  }
+
+  const excerpt =
+    post.description
+      ?.replace(/<[^>]*>/g, "")
+      .slice(0, 160)
+      .trim() + "...";
+
+  return createMetadata({
+    title: `${post.title} | مجله ساخت و ساز ساروج`,
+    description: excerpt,
+    keywords: `${post.title}, ساخت و ساز`,
+    authors: [{ name: "شرکت ساخت و ساز ساروج" }],
+    creator: "شرکت ساخت و ساز ساروج",
+    publisher: "شرکت ساخت و ساز ساروج",
+    robots: "index, follow",
+    alternates: {
+      canonical: `${baseUrl}/blog/${slug}`,
+    },
+    openGraph: {
+      title: `${post.title} | مجله ساخت و ساز ساروج`,
+      description: excerpt,
+      url: `${baseUrl}/blog/${slug}`,
+      siteName: "شرکت ساخت و ساز ساروج",
+      locale: "fa_IR",
+      type: "article",
+      publishedTime: post.createdAt,
+      modifiedTime: post.updatedAt || post.createdAt,
+      authors: ["شرکت ساخت و ساز ساروج"],
+      tags: ["شرکت ساخت و ساز ساروج", post?.title],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${post.title} | مجله ساخت و ساز ساروج`,
+      description: excerpt,
+    },
+  });
+}
+
 export async function generateStaticParams() {
   const data = await getData<
     IBaseResponse<
@@ -44,62 +101,4 @@ export default async function SingleBlogPage({ params }: Props) {
       <RelatedBlogs suggestions={data?.data?.suggestions || []} />
     </main>
   );
-}
-
-const baseUrl =
-  process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const decodedSlug = decodeURIComponent(slug).replaceAll("-", " ");
-
-  const data = await getData<IBaseResponse<IBlogWithSuggestions>>(
-    blogsRoutes.findBySlug(decodedSlug),
-  );
-
-  const post = data?.data?.blog;
-
-  if (!post) {
-    return {
-      title: "مقاله یافت نشد | شرکت ساخت و ساز ساروج",
-      description: "مقاله مورد نظر یافت نشد.",
-    };
-  }
-
-  const excerpt =
-    post.description
-      ?.replace(/<[^>]*>/g, "")
-      .slice(0, 160)
-      .trim() + "...";
-
-  return createMetadata({
-    title: `${post.title} | مجله ساخت و ساز ساروج`,
-    description: excerpt,
-    metadataBase: new URL(baseUrl),
-    keywords: `${post.title}, ساخت و ساز`,
-    authors: [{ name: "شرکت ساخت و ساز ساروج" }],
-    creator: "شرکت ساخت و ساز ساروج",
-    publisher: "شرکت ساخت و ساز ساروج",
-    robots: "index, follow",
-    alternates: {
-      canonical: `${baseUrl}/blog/${slug}`,
-    },
-    openGraph: {
-      title: `${post.title} | مجله ساخت و ساز ساروج`,
-      description: excerpt,
-      url: `${baseUrl}/blog/${slug}`,
-      siteName: "شرکت ساخت و ساز ساروج",
-      locale: "fa_IR",
-      type: "article",
-      publishedTime: post.createdAt,
-      modifiedTime: post.updatedAt || post.createdAt,
-      authors: ["شرکت ساخت و ساز ساروج"],
-      tags: ["شرکت ساخت و ساز ساروج", post?.title],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${post.title} | مجله ساخت و ساز ساروج`,
-      description: excerpt,
-    },
-  });
 }

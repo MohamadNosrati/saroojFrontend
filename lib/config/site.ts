@@ -6,14 +6,16 @@ export const SITE_CONFIG = {
   locale: "fa_IR",
 };
 
-export const createMetadata = (overrides?: any) => ({
-  // metadataBase: new URL(SITE_CONFIG.domain),
-  title: {
-    default: SITE_CONFIG.name,
-    template: `%s | ${SITE_CONFIG.name}`,
-  },
-  ...overrides,
-});
+export const createMetadata = (overrides?: any) => {
+  return {
+    metadataBase: new URL(SITE_CONFIG.domain),
+    title: {
+      default: SITE_CONFIG.name,
+      template: `%s | ${SITE_CONFIG.name}`,
+    },
+    ...overrides,
+  };
+};
 
 export const dashboardPages = [
   {

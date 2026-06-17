@@ -62,7 +62,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description:
       project.description ||
       `مشاهده پروژه ${project.title} -  توسط شرکت ساخت و ساز ساروج`,
-    metadataBase: new URL(baseUrl),
     keywords: `${project.title}, پروژه ${project.address}, ساخت و ساز,`,
     authors: [{ name: "شرکت ساخت و ساز ساروج" }],
     creator: "شرکت ساخت و ساز ساروج",

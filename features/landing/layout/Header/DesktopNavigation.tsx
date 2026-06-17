@@ -31,9 +31,7 @@ export default function DeskTopNavigation({ data }: IProps) {
             ])}
             href={item?.href}
           >
-            <span className="block pb-1">
-              <Icon height={20} width={20} />
-            </span>
+            <Icon />
             {item?.label}
           </Link>
         );

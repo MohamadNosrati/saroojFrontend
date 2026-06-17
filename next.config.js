@@ -1,27 +1,52 @@
+// next.config.mjs
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**", // Allows all HTTPS domains
-      },
-      {
-        protocol: "http",
-        hostname: "**", // Allows all HTTP domains (for development)
-      },
-    ],
-  },
-  experimental: {
-    turbo: {
-      rules: {
-        "*.svg": {
-          loaders: ["@svgr/webpack"],
-          as: "*.ts",
-        },
+  // Turbopack configuration (development only)
+  turbopack: {
+    rules: {
+      "*.svg": {
+        loaders: [
+          {
+            loader: "@svgr/webpack",
+            options: {
+              // Common SVGR options – adjust as needed
+              icon: true, // makes SVG fit a 1em × 1em box
+              dimensions: false, // strips width/height attributes
+            },
+          },
+        ],
+        as: "*.js", // output as JavaScript module
       },
     },
   },
+
+  // Webpack fallback (used for production builds)
+  webpack(config) {
+    // Find the default rule that handles SVG imports (asset/resource)
+    const fileLoaderRule = config.module.rules.find((rule) =>
+      rule.test?.test?.(".svg"),
+    );
+    if (fileLoaderRule) {
+      // Prevent the default rule from processing SVGs
+      fileLoaderRule.exclude = /\.svg$/;
+    }
+
+    // Add SVGR rule for all .svg imports
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: "@svgr/webpack",
+          options: {
+            icon: true,
+            dimensions: false,
+          },
+        },
+      ],
+    });
+
+    return config;
+  },
 };
 
-module.exports = nextConfig;
+export default nextConfig;

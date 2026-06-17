@@ -1,9 +1,13 @@
+"use client";
+
 import "../public/globals.css";
 import clsx from "clsx";
 import { ToastContainer } from "react-toastify";
 import NextTopLoader from "nextjs-toploader";
 
 import Providers from "@/lib/providers";
+
+// import Providers from "@/lib/providers";
 
 export default function RootLayout({
   children,

@@ -1,7 +1,5 @@
 import Image from "next/image";
 
-import ShareButton from "../../layout/ShareButton";
-
 import { SafeBlogContent } from "./SafeBlogContent";
 
 import { CalandarIcon } from "@/components/icons";
@@ -21,14 +19,14 @@ export default function BlogDetails({ blog }: IProps) {
           <h1 className="lg:text-4xl text-dark dark:text-white font-bold sm:text-2xl text-xl max-w-4/5 text-wrap">
             {blog?.title}
           </h1>
-          <div className="min-w-fit ">
-            <ShareButton
+          <div className="min-w-fit">
+            {/* <ShareButton
               paylod={{
                 text: blog?.userId?.userName,
                 title: blog?.title,
                 image: uploadUrl(blog?.pictureId?.image),
               }}
-            />
+            /> */}
           </div>
         </div>
         <div className="flex items-center mt-2.5 justify-between">

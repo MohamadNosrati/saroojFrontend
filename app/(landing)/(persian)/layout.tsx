@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import { Viewport } from "next";
 
-import Footer from "@/features/landing/layout/Footer";
 import Header from "@/features/landing/layout/Header";
+import Footer from "@/features/landing/layout/Footer";
 import { yekanBakh } from "@/lib/config/fonts";
 
 export const viewport: Viewport = {

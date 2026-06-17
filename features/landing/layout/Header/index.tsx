@@ -2,18 +2,19 @@
 
 import Link from "next/link";
 
-import ToggleTheme from "./ToggleTheme";
-import SelectLanguage from "./SelectLanguage";
+// import ToggleTheme from "./ToggleTheme";
+// import SelectLanguage from "./SelectLanguage";
 import DeskTopNavigation from "./DesktopNavigation";
-import MobileNavigation from "./MobileNavigation";
+// import MobileNavigation from "./MobileNavigation";
 
 import {
   AboutPageIcon,
   BlogsIcon,
   HouseIcon,
   ProjectsIcon,
-  SaroojIcon,
 } from "@/components/icons";
+
+console.log("HouseIcon =", HouseIcon);
 import { persianRoutes } from "@/lib/routes/navigationRoutes";
 
 const data = [
@@ -44,15 +45,15 @@ const Header = () => {
     <section className="h-20 sticky bg-white dark:bg-dark bg-opacity-20 backdrop-blur-sm  w-full top-0 z-[10] flex items-center">
       <div className="container flex items-center justify-between">
         <div className="flex items-center  xl:gap-24 lg:gap-12 gap-6">
-          <MobileNavigation />
+          {/* <MobileNavigation /> */}
           <Link href={persianRoutes.homePage()}>
-            <SaroojIcon className="sm:w-24 h-12 dark:text-white" />
+            {/* <SaroojIcon className="sm:w-24 h-12 dark:text-white" /> */}
           </Link>
           <DeskTopNavigation data={data} />
         </div>
         <div className="flex items-center xl:gap-16 lg:gap-12 gap-6">
-          <SelectLanguage />
-          <ToggleTheme />
+          {/* <SelectLanguage />
+          <ToggleTheme /> */}
         </div>
       </div>
     </section>

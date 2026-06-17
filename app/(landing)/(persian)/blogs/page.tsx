@@ -11,8 +11,6 @@ import { createMetadata } from "@/lib/config/site";
 import { blogsRoutes } from "@/lib/routes/apiRoutes";
 import { getData } from "@/lib/services/data";
 
-// app/blog/page.tsx
-
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
 
@@ -20,7 +18,6 @@ export const metadata: Metadata = createMetadata({
   title: "مجله ساخت و ساز | مقالات و اخبار شرکت ساروج",
   description:
     "مقالات تخصصی ساخت و ساز، نکات بازسازی ساختمان، اخبار پروژه‌های صنعتی و راهنمایی‌های کاربردی برای مالکان و پیمانکاران.",
-  metadataBase: new URL(baseUrl),
   keywords:
     "مجله ساخت و ساز, مقاله ساختمانی, اخبار صنعت ساختمان, نکات بازسازی, وبلاگ پیمانکاری, ساخت و ساز در ایران",
   authors: [{ name: "شرکت ساخت و ساز ساروج" }],
