@@ -63,7 +63,6 @@ export default function Chatroom() {
         });
 
         socket?.on(eventNames.receiveMessage, (data) => {
-          console.log("recievedMessage", data);
           updateCache(
             messageRoutes.getConversationMessages(data?.conversationId),
             data,

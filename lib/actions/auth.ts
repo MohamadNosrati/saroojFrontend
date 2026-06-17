@@ -65,7 +65,6 @@ export async function login(
     };
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.log("error", error?.status);
       if (error.status === 400) {
         return {
           errors: {

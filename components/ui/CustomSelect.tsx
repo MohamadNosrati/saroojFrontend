@@ -71,8 +71,6 @@ const CustomSelect: React.FC<ICustomSelectProps> = ({
   error,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  console.log("isOpen", isOpen);
   const [isFocused, setIsFocused] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);

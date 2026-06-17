@@ -64,7 +64,6 @@ const Form = () => {
   });
 
   const onSubmit = async (formData: TFormValues) => {
-    console.log(formData);
     try {
       setIsPending(true);
       commentServices.create({

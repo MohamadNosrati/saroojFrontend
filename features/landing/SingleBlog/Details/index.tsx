@@ -14,8 +14,6 @@ interface IProps {
 }
 
 export default function BlogDetails({ blog }: IProps) {
-  console.log("blog", blog);
-
   return (
     <section className="bg-gradient-to-b dark:bg-dark bg-white from-primary via-primary/25 to-transparent lg:pt-12 sm:pt-8 pt-6 lg:pb-16 pb-8">
       <div className="container">

@@ -65,8 +65,6 @@ export default function BlogsList() {
       },
     });
 
-  // console.log("data",data)
-
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

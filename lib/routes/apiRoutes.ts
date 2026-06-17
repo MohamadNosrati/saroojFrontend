@@ -87,8 +87,6 @@ class Blogs {
   getAll(params?: IBlogParams) {
     const queryString = queryStringCreator(params);
 
-    console.log("queryString", queryString);
-
     return `${this.base}?${queryString}`;
   }
 
@@ -249,6 +247,10 @@ class Subscription {
   }
 
   getAll() {
+    return `${this.base}`;
+  }
+
+  create() {
     return `${this.base}`;
   }
 }

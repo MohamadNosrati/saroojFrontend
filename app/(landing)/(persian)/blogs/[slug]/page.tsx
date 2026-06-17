@@ -9,13 +9,8 @@ import { slugify } from "@/lib/tools/slugify";
 import { IBaseResponse } from "@/lib/types/base";
 import { IBlog, IBlogWithSuggestions } from "@/lib/types/blog";
 
-type Props = {
-  params: Promise<{ slug: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-};
-
 export async function generateStaticParams() {
-  const blogs = await getData<
+  const data = await getData<
     IBaseResponse<
       {
         id: string;
@@ -23,10 +18,32 @@ export async function generateStaticParams() {
       }[]
     >
   >(blogsRoutes.getAllSlugs());
-
-  return blogs?.data?.map((item) => ({
+  const blogs = data?.data?.map((item) => ({
     slug: slugify(item?.title),
   }));
+
+  return blogs || [];
+}
+
+type Props = {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+};
+
+export default async function SingleBlogPage({ params }: Props) {
+  const slug = (await params)?.slug;
+  const decodedSlug = decodeURIComponent(slug).replaceAll("-", " ");
+
+  const data = await getData<IBaseResponse<IBlogWithSuggestions>>(
+    blogsRoutes.findBySlug(decodedSlug),
+  );
+
+  return (
+    <main>
+      <BlogDetails blog={data?.data?.blog as IBlog} />
+      <RelatedBlogs suggestions={data?.data?.suggestions || []} />
+    </main>
+  );
 }
 
 const baseUrl =
@@ -85,22 +102,4 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: excerpt,
     },
   });
-}
-
-export default async function SingleBlogPage({ params }: Props) {
-  const slug = (await params)?.slug;
-  const decodedSlug = decodeURIComponent(slug).replaceAll("-", " ");
-
-  const data = await getData<IBaseResponse<IBlogWithSuggestions>>(
-    blogsRoutes.findBySlug(decodedSlug),
-  );
-
-  console.log("dataaaaaaa", data?.data);
-
-  return (
-    <main>
-      <BlogDetails blog={data?.data?.blog as IBlog} />
-      <RelatedBlogs suggestions={data?.data?.suggestions || []} />
-    </main>
-  );
 }

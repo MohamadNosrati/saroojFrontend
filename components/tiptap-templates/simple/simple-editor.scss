@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
-
 .simple-editor-wrapper {
   width: 100%;
   overflow: auto;
@@ -28,18 +27,17 @@
   }
 }
 
-
 // Font size and family styles
 .simple-editor {
   .tiptap-button {
     min-width: 40px;
     padding: 8px 12px;
-    
+
     &:hover {
       background-color: rgba(0, 0, 0, 0.05);
     }
   }
-  
+
   // Placeholder styling
   .is-editor-empty:first-child::before {
     content: attr(data-placeholder);
@@ -48,9 +46,15 @@
     pointer-events: none;
     height: 0;
   }
-  
+
   // Ensure text alignment works properly
-  p, h1, h2, h3, h4, h5, h6 {
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     &.has-text-align-left {
       text-align: left;
     }
@@ -64,12 +68,12 @@
       text-align: justify;
     }
   }
-  
+
   // Font size styles
   [style*="font-size"] {
     display: inline-block;
   }
-  
+
   // Font family styles
   [style*="font-family"] {
     display: inline-block;

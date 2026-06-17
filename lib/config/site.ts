@@ -7,7 +7,7 @@ export const SITE_CONFIG = {
 };
 
 export const createMetadata = (overrides?: any) => ({
-  metadataBase: new URL(SITE_CONFIG.domain),
+  // metadataBase: new URL(SITE_CONFIG.domain),
   title: {
     default: SITE_CONFIG.name,
     template: `%s | ${SITE_CONFIG.name}`,

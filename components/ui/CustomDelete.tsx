@@ -51,7 +51,7 @@ const CustomDelete: React.FC<ICustomDeleteProps> = ({ id, title, entity }) => {
       });
       setIsDeleteOpen(false);
     } catch (err) {
-      responseHandler.fail(err);
+      responseHandler.fail("مشکلی پیش آمده است.");
     } finally {
       setIsDeleting(false);
     }

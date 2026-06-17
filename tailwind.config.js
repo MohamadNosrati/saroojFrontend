@@ -1,6 +1,5 @@
 import { heroui } from "@heroui/theme";
 
-
 const config = {
   content: [
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -28,7 +27,7 @@ const config = {
         primary: {
           DEFAULT: "var(--primary)",
           light: "var(--primaryLight)",
-          dark:"var(--primaryDark)"
+          dark: "var(--primaryDark)",
         },
         white: {
           DEFAULT: "var(--white)",

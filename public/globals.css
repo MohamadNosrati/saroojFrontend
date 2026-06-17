@@ -3,28 +3,27 @@
 @config "../tailwind.config.js";
 
 :root {
-  --primary: #AE8649;
+  --primary: #ae8649;
   --primaryLight: #b6915a;
-  --primaryDark: #473B29;
-  --white: #F1F1F2;
-  --whiteGray: #FCFCFD;
-  --grayLighter: #D6D6D6;
-  --grayDarker: #1D1D1D;
+  --primaryDark: #473b29;
+  --white: #f1f1f2;
+  --whiteGray: #fcfcfd;
+  --grayLighter: #d6d6d6;
+  --grayDarker: #1d1d1d;
   --secondary: #666666;
   --gray: #2f2f2f;
 }
 
 .custom-modal-font,
 .custom-modal-font * {
-  font-family: 'font-yekan', sans-serif !important;
+  font-family: "font-yekan", sans-serif !important;
 }
-
 
 .dark input:-webkit-autofill,
 .dark input:autofill {
   font-weight: 700;
-  -webkit-text-fill-color: #1D1D1D !important;
+  -webkit-text-fill-color: #1d1d1d !important;
 }
 
-@import '../styles/_variables.scss';
-@import '../styles/_keyframe-animations.scss';
+@import "../styles/_variables.scss";
+@import "../styles/_keyframe-animations.scss";

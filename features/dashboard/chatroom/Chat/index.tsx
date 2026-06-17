@@ -120,8 +120,6 @@ const Chat: React.FC<IProps> = ({
 
   const ChateSelected = selectedContact || selectedConversation;
 
-  console.log("messages", messages);
-
   return (
     <>
       {ChateSelected ? (

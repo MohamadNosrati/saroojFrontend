@@ -21,7 +21,7 @@ type Props = {
 };
 
 export async function generateStaticParams() {
-  const projects = await getData<
+  const data = await getData<
     IBaseResponse<
       {
         id: string;
@@ -30,9 +30,11 @@ export async function generateStaticParams() {
     >
   >(ProjectsRoute.getAllSlugs());
 
-  return projects?.data?.map((item) => ({
+  const projects = data?.data?.map((item) => ({
     slug: slugify(item?.title),
   }));
+
+  return projects || [];
 }
 
 const baseUrl =

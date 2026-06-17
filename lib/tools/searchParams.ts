@@ -7,7 +7,5 @@ export const queryStringCreator = (params: unknown) => {
     }
   });
 
-  console.log("queryParams", queryParams);
-
   return new URLSearchParams(queryParams).toString();
 };

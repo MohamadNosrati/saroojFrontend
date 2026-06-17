@@ -35,7 +35,6 @@ const Contacts: React.FC<IProps> = ({
     if (!conversationsOtherUserIds?.includes(item?.id)) {
       setSelectedConversation(undefined);
     } else {
-      console.log("oomd inja");
       setSelectedConversation(
         conversations?.find((elem) => elem?.otherUser?.id === item?.id),
       );
