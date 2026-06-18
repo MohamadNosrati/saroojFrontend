@@ -1,4 +1,4 @@
-// next.config.mjs
+const backendUrl = new URL(process.env.NEXT_PUBLIC_BACKEND_URL);
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Turbopack configuration (development only)
@@ -18,6 +18,15 @@ const nextConfig = {
         as: "*.js", // output as JavaScript module
       },
     },
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: backendUrl.protocol.replace(":", ""), // "http" or "https"
+        hostname: backendUrl.hostname,
+        port: backendUrl.port || "",
+      },
+    ],
   },
 
   // Webpack fallback (used for production builds)
