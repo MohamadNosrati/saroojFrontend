@@ -1,16 +1,16 @@
 import { Metadata } from "next";
-
-import Banner from "@/features/landing/Projects/Banner";
-import Container from "@/features/landing/Projects/Container";
-import { createMetadata } from "@/lib/config/site";
-import { ProjectsRoute } from "@/lib/routes/apiRoutes";
-import { getData } from "@/lib/services/data";
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
 import { Suspense } from "react";
+
+import Banner from "@/features/landing/Projects/Banner";
+import Container from "@/features/landing/Projects/Container";
+import { createMetadata } from "@/lib/config/site";
+import { ProjectsRoute } from "@/lib/routes/apiRoutes";
+import { getData } from "@/lib/services/data";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";

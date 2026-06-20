@@ -19,6 +19,7 @@ export default function DeskTopNavigation({ data }: IProps) {
     <div className="flex max-lg:hidden items-center gap-12">
       {data?.map((item) => {
         const Icon = item?.icon;
+
         return (
           <Link
             key={item?.label}
@@ -30,7 +31,7 @@ export default function DeskTopNavigation({ data }: IProps) {
             ])}
             href={item?.href}
           >
-            <Icon width={24} height={24} />
+            <Icon height={24} width={24} />
             {item?.label}
           </Link>
         );

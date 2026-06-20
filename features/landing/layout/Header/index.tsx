@@ -1,7 +1,13 @@
 "use client";
 
 import Link from "next/link";
+
 import DeskTopNavigation from "./DesktopNavigation";
+import MobileNavigation from "./MobileNavigation";
+import SelectLanguage from "./SelectLanguage";
+import ToggleTheme from "./ToggleTheme";
+
+import { persianRoutes } from "@/lib/routes/navigationRoutes";
 import {
   AboutPageIcon,
   BlogsIcon,
@@ -9,10 +15,6 @@ import {
   ProjectsIcon,
   SaroojIcon,
 } from "@/components/icons";
-import { persianRoutes } from "@/lib/routes/navigationRoutes";
-import MobileNavigation from "./MobileNavigation";
-import SelectLanguage from "./SelectLanguage";
-import ToggleTheme from "./ToggleTheme";
 
 const data = [
   {
