@@ -16,23 +16,47 @@ export default function DeskTopNavigation({ data }: IProps) {
   const pathName = usePathname();
 
   return (
-    <div className="flex max-lg:hidden items-center gap-12">
+    <div className="flex max-lg:hidden items-center xl:gap-10 lg:gap-8 gap-6">
       {data?.map((item) => {
         const Icon = item?.icon;
+        const isActive = item?.href === pathName;
 
         return (
           <Link
             key={item?.label}
             className={clsx([
-              "dark:text-white  flex min-w-fit items-center gap-1 text-black font-bold",
-              item?.href === pathName
-                ? "bg-primary px-2.5 py-1.5 rounded-lg"
-                : "hover:text-primary hover:dark:text-primary transition-all duration-300",
+              "relative flex items-center gap-2 py-2 text-sm xl:text-base font-extrabold tracking-wide transition-all duration-300 group select-none",
+              isActive
+                ? "text-primary"
+                : "text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-primary",
             ])}
             href={item?.href}
           >
-            <Icon height={24} width={24} />
-            {item?.label}
+            {/* ICON BLOCK WITH MICRO HOVER BOUNCE */}
+            <span
+              className={clsx([
+                "transition-transform duration-300 group-hover:-translate-y-0.5",
+                isActive
+                  ? "text-primary"
+                  : "text-gray-400 dark:text-gray-500 group-hover:text-primary",
+              ])}
+            >
+              <Icon height={18} width={18} />
+            </span>
+
+            {/* LINK LABEL TEXT */}
+            <span>{item?.label}</span>
+
+            {/* ELEGANT UNDERLINE INDICATOR */}
+            {/* If active, it stays open. If inactive, it expands beautifully outwards from the center on hover. */}
+            <span
+              className={clsx([
+                "absolute bottom-0 left-0 h-[2px] bg-primary rounded-full transition-all duration-300 origin-center",
+                isActive
+                  ? "w-full opacity-100 shadow-[0_0_8px_rgba(var(--primary-rgb),0.5)]"
+                  : "w-0 opacity-0 group-hover:w-full group-hover:opacity-100",
+              ])}
+            />
           </Link>
         );
       })}

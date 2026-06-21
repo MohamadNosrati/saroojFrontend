@@ -104,36 +104,38 @@ const Container = () => {
 
   return (
     <motion.section
-      className="lg:pb-20 sm:pb-14 pb-10 dark:bg-dark bg-white overflow-hidden lg:mt-12 mt-6"
+      className="lg:pb-28 sm:pb-20 pb-14 dark:bg-dark bg-gray-50/50 overflow-hidden lg:mt-16 mt-8"
       initial="hidden"
       variants={containerVariants}
       viewport={{ once: true, amount: 0.15 }}
       whileInView="visible"
     >
-      <div className="container flex max-lg:flex-col gap-2.5 items-center justify-between">
-        <motion.div variants={itemVariants}>
-          <span className="font-bold sm:text-4xl text-2xl dark:text-white">
-            پروژه های ساروج
+      {/* TITLE & HEADER BAR */}
+      <div className="container flex max-lg:flex-col gap-6 items-center justify-between px-4">
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-col max-lg:items-center gap-2"
+        >
+          <span className="font-black sm:text-4xl text-2xl text-gray-900 dark:text-white tracking-tight">
+            پروژه‌های ساروج
           </span>
+          <span className="w-16 h-[3px] bg-primary rounded-full max-lg:mx-auto" />
         </motion.div>
 
-        <motion.div variants={itemVariants}>
+        {/* FILTERING LAYER */}
+        <motion.div variants={itemVariants} className="w-full lg:w-auto">
           <Filtering
             data={categoriesData?.data || []}
-            filtering={{
-              groupSelected,
-              setGroupSelected,
-            }}
+            filtering={{ groupSelected, setGroupSelected }}
             isLoading={isLoadingCategories}
-            sort={{
-              selected,
-              setSelected,
-            }}
+            sort={{ selected, setSelected }}
           />
         </motion.div>
       </div>
+
+      {/* THE PORTFOLIO GRID */}
       <motion.div
-        className="container mt-10 grid lg:grid-cols-3 grid-cols-2 gap-5"
+        className="container mt-12 grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 px-4"
         variants={itemVariants}
       >
         {isLoading
@@ -142,10 +144,20 @@ const Container = () => {
               <ProjectItem key={item?.id} item={item as IProject} />
             ))}
       </motion.div>
+
+      {/* INFINITE SCROLL SYSTEM ELEMENT */}
       <CustomWhen condition={hasNextPage}>
-        <div ref={loadMoreRef} className="w-full h-20" />
+        <div
+          ref={loadMoreRef}
+          className="w-full h-24 flex items-center justify-center mt-8"
+        />
       </CustomWhen>
-      {isFetchingNextPage && <Spinner color="primary" />}
+
+      {isFetchingNextPage && (
+        <div className="flex justify-center mt-6">
+          <Spinner color="primary" size="lg" />
+        </div>
+      )}
     </motion.section>
   );
 };

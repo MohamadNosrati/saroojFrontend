@@ -83,7 +83,7 @@ const Form = () => {
 
   return (
     <motion.div
-      className="flex-col bg-cover gap-y-14 lg:py-20 md:py-14 py-10 flex items-center dark:bg-dark bg-white relative overflow-hidden"
+      className="flex-col bg-cover bg-center gap-y-14 lg:py-24 md:py-16 py-12 flex items-center dark:bg-dark bg-slate-50 relative overflow-hidden border-y border-gray-100 dark:border-white/[0.03]"
       initial={{ opacity: 0 }}
       style={{
         backgroundImage: `url(${FormBg?.src})`,
@@ -92,52 +92,52 @@ const Form = () => {
       viewport={{ once: true }}
       whileInView={{ opacity: 1 }}
     >
-      {/* Background Glow */}
+      {/* Background Dark/Light Overlay for better readability over the image */}
+      <div className="absolute inset-0 bg-white/40 dark:bg-dark/60 pointer-events-none mix-blend-multiply" />
+
+      {/* Enhanced Animated Ambient Background Glow */}
       <motion.div
         animate={{
-          scale: [1, 1.15, 1],
-          opacity: [0.15, 0.3, 0.15],
+          scale: [1, 1.2, 1],
+          opacity: [0.2, 0.4, 0.2],
         }}
-        className="absolute w-[500px] h-[500px] rounded-full bg-primary/20 blur-3xl -z-10"
+        className="absolute w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-primary/30 to-transparent blur-3xl -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         transition={{
-          duration: 8,
+          duration: 10,
           repeat: Infinity,
           ease: "easeInOut",
         }}
       />
 
-      {/* Title */}
-      <motion.p
-        className="dark:text-white text-dark text-center lg:text-xl font-bold text-base"
-        initial={{
-          opacity: 0,
-          y: 25,
-        }}
-        transition={{
-          duration: 0.7,
-          ease: "easeOut",
-        }}
-        viewport={{ once: true }}
-        whileInView={{
-          opacity: 1,
-          y: 0,
-        }}
-      >
-        اگر سوالی دارید <br />
-        لطفا در ارسال پیام به ما تردید نکنید !
-      </motion.p>
+      {/* Title & Underline */}
+      <div className="flex flex-col items-center gap-4 relative z-10">
+        <motion.p
+          className="dark:text-white text-dark text-center lg:text-2xl md:text-xl font-black text-base leading-relaxed tracking-wide"
+          initial={{ opacity: 0, y: 25 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          viewport={{ once: true }}
+          whileInView={{ opacity: 1, y: 0 }}
+        >
+          اگر سوالی دارید <br />
+          لطفا در ارسال پیام به ما تردید نکنید !
+        </motion.p>
+
+        {/* Sleek Decorative Line Under Title */}
+        <div className="w-16 h-[3px] bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
+      </div>
 
       <form
-        className="container flex justify-center"
+        className="container flex justify-center relative z-10"
         onSubmit={handleSubmit(onSubmit)}
       >
         <motion.div
-          className="flex lg:w-2/3 sm:w-3/5 w-full flex-col items-center gap-5"
+          className="flex lg:w-2/3 sm:w-3/5 w-full flex-col items-center gap-6 max-w-xl"
           initial="hidden"
           variants={containerVariants}
           viewport={{ once: true }}
           whileInView="visible"
         >
+          {/* Full Name Input */}
           <motion.div className="w-full" variants={itemVariants}>
             <Controller
               control={control}
@@ -150,7 +150,9 @@ const Form = () => {
                   fullWidth
                   classNames={{
                     inputWrapper:
-                      "dark:bg-gray-darker rounded-none data-[hover=true]:dark:bg-gray-darker bg-gray-lighter data-[hover=true]:bg-gray-lighter text-gray-lighter font-medium",
+                      "dark:bg-gray-darker/80 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-white/10 data-[hover=true]:border-primary/50 focus-within:!border-primary shadow-[0_4px_12px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.2)] bg-white text-gray-800 dark:text-white font-medium transition-all duration-300 h-14 px-5",
+                    input:
+                      "placeholder:text-gray-400 dark:placeholder:text-gray-500 text-sm",
                   }}
                   errorMessage={error?.message}
                   isInvalid={Boolean(error?.message)}
@@ -163,6 +165,7 @@ const Form = () => {
             />
           </motion.div>
 
+          {/* Email Input */}
           <motion.div className="w-full" variants={itemVariants}>
             <Controller
               control={control}
@@ -175,7 +178,9 @@ const Form = () => {
                   fullWidth
                   classNames={{
                     inputWrapper:
-                      "dark:bg-gray-darker rounded-none data-[hover=true]:dark:bg-gray-darker bg-gray-lighter data-[hover=true]:bg-gray-lighter text-gray-lighter font-medium",
+                      "dark:bg-gray-darker/80 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-white/10 data-[hover=true]:border-primary/50 focus-within:!border-primary shadow-[0_4px_12px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.2)] bg-white text-gray-800 dark:text-white font-medium transition-all duration-300 h-14 px-5",
+                    input:
+                      "placeholder:text-gray-400 dark:placeholder:text-gray-500 text-sm ltr",
                   }}
                   errorMessage={error?.message}
                   isInvalid={Boolean(error?.message)}
@@ -188,6 +193,7 @@ const Form = () => {
             />
           </motion.div>
 
+          {/* Message Text Input */}
           <motion.div className="w-full" variants={itemVariants}>
             <Controller
               control={control}
@@ -200,7 +206,9 @@ const Form = () => {
                   fullWidth
                   classNames={{
                     inputWrapper:
-                      "dark:bg-gray-darker rounded-none data-[hover=true]:dark:bg-gray-darker bg-gray-lighter data-[hover=true]:bg-gray-lighter text-gray-lighter font-medium",
+                      "dark:bg-gray-darker/80 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-white/10 data-[hover=true]:border-primary/50 focus-within:!border-primary shadow-[0_4px_12px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.2)] bg-white text-gray-800 dark:text-white font-medium transition-all duration-300 h-14 px-5",
+                    input:
+                      "placeholder:text-gray-400 dark:placeholder:text-gray-500 text-sm",
                   }}
                   errorMessage={error?.message}
                   isInvalid={Boolean(error?.message)}
@@ -213,18 +221,15 @@ const Form = () => {
             />
           </motion.div>
 
+          {/* Submit Button */}
           <motion.div
+            className="w-full sm:w-auto mt-2"
             variants={itemVariants}
-            whileHover={{
-              scale: 1.03,
-            }}
-            whileTap={{
-              scale: 0.96,
-            }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             <Button
-              className="rounded-none font-bold max-sm:w-full"
-              color="primary"
+              className="rounded-xl font-extrabold px-12 h-13 shadow-lg shadow-primary/20 dark:shadow-primary/10 hover:shadow-primary/30 text-sm tracking-wider w-full sm:w-auto bg-primary text-white transition-all duration-300"
               isLoading={isPending}
               type="submit"
             >

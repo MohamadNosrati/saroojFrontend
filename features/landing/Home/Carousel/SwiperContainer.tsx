@@ -14,6 +14,7 @@ import Link from "next/link";
 
 import { ISlider } from "@/lib/types/slider";
 import { uploadUrl } from "@/lib/tools/upload";
+import CarouselItem from "./CarouselItem";
 
 interface IProps {
   data: ISlider[];
@@ -49,83 +50,7 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
       >
         {data?.map((item, index) => (
           <SwiperSlide key={item?.id} className="!relative overflow-hidden">
-            {/* IMAGE ZOOM LAYER */}
-            <motion.div
-              animate={{ scale: 1 }}
-              className="absolute inset-0"
-              initial={{ scale: 1.1 }}
-              transition={{ duration: 2, ease: "easeOut" }}
-            >
-              <Image
-                fill
-                alt={item?.alt || ""}
-                src={uploadUrl(item?.pictureId?.image)}
-                // className="object-cover"
-              />
-            </motion.div>
-
-            {/* DARK OVERLAY */}
-            <div className="absolute inset-0 bg-[#0E0E0E]/60" />
-
-            {/* CONTENT */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="max-w-4/5 flex flex-col items-center text-center">
-                {/* TITLE */}
-                <motion.h1
-                  key={`title-${index}`}
-                  animate={{
-                    opacity: index === activeIndex ? 1 : 0,
-                    y: index === activeIndex ? 0 : 30,
-                  }}
-                  className="text-3xl leading-11 text-white font-semibold"
-                  initial={{ opacity: 0, y: 30 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  {item?.title}
-                </motion.h1>
-
-                {/* DESCRIPTION */}
-                <motion.p
-                  key={`desc-${index}`}
-                  animate={{
-                    opacity: index === activeIndex ? 1 : 0,
-                    y: index === activeIndex ? 0 : 20,
-                  }}
-                  className="max-sm:text-sm text-gray-lighter mt-3"
-                  initial={{ opacity: 0, y: 20 }}
-                  transition={{ duration: 0.7, delay: 0.1 }}
-                >
-                  {item?.description}
-                </motion.p>
-
-                {/* BUTTON */}
-                <motion.div
-                  key={`btn-${index}`}
-                  animate={{
-                    opacity: index === activeIndex ? 1 : 0,
-                    scale: index === activeIndex ? 1 : 0.9,
-                  }}
-                  className="mt-10"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  <Link href={item?.link}>
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Button
-                        className="font-bold text-lg"
-                        color="primary"
-                        variant="ghost"
-                      >
-                        مشاهده جزییات
-                      </Button>
-                    </motion.div>
-                  </Link>
-                </motion.div>
-              </div>
-            </div>
+            <CarouselItem activeIndex={activeIndex} index={index} item={item} key={item?.id}/>
           </SwiperSlide>
         ))}
       </Swiper>

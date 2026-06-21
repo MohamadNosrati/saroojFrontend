@@ -42,26 +42,10 @@ const Container: React.FC<IProps> = ({ data }) => {
       modules={[Autoplay]}
     >
       {data?.map((item) => (
-        <SwiperSlide key={item?.id} className="!pt-12">
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 30,
-            }}
-            transition={{
-              duration: 0.6,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.3,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-          >
+        <SwiperSlide key={item?.id} className="!pt-10 pb-4">
+          <div className="w-full h-full transform transition-all duration-300 hover:-translate-y-1">
             <CommentItem item={item} />
-          </motion.div>
+          </div>
         </SwiperSlide>
       ))}
     </Swiper>

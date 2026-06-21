@@ -18,8 +18,15 @@ const Categories = async () => {
         backgroundImage: `url(${LinesImage.src})`,
       }}
     >
-      <h5 className="text-center text-primary text-2xl font-bold">دسته بندی</h5>
-      <div className="grid container lg:mt-12 sm:mt-8 mt-4 grid-cols-12 gap-y-5 gap-x-5">
+      {/* ENHANCED HEADER WITH ACCENT LINE */}
+      <div className="flex flex-col items-center gap-2 mb-2">
+        <h5 className="text-center text-primary text-2xl font-extrabold tracking-wide drop-shadow-sm">
+          دسته بندی
+        </h5>
+        <span className="w-12 h-[3px] bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
+      </div>
+
+      <div className="grid container lg:mt-12 sm:mt-8 mt-4 grid-cols-12 gap-y-5 gap-x-5 px-4">
         {data?.data?.map((item) => <CategoryItem key={item?.id} item={item} />)}
       </div>
     </section>
