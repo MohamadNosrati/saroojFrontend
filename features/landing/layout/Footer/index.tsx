@@ -27,8 +27,8 @@ const Footer = () => {
         {/* COLUMN 1: BRAND LOGO & BIO */}
         <div className="flex flex-col gap-4 max-sm:items-center lg:col-span-1 sm:col-span-2 col-span-4">
           <Link
-            href={persianRoutes.homePage()}
             className="transition-transform duration-300 hover:scale-[1.02] inline-block"
+            href={persianRoutes.homePage()}
           >
             <SaroojIcon className="sm:w-28 h-12 text-white" />
           </Link>
@@ -47,8 +47,8 @@ const Footer = () => {
           </div>
           <div className="flex gap-3 mt-1">
             <Link
-              href={saroojInstagram}
               className="bg-white/[0.03] border border-white/10 hover:bg-primary rounded-xl flex items-center justify-center size-11 transition-all duration-300 hover:shadow-[0_4px_15px_rgba(var(--primary-rgb),0.3)] hover:-translate-y-0.5 group"
+              href={saroojInstagram}
             >
               <InstagramIcon
                 className="text-gray-lighter group-hover:text-gray-darker transition-colors duration-300"

@@ -133,6 +133,7 @@ export default function MobileNavigation() {
 
       {/* DARK BACKGROUND BACKDROP LAYER */}
       <button
+        aria-label="Close menu"
         className={clsx([
           "fixed inset-0 h-screen w-screen top-20 bg-black/40 backdrop-blur-sm transition-all duration-300 z-50",
           isOpen
@@ -140,7 +141,6 @@ export default function MobileNavigation() {
             : "opacity-0 invisible pointer-events-none",
         ])}
         onClick={() => setIsOpen(false)}
-        aria-label="Close menu"
       />
     </div>
   );

@@ -9,6 +9,7 @@ import { IUser } from "@/lib/types/user";
 import { IConversation } from "@/lib/types/conversation";
 import { useGetConversations } from "@/lib/hooks/conversation";
 import { useAuthStore } from "@/lib/stores/auth";
+import clsx from "clsx";
 
 type TTabType = "conversations" | "contacts";
 type TabItem = {
@@ -59,21 +60,32 @@ const Tabs: React.FC<IProps> = ({
   });
 
   return (
-    <div className="flex w-full h-full overflow-auto relative bg-gray-darker">
-      <div className="flex flex-col relative w-full ">
-        <div className="flex sticky top-0">
-          {tabs?.map((item, index) => (
-            <Button
-              key={index}
-              className="grow rounded-none"
-              color="success"
-              variant={item?.key === selected ? "solid" : "ghost"}
-              onPress={() => setSelected(item?.key)}
-            >
-              {item?.label}
-            </Button>
-          ))}
+    <div className="flex flex-col w-full h-full relative overflow-hidden">
+      {/* Tab Controls Header */}
+      <div className="p-3 border-b border-slate-800 bg-slate-900/40">
+        <div className="flex bg-slate-950/60 p-1 rounded-xl border border-slate-800/80 gap-1">
+          {tabs?.map((item, index) => {
+            const isActive = item?.key === selected;
+            return (
+              <Button
+                key={index}
+                className={clsx(
+                  "grow h-9 rounded-lg font-bold text-xs transition-all duration-200",
+                  isActive
+                    ? "bg-primary text-slate-950 shadow-md shadow-primary/20 font-extrabold"
+                    : "bg-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/40",
+                )}
+                onPress={() => setSelected(item?.key)}
+              >
+                {item?.label}
+              </Button>
+            );
+          })}
         </div>
+      </div>
+
+      {/* Dynamic Content Panel */}
+      <div className="grow overflow-y-auto custom-scrollbar p-2 space-y-1">
         <CustomWhen condition={selected === "contacts"}>
           <Contacts
             conversations={converstions || []}
@@ -82,6 +94,7 @@ const Tabs: React.FC<IProps> = ({
             setSelectedConversation={setSelectedConversation}
           />
         </CustomWhen>
+
         <CustomWhen condition={selected === "conversations"}>
           <Conversations
             conversations={converstions || []}

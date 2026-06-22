@@ -14,10 +14,10 @@ const Banner = () => {
 
           {/* DYNAMIC BACKGROUND IMAGE */}
           <Image
+            priority // Ensures banner loads immediately
             alt="Sarooj Projects Banner"
             className="h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
             src={BannerImage}
-            priority // Ensures banner loads immediately
           />
 
           {/* FLOATING BANNER TEXT CONTENT */}

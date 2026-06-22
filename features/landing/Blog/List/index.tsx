@@ -134,8 +134,8 @@ export default function BlogsList() {
               {sortOptions.map((option) => (
                 <SelectItem
                   key={option.key}
-                  dir="rtl"
                   className="font-bold text-sm hover:bg-primary/10 dark:hover:bg-primary/20 rounded-lg"
+                  dir="rtl"
                 >
                   {option.label}
                 </SelectItem>

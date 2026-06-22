@@ -104,8 +104,9 @@ export default function Chatroom() {
   }, [user?.id]);
 
   return (
-    <div className="flex h-full  overflow-hidden">
-      <div className="h-full w-60">
+    <div className="flex h-full w-full overflow-hidden bg-slate-950/40 rounded-2xl">
+      {/* Contacts & Conversations Sidebar */}
+      <div className="h-full w-72 shrink-0 border-l border-slate-800 bg-slate-900/30 flex flex-col">
         <Tabs
           selectedContact={selectedContact}
           selectedConversation={selectedConversation}
@@ -113,9 +114,16 @@ export default function Chatroom() {
           setSelectedConversation={setSelectedConversation}
         />
       </div>
-      <div className="h-full relative justify-center items-center grow flex flex-col">
+
+      {/* Chat Main Section */}
+      <div className="h-full relative justify-center items-center grow flex flex-col bg-slate-950/10">
         {isConnecting ? (
-          <Spinner label="Connecting to chat..." size="lg" />
+          <div className="flex flex-col gap-3 items-center">
+            <Spinner color="primary" size="lg" />
+            <span className="text-slate-400 text-sm font-medium">
+              در حال اتصال به گفت‌وگو...
+            </span>
+          </div>
         ) : isConnected ? (
           <Chat
             chatBottomRef={chatBottomRef}
@@ -126,8 +134,8 @@ export default function Chatroom() {
             socketRef={socketRef}
           />
         ) : (
-          <div className="text-center text-red-500">
-            Failed to connect to chat server. Please try again.
+          <div className="text-center p-6 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl max-w-sm mx-auto text-sm font-semibold">
+            خطا در اتصال به سرور چت. لطفاً دوباره تلاش کنید.
           </div>
         )}
       </div>

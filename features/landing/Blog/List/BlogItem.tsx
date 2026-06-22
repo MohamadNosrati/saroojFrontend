@@ -38,8 +38,8 @@ export default function BlogItem({ item }: IProps) {
           fill
           alt={item?.alt || item?.title}
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-          src={uploadUrl(item?.pictureId?.image)}
           sizes="(max-w-7xl) 33vw, 100vw"
+          src={uploadUrl(item?.pictureId?.image)}
         />
 
         {/* MODERN CORNER DATE ACCENT TAG */}
@@ -47,7 +47,7 @@ export default function BlogItem({ item }: IProps) {
           className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 bg-black/60 backdrop-blur-md border border-white/10 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-md select-none"
           dir="rtl"
         >
-          <CalandarIcon height={14} width={14} className="text-primary" />
+          <CalandarIcon className="text-primary" height={14} width={14} />
           <span>{dateConvertor(item?.createdAt)}</span>
         </div>
 

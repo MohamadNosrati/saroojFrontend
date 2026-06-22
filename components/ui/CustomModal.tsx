@@ -41,9 +41,27 @@ const CustomModal: React.FC<ICustomMoalProps> = ({
       </Button>
       <Modal
         classNames={{
-          header: "text-white-gray font-bold text-xl ",
-          base: "bg-gray font-yekan ",
-          body: "py-10  flex flex-col gap-y-12 !overflow-visible !overflow-y-auto max-h-[80vh] sm:max-h-[75vh]",
+          base: "bg-slate-900/95 border border-slate-800 backdrop-blur-md rounded-2xl shadow-2xl shadow-black/80 font-yekan text-slate-100 max-h-[90vh] sm:max-h-[85vh]",
+          header:
+            "text-slate-100 font-extrabold text-xl pt-6 pb-4 px-6 border-b border-slate-800/60",
+          body: "py-6 px-6 flex flex-col gap-y-6 overflow-y-auto scroll-smooth custom-scrollbar",
+          closeButton:
+            "hover:bg-slate-800 text-slate-400 hover:text-slate-100 transition-colors duration-200 left-4 right-auto", // Fixed position for RTL
+        }}
+        backdrop="blur" // Native HeroUI frosted glass background overlay
+        motionProps={{
+          variants: {
+            enter: {
+              y: 0,
+              opacity: 1,
+              transition: { duration: 0.2, ease: "easeOut" },
+            },
+            exit: {
+              y: 10,
+              opacity: 0,
+              transition: { duration: 0.15, ease: "easeIn" },
+            },
+          },
         }}
         dir="rtl"
         isOpen={isOpen}
@@ -57,10 +75,10 @@ const CustomModal: React.FC<ICustomMoalProps> = ({
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
+              <ModalHeader className="flex items-center gap-2">
                 {modalTitle}
               </ModalHeader>
-              <Divider />
+              {/* Removed standard <Divider /> because the subtle border-b in the header class looks cleaner */}
               <ModalBody>{children}</ModalBody>
             </>
           )}

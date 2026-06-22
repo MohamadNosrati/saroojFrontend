@@ -23,8 +23,8 @@ export default function LatestBlogItem({ item }: IProps) {
           fill
           alt={item?.title || "Sarooj Blog Cover"}
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-          src={uploadUrl(item?.pictureId?.image)}
           sizes="(max-w-7xl) 50vw, 100vw"
+          src={uploadUrl(item?.pictureId?.image)}
         />
       </div>
 

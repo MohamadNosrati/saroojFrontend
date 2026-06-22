@@ -52,8 +52,8 @@ const Header = () => {
 
           {/* Brand logo container */}
           <Link
-            href={persianRoutes.homePage()}
             className="transition-transform duration-300 hover:scale-[1.02] flex items-center shrink-0"
+            href={persianRoutes.homePage()}
           >
             <SaroojIcon className="sm:w-24 h-10 dark:text-white text-gray-900" />
           </Link>

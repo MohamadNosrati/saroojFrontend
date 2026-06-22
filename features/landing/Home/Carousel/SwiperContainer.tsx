@@ -1,20 +1,16 @@
 "use client";
 
-import Image from "next/image";
 import "swiper/css";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Button } from "@heroui/button";
-import { useRef, useState } from "react";
-import { motion } from "framer-motion";
-
 import type { Swiper as SwiperType } from "swiper/types";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { Autoplay } from "swiper/modules";
-import Link from "next/link";
+
+import CarouselItem from "./CarouselItem";
 
 import { ISlider } from "@/lib/types/slider";
-import { uploadUrl } from "@/lib/tools/upload";
-import CarouselItem from "./CarouselItem";
 
 interface IProps {
   data: ISlider[];
@@ -50,7 +46,12 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
       >
         {data?.map((item, index) => (
           <SwiperSlide key={item?.id} className="!relative overflow-hidden">
-            <CarouselItem activeIndex={activeIndex} index={index} item={item} key={item?.id}/>
+            <CarouselItem
+              key={item?.id}
+              activeIndex={activeIndex}
+              index={index}
+              item={item}
+            />
           </SwiperSlide>
         ))}
       </Swiper>

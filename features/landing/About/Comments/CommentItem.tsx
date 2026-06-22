@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { motion } from "framer-motion";
 
 import CommentImage from "@/public/images/commentImage.png";
 import { DobleQuatesIcon } from "@/components/icons";
@@ -18,11 +17,11 @@ const CommentItem: React.FC<IProps> = ({ item }) => {
       <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full p-[3px] bg-gradient-to-b from-white/20 to-white/5 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.5)] group-hover:from-primary/40 group-hover:to-primary/10 transition-all duration-500">
         <div className="relative size-full rounded-full overflow-hidden bg-gray-darker border border-white/5">
           <Image
-            alt={item.fullName || "کاربر ساروج"}
-            src={CommentImage}
             fill
+            alt={item.fullName || "کاربر ساروج"}
             className="object-cover group-hover:scale-105 transition-transform duration-500"
             sizes="96px"
+            src={CommentImage}
           />
         </div>
       </div>

@@ -28,8 +28,8 @@ export default function CarouselItem({
         <Image
           fill
           alt={item?.alt || ""}
-          src={uploadUrl(item?.pictureId?.image)}
           className="object-cover" // Un-commented for proper scaling
+          src={uploadUrl(item?.pictureId?.image)}
         />
       </motion.div>
 
@@ -59,8 +59,8 @@ export default function CarouselItem({
 
             {/* ELEGANT UNDERLINE ACCENT */}
             <motion.span
-              className="h-[3px] bg-gradient-to-r from-transparent via-primary to-transparent rounded-full shadow-[0_0_8px_var(--tw-shadow-color)] shadow-primary/50"
               animate={{ width: index === activeIndex ? "80px" : "0px" }}
+              className="h-[3px] bg-gradient-to-r from-transparent via-primary to-transparent rounded-full shadow-[0_0_8px_var(--tw-shadow-color)] shadow-primary/50"
               transition={{ duration: 0.8, delay: 0.2 }}
             />
           </motion.div>

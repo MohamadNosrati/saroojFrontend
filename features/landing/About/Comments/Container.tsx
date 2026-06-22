@@ -3,7 +3,6 @@
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import { motion } from "framer-motion";
 
 import CommentItem from "./CommentItem";
 

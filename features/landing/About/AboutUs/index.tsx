@@ -25,12 +25,12 @@ const AboutUs = () => {
           <div className="relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl bg-gray-dark/40 backdrop-blur-sm">
             <div className="aspect-square relative overflow-hidden">
               <Image
+                fill
+                priority
                 alt="شرکت مهندسی معماری ساروج"
                 className="object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-                src={StaticImage}
-                priority
-                fill
                 sizes="(max-w-7xl) 30vw, 100vw"
+                src={StaticImage}
               />
             </div>
           </div>

@@ -50,8 +50,8 @@ const Services = () => {
           <Image
             fill
             alt="Sarooj Architecture Services"
-            src={ServiceImage}
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            src={ServiceImage}
           />
         </div>
 

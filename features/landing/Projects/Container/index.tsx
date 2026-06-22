@@ -113,8 +113,8 @@ const Container = () => {
       {/* TITLE & HEADER BAR */}
       <div className="container flex max-lg:flex-col gap-6 items-center justify-between px-4">
         <motion.div
-          variants={itemVariants}
           className="flex flex-col max-lg:items-center gap-2"
+          variants={itemVariants}
         >
           <span className="font-black sm:text-4xl text-2xl text-gray-900 dark:text-white tracking-tight">
             پروژه‌های ساروج
@@ -123,7 +123,7 @@ const Container = () => {
         </motion.div>
 
         {/* FILTERING LAYER */}
-        <motion.div variants={itemVariants} className="w-full lg:w-auto">
+        <motion.div className="w-full lg:w-auto" variants={itemVariants}>
           <Filtering
             data={categoriesData?.data || []}
             filtering={{ groupSelected, setGroupSelected }}
