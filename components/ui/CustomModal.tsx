@@ -7,7 +7,6 @@ import {
   ModalProps,
 } from "@heroui/modal";
 import { Button } from "@heroui/button";
-import { Divider } from "@heroui/divider";
 
 import { yekanBakh } from "@/lib/config/fonts";
 
@@ -40,6 +39,7 @@ const CustomModal: React.FC<ICustomMoalProps> = ({
         {buttonTitle}
       </Button>
       <Modal
+        backdrop="blur" // Native HeroUI frosted glass background overlay
         classNames={{
           base: "bg-slate-900/95 border border-slate-800 backdrop-blur-md rounded-2xl shadow-2xl shadow-black/80 font-yekan text-slate-100 max-h-[90vh] sm:max-h-[85vh]",
           header:
@@ -48,7 +48,8 @@ const CustomModal: React.FC<ICustomMoalProps> = ({
           closeButton:
             "hover:bg-slate-800 text-slate-400 hover:text-slate-100 transition-colors duration-200 left-4 right-auto", // Fixed position for RTL
         }}
-        backdrop="blur" // Native HeroUI frosted glass background overlay
+        dir="rtl"
+        isOpen={isOpen}
         motionProps={{
           variants: {
             enter: {
@@ -63,8 +64,6 @@ const CustomModal: React.FC<ICustomMoalProps> = ({
             },
           },
         }}
-        dir="rtl"
-        isOpen={isOpen}
         size="5xl"
         style={
           { "--font-yekan": yekanBakh.style.fontFamily } as React.CSSProperties

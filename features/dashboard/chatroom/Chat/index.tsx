@@ -9,6 +9,7 @@ import React, {
   useState,
 } from "react";
 import { Socket } from "socket.io-client";
+import clsx from "clsx";
 
 import MessageItem from "./MessageItem";
 
@@ -24,7 +25,6 @@ import { ISocketAcknowledgement } from "@/lib/types/base";
 import { IConversation } from "@/lib/types/conversation";
 import { IMessage, MessageStatus, MessageType } from "@/lib/types/message";
 import { IUser } from "@/lib/types/user";
-import clsx from "clsx";
 
 interface IProps {
   isConnected: boolean;
@@ -147,7 +147,7 @@ const Chat: React.FC<IProps> = ({
             {/* Content Loading State */}
             <CustomWhen condition={isLoading}>
               <div className="size-full flex justify-center items-center">
-                <Spinner size="lg" color="primary" />
+                <Spinner color="primary" size="lg" />
               </div>
             </CustomWhen>
 

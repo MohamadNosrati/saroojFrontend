@@ -47,6 +47,7 @@ const Contacts: React.FC<IProps> = ({
         <div className="flex flex-col w-full gap-1">
           {otherUsers?.map((item) => {
             const isSelected = item?.id === selectedContact?.id;
+
             return (
               <button
                 key={item?.id}
@@ -104,7 +105,7 @@ const Contacts: React.FC<IProps> = ({
 
       <CustomWhen condition={isLoading}>
         <div className="flex grow items-center justify-center p-6">
-          <Spinner size="md" color="primary" />
+          <Spinner color="primary" size="md" />
         </div>
       </CustomWhen>
     </div>

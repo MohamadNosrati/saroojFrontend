@@ -28,6 +28,7 @@ const Conversations: React.FC<IProps> = ({
     <div className="flex flex-col w-full gap-1">
       {conversations?.map((item) => {
         const isSelected = item?.id === selectedConversation?.id;
+
         return (
           <button
             key={item?.id}

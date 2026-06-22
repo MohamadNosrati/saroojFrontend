@@ -1,5 +1,6 @@
 import { Button } from "@heroui/button";
 import React, { Dispatch, SetStateAction, useState } from "react";
+import clsx from "clsx";
 
 import Contacts from "./Contacts";
 import Conversations from "./Conversations";
@@ -9,7 +10,6 @@ import { IUser } from "@/lib/types/user";
 import { IConversation } from "@/lib/types/conversation";
 import { useGetConversations } from "@/lib/hooks/conversation";
 import { useAuthStore } from "@/lib/stores/auth";
-import clsx from "clsx";
 
 type TTabType = "conversations" | "contacts";
 type TabItem = {
@@ -66,6 +66,7 @@ const Tabs: React.FC<IProps> = ({
         <div className="flex bg-slate-950/60 p-1 rounded-xl border border-slate-800/80 gap-1">
           {tabs?.map((item, index) => {
             const isActive = item?.key === selected;
+
             return (
               <Button
                 key={index}
