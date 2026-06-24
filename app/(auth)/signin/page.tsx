@@ -76,8 +76,6 @@ const SiginPage = () => {
               type="password"
             />
           </div>
-
-          {/* Submit Action Button */}
           <Button
             fullWidth
             className="h-12 !mt-8 bg-primary text-slate-950 font-extrabold text-sm rounded-xl shadow-lg shadow-primary/10 hover:shadow-primary/20 hover:scale-[1.01] transition-all duration-200"
