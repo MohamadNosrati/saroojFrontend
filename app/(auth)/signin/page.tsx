@@ -63,7 +63,6 @@ const SiginPage = () => {
             />
           </div>
 
-          {/* Password Input Field */}
           <div className="w-full">
             <CustomInput
               className="w-full text-left"
