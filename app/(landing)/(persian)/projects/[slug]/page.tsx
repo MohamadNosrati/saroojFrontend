@@ -80,6 +80,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: project.createdAt,
       modifiedTime: project.updatedAt,
       authors: ["شرکت ساخت و ساز ساروج"],
+      images: [
+        {
+          url: uploadUrl(project?.pictureId?.image),
+          width: 1200,
+          height: 630,
+          alt: project?.title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",

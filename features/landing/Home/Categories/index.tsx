@@ -13,7 +13,7 @@ const Categories = async () => {
 
   return (
     <section
-      className="lg:pt-20 dark:bg-dark bg-white lg:pb-48 md:pt-14 md:pb-24 sm:pt-10 sm:pb-14 pt-6 pb-10 bg-cover bg-no-repeat"
+      className="lg:pt-16 dark:bg-dark bg-white lg:pb-20 md:pt-14 md:pb-24 sm:pt-12 sm:pb-10 pt-6 pb-8 bg-cover bg-no-repeat"
       style={{
         backgroundImage: `url(${LinesImage.src})`,
       }}

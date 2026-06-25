@@ -72,10 +72,12 @@ const FormContainer: React.FC<IFormContainerProps> = ({ onOpenChage }) => {
       </div>
       <div>
         <Controller
+          
           control={control}
           name="url"
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <CustomInput
+              dir="ltr"
               errorMessage={error?.message}
               isInvalid={Boolean(error?.message)}
               label="لینک"

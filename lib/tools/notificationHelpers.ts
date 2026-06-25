@@ -3,9 +3,14 @@ import { ISubscriptionPayload } from "../types/subscription";
 import { responseHandler } from "./responseHandler";
 
 class NotificationHelpers {
+  readonly STORAGE_KEY: string = "pwa_prompt_last_shown";
+  readonly TWENTY_FOUR_HOURS: number = 24 * 60 * 60 * 1000;
+
   async getPermission() {
     if (!("Notification" in window)) {
-      responseHandler.fail("broswer doest not support notification");
+      responseHandler.fail(
+        "broswer doest not support notification . we suggest to install sarooj pwa app.",
+      );
     }
 
     const permission = await Notification.requestPermission();
@@ -59,6 +64,12 @@ class NotificationHelpers {
     }
 
     return outputArray;
+  }
+
+  shouldShowPrompt() {
+    const lastShown = localStorage.getItem(this.STORAGE_KEY);
+    if (!lastShown) return true;
+    return Date.now() - parseInt(lastShown, 10) >= this.TWENTY_FOUR_HOURS;
   }
 }
 

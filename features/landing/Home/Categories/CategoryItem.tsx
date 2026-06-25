@@ -17,7 +17,7 @@ const CategoryItem: React.FC<IProps> = ({ item }) => {
       href={persianRoutes.categoryProjectsPage(`${slugify(item?.title)}`)}
     >
       {/* LAYERED CINEMATIC OVERLAY */}
-      <div className="size-full absolute left-0 top-0 z-10 bg-gradient-to-t from-black via-black/40 to-transparent flex py-8 px-5 flex-col items-center justify-end text-primary transition-all duration-300 group-hover:bg-black/50">
+      <div className="size-full absolute left-0 top-0 z-10 bg-gradient-to-t from-black via-black/40 to-transparent flex py-8 px-5 flex-col items-center justify-end text-primary transition-all duration-300 group-hover:bg-dark/50">
         {/* TITLE WRAPPER WITH HOVER GLOW EFFECT */}
         <div className="w-full flex flex-col items-center gap-2 text-center">
           <span className="text-2xl sm:text-3xl lg:text-4xl max-w-full truncate font-black text-primary drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] group-hover:scale-[1.02] transition-transform duration-300">

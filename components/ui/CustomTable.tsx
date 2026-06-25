@@ -131,7 +131,7 @@ export default function CustomTable({
       case "link":
         return (
           <div className="flex flex-col max-w-20">
-            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
+            <p className="text-bold text-sm text-dark max-w-full truncate capitalize  line-clamp-1">
               {cellValue}
             </p>
           </div>
@@ -290,7 +290,7 @@ export default function CustomTable({
         {(item: Item) => (
           <TableRow key={item.id}>
             {(columnKey: Key) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
+              <TableCell className="text-dark dark:text-white">{renderCell(item, columnKey)}</TableCell>
             )}
           </TableRow>
         )}

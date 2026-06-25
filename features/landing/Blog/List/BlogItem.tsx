@@ -44,7 +44,7 @@ export default function BlogItem({ item }: IProps) {
 
         {/* MODERN CORNER DATE ACCENT TAG */}
         <div
-          className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 bg-black/60 backdrop-blur-md border border-white/10 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-md select-none"
+          className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 bg-dark/60 backdrop-blur-md border border-white/10 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-md select-none"
           dir="rtl"
         >
           <CalandarIcon className="text-primary" height={14} width={14} />

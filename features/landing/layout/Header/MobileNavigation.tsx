@@ -51,7 +51,7 @@ export default function MobileNavigation() {
     <div className="lg:hidden">
       {/* MENU TOGGLE BUTTON (Simplified and polished) */}
       <Button
-        className="min-w-0 p-2.5 rounded-xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/10 transition-all duration-300 active:scale-95"
+        className="min-w-0 p-2.5 rounded-xl bg-dark/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/10 transition-all duration-300 active:scale-95"
         color="default"
         variant="light"
         onPress={() => setIsOpen((prv) => !prv)}
@@ -74,7 +74,7 @@ export default function MobileNavigation() {
       {/* DROP-DOWN MENU DRAWER */}
       <div
         className={clsx([
-          "fixed left-0 right-0 top-20 w-full bg-white/95 dark:bg-black/95 backdrop-blur-xl border-b border-black/[0.06] dark:border-white/[0.06] shadow-2xl transition-all duration-300 ease-out z-[60] py-6 px-4 flex flex-col gap-2 rounded-b-3xl",
+          "fixed left-0 right-0 top-20 w-full bg-white/95 dark:bg-dark/95 backdrop-blur-xl border-b border-black/[0.06] dark:border-white/[0.06] shadow-2xl transition-all duration-300 ease-out z-[60] py-6 px-4 flex flex-col gap-2 rounded-b-3xl",
           isOpen
             ? "opacity-100 translate-y-0 visible"
             : "opacity-0 -translate-y-4 invisible pointer-events-none",
@@ -92,7 +92,7 @@ export default function MobileNavigation() {
                   "w-full flex items-center justify-between py-3.5 px-4 rounded-xl font-extrabold text-base transition-all duration-200 group border",
                   isActive
                     ? "bg-primary text-gray-darker border-primary/20 shadow-lg shadow-primary/10"
-                    : "text-gray-800 dark:text-gray-200 bg-transparent border-transparent hover:bg-black/[0.02] dark:hover:bg-white/[0.02] hover:text-primary dark:hover:text-primary",
+                    : "text-gray-800 dark:text-gray-200 bg-transparent border-transparent hover:bg-dark/[0.02] dark:hover:bg-white/[0.02] hover:text-primary dark:hover:text-primary",
                 ])}
                 href={item?.href}
                 onClick={() => setIsOpen(false)} // Auto-close drawer on click
@@ -135,7 +135,7 @@ export default function MobileNavigation() {
       <button
         aria-label="Close menu"
         className={clsx([
-          "fixed inset-0 h-screen w-screen top-20 bg-black/40 backdrop-blur-sm transition-all duration-300 z-50",
+          "fixed inset-0 h-screen w-screen top-20 bg-dark/40 backdrop-blur-sm transition-all duration-300 z-50",
           isOpen
             ? "opacity-100 visible"
             : "opacity-0 invisible pointer-events-none",

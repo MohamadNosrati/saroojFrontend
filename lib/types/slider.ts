@@ -3,7 +3,7 @@ import { IFile } from "./file";
 export interface ISliderPayload {
   title: string;
   alt: string;
-  link: string;
+  link?: string;
   description: string;
   pictureId: string;
   isActive: boolean;
@@ -17,7 +17,7 @@ export interface ISlider {
   description: string;
   createdAt: Date;
   alt: string;
-  link: string;
+  link?: string;
   updatedAt: Date;
   isActive: boolean;
 }

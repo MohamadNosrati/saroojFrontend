@@ -26,7 +26,7 @@ export default function User() {
                 src={uploadUrl(user?.pictureId?.image)}
               />
               {/* Subtle dark overlay on hover */}
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/avatar:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+              <div className="absolute inset-0 bg-dark/40 opacity-0 group-hover/avatar:opacity-100 transition-opacity duration-200 flex items-center justify-center">
                 <span className="text-[10px] text-slate-200 font-medium">
                   تغییر
                 </span>

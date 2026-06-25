@@ -8,6 +8,7 @@ import { getData } from "@/lib/services/data";
 import { slugify } from "@/lib/tools/slugify";
 import { IBaseResponse } from "@/lib/types/base";
 import { IBlog, IBlogWithSuggestions } from "@/lib/types/blog";
+import { uploadUrl } from "@/lib/tools/upload";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
@@ -57,11 +58,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       modifiedTime: post.updatedAt || post.createdAt,
       authors: ["شرکت ساخت و ساز ساروج"],
       tags: ["شرکت ساخت و ساز ساروج", post?.title],
+      images: [
+        {
+          url: uploadUrl(post?.pictureId?.image),
+          width: 1200,
+          height: 630,
+          alt: post?.title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${post.title} | مجله ساخت و ساز ساروج`,
       description: excerpt,
+      images: [uploadUrl(post?.pictureId?.image)],
     },
   });
 }

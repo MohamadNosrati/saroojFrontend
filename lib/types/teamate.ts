@@ -6,6 +6,8 @@ export interface ITeamatePayload {
   description: string;
   pictureId: string;
   isActive: boolean;
+  telegram?: string;
+  instagram?: string;
 }
 
 export interface ITeamate {
@@ -18,6 +20,8 @@ export interface ITeamate {
   updatedAt: Date;
   isActive: boolean;
   alt: string;
+  telegram?: string;
+  instagram?: string;
 }
 
 export interface IUpdateTeamatePayload extends Partial<ITeamatePayload> {

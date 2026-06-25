@@ -6,6 +6,8 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: "YourApp",
     description: "Your app description",
     start_url: "/",
+    id: "/",
+    orientation: "portrait",
     display: "standalone",
     background_color: "#ffffff",
     theme_color: "#000000",
@@ -16,7 +18,7 @@ export default function manifest(): MetadataRoute.Manifest {
         type: "image/png",
       },
       {
-        src: "/android-chrome-192x192.png",
+        src: "/android-chrome-512x512.png",
         sizes: "512x512",
         type: "image/png",
       },

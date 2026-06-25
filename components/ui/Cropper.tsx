@@ -32,12 +32,12 @@ const ImageCropper: React.FC<IProps> = ({
   aspect,
 }) => {
   return (
-    <div className="flex justify-center z-[100000000] items-end p-6 fixed left-0 top-0 gap-4 w-full min-h-screen bg-black/75">
+    <div className="flex justify-center z-[100000000] items-end p-6 fixed left-0 top-0 gap-4 w-full min-h-screen bg-dark/75">
       <Cropper
         aspect={aspect}
         classes={{
           containerClassName:
-            "w-full h-full flex relative justify-center items-center bg-black/75",
+            "w-full h-full flex relative justify-center items-center bg-dark/75",
           cropAreaClassName: "size-full",
         }}
         crop={crop}

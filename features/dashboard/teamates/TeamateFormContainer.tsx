@@ -26,6 +26,8 @@ type TformValues = {
   isActive: "0" | "1";
   alt: string;
   position: string;
+  telegram?: string;
+  instagram?: string;
 };
 
 const FormContainer: React.FC<IFormContainerProps> = ({
@@ -37,25 +39,28 @@ const FormContainer: React.FC<IFormContainerProps> = ({
     useCreateTeamate();
   const { mutate: updateMutate, isPending: isUpdatePending } =
     useUpdateTeamate();
-  const { handleSubmit, setValue, watch, control, reset } =
-    useForm<TformValues>({
-      defaultValues: {
-        title: "",
-        pictureId: "",
-        description: "",
-        isActive: "1",
-        alt: "",
-        position: "",
-      },
-      values: {
-        title: teamate?.title || "",
-        position: teamate?.position || "",
-        description: teamate?.description || "",
-        pictureId: teamate?.pictureId?.id || "",
-        alt: teamate?.alt || "",
-        isActive: teamate?.isActive === false ? "0" : "1",
-      },
-    });
+  const { handleSubmit, control, reset } = useForm<TformValues>({
+    defaultValues: {
+      title: "",
+      pictureId: "",
+      description: "",
+      isActive: "1",
+      alt: "",
+      position: "",
+      telegram: "",
+      instagram: "",
+    },
+    values: {
+      title: teamate?.title || "",
+      position: teamate?.position || "",
+      description: teamate?.description || "",
+      pictureId: teamate?.pictureId?.id || "",
+      alt: teamate?.alt || "",
+      instagram: teamate?.instagram || "",
+      telegram: teamate?.telegram || "",
+      isActive: teamate?.isActive === false ? "0" : "1",
+    },
+  });
   const onSubmit = async (data: TformValues) => {
     const createPayload = {
       ...data,
@@ -175,6 +180,38 @@ const FormContainer: React.FC<IFormContainerProps> = ({
               message: "alt is required!",
             },
           }}
+        />
+      </div>
+      <div>
+        <Controller
+          control={control}
+          name="telegram"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              errorMessage={error?.message}
+              isInvalid={Boolean(error?.message)}
+              label="لینک تلگرام"
+              labelPlacement="outside-top"
+              value={value}
+              onChange={onChange}
+            />
+          )}
+        />
+      </div>
+      <div>
+        <Controller
+          control={control}
+          name="instagram"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              errorMessage={error?.message}
+              isInvalid={Boolean(error?.message)}
+              label="لینک اینستاگرام"
+              labelPlacement="outside-top"
+              value={value}
+              onChange={onChange}
+            />
+          )}
         />
       </div>
       <div>

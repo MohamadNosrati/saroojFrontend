@@ -33,7 +33,7 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
           delay: 2500,
           disableOnInteraction: false,
         }}
-        className="!w-full bg-black h-[calc(100vh-80px)]"
+        className="!w-full dark:bg-dark bg-white h-[calc(100vh-80px)]"
         modules={[Autoplay]}
         slidesPerView={1}
         spaceBetween={0}

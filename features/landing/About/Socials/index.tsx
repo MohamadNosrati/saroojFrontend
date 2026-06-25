@@ -5,7 +5,7 @@ import { saroojInstagram } from "@/lib/constants/info";
 
 const Socials = () => {
   return (
-    <div className="lg:gap-10 gap-6 flex dark:bg-dark bg-white flex-col items-center py-10 px-6 rounded-3xl relative overflow-hidden border border-gray-100 dark:border-white/[0.02] shadow-[0_4px_30px_rgba(0,0,0,0.02)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+    <div className="lg:gap-10 gap-6 flex dark:bg-dark bg-white flex-col items-center py-10 px-6 relative overflow-hidden border border-gray-100 dark:border-white/[0.02] shadow-[0_4px_30px_rgba(0,0,0,0.02)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
       {/* Subtle Ambient Background Radial Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl pointer-events-none" />
 

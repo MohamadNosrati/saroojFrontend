@@ -23,7 +23,7 @@ type TformValues = {
   title: string;
   pictureId: string;
   mobilePictureId: string;
-  link: string;
+  link?: string;
   alt: string;
   description: string;
   isActive: "0" | "1";
@@ -175,12 +175,6 @@ const FormContainer: React.FC<IFormContainerProps> = ({
               onChange={onChange}
             />
           )}
-          rules={{
-            required: {
-              value: true,
-              message: "link is required!",
-            },
-          }}
         />
       </div>
       <div>

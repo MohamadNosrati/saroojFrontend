@@ -32,3 +32,4 @@ export { default as BreakIcon } from "./landing/break.svg";
 export { default as AboutPageIcon } from "./landing/aboutPage.svg";
 export { default as SaroojIcon } from "./landing/sarooj.svg";
 export { default as ShareIcon } from "./landing/share.svg";
+export { default as TelegramIcon } from "./landing/telegram.svg";
