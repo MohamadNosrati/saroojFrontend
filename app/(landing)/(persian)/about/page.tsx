@@ -7,7 +7,6 @@ import Form from "@/features/landing/About/Form";
 import Map from "@/features/landing/About/Map";
 import Socials from "@/features/landing/About/Socials";
 import { createMetadata } from "@/lib/config/site";
-import { uploadUrl } from "@/lib/tools/upload";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";

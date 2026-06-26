@@ -68,7 +68,9 @@ class NotificationHelpers {
 
   shouldShowPrompt() {
     const lastShown = localStorage.getItem(this.STORAGE_KEY);
+
     if (!lastShown) return true;
+
     return Date.now() - parseInt(lastShown, 10) >= this.TWENTY_FOUR_HOURS;
   }
 }

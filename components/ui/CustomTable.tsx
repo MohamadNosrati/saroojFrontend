@@ -290,7 +290,9 @@ export default function CustomTable({
         {(item: Item) => (
           <TableRow key={item.id}>
             {(columnKey: Key) => (
-              <TableCell className="text-dark dark:text-white">{renderCell(item, columnKey)}</TableCell>
+              <TableCell className="text-dark dark:text-white">
+                {renderCell(item, columnKey)}
+              </TableCell>
             )}
           </TableRow>
         )}

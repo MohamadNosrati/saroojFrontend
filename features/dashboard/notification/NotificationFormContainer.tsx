@@ -72,7 +72,6 @@ const FormContainer: React.FC<IFormContainerProps> = ({ onOpenChage }) => {
       </div>
       <div>
         <Controller
-          
           control={control}
           name="url"
           render={({ field: { value, onChange }, fieldState: { error } }) => (

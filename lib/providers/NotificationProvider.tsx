@@ -8,12 +8,13 @@ import {
   ModalBody,
   ModalFooter,
 } from "@heroui/modal";
+import { Button } from "@heroui/button";
+
+import { yekanBakh } from "../config/fonts";
 
 import { notficationHelpers } from "@/lib/tools/notificationHelpers";
 import { servicWorkerHelpers } from "@/lib/tools/servicWorkerHelpers";
 import { useCreateSubscription } from "@/lib/hooks/subscription";
-import { Button } from "@heroui/button";
-import { yekanBakh } from "../config/fonts";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 
 export const NotificationProvider = () => {
@@ -50,6 +51,7 @@ export const NotificationProvider = () => {
             Date.now().toString(),
           );
         }
+
         return;
       }
 
@@ -65,6 +67,7 @@ export const NotificationProvider = () => {
               Date.now().toString(),
             );
           }
+
           return;
         }
 
@@ -75,6 +78,7 @@ export const NotificationProvider = () => {
           const newSubscription = await notficationHelpers.subscribeUser(
             process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
           );
+
           mutate(newSubscription);
         }
       } catch (error) {
@@ -96,6 +100,7 @@ export const NotificationProvider = () => {
   const handleInstallClick = async (onClose: () => void) => {
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
+
     if (outcome === "accepted") {
       localStorage.setItem(
         notficationHelpers.STORAGE_KEY,
@@ -108,19 +113,19 @@ export const NotificationProvider = () => {
 
   return (
     <Modal
-      isOpen={isOpen}
-      onOpenChange={setIsOpen}
-      placement="center"
       backdrop="blur"
-      style={
-        { "--font-yekan": yekanBakh.style.fontFamily } as React.CSSProperties
-      }
-      dir="rtl"
       classNames={{
         base: "bg-white font-yekan dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100",
         closeButton:
           "left-2 right-auto hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700",
       }}
+      dir="rtl"
+      isOpen={isOpen}
+      placement="center"
+      style={
+        { "--font-yekan": yekanBakh.style.fontFamily } as React.CSSProperties
+      }
+      onOpenChange={setIsOpen}
     >
       <ModalContent>
         {(onClose) => (
@@ -137,8 +142,8 @@ export const NotificationProvider = () => {
               <>
                 <div>
                   <p className="mt-2 text-sm text-zinc-500 text-justify dark:text-zinc-400 font-medium">
-                    با کلیک روی دکمه{" "}
-                    <span className="text-primary font-bold">"نصب برنامه"</span>{" "}
+                    با کلیک روی دکمه
+                    <span className="text-primary font-bold">نصب برنامه</span>
                     زیر، می‌توانید اپلیکیشن را مستقیماً روی دستگاه خود نصب کنید.
                   </p>
                 </div>
@@ -148,18 +153,20 @@ export const NotificationProvider = () => {
                   </span>
                   <ul className="list-disc list-inside space-y-1 pr-2">
                     <li>
-                      <strong>آیفون (Safari):</strong> روی دکمه{" "}
-                      <span className="underline">Share</span> بزنید و گزینه{" "}
+                      <strong>آیفون (Safari):</strong> روی دکمه
+                      <span className="underline">Share</span> بزنید و گزینه
                       <strong className="text-primary">
-                        "Add to Home Screen"
-                      </strong>{" "}
+                        {"Add to Home Screen"}
+                      </strong>
                       را انتخاب کنید.
                     </li>
                     <li>
                       <strong>اندروید / Chrome:</strong> روی آیکون سه نقطه بالا
-                      بزنید و گزینه{" "}
-                      <strong className="text-primary">"Install App"</strong> را
-                      انتخاب کنید.
+                      بزنید و گزینه
+                      <strong className="text-primary">
+                        {"Install App"}
+                      </strong>
+                      را انتخاب کنید.
                     </li>
                   </ul>
                 </div>
@@ -167,19 +174,19 @@ export const NotificationProvider = () => {
             </ModalBody>
             <ModalFooter className="flex justify-end gap-2">
               <Button
+                className="hover:bg-zinc-100 dark:hover:bg-zinc-800"
                 color="secondary"
                 variant="light"
                 onPress={onClose}
-                className="hover:bg-zinc-100 dark:hover:bg-zinc-800"
               >
                 متوجه شدم
               </Button>
               <CustomWhen condition={isSearchingPrompt || deferredPrompt}>
                 <Button
+                  className="font-medium shadow-md shadow-primary/20"
                   color="primary"
                   isLoading={isSearchingPrompt}
                   onPress={() => handleInstallClick(onClose)}
-                  className="font-medium shadow-md shadow-primary/20"
                 >
                   {isSearchingPrompt
                     ? "در حال برسی سیستم"

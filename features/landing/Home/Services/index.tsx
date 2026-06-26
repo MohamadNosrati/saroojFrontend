@@ -1,8 +1,5 @@
-import Image from "next/image";
-
 import ServiceItem from "./ServiceItem";
 
-import ServiceImage from "@/public/images/serviceImage.png";
 import { BreakIcon, HomeCowch, HomeIcon, RullerIcon } from "@/components/icons";
 
 const data = [
