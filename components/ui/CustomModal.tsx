@@ -72,7 +72,7 @@ const CustomModal: React.FC<ICustomMoalProps> = ({
         onOpenChange={onOpenChange}
       >
         <ModalContent>
-          {(onClose) => (
+          {() => (
             <>
               <ModalHeader className="flex items-center gap-2">
                 {modalTitle}

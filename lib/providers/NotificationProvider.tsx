@@ -163,9 +163,7 @@ export const NotificationProvider = () => {
                     <li>
                       <strong>اندروید / Chrome:</strong> روی آیکون سه نقطه بالا
                       بزنید و گزینه
-                      <strong className="text-primary">
-                        {"Install App"}
-                      </strong>
+                      <strong className="text-primary">{"Install App"}</strong>
                       را انتخاب کنید.
                     </li>
                   </ul>

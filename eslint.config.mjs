@@ -52,6 +52,7 @@ export default defineConfig([
         "plugin:react-hooks/recommended",
         "plugin:jsx-a11y/recommended",
         "plugin:@next/next/recommended",
+        "next/core-web-vitals",
       ),
     ),
 

@@ -109,7 +109,7 @@ const MainToolbarContent = ({
   isMobile: boolean;
   editor: any;
 }) => {
-  const [showFontSizeMenu, setShowFontSizeMenu] = useState(false);
+  // const [showFontSizeMenu, setShowFontSizeMenu] = useState(false);
   const fontSizeMenuRef = useRef<HTMLDivElement>(null);
   const fontFamilyMenuRef = useRef<HTMLDivElement>(null);
 
@@ -120,7 +120,7 @@ const MainToolbarContent = ({
         fontSizeMenuRef.current &&
         !fontSizeMenuRef.current.contains(event.target as Node)
       ) {
-        setShowFontSizeMenu(false);
+        // setShowFontSizeMenu(false);
       }
       if (
         fontFamilyMenuRef.current &&
@@ -134,10 +134,10 @@ const MainToolbarContent = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const setFontSize = (size: string) => {
-    editor.chain().focus().setMark("textStyle", { fontSize: size }).run();
-    setShowFontSizeMenu(false);
-  };
+  // const setFontSize = (size: string) => {
+  //   editor.chain().focus().setMark("textStyle", { fontSize: size }).run();
+  //   setShowFontSizeMenu(false);
+  // };
 
   return (
     <>
