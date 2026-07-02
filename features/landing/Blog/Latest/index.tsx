@@ -1,9 +1,9 @@
-import LatestBlogItem from "./LatestBlogItem";
-
 import { getData } from "@/lib/services/data";
 import { IBaseResponse, IPaginatedResponse } from "@/lib/types/base";
 import { IBlog } from "@/lib/types/blog";
 import { blogsRoutes } from "@/lib/routes/apiRoutes";
+
+import LatestBlogItem from "./LatestBlogItem";
 
 export default async function BlogsLatest() {
   const data = await getData<IBaseResponse<IPaginatedResponse<IBlog>>>(

@@ -3,12 +3,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
-import { DeleteIcon } from "../icons";
-
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { temateServices } from "@/lib/services/teamates";
 import { categoriesRoute, TeamatesRoute } from "@/lib/routes/apiRoutes";
 import { categoryServices } from "@/lib/services/categories";
+
+import { DeleteIcon } from "../icons";
 
 export type TEntity = "category" | "teamate" | "comment" | "project";
 

@@ -20,8 +20,9 @@ const ShareButton: React.FC<IProps> = ({ paylod }) => {
 
   return (
     <Button
-      className="min-w-0 size-8 !p-0"
-      color="secondary"
+      className="min-w-0 sm:size-10 size-8 !p-0"
+      color="warning"
+      variant="shadow"
       onPress={() => shareHandler()}
     >
       <ShareIcon className="text-dark" height={20} width={20} />

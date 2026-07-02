@@ -4,14 +4,14 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Button } from "@heroui/button";
 import { Spinner } from "@heroui/spinner";
 
+import { useUpload } from "@/lib/hooks/upload";
+import { getCroppedImg } from "@/lib/tools/croppedImage";
+
 import { DeleteIcon } from "../icons";
 
 import CustomImage from "./CustomImage";
 import { CustomWhen } from "./CustomWhen";
 import ImageCropper from "./Cropper";
-
-import { useUpload } from "@/lib/hooks/upload";
-import { getCroppedImg } from "@/lib/tools/croppedImage";
 
 export type CroppedPixels = {
   x: number;

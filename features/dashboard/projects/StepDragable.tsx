@@ -13,30 +13,23 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import {
-  Control,
-  UseFieldArrayRemove,
-  UseFieldArrayUpdate,
-  UseFormSetValue,
-} from "react-hook-form";
+import { Control, UseFieldArrayRemove, UseFormSetValue } from "react-hook-form";
 
-import BeforeAfterItem from "./BeforeAfterItem";
+import { IStePItemPayload } from "@/lib/types/project";
+
 import { TformValues } from "./ProjectsFormContainer";
-
-import { ImageItemPayload } from "@/lib/types/project";
+import StepItem from "./StepItem";
 
 interface IProps {
-  fields: ImageItemPayload[];
+  fields: IStePItemPayload[];
   remove: UseFieldArrayRemove;
-  update: UseFieldArrayUpdate<TformValues, "images">;
   control: Control<TformValues, any, TformValues>;
   setValue: UseFormSetValue<TformValues>;
 }
 
-export default function Dragable({
+export default function StepDragable({
   fields,
   remove,
-  update,
   control,
   setValue,
 }: IProps) {
@@ -66,7 +59,7 @@ export default function Dragable({
     if (oldIndex !== -1 && newIndex !== -1 && oldIndex !== newIndex) {
       const reorderedFields = arrayMove(fields, oldIndex, newIndex);
 
-      setValue("images", reorderedFields);
+      setValue("steps", reorderedFields);
     }
   };
 
@@ -82,14 +75,13 @@ export default function Dragable({
       >
         <div className="flex flex-col gap-10">
           {fields.map((item, index) => (
-            <BeforeAfterItem
+            <StepItem
               key={item.id}
               control={control}
               index={index}
               item={item}
               remove={remove}
               setValue={setValue}
-              update={update}
             />
           ))}
         </div>

@@ -1,9 +1,9 @@
 import Link from "next/link";
 
-import ContactItem from "./ContactItem";
-
 import { EnvelopeIcon, CallIcon, LocationIcon } from "@/components/icons";
 import { phones, saroojAddress, saroojEmail } from "@/lib/constants/info";
+
+import ContactItem from "./ContactItem";
 
 const Contact = () => {
   return (

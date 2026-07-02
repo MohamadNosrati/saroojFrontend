@@ -4,9 +4,9 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 
-import BlogItem from "../../Blog/List/BlogItem";
-
 import { IBlog } from "@/lib/types/blog";
+
+import BlogItem from "../../Blog/List/BlogItem";
 
 interface IProps {
   suggestions: IBlog[];

@@ -1,9 +1,9 @@
-import TeamItem from "./TeamItem";
-
 import { TeamatesRoute } from "@/lib/routes/apiRoutes";
 import { ITeamate } from "@/lib/types/teamate";
 import { getData } from "@/lib/services/data";
 import { IBaseResponse } from "@/lib/types/base";
+
+import TeamItem from "./TeamItem";
 
 const Team = async () => {
   const data = await getData<IBaseResponse<ITeamate[]>>(TeamatesRoute.getAll());

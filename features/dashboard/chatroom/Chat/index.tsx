@@ -11,8 +11,6 @@ import React, {
 import { Socket } from "socket.io-client";
 import clsx from "clsx";
 
-import MessageItem from "./MessageItem";
-
 import CustomInput from "@/components/ui/CustomInput";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { eventNames } from "@/lib/config/socket";
@@ -25,6 +23,8 @@ import { ISocketAcknowledgement } from "@/lib/types/base";
 import { IConversation } from "@/lib/types/conversation";
 import { IMessage, MessageStatus, MessageType } from "@/lib/types/message";
 import { IUser } from "@/lib/types/user";
+
+import MessageItem from "./MessageItem";
 
 interface IProps {
   isConnected: boolean;

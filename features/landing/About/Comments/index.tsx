@@ -1,9 +1,9 @@
-import Container from "./Container";
-
 import { CommentsRoute } from "@/lib/routes/apiRoutes";
 import CommentsBg from "@/public/images/commentsBg.png";
 import { getData } from "@/lib/services/data";
 import { IBaseResponse } from "@/lib/types/base";
+
+import Container from "./Container";
 
 const Comments = async () => {
   const data = await getData<IBaseResponse<IComment[]>>(CommentsRoute.getAll());

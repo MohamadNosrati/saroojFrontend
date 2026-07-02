@@ -2,14 +2,14 @@ import { Button } from "@heroui/button";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import clsx from "clsx";
 
-import Contacts from "./Contacts";
-import Conversations from "./Conversations";
-
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { IUser } from "@/lib/types/user";
 import { IConversation } from "@/lib/types/conversation";
 import { useGetConversations } from "@/lib/hooks/conversation";
 import { useAuthStore } from "@/lib/stores/auth";
+
+import Conversations from "./Conversations";
+import Contacts from "./Contacts";
 
 type TTabType = "conversations" | "contacts";
 type TabItem = {

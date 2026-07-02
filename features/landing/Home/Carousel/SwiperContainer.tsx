@@ -8,9 +8,9 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Autoplay } from "swiper/modules";
 
-import CarouselItem from "./CarouselItem";
-
 import { ISlider } from "@/lib/types/slider";
+
+import CarouselItem from "./CarouselItem";
 
 interface IProps {
   data: ISlider[];

@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { useDisclosure } from "@heroui/modal";
 
-import UserFormContainer from "./UserFormContainer";
-
 import { uploadUrl } from "@/lib/tools/upload";
 import { useAuthStore } from "@/lib/stores/auth";
+
+import UserFormContainer from "./UserFormContainer";
 
 export default function User() {
   const user = useAuthStore((state) => state.user);

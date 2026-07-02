@@ -97,7 +97,7 @@ const Footer = () => {
                   width={16}
                 />
               </span>
-              <span className="truncate max-w-[180px] sm:max-w-full font-sans text-sm">
+              <span className="sm:max-w-full font-sans text-sm">
                 {saroojEmail}
               </span>
             </Link>

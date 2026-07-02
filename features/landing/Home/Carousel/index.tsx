@@ -1,9 +1,9 @@
-import SwiperContainer from "./SwiperContainer";
-
 import { sliderRoutes } from "@/lib/routes/apiRoutes";
 import { getData } from "@/lib/services/data";
 import { ISlider } from "@/lib/types/slider";
 import { IBaseResponse } from "@/lib/types/base";
+
+import SwiperContainer from "./SwiperContainer";
 
 const HomeCarousel = async () => {
   const data = await getData<IBaseResponse<ISlider[]>>(sliderRoutes.getAll());

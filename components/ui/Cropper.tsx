@@ -2,9 +2,9 @@ import Cropper, { Point } from "react-easy-crop";
 import { Button } from "@heroui/button";
 import { Slider } from "@heroui/slider";
 
-import { Crop, CroppedPixels } from "./CustomImageLoader";
-
 import sliderMarks from "@/lib/config/marks";
+
+import { Crop, CroppedPixels } from "./CustomImageLoader";
 
 interface IProps {
   zoom: number;

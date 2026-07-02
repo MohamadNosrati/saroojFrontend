@@ -10,12 +10,12 @@ import {
 } from "@heroui/modal";
 import { Button } from "@heroui/button";
 
-import { yekanBakh } from "../config/fonts";
-
 import { notficationHelpers } from "@/lib/tools/notificationHelpers";
 import { servicWorkerHelpers } from "@/lib/tools/servicWorkerHelpers";
 import { useCreateSubscription } from "@/lib/hooks/subscription";
 import { CustomWhen } from "@/components/ui/CustomWhen";
+
+import { yekanBakh } from "../config/fonts";
 
 export const NotificationProvider = () => {
   const [isOpen, setIsOpen] = useState(false);

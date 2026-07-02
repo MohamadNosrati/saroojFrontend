@@ -1,11 +1,11 @@
 import Image from "next/image";
 
-import { SafeBlogContent } from "./SafeBlogContent";
-
 import { CalandarIcon } from "@/components/icons";
 import { IBlog } from "@/lib/types/blog";
 import { dateConvertor } from "@/lib/tools/dateConvertor";
 import { uploadUrl } from "@/lib/tools/upload";
+
+import { SafeBlogContent } from "./SafeBlogContent";
 
 interface IProps {
   blog: IBlog;

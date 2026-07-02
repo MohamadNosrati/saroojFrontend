@@ -4,9 +4,9 @@ import { Accordion, AccordionItem } from "@heroui/accordion";
 import { useState } from "react";
 import clsx from "clsx";
 
-import AccordionTitle from "./AccordionTitle";
-
 import { ArrowIcon } from "@/components/icons";
+
+import AccordionTitle from "./AccordionTitle";
 
 const data = [
   {

@@ -2,9 +2,9 @@
 
 import { motion } from "framer-motion";
 
-import RelatedProjectsContainer from "./Container";
-
 import { IProject } from "@/lib/types/project";
+
+import RelatedProjectsContainer from "./Container";
 
 interface IProps {
   suggsetions: IProject[];

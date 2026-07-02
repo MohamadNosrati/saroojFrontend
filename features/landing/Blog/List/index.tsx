@@ -5,8 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 
-import BlogItem from "./BlogItem";
-
 import { blogsRoutes } from "@/lib/routes/apiRoutes";
 import { getData } from "@/lib/services/data";
 import {
@@ -17,6 +15,8 @@ import {
 import { IBlog } from "@/lib/types/blog";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { sortOptions } from "@/lib/config/sort";
+
+import BlogItem from "./BlogItem";
 
 const sectionVariants = {
   hidden: {},

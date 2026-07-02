@@ -2,12 +2,12 @@ import Image from "next/image";
 import { Button } from "@heroui/button";
 import { Dispatch, SetStateAction } from "react";
 
+import { dateConvertor } from "@/lib/tools/dateConvertor";
+import { IFile } from "@/lib/types/file";
+
 import { EditIcon } from "../icons";
 
 import CustomDelete, { TEntity } from "./CustomDelete";
-
-import { dateConvertor } from "@/lib/tools/dateConvertor";
-import { IFile } from "@/lib/types/file";
 
 interface IItem {
   id: string;

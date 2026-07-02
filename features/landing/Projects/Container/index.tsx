@@ -5,10 +5,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Spinner } from "@heroui/spinner";
 import { motion } from "framer-motion";
 
-import ProjectItem from "../../ProjectItem";
-
-import Filtering from "./Filtering";
-
 import { ProjectsRoute } from "@/lib/routes/apiRoutes";
 import { IProject } from "@/lib/types/project";
 import { getData } from "@/lib/services/data";
@@ -20,6 +16,10 @@ import {
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { useGetCategories } from "@/lib/hooks/categories";
 import ProjectSclton from "@/components/ui/ProjectScleton";
+
+import ProjectItem from "../../ProjectItem";
+
+import Filtering from "./Filtering";
 
 const containerVariants = {
   hidden: {},

@@ -1,6 +1,6 @@
-import ServiceItem from "./ServiceItem";
-
 import { BreakIcon, HomeCowch, HomeIcon, RullerIcon } from "@/components/icons";
+
+import ServiceItem from "./ServiceItem";
 
 const data = [
   {

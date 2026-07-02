@@ -1,7 +1,5 @@
 import { Metadata } from "next";
 
-import notFound from "../../not-found";
-
 import Carousel from "@/features/landing/SingleProject/Carousel";
 import Info from "@/features/landing/SingleProject/Info";
 import RelatedProjects from "@/features/landing/SingleProject/RelatedProjects";
@@ -14,6 +12,10 @@ import { IProject, IProjectWithSuggestions } from "@/lib/types/project";
 import { createMetadata } from "@/lib/config/site";
 import ShareButton from "@/features/landing/layout/ShareButton";
 import { uploadUrl } from "@/lib/tools/upload";
+import { CustomWhen } from "@/components/ui/CustomWhen";
+import StepsContainer from "@/features/landing/SingleProject/Steps";
+
+import notFound from "../../not-found";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -109,12 +111,18 @@ export default async function SingleProjectPage({ params }: Props) {
     notFound();
   }
 
+  console.log("project", data?.data?.project);
+
   return (
-    <main>
-      <section className="bg-gradient-to-b dark:bg-dark bg-white from-primary via-primary/25 to-transparent">
-        <div className="container lg:pt-8 pt-6">
-          <div className="flex items-center justify-between  lg:mb-6 mb-2.5">
-            <h1 className="text-center lg:text-4xl sm:text-2xl text-xl font-bold">
+    <main className="bg-neutral-50 dark:bg-[#09090b] min-h-screen text-neutral-900 dark:text-neutral-50 overflow-x-hidden antialiased selection:bg-primary selection:text-black transition-colors duration-200">
+      <section className="relative sm:py-8 py-4 mb-2.5 bg-gradient-to-b from-primary/5 via-neutral-100/50 to-neutral-50 dark:from-primary/10 dark:via-[#09090b]/40 dark:to-[#09090b]">
+        {/* Refined Grid Overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000004_1px,transparent_1px),linear-gradient(to_bottom,#00000004_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
+
+        <div className="container relative z-10 px-4 mx-auto max-w-6xl">
+          {/* Tightened, sharper header layout */}
+          <div className="flex items-center justify-between gap-4  dark:border-neutral-800">
+            <h1 className="text-xl font-semibold tracking-tight sm:text-2xl lg:text-3xl text-neutral-800 dark:text-neutral-100">
               {data?.data?.project?.title}
             </h1>
             <ShareButton
@@ -127,12 +135,32 @@ export default async function SingleProjectPage({ params }: Props) {
               }}
             />
           </div>
-          <Carousel images={data?.data?.project?.images || []} />
-          <Info project={data?.data?.project as IProject} />
+          <div className="w-full sm:mt-4 mt-2.5 rounded-xl bg-white dark:bg-neutral-900/30 border border-neutral-200 dark:border-neutral-800/60 shadow-sm dark:shadow-none px-1 sm:px-2 sm:py-6 py-4">
+            {false ? (
+              <Carousel images={data?.data?.project?.images || []} />
+            ) : (
+              <StepsContainer steps={data?.data?.project?.steps || []} />
+            )}
+          </div>
+          <div className="sm:mt-8 mt-4">
+            <Info project={data?.data?.project as IProject} />
+          </div>
         </div>
       </section>
-      <Video />
-      <RelatedProjects suggsetions={data?.data?.suggestions || []} />
+
+      <CustomWhen condition={Boolean(data?.data?.project?.video)}>
+        <div className="border-t border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-[#060608] py-6">
+          <div className="container px-4 mx-auto max-w-6xl">
+            <Video video={data?.data?.project?.video as string} />
+          </div>
+        </div>
+      </CustomWhen>
+
+      <div className="border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-[#09090b] py-8">
+        <div className="container px-4 mx-auto max-w-6xl">
+          <RelatedProjects suggsetions={data?.data?.suggestions || []} />
+        </div>
+      </div>
     </main>
   );
 }

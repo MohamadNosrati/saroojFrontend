@@ -24,6 +24,24 @@ export interface ImageItemPayload {
   after: ImageInfoPayload;
   id?: string;
 }
+export interface IStePItemPayload {
+  name: string;
+  pictureId: string;
+  alt: string;
+  description: string;
+  isActive: "0" | "1";
+  video?: string;
+  id?: string;
+}
+
+export interface IStep {
+  name: string;
+  pictureId: IFile;
+  alt: string;
+  description: string;
+  isActive: boolean;
+  video?: string;
+}
 
 export interface IProject {
   id: string;
@@ -37,10 +55,12 @@ export interface IProject {
   endDate?: number;
   description: string;
   isActive: boolean;
-  artitectureStyle: string;
+  artitectureStyle?: string;
   address: string;
   createdAt: number;
   updatedAt: number;
+  video?: string;
+  steps: IStep[];
 }
 
 export interface IProjectPayload {
@@ -54,8 +74,9 @@ export interface IProjectPayload {
   endDate?: number;
   description: string;
   isActive: boolean;
-  artitectureStyle: string;
+  artitectureStyle?: string;
   address: string;
+  video?: string;
 }
 
 export interface IUpdateProjectPayload extends IProjectPayload {
@@ -72,4 +93,9 @@ export interface IProjectParams {
 export interface IProjectWithSuggestions {
   project: IProject;
   suggestions: IProject[];
+}
+
+export enum IProjectType {
+  Steps = "steps",
+  BeforeAfter = "beforeAfter",
 }

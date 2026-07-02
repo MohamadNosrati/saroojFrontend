@@ -5,9 +5,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import DatePicker from "react-multi-date-picker";
-import { useRef } from "react";
-
-import Dragable from "./Dragable";
+import { useEffect, useRef, useState } from "react";
+import { RadioGroup, Radio } from "@heroui/radio";
 
 import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
@@ -15,11 +14,19 @@ import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import CustomSelect from "@/components/ui/CustomSelect";
 import { isActiveOptions } from "@/lib/constants/isActive";
 import { responseHandler } from "@/lib/tools/responseHandler";
-import { ImageItemPayload, IProject } from "@/lib/types/project";
+import {
+  ImageItemPayload,
+  IProject,
+  IProjectType,
+  IStePItemPayload,
+} from "@/lib/types/project";
 import { useCreateProject, useUpdateProject } from "@/lib/hooks/projects";
 import { ProjectsRoute } from "@/lib/routes/apiRoutes";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { useGetCategories } from "@/lib/hooks/categories";
+
+import BfDragable from "./BFDragable";
+import StepDragable from "./StepDragable";
 
 interface IFormContainerProps {
   project?: IProject;
@@ -36,13 +43,18 @@ export type TformValues = {
   endDate?: number;
   description: string;
   isActive: "0" | "1";
-  artitectureStyle: string;
+  artitectureStyle?: string;
   address: string;
+  video?: string;
+  steps: IStePItemPayload[];
 };
 
 const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
   const queryClient = useQueryClient();
   const datePickerRef = useRef<any>(null);
+  const [projectType, setProjectType] = useState<IProjectType>(
+    IProjectType.BeforeAfter,
+  );
   const { mutate: createMutate, isPending: isCreatePending } =
     useCreateProject();
   const { mutate: updateMutate, isPending: isUpdatePending } =
@@ -62,6 +74,8 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
       images: [],
       artitectureStyle: "",
       address: "",
+      video: "",
+      steps: [],
     },
     values: {
       title: project?.title || "",
@@ -73,6 +87,13 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
       area: project?.area || 0,
       startDate: project?.startDate || 0,
       categoryId: project?.categoryId?.id || "",
+      steps:
+        project?.steps?.map((item) => ({
+          ...item,
+          isActive: item?.isActive === false ? "0" : "1",
+          pictureId: item?.pictureId?.id,
+        })) || [],
+      video: project?.video || "",
       images:
         project?.images?.map((item) => ({
           after: {
@@ -89,20 +110,47 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
     },
   });
 
-  const { append, fields, update, remove } = useFieldArray({
+  const {
+    append: appendImages,
+    fields: imagesFields,
+    update: updateImages,
+    remove: removeImages,
+  } = useFieldArray({
     control: control,
     name: "images",
+  });
+  const {
+    append: appendSteps,
+    fields: stepFields,
+    remove: removeSteps,
+  } = useFieldArray({
+    control: control,
+    name: "steps",
   });
   const onSubmit = async (data: TformValues) => {
     const createPayload = {
       ...data,
-      images: data?.images?.map((item) => ({
-        before: item?.before,
-        after: item?.after,
-      })),
+      images:
+        projectType === IProjectType?.BeforeAfter
+          ? data?.images?.map((item) => ({
+              before: item?.before,
+              after: item?.after,
+            }))
+          : [],
       startDate: data?.startDate,
       endDate: data?.startDate,
       isActive: data?.isActive === "1" ? true : false,
+      steps:
+        projectType === IProjectType?.Steps
+          ? data?.steps?.map((item) => ({
+              name: item?.name,
+              alt: item?.alt,
+              description: item?.description,
+              video: item?.video,
+              pictureId: item?.pictureId,
+              isActive: item?.isActive === "1" ? true : false,
+            }))
+          : [],
     };
     const updatePayload = {
       ...createPayload,
@@ -133,6 +181,12 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
       });
     }
   };
+
+  useEffect(() => {
+    if (project?.steps?.length) {
+      setProjectType(IProjectType.Steps);
+    }
+  }, [project]);
 
   return (
     <form className="flex flex-col gap-y-10" onSubmit={handleSubmit(onSubmit)}>
@@ -209,6 +263,23 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
       <div>
         <Controller
           control={control}
+          name="video"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              errorMessage={error?.message}
+              isInvalid={Boolean(error?.message)}
+              label="لینک ویدعو آپارات"
+              labelPlacement="outside-top"
+              value={value}
+              onChange={onChange}
+              onFocus={() => datePickerRef.current?.openCalendar()}
+            />
+          )}
+        />
+      </div>
+      <div>
+        <Controller
+          control={control}
           name="address"
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <CustomInput
@@ -242,12 +313,6 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
               onChange={onChange}
             />
           )}
-          rules={{
-            required: {
-              value: true,
-              message: "alt is required!",
-            },
-          }}
         />
       </div>
       <div>
@@ -290,7 +355,6 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
               id="startDate"
               inputClass="w-full bg-white mt-1 h-10 rounded-xl text-dark p-2.5 font-bold"
               locale={persian_fa}
-              required={true}
               value={value}
               zIndex={10000000}
               onChange={onChange}
@@ -299,7 +363,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
           rules={{
             required: {
               value: true,
-              message: "alt is required!",
+              message: "start date is required!",
             },
           }}
         />
@@ -320,18 +384,11 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
               id="endDate"
               inputClass="w-full bg-white mt-1 h-10 rounded-xl text-dark p-2.5 font-bold"
               locale={persian_fa}
-              required={true}
               value={value}
               zIndex={10000000}
               onChange={onChange}
             />
           )}
-          rules={{
-            required: {
-              value: true,
-              message: "endDate is required!",
-            },
-          }}
         />
       </div>
       <div>
@@ -409,41 +466,81 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
           }}
         />
       </div>
-      <div>
-        <p className="text-white font-bold text-center">
-          عکس های مربوط به قبل و بعد پروژه را وارد کنید.
-        </p>
+      <div className="flex flex-col gap-2">
+        <span className="text-white font-bold">
+          نوع نمایش پروژه را انتخاب کنید.
+        </span>
+        <RadioGroup
+          isDisabled={Boolean(project)}
+          orientation="horizontal"
+          value={projectType}
+          onValueChange={(value: any) => setProjectType(value)}
+        >
+          <Radio value={IProjectType.BeforeAfter}>قبل و بعد</Radio>
+          <Radio value={IProjectType.Steps}>مراحل</Radio>
+        </RadioGroup>
       </div>
-      <div className="flex flex-col gap-10">
-        <Dragable
-          control={control}
-          fields={fields}
-          remove={remove}
-          setValue={setValue}
-          update={update}
-        />
-        <div>
-          <Button
-            fullWidth
-            color="primary"
-            onPress={() => {
-              append({
-                id: crypto.randomUUID(),
-                before: {
-                  name: "",
-                  pictureId: "",
-                },
-                after: {
-                  name: "",
-                  pictureId: "",
-                },
-              });
-            }}
-          >
-            افزودن عکس{" "}
-          </Button>
+      <CustomWhen condition={projectType === IProjectType.BeforeAfter}>
+        <div className="flex flex-col gap-10">
+          <BfDragable
+            control={control}
+            fields={imagesFields}
+            remove={removeImages}
+            setValue={setValue}
+            update={updateImages}
+          />
+          <div>
+            <Button
+              fullWidth
+              color="primary"
+              onPress={() => {
+                appendImages({
+                  id: crypto.randomUUID(),
+                  before: {
+                    name: "",
+                    pictureId: "",
+                  },
+                  after: {
+                    name: "",
+                    pictureId: "",
+                  },
+                });
+              }}
+            >
+              افزودن عکس قبل و بعد
+            </Button>
+          </div>
         </div>
-      </div>
+      </CustomWhen>
+      <CustomWhen condition={projectType === IProjectType.Steps}>
+        <div className="flex flex-col gap-10">
+          <StepDragable
+            control={control}
+            fields={stepFields}
+            remove={removeSteps}
+            setValue={setValue}
+          />
+          <div>
+            <Button
+              fullWidth
+              color="primary"
+              onPress={() => {
+                appendSteps({
+                  id: crypto.randomUUID(),
+                  alt: "",
+                  description: "",
+                  video: "",
+                  isActive: "0",
+                  name: "",
+                  pictureId: "",
+                });
+              }}
+            >
+              افزودن مرحله
+            </Button>
+          </div>
+        </div>
+      </CustomWhen>
       <div>
         <Button
           fullWidth
@@ -460,23 +557,3 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
 };
 
 export default FormContainer;
-
-interface IProps {
-  value: any;
-  onChange: any;
-}
-
-const CustomDatePickerInput = ({ value, onChange }: IProps) => {
-  return (
-    <div className="w-full">
-      <CustomInput
-        fullWidth
-        className="w-full"
-        label=" تاریخ پایان"
-        labelPlacement="outside-top"
-        value={String(value)}
-        onChange={onChange}
-      />
-    </div>
-  );
-};

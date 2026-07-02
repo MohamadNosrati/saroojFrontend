@@ -1,10 +1,10 @@
-import CategoryItem from "./CategoryItem";
-
 import LinesImage from "@/public/images/lines.png";
 import { categoriesRoute } from "@/lib/routes/apiRoutes";
 import { ICategory } from "@/lib/types/categories";
 import { IBaseResponse } from "@/lib/types/base";
 import { getData } from "@/lib/services/data";
+
+import CategoryItem from "./CategoryItem";
 
 const Categories = async () => {
   const data = await getData<IBaseResponse<ICategory[]>>(

@@ -1,10 +1,10 @@
 import { Spinner } from "@heroui/spinner";
 import Image, { ImageProps } from "next/image";
 
-import { CustomWhen } from "./CustomWhen";
-
 import { useFindUpload } from "@/lib/hooks/upload";
 import { uploadUrl } from "@/lib/tools/upload";
+
+import { CustomWhen } from "./CustomWhen";
 
 interface ICustomImageProps extends ImageProps {
   id: string;

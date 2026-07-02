@@ -1,6 +1,6 @@
-import FaqsContainer from "./FaqsContainer";
-
 import HouseImage from "@/public/images/house.png";
+
+import FaqsContainer from "./FaqsContainer";
 
 const Faqs = () => {
   return (
