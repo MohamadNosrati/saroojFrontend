@@ -94,25 +94,23 @@ const BlogsPage = () => {
           />
         </CustomModal>
         <CustomModal
-          hiddenButton={true}
           buttonTitle="ترجمه مقاله"
+          hiddenButton={true}
           isOpen={isTranslatorOpen}
           modalTitle={
-            editData
-              ? `ترجمه مقاله ${editData?.data?.title}`
-              : "ترجمه مقاله"
+            editData ? `ترجمه مقاله ${editData?.data?.title}` : "ترجمه مقاله"
           }
           onClose={handleTranlateModalClose}
           onOpen={onOpenTranslator}
           onOpenChange={onOpenChangeTranslator}
         >
           <TranslateBlogFormContainer
+            editId={editId as string}
             isPending={isTranslatePending}
             traslatedBlogPayload={
               translateData?.data?.data as ITranslatedBlogPayload
             }
             onOpenChangeTranslator={onOpenChangeTranslator}
-            editId={editId as string}
           />
         </CustomModal>
       </div>

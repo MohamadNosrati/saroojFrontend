@@ -98,13 +98,13 @@ const SlidersPage = () => {
           onOpenChange={onOpenChange}
         >
           <FormContainer
-            translateHandler={translateHandler}
             slider={editData?.data}
+            translateHandler={translateHandler}
           />
         </CustomModal>
         <CustomModal
-          hiddenButton={true}
           buttonTitle="ترجمه اسلایدر"
+          hiddenButton={true}
           isOpen={isTranslatorOpen}
           modalTitle={
             editData
@@ -116,12 +116,12 @@ const SlidersPage = () => {
           onOpenChange={onOpenChangeTranslator}
         >
           <TranslateSliderFormContainer
+            editId={editId as string}
             isPending={isTranslatePending}
             traslatedSliderPayload={
               translateData?.data?.data as ITranslatedSliderPayload
             }
             onOpenChangeTranslator={onOpenChangeTranslator}
-            editId={editId as string}
           />
         </CustomModal>
       </div>

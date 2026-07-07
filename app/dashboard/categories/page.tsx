@@ -16,7 +16,6 @@ import {
   TCategoryTranslatePayload,
 } from "@/lib/types/categories";
 import { useTranslate } from "@/lib/hooks/translate";
-import TranslateSliderFormContainer from "@/features/dashboard/sliders/TranslateSliderFormContainer";
 import TranslateCategoryFormContainer from "@/features/dashboard/categories/TranslateCategoryFormContainer";
 
 const columns = [
@@ -97,13 +96,13 @@ const CategoriesPage = () => {
           onOpenChange={onOpenChange}
         >
           <FormContainer
-            translateHandler={translateHandler}
             category={editData?.data}
+            translateHandler={translateHandler}
           />
         </CustomModal>
         <CustomModal
-          hiddenButton={true}
           buttonTitle="ترجمه اسلایدر"
+          hiddenButton={true}
           isOpen={isTranslatorOpen}
           modalTitle={
             editData
@@ -115,12 +114,12 @@ const CategoriesPage = () => {
           onOpenChange={onOpenChangeTranslator}
         >
           <TranslateCategoryFormContainer
+            editId={editId as string}
             isPending={isTranslatePending}
             traslatedCategoryPayload={
               translateData?.data?.data as ITranslatedCategoryPayload
             }
             onOpenChangeTranslator={onOpenChangeTranslator}
-            editId={editId as string}
           />
         </CustomModal>
       </div>

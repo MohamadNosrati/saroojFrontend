@@ -1,4 +1,4 @@
-import {  translateRoutes } from "../routes/apiRoutes";
+import { translateRoutes } from "../routes/apiRoutes";
 import { IBaseResponse } from "../types/base";
 
 import axiosInstance from "./base";
@@ -13,4 +13,3 @@ class TranslateServices {
 }
 
 export const translateServices = new TranslateServices();
-

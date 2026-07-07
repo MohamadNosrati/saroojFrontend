@@ -2,10 +2,10 @@
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "@heroui/button";
 import { useQueryClient } from "@tanstack/react-query";
+import { Spinner } from "@heroui/spinner";
 
 import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
-import { Spinner } from "@heroui/spinner";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { ITranslatedCategoryPayload } from "@/lib/types/categories";
 import { useUpdateCategory } from "@/lib/hooks/categories";
@@ -50,6 +50,7 @@ const TranslateCategoryFormContainer: React.FC<IFormContainerProps> = ({
       ...data,
       id: editId as string,
     };
+
     updateMutate(updatePayload, {
       onSuccess: () => {
         queryClient.invalidateQueries({
@@ -151,10 +152,10 @@ const TranslateCategoryFormContainer: React.FC<IFormContainerProps> = ({
           </div>
           <div className="w-full">
             <Button
-              isLoading={isUpdatePending}
               fullWidth
               className="font-bold"
               color={"warning"}
+              isLoading={isUpdatePending}
               type="submit"
             >
               {"ثبت ترجمه"}

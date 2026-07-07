@@ -22,7 +22,6 @@ export interface UpdateCategoryPayload extends Partial<ICategoryPayload> {
   id: string;
 }
 
-
 export type TCategoryTranslatePayload = Pick<
   ICategory,
   "alt" | "title" | "description"

@@ -90,7 +90,7 @@ export default function CustomTable({
         );
       case "link":
         return (
-          <div dir="ltr" className="flex flex-col">
+          <div className="flex flex-col" dir="ltr">
             <p className="text-bold text-sm capitalize  line-clamp-1">
               {cellValue}
             </p>
@@ -98,7 +98,7 @@ export default function CustomTable({
         );
       case "linkEn":
         return (
-          <div dir="ltr" className="flex flex-col">
+          <div className="flex flex-col" dir="ltr">
             <p className="text-bold text-sm capitalize  line-clamp-1">
               {cellValue}
             </p>

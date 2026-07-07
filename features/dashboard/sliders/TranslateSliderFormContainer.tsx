@@ -2,11 +2,11 @@
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "@heroui/button";
 import { useQueryClient } from "@tanstack/react-query";
+import { Spinner } from "@heroui/spinner";
 
 import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
 import { ITranslatedSliderPayload } from "@/lib/types/slider";
-import { Spinner } from "@heroui/spinner";
 import { useUpdateSlider } from "@/lib/hooks/sliders";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { sliderRoutes } from "@/lib/routes/apiRoutes";
@@ -50,6 +50,7 @@ const TranslateSliderFormContainer: React.FC<IFormContainerProps> = ({
       ...data,
       id: editId as string,
     };
+
     updateMutate(updatePayload, {
       onSuccess: () => {
         queryClient.invalidateQueries({
@@ -151,10 +152,10 @@ const TranslateSliderFormContainer: React.FC<IFormContainerProps> = ({
           </div>
           <div className="w-full">
             <Button
-              isLoading={isUpdatePending}
               fullWidth
               className="font-bold"
               color={"warning"}
+              isLoading={isUpdatePending}
               type="submit"
             >
               {"ثبت ترجمه"}

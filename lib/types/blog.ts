@@ -40,7 +40,6 @@ export interface IBlogWithSuggestions {
   suggestions: IBlog[];
 }
 
-
 export type TBlogTranslatePayload = Pick<
   IBlog,
   "alt" | "title" | "description"

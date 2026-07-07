@@ -94,13 +94,13 @@ const TematesPage = () => {
           onOpenChange={onOpenChange}
         >
           <FormContainer
-            translateHandler={translateHandler}
             teamate={editData?.data}
+            translateHandler={translateHandler}
           />
         </CustomModal>
         <CustomModal
-          hiddenButton={true}
           buttonTitle="ترجمه عضو تیم"
+          hiddenButton={true}
           isOpen={isTranslatorOpen}
           modalTitle={
             editData
@@ -112,12 +112,12 @@ const TematesPage = () => {
           onOpenChange={onOpenChangeTranslator}
         >
           <TranslateTeamateFormContainer
+            editId={editId as string}
             isPending={isTranslatePending}
             traslatedTeamatePayload={
               translateData?.data?.data as ITranslatedTeamatePayload
             }
             onOpenChangeTranslator={onOpenChangeTranslator}
-            editId={editId as string}
           />
         </CustomModal>
       </div>

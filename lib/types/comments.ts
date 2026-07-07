@@ -13,7 +13,7 @@ interface IComment {
   createdAt: Date;
   updatedAt: Date;
   isActive: boolean;
-  type : "persian" | "english";
+  type: "persian" | "english";
 }
 
 interface IUpdateCommentPayload extends Partial<ICommentPayload> {

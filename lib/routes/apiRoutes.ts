@@ -298,11 +298,10 @@ class Translate {
   constructor() {
     this.base = "translate";
   }
-  
-  translate(){
-    return this.base
-  }
 
+  translate() {
+    return this.base;
+  }
 }
 
 export const categoriesRoute = new Catgories();
