@@ -9,6 +9,7 @@ import {
 import { Button } from "@heroui/button";
 
 import { yekanBakh } from "@/lib/config/fonts";
+import { CustomWhen } from "./CustomWhen";
 
 interface ICustomMoalProps extends ModalProps {
   isOpen: boolean;
@@ -17,6 +18,7 @@ interface ICustomMoalProps extends ModalProps {
   buttonTitle: string;
   modalTitle: string;
   children: React.ReactNode;
+  hiddenButton?: boolean;
   // setEditId: Dispatch<SetStateAction<string | undefined>>;
 }
 
@@ -28,16 +30,19 @@ const CustomModal: React.FC<ICustomMoalProps> = ({
   modalTitle,
   children,
   onClose,
+  hiddenButton,
 }) => {
   return (
     <>
-      <Button
-        className=" bg-primary text-sm font-bold "
-        size="lg"
-        onPress={onOpen}
-      >
-        {buttonTitle}
-      </Button>
+      <CustomWhen condition={!hiddenButton}>
+        <Button
+          className=" bg-primary text-sm font-bold "
+          size="lg"
+          onPress={onOpen}
+        >
+          {buttonTitle}
+        </Button>
+      </CustomWhen>
       <Modal
         backdrop="blur" // Native HeroUI frosted glass background overlay
         classNames={{

@@ -45,7 +45,7 @@ export default function CustomTable({
 }: IProps) {
   type Item = (typeof items)[0];
   const renderCell = React.useCallback((item: Item, columnKey: React.Key) => {
-    const cellValue = item[columnKey as keyof Item];
+    const cellValue = item[columnKey as keyof Item] || "";
 
     switch (columnKey) {
       case "pictureId":
@@ -90,13 +90,29 @@ export default function CustomTable({
         );
       case "link":
         return (
-          <div className="flex flex-col">
+          <div dir="ltr" className="flex flex-col">
+            <p className="text-bold text-sm capitalize  line-clamp-1">
+              {cellValue}
+            </p>
+          </div>
+        );
+      case "linkEn":
+        return (
+          <div dir="ltr" className="flex flex-col">
             <p className="text-bold text-sm capitalize  line-clamp-1">
               {cellValue}
             </p>
           </div>
         );
       case "description":
+        return (
+          <div className="flex flex-col max-w-20">
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
+              {cellValue}
+            </p>
+          </div>
+        );
+      case "descriptionEn":
         return (
           <div className="flex flex-col max-w-20">
             <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
@@ -152,6 +168,14 @@ export default function CustomTable({
             </p>
           </div>
         );
+      case "titleEn":
+        return (
+          <div className="flex flex-col max-w-20 truncate">
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
+              {cellValue}
+            </p>
+          </div>
+        );
       case "startDate":
         return (
           <div className="flex flex-col">
@@ -180,10 +204,22 @@ export default function CustomTable({
             <p className="text-bold text-sm capitalize">{cellValue}</p>
           </div>
         );
+      case "positionEn":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">{cellValue || ""}</p>
+          </div>
+        );
       case "alt":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-sm capitalize">{cellValue}</p>
+          </div>
+        );
+      case "altEn":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">{cellValue || ""}</p>
           </div>
         );
       case "fullName":

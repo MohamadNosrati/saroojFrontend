@@ -7,7 +7,7 @@ import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
 import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import CustomSelect from "@/components/ui/CustomSelect";
-import { ICategory } from "@/lib/types/categories";
+import { ICategory, TCategoryTranslatePayload } from "@/lib/types/categories";
 import { useCreateCategory, useUpdateCategory } from "@/lib/hooks/categories";
 import { isActiveOptions } from "@/lib/constants/isActive";
 import { categoriesRoute } from "@/lib/routes/apiRoutes";
@@ -16,7 +16,7 @@ import { CustomWhen } from "@/components/ui/CustomWhen";
 
 interface IFormContainerProps {
   category?: ICategory;
-  onOpenChage: () => void;
+  translateHandler: (payload: TCategoryTranslatePayload) => void;
 }
 
 type TformValues = {
@@ -29,7 +29,7 @@ type TformValues = {
 
 const FormContainer: React.FC<IFormContainerProps> = ({
   category,
-  onOpenChage,
+  translateHandler,
 }) => {
   const queryClient = useQueryClient();
   const { mutate: createMutate, isPending: isCreatePending } =
@@ -72,7 +72,11 @@ const FormContainer: React.FC<IFormContainerProps> = ({
             queryKey: [categoriesRoute.findOne(category?.id)],
           });
           responseHandler.success("دسته بندی با ویرایش ایجاد شد");
-          onOpenChage();
+          translateHandler({
+            title: data?.title as string,
+            alt: data?.alt as string,
+            description: data?.description as string,
+          });
         },
       });
     } else {
@@ -83,6 +87,11 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           });
           responseHandler.success("دسته بندی با موفقیت ایجاد شد");
           reset();
+          translateHandler({
+            title: data?.title as string,
+            alt: data?.alt as string,
+            description: data?.description as string,
+          });
         },
       });
     }

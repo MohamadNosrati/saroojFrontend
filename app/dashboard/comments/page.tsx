@@ -17,6 +17,7 @@ const columns = [
   { name: "وضعیت", uid: "isActive" },
   { name: "متن", uid: "text" },
   { name: "ایمیل", uid: "email" },
+  { name: "زبان", uid: "type" },
   { name: "تاریخ ساخت", uid: "createdAt" },
   { name: "تاریخ ویرایش", uid: "updatedAt" },
   { name: "عملیات", uid: "actions" },
@@ -58,7 +59,6 @@ const CommentsPage = () => {
           onOpen={onOpen}
           onOpenChange={onOpenChange}
         >
-          <></>
           <FormContainer comment={editData?.data} onOpenChage={onOpenChange} />
         </CustomModal>
       </div>

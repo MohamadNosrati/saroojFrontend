@@ -11,12 +11,22 @@ import {
   useGetCategories,
   useGetCategory,
 } from "@/lib/hooks/categories";
+import {
+  ITranslatedCategoryPayload,
+  TCategoryTranslatePayload,
+} from "@/lib/types/categories";
+import { useTranslate } from "@/lib/hooks/translate";
+import TranslateSliderFormContainer from "@/features/dashboard/sliders/TranslateSliderFormContainer";
+import TranslateCategoryFormContainer from "@/features/dashboard/categories/TranslateCategoryFormContainer";
 
 const columns = [
   { name: "عکس", uid: "pictureId" },
   { name: "عنوان", uid: "title" },
   { name: "توضیحات عکس", uid: "alt" },
   { name: "وضعیت", uid: "isActive" },
+  { name: "عنوان انگلیسی", uid: "titleEn" },
+  { name: "توضیحات انگلیسی", uid: "descriptionEn" },
+  { name: "توضیحات عکس انگلیسی", uid: "altEn" },
   { name: "تاریخ ساخت", uid: "createdAt" },
   { name: "تاریخ ویرایش", uid: "updatedAt" },
   { name: "عملیات", uid: "actions" },
@@ -28,6 +38,16 @@ const CategoriesPage = () => {
   const { isPending, mutate: deleteCategory } = useDeleteCategory();
   const [editId, setEditId] = useState<string | undefined>(undefined);
   const { data: editData } = useGetCategory(editId);
+  const {
+    isOpen: isTranslatorOpen,
+    onOpen: onOpenTranslator,
+    onOpenChange: onOpenChangeTranslator,
+  } = useDisclosure();
+  const {
+    mutate: translateMutate,
+    isPending: isTranslatePending,
+    data: translateData,
+  } = useTranslate();
 
   const deleteHandler = (id: string) => {
     deleteCategory(id);
@@ -40,6 +60,20 @@ const CategoriesPage = () => {
   const handleModalClose = () => {
     setEditId(undefined);
     onOpenChange();
+  };
+  const handleTranlateModalClose = () => {
+    setEditId(undefined);
+    onOpenChangeTranslator();
+  };
+
+  const translateHandler = (data: TCategoryTranslatePayload) => {
+    onOpenChange();
+    onOpenChangeTranslator();
+    translateMutate({
+      title: data?.title as string,
+      alt: data?.alt as string,
+      description: data?.description as string,
+    });
   };
 
   return (
@@ -62,7 +96,32 @@ const CategoriesPage = () => {
           onOpen={onOpen}
           onOpenChange={onOpenChange}
         >
-          <FormContainer category={editData?.data} onOpenChage={onOpenChange} />
+          <FormContainer
+            translateHandler={translateHandler}
+            category={editData?.data}
+          />
+        </CustomModal>
+        <CustomModal
+          hiddenButton={true}
+          buttonTitle="ترجمه اسلایدر"
+          isOpen={isTranslatorOpen}
+          modalTitle={
+            editData
+              ? `ترجمه اسلایدر ${editData?.data?.title}`
+              : "ترجمه اسلایدر"
+          }
+          onClose={handleTranlateModalClose}
+          onOpen={onOpenTranslator}
+          onOpenChange={onOpenChangeTranslator}
+        >
+          <TranslateCategoryFormContainer
+            isPending={isTranslatePending}
+            traslatedCategoryPayload={
+              translateData?.data?.data as ITranslatedCategoryPayload
+            }
+            onOpenChangeTranslator={onOpenChangeTranslator}
+            editId={editId as string}
+          />
         </CustomModal>
       </div>
       <div className="bg-component-base-2 rounded-2xl">

@@ -84,7 +84,9 @@ export default function Error({ error, reset }: ErrorProps) {
               color="primary"
               radius="full"
               size="lg"
-              onPress={() => reset()}
+              onPress={() => {
+                window.location.reload();
+              }}
             >
               Try Again
             </Button>

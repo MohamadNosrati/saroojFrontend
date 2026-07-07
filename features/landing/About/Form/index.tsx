@@ -70,6 +70,7 @@ const Form = () => {
         email: formData?.email,
         fullName: formData?.fullname,
         text: formData?.text,
+        type: "persian",
       });
       responseHandler.success("پیام با موفقیت ارسال شد.");
       reset();

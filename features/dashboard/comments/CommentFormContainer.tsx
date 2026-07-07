@@ -10,6 +10,7 @@ import { isActiveOptions } from "@/lib/constants/isActive";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { useCreateComment, useUpdateComment } from "@/lib/hooks/comments";
 import { CommentsRoute } from "@/lib/routes/apiRoutes";
+import { typeOptions } from "@/lib/constants/type";
 
 interface IFormContainerProps {
   comment?: IComment;
@@ -21,6 +22,7 @@ type TformValues = {
   isActive: "0" | "1";
   email: string;
   text: string;
+  type: "persian" | "english";
 };
 
 const FormContainer: React.FC<IFormContainerProps> = ({
@@ -39,14 +41,18 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         isActive: "1",
         email: "",
         text: "",
+        type: "persian",
       },
       values: {
         fullName: comment?.fullName || "",
         text: comment?.text || "",
         email: comment?.email || "",
         isActive: comment?.isActive === false ? "0" : "1",
+        type: comment?.type || "persian",
       },
     });
+
+  const type = watch("type");
   const onSubmit = async (data: TformValues) => {
     const createPayload = {
       ...data,
@@ -88,9 +94,31 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       <div>
         <Controller
           control={control}
+          name={"type"}
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomSelect
+              error={error?.message}
+              options={typeOptions}
+              selectLabel="نوع"
+              value={value}
+              onSelectionChange={onChange}
+            />
+          )}
+          rules={{
+            required: {
+              value: true,
+              message: "type is required!",
+            },
+          }}
+        />
+      </div>
+      <div>
+        <Controller
+          control={control}
           name="fullName"
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <CustomInput
+              dir={type === "persian" ? "rtl" : "ltr"}
               errorMessage={error?.message}
               isInvalid={Boolean(error?.message)}
               label="نام و نام خانوادگی"
@@ -113,6 +141,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           name="email"
           render={({ field: { value, onChange }, formState: { errors } }) => (
             <CustomInput
+              dir="ltr"
               errorMessage={errors?.email?.message}
               isInvalid={Boolean(errors?.email)}
               label="ایمیل"
@@ -150,12 +179,14 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           }}
         />
       </div>
+
       <div>
         <Controller
           control={control}
           name="text"
           render={({ field: { value, onChange }, formState: { errors } }) => (
             <CustomTextArea
+              dir={type === "persian" ? "rtl" : "ltr"}
               errorMessage={errors?.text?.message}
               isInvalid={Boolean(errors?.text)}
               value={value}

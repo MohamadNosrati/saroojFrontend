@@ -292,6 +292,18 @@ class Message {
     return `${this.base}?conversationId=${conversationId}`;
   }
 }
+class Translate {
+  private readonly base: string;
+
+  constructor() {
+    this.base = "translate";
+  }
+  
+  translate(){
+    return this.base
+  }
+
+}
 
 export const categoriesRoute = new Catgories();
 export const ProjectsRoute = new Projects();
@@ -306,3 +318,4 @@ export const subscriptionRoutes = new Subscription();
 export const notificationRoutes = new Notification();
 export const conversationRoutes = new Conversation();
 export const messageRoutes = new Message();
+export const translateRoutes = new Translate();

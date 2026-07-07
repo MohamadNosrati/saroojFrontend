@@ -34,7 +34,11 @@ const Comments = async () => {
         {/* CONTAINER SPACING TIGHTENED */}
         <div className="lg:mt-14 md:mt-10 mt-8 w-full">
           <Container
-            data={data?.data?.filter((item) => item?.isActive) || []}
+            data={
+              data?.data?.filter(
+                (item) => item?.isActive && item?.type === "persian",
+              ) || []
+            }
           />
         </div>
       </div>

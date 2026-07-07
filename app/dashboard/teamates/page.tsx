@@ -11,13 +11,22 @@ import {
   useGetTeamate,
   useGetTemates,
 } from "@/lib/hooks/temates";
+import { useTranslate } from "@/lib/hooks/translate";
+import TranslateTeamateFormContainer from "@/features/dashboard/teamates/TranslateTeamateFormContainer";
+import {
+  ITranslatedTeamatePayload,
+  TTeamateTranslatePayload,
+} from "@/lib/types/teamate";
 
 const columns = [
   { name: "عکس", uid: "pictureId" },
   { name: "عنوان", uid: "title" },
   { name: "موقعیت", uid: "position" },
   { name: "توضیحات عکس", uid: "alt" },
-  { name: "وضعیت", uid: "isActive" },
+  { name: "عنوان انگلیسی", uid: "titleEn" },
+  { name: "توضیحات انگلیسی", uid: "descriptionEn" },
+  { name: "توضیحات عکس انگلیسی", uid: "altEn" },
+  { name: "توضیحات  موقعیت انگلیسی", uid: "positionEn" },
   { name: "تاریخ ساخت", uid: "createdAt" },
   { name: "تاریخ ویرایش", uid: "updatedAt" },
   { name: "عملیات", uid: "actions" },
@@ -26,6 +35,16 @@ const columns = [
 const TematesPage = () => {
   const { data, isLoading } = useGetTemates();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const {
+    isOpen: isTranslatorOpen,
+    onOpen: onOpenTranslator,
+    onOpenChange: onOpenChangeTranslator,
+  } = useDisclosure();
+  const {
+    mutate: translateMutate,
+    isPending: isTranslatePending,
+    data: translateData,
+  } = useTranslate();
   const { isPending, mutate: deleteTemate } = useDeleteTeamate();
   const [editId, setEditId] = useState<string | undefined>(undefined);
   const { data: editData } = useGetTeamate(editId);
@@ -41,6 +60,21 @@ const TematesPage = () => {
   const handleModalClose = () => {
     setEditId(undefined);
     onOpenChange();
+  };
+  const handleTranlateModalClose = () => {
+    setEditId(undefined);
+    onOpenChangeTranslator();
+  };
+
+  const translateHandler = (data: TTeamateTranslatePayload) => {
+    onOpenChange();
+    onOpenChangeTranslator();
+    translateMutate({
+      title: data?.title as string,
+      alt: data?.alt as string,
+      description: data?.description as string,
+      position: data?.position as string,
+    });
   };
 
   return (
@@ -59,7 +93,32 @@ const TematesPage = () => {
           onOpen={onOpen}
           onOpenChange={onOpenChange}
         >
-          <FormContainer teamate={editData?.data} onOpenChage={onOpenChange} />
+          <FormContainer
+            translateHandler={translateHandler}
+            teamate={editData?.data}
+          />
+        </CustomModal>
+        <CustomModal
+          hiddenButton={true}
+          buttonTitle="ترجمه عضو تیم"
+          isOpen={isTranslatorOpen}
+          modalTitle={
+            editData
+              ? `ترجمه هم تیمی ${editData?.data?.title}`
+              : "ترجمه هم تیمی"
+          }
+          onClose={handleTranlateModalClose}
+          onOpen={onOpenTranslator}
+          onOpenChange={onOpenChangeTranslator}
+        >
+          <TranslateTeamateFormContainer
+            isPending={isTranslatePending}
+            traslatedTeamatePayload={
+              translateData?.data?.data as ITranslatedTeamatePayload
+            }
+            onOpenChangeTranslator={onOpenChangeTranslator}
+            editId={editId as string}
+          />
         </CustomModal>
       </div>
       <div className="bg-component-base-2 rounded-2xl">

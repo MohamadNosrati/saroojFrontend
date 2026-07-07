@@ -11,6 +11,12 @@ import {
   useGetSlider,
   useGetSliders,
 } from "@/lib/hooks/sliders";
+import TranslateSliderFormContainer from "@/features/dashboard/sliders/TranslateSliderFormContainer";
+import {
+  ITranslatedSliderPayload,
+  TSliderTranslatePayload,
+} from "@/lib/types/slider";
+import { useTranslate } from "@/lib/hooks/translate";
 
 const columns = [
   { name: "عکس", uid: "pictureId" },
@@ -18,8 +24,12 @@ const columns = [
   { name: "عنوان", uid: "title" },
   { name: "توضیحات عکس", uid: "alt" },
   { name: "لینک", uid: "link" },
+  { name: "لینک انگلیسی", uid: "linkEn" },
   { name: "توضیحات", uid: "description" },
   { name: "وضعیت", uid: "isActive" },
+  { name: "عنوان انگلیسی", uid: "titleEn" },
+  { name: "توضیحات انگلیسی", uid: "descriptionEn" },
+  { name: "توضیحات عکس انگلیسی", uid: "altEn" },
   { name: "تاریخ ساخت", uid: "createdAt" },
   { name: "تاریخ ویرایش", uid: "updatedAt" },
   { name: "عملیات", uid: "actions" },
@@ -28,12 +38,22 @@ const columns = [
 const SlidersPage = () => {
   const { data, isLoading } = useGetSliders();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { isPending, mutate: deleteCategory } = useDeleteSlider();
+  const {
+    isOpen: isTranslatorOpen,
+    onOpen: onOpenTranslator,
+    onOpenChange: onOpenChangeTranslator,
+  } = useDisclosure();
+  const { isPending, mutate: deleteSlider } = useDeleteSlider();
   const [editId, setEditId] = useState<string | undefined>(undefined);
   const { data: editData } = useGetSlider(editId);
+  const {
+    mutate: translateMutate,
+    isPending: isTranslatePending,
+    data: translateData,
+  } = useTranslate();
 
   const deleteHandler = (id: string) => {
-    deleteCategory(id);
+    deleteSlider(id);
   };
   const editHandler = (id: string) => {
     onOpenChange();
@@ -43,6 +63,20 @@ const SlidersPage = () => {
   const handleModalClose = () => {
     setEditId(undefined);
     onOpenChange();
+  };
+  const handleTranlateModalClose = () => {
+    setEditId(undefined);
+    onOpenChangeTranslator();
+  };
+
+  const translateHandler = (data: TSliderTranslatePayload) => {
+    onOpenChange();
+    onOpenChangeTranslator();
+    translateMutate({
+      title: data?.title as string,
+      alt: data?.alt as string,
+      description: data?.description as string,
+    });
   };
 
   return (
@@ -63,7 +97,32 @@ const SlidersPage = () => {
           onOpen={onOpen}
           onOpenChange={onOpenChange}
         >
-          <FormContainer slider={editData?.data} onOpenChage={onOpenChange} />
+          <FormContainer
+            translateHandler={translateHandler}
+            slider={editData?.data}
+          />
+        </CustomModal>
+        <CustomModal
+          hiddenButton={true}
+          buttonTitle="ترجمه اسلایدر"
+          isOpen={isTranslatorOpen}
+          modalTitle={
+            editData
+              ? `ترجمه اسلایدر ${editData?.data?.title}`
+              : "ترجمه اسلایدر"
+          }
+          onClose={handleTranlateModalClose}
+          onOpen={onOpenTranslator}
+          onOpenChange={onOpenChangeTranslator}
+        >
+          <TranslateSliderFormContainer
+            isPending={isTranslatePending}
+            traslatedSliderPayload={
+              translateData?.data?.data as ITranslatedSliderPayload
+            }
+            onOpenChangeTranslator={onOpenChangeTranslator}
+            editId={editId as string}
+          />
         </CustomModal>
       </div>
       <div className="bg-component-base-2 rounded-2xl">

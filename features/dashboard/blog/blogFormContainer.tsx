@@ -8,7 +8,7 @@ import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import CustomSelect from "@/components/ui/CustomSelect";
 import { isActiveOptions } from "@/lib/constants/isActive";
 import { responseHandler } from "@/lib/tools/responseHandler";
-import { IBlog } from "@/lib/types/blog";
+import { IBlog, TBlogTranslatePayload } from "@/lib/types/blog";
 import { useCreateBlog, useUpdateBlog } from "@/lib/hooks/blog";
 import { blogsRoutes } from "@/lib/routes/apiRoutes";
 import { CustomWhen } from "@/components/ui/CustomWhen";
@@ -16,7 +16,7 @@ import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor
 
 interface IFormContainerProps {
   blog?: IBlog;
-  onOpenChage: () => void;
+  translateHandler: (payload: TBlogTranslatePayload) => void;
 }
 
 export type TformValues = {
@@ -29,7 +29,7 @@ export type TformValues = {
 
 const FormContainer: React.FC<IFormContainerProps> = ({
   blog,
-  onOpenChage,
+  translateHandler,
 }) => {
   const queryClient = useQueryClient();
   const { mutate: createMutate, isPending: isCreatePending } = useCreateBlog();
@@ -70,6 +70,11 @@ const FormContainer: React.FC<IFormContainerProps> = ({
             queryKey: [blogsRoutes.findOne(blog?.id)],
           });
           responseHandler.success("مقاله با ویرایش ایجاد شد");
+          translateHandler({
+            title: data?.title as string,
+            alt: data?.alt as string,
+            description: data?.description as string,
+          });
         },
       });
     } else {
@@ -80,7 +85,11 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           });
           responseHandler.success("مقاله با موفقیت ایجاد شد");
           reset();
-          onOpenChage();
+          translateHandler({
+            title: data?.title as string,
+            alt: data?.alt as string,
+            description: data?.description as string,
+          });
         },
       });
     }

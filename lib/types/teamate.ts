@@ -27,3 +27,16 @@ export interface ITeamate {
 export interface IUpdateTeamatePayload extends Partial<ITeamatePayload> {
   id: string;
 }
+
+
+export type TTeamateTranslatePayload = Pick<
+  ITeamate,
+  "alt" | "title" | "description" | "position"
+>;
+
+export interface ITranslatedTeamatePayload {
+  titleEn?: string;
+  descriptionEn?: string;
+  altEn?: string;
+  positionEn?: string;
+}

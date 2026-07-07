@@ -7,12 +7,21 @@ import CustomModal from "@/components/ui/CustomModal";
 import CustomTable from "@/components/ui/CustomTable";
 import FormContainer from "@/features/dashboard/blog/blogFormContainer";
 import { useDeleteBlog, useGetBlog, useGetBlogs } from "@/lib/hooks/blog";
+import { useTranslate } from "@/lib/hooks/translate";
+import {
+  ITranslatedBlogPayload,
+  TBlogTranslatePayload,
+} from "@/lib/types/blog";
+import TranslateBlogFormContainer from "@/features/dashboard/blog/TranslateBlogFormContainer";
 
 const columns = [
   { name: "عکس", uid: "pictureId" },
   { name: "عنوان", uid: "title" },
   { name: "توضیحات عکس", uid: "alt" },
   { name: "وضعیت", uid: "isActive" },
+  { name: "عنوان انگلیسی", uid: "titleEn" },
+  { name: "توضیحات انگلیسی", uid: "descriptionEn" },
+  { name: "توضیحات عکس انگلیسی", uid: "altEn" },
   { name: "تاریخ ساخت", uid: "createdAt" },
   { name: "تاریخ ویرایش", uid: "updatedAt" },
   { name: "عملیات", uid: "actions" },
@@ -24,6 +33,16 @@ const BlogsPage = () => {
   const { isPending, mutate: deleteCategory } = useDeleteBlog();
   const [editId, setEditId] = useState<string | undefined>(undefined);
   const { data: editData } = useGetBlog(editId);
+  const {
+    isOpen: isTranslatorOpen,
+    onOpen: onOpenTranslator,
+    onOpenChange: onOpenChangeTranslator,
+  } = useDisclosure();
+  const {
+    mutate: translateMutate,
+    isPending: isTranslatePending,
+    data: translateData,
+  } = useTranslate();
 
   const deleteHandler = (id: string) => {
     deleteCategory(id);
@@ -36,6 +55,21 @@ const BlogsPage = () => {
   const handleModalClose = () => {
     setEditId(undefined);
     onOpenChange();
+  };
+
+  const handleTranlateModalClose = () => {
+    setEditId(undefined);
+    onOpenChangeTranslator();
+  };
+
+  const translateHandler = (data: TBlogTranslatePayload) => {
+    onOpenChange();
+    onOpenChangeTranslator();
+    translateMutate({
+      title: data?.title as string,
+      alt: data?.alt as string,
+      description: data?.description as string,
+    });
   };
 
   return (
@@ -54,7 +88,32 @@ const BlogsPage = () => {
           onOpen={onOpen}
           onOpenChange={onOpenChange}
         >
-          <FormContainer blog={editData?.data} onOpenChage={onOpenChange} />
+          <FormContainer
+            blog={editData?.data}
+            translateHandler={translateHandler}
+          />
+        </CustomModal>
+        <CustomModal
+          hiddenButton={true}
+          buttonTitle="ترجمه مقاله"
+          isOpen={isTranslatorOpen}
+          modalTitle={
+            editData
+              ? `ترجمه مقاله ${editData?.data?.title}`
+              : "ترجمه مقاله"
+          }
+          onClose={handleTranlateModalClose}
+          onOpen={onOpenTranslator}
+          onOpenChange={onOpenChangeTranslator}
+        >
+          <TranslateBlogFormContainer
+            isPending={isTranslatePending}
+            traslatedBlogPayload={
+              translateData?.data?.data as ITranslatedBlogPayload
+            }
+            onOpenChangeTranslator={onOpenChangeTranslator}
+            editId={editId as string}
+          />
         </CustomModal>
       </div>
       <div className="bg-component-base-2 rounded-2xl">

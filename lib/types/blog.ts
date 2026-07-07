@@ -39,3 +39,15 @@ export interface IBlogWithSuggestions {
   blog: IBlog;
   suggestions: IBlog[];
 }
+
+
+export type TBlogTranslatePayload = Pick<
+  IBlog,
+  "alt" | "title" | "description"
+>;
+
+export interface ITranslatedBlogPayload {
+  titleEn?: string;
+  descriptionEn?: string;
+  altEn?: string;
+}

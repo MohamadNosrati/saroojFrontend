@@ -9,14 +9,14 @@ import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import CustomSelect from "@/components/ui/CustomSelect";
 import { isActiveOptions } from "@/lib/constants/isActive";
 import { responseHandler } from "@/lib/tools/responseHandler";
-import { ITeamate } from "@/lib/types/teamate";
+import { ITeamate, TTeamateTranslatePayload } from "@/lib/types/teamate";
 import { useCreateTeamate, useUpdateTeamate } from "@/lib/hooks/temates";
 import { TeamatesRoute } from "@/lib/routes/apiRoutes";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 
 interface IFormContainerProps {
   teamate?: ITeamate;
-  onOpenChage: () => void;
+  translateHandler: (payload: TTeamateTranslatePayload) => void;
 }
 
 type TformValues = {
@@ -32,7 +32,7 @@ type TformValues = {
 
 const FormContainer: React.FC<IFormContainerProps> = ({
   teamate,
-  onOpenChage,
+  translateHandler,
 }) => {
   const queryClient = useQueryClient();
   const { mutate: createMutate, isPending: isCreatePending } =
@@ -78,7 +78,12 @@ const FormContainer: React.FC<IFormContainerProps> = ({
             queryKey: [TeamatesRoute.getAll()],
           });
           responseHandler.success("عصو تیم با موفقیت ایجاد شد");
-          onOpenChage();
+          translateHandler({
+            title: data?.title as string,
+            alt: data?.alt as string,
+            description: data?.description as string,
+            position: data?.position as string,
+          });
         },
       });
     } else {
@@ -89,6 +94,12 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           });
           responseHandler.success("عصو تیم با موفقیت ایجاد شد");
           reset();
+          translateHandler({
+            title: data?.title as string,
+            alt: data?.alt as string,
+            description: data?.description as string,
+            position: data?.position as string,
+          });
         },
       });
     }

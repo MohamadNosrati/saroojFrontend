@@ -9,14 +9,13 @@ import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import CustomSelect from "@/components/ui/CustomSelect";
 import { isActiveOptions } from "@/lib/constants/isActive";
 import { responseHandler } from "@/lib/tools/responseHandler";
-import { ISlider } from "@/lib/types/slider";
+import { ISlider, TSliderTranslatePayload } from "@/lib/types/slider";
 import { useCreateSlider, useUpdateSlider } from "@/lib/hooks/sliders";
 import { sliderRoutes } from "@/lib/routes/apiRoutes";
 import { CustomWhen } from "@/components/ui/CustomWhen";
-
 interface IFormContainerProps {
   slider?: ISlider;
-  onOpenChage: () => void;
+  translateHandler: (payload: TSliderTranslatePayload) => void;
 }
 
 type TformValues = {
@@ -27,17 +26,19 @@ type TformValues = {
   alt: string;
   description: string;
   isActive: "0" | "1";
+  linkEn?: string;
 };
 
 const FormContainer: React.FC<IFormContainerProps> = ({
   slider,
-  onOpenChage,
+  translateHandler,
 }) => {
   const queryClient = useQueryClient();
   const { mutate: createMutate, isPending: isCreatePending } =
     useCreateSlider();
   const { mutate: updateMutate, isPending: isUpdatePending } =
     useUpdateSlider();
+
   const { handleSubmit, setValue, watch, control, reset } =
     useForm<TformValues>({
       defaultValues: {
@@ -47,6 +48,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         isActive: "1",
         alt: "",
         link: "",
+        linkEn: "",
         mobilePictureId: "",
       },
       values: {
@@ -56,6 +58,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         alt: slider?.alt || "",
         isActive: slider?.isActive === false ? "0" : "1",
         link: slider?.link || "",
+        linkEn: slider?.linkEn || "",
         mobilePictureId: slider?.mobilePictureId?.id || "",
       },
     });
@@ -78,8 +81,11 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           queryClient.invalidateQueries({
             queryKey: [sliderRoutes.findOne(slider?.id)],
           });
-          responseHandler.success("اسلایدر  با موفقیت ویرایش ایجاد شد");
-          onOpenChage();
+          translateHandler({
+            title: data?.title as string,
+            alt: data?.alt as string,
+            description: data?.description as string,
+          });
         },
       });
     } else {
@@ -90,6 +96,11 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           });
           responseHandler.success("اسلایدر با موفقیت ایجاد شد");
           reset();
+          translateHandler({
+            title: data?.title as string,
+            alt: data?.alt as string,
+            description: data?.description as string,
+          });
         },
       });
     }
@@ -167,9 +178,27 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           name="link"
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <CustomInput
+              dir="ltr"
               errorMessage={error?.message}
               isInvalid={Boolean(error?.message)}
               label="لینک جزییات"
+              labelPlacement="outside-top"
+              value={value}
+              onChange={onChange}
+            />
+          )}
+        />
+      </div>
+      <div>
+        <Controller
+          control={control}
+          name="linkEn"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              dir="ltr"
+              errorMessage={error?.message}
+              isInvalid={Boolean(error?.message)}
+              label="لینک جزییات انگلیسی"
               labelPlacement="outside-top"
               value={value}
               onChange={onChange}

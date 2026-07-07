@@ -2,6 +2,7 @@ interface ICommentPayload {
   fullName: string;
   email: string;
   text: string;
+  type: "persian" | "english";
 }
 
 interface IComment {
@@ -12,6 +13,7 @@ interface IComment {
   createdAt: Date;
   updatedAt: Date;
   isActive: boolean;
+  type : "persian" | "english";
 }
 
 interface IUpdateCommentPayload extends Partial<ICommentPayload> {
