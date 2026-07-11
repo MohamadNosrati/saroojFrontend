@@ -15,6 +15,7 @@ import DeskTopNavigation from "./DesktopNavigation";
 import MobileNavigation from "./MobileNavigation";
 import SelectLanguage from "./SelectLanguage";
 import ToggleTheme from "./ToggleTheme";
+import ChatBot from "./ChatBot";
 
 const data = [
   {
@@ -71,10 +72,9 @@ const Header = () => {
             <div className="hover:bg-white dark:hover:bg-gray-darker rounded-xl transition-all duration-200 shadow-sm">
               <SelectLanguage />
             </div>
-
+            <ChatBot />
             {/* Separator needle accent line */}
             <span className="w-px h-5 bg-dark/10 dark:bg-white/10 block" />
-
             <div className="hover:bg-white dark:hover:bg-gray-darker rounded-xl transition-all duration-200 shadow-sm flex items-center justify-center p-0.5">
               <ToggleTheme />
             </div>

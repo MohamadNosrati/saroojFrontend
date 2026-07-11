@@ -2,7 +2,6 @@
 
 import CustomContainer from "@/components/ui/CustomContainer";
 import CustomTable from "@/components/ui/CustomTable";
-import { useGetSliders } from "@/lib/hooks/sliders";
 import { useGetUsers } from "@/lib/hooks/user";
 
 const columns = [
