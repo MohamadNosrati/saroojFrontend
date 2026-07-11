@@ -54,4 +54,8 @@ export const dashboardPages = [
     label: "چتروم",
     href: dashboardRoutes.chatroom(),
   },
+  {
+    label: "اعضا",
+    href: dashboardRoutes.users(),
+  },
 ];

@@ -231,7 +231,17 @@ export default function CustomTable({
       case "email":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-sm capitalize">{cellValue}</p>
+            <p className="text-bold text-sm capitalize dark:text-white">
+              {cellValue}
+            </p>
+          </div>
+        );
+      case "userName":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize dark:text-white">
+              {cellValue}
+            </p>
           </div>
         );
       case "text":
@@ -249,6 +259,17 @@ export default function CustomTable({
             variant="flat"
           >
             {cellValue ? "فعال" : "غیرفعال"}
+          </Chip>
+        );
+      case "role":
+        return (
+          <Chip
+            className="capitalize"
+            color={"danger"}
+            size="sm"
+            variant="flat"
+          >
+            {cellValue}
           </Chip>
         );
       case "createdAt":

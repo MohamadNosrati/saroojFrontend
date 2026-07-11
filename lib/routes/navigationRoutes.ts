@@ -97,6 +97,10 @@ class DashboardRoute {
   chatroom() {
     return `${this.base}/chatroom`;
   }
+
+  users() {
+    return `${this.base}/users`;
+  }
 }
 
 class FrontAuthRoutes {
