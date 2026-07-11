@@ -269,6 +269,21 @@ class Notification {
     return `${this.base}`;
   }
 }
+class Assistant {
+  private readonly base: string;
+
+  constructor() {
+    this.base = "assistant";
+  }
+
+  getSessionIdMessages(sessionId: string) {
+    return `${this.base}/${sessionId}`;
+  }
+
+  create() {
+    return `${this.base}`;
+  }
+}
 
 class Conversation {
   private readonly base: string;
@@ -318,3 +333,4 @@ export const notificationRoutes = new Notification();
 export const conversationRoutes = new Conversation();
 export const messageRoutes = new Message();
 export const translateRoutes = new Translate();
+export const assistantRoutes = new Assistant();

@@ -11,15 +11,15 @@ import Chat from "@/features/dashboard/chatroom/Chat";
 import { IConversation } from "@/lib/types/conversation";
 import { IUser } from "@/lib/types/user";
 import { getCookie } from "@/lib/actions/auth";
-import useUpdateCache from "@/lib/hooks/updateCache";
 import { conversationRoutes, messageRoutes } from "@/lib/routes/apiRoutes";
 import { useAuthStore } from "@/lib/stores/auth";
 import { eventNames } from "@/lib/config/socket";
+import { useUpdateChatMessageCache } from "@/lib/hooks/updateCache";
 
 export default function Chatroom() {
   const [isConnected, setIsConnected] = useState(false);
   const [isConnecting, setIsConnecting] = useState(true);
-  const { updateCache } = useUpdateCache();
+  const { updateCache } = useUpdateChatMessageCache();
   const [selectedConversation, setSelectedConversation] = useState<
     IConversation | undefined
   >(undefined);

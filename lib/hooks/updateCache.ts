@@ -1,10 +1,11 @@
 import { useQueryClient } from "@tanstack/react-query";
 
 import { GroupedMessageItem, IMessage } from "../types/message";
+import { IAssistantMessage } from "../types/assistant";
 const getDateKey = (timestamp: string | number | Date) =>
   new Date(timestamp).toISOString().split("T")[0];
 
-const useUpdateCache = () => {
+export const useUpdateChatMessageCache = () => {
   const queryClient = useQueryClient();
   const updateCache = (
     key: string,
@@ -64,4 +65,23 @@ const useUpdateCache = () => {
   return { updateCache };
 };
 
-export default useUpdateCache;
+export const useUpdateAssistantMessageChace = () => {
+  const queryClient = useQueryClient();
+  const updateCache = (
+    sessionId: string,
+    newAssistantMessage: IAssistantMessage,
+  ) => {
+    queryClient.setQueryData([sessionId], (old: any) => {
+      if (!old) return old;
+      return {
+        ...old,
+        data: {
+          ...old.data,
+          data: [...(old.data?.data || []), newAssistantMessage],
+        },
+      };
+    });
+  };
+
+  return { updateCache };
+};

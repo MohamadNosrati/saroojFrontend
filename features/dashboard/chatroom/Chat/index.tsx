@@ -15,7 +15,6 @@ import CustomInput from "@/components/ui/CustomInput";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { eventNames } from "@/lib/config/socket";
 import { useGetConversationMessages } from "@/lib/hooks/message";
-import useUpdateCache from "@/lib/hooks/updateCache";
 import { conversationRoutes, messageRoutes } from "@/lib/routes/apiRoutes";
 import { useAuthStore } from "@/lib/stores/auth";
 import { responseHandler } from "@/lib/tools/responseHandler";
@@ -25,6 +24,7 @@ import { IMessage, MessageStatus, MessageType } from "@/lib/types/message";
 import { IUser } from "@/lib/types/user";
 
 import MessageItem from "./MessageItem";
+import { useUpdateChatMessageCache } from "@/lib/hooks/updateCache";
 
 interface IProps {
   isConnected: boolean;
@@ -60,7 +60,7 @@ const Chat: React.FC<IProps> = ({
     otherUserId: selectedConversation?.otherUser?.id || selectedContact?.id,
     conversationId: selectedConversation?.id || undefined,
   };
-  const { updateCache } = useUpdateCache();
+  const { updateCache } = useUpdateChatMessageCache();
   const handleSendMessage = () => {
     socketRef?.current?.emit(
       eventNames.sendMessage,

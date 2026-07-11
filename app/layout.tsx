@@ -6,6 +6,8 @@ import { ToastContainer } from "react-toastify";
 import NextTopLoader from "nextjs-toploader";
 
 import Providers from "@/lib/providers";
+import { useEffect } from "react";
+import { useSessionStore } from "@/lib/stores/session";
 
 // import Providers from "@/lib/providers";
 
@@ -14,6 +16,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  useEffect(() => {
+    // Access the store and generate the ID on mount
+    useSessionStore.getState().generateSessionId();
+  }, []);
+
   return (
     <html suppressHydrationWarning lang="fa">
       <head />
