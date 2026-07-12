@@ -3,7 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Button } from "@heroui/button";
 import { useQueryClient } from "@tanstack/react-query";
 import { Spinner } from "@heroui/spinner";
-import { MutableRefObject } from "react";
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
 
 import CustomInput from "@/components/ui/CustomInput";
 import { responseHandler } from "@/lib/tools/responseHandler";
@@ -19,6 +19,7 @@ interface IFormContainerProps {
   isPending: boolean;
   editId: string;
   translateIdRef: MutableRefObject<string | undefined>;
+  setEditId: Dispatch<SetStateAction<string | undefined>>;
 }
 
 type TformValues = {
@@ -33,6 +34,7 @@ const TranslateBlogFormContainer: React.FC<IFormContainerProps> = ({
   isPending,
   editId,
   translateIdRef,
+  setEditId,
 }) => {
   const queryClient = useQueryClient();
   const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateBlog();
@@ -64,6 +66,7 @@ const TranslateBlogFormContainer: React.FC<IFormContainerProps> = ({
         });
         responseHandler.success("مقاله  با موفقیت ویرایش ایجاد شد");
         onOpenChangeTranslator();
+        setEditId(undefined);
       },
     });
   };

@@ -114,6 +114,7 @@ const TematesPage = () => {
           onOpenChange={onOpenChangeTranslator}
         >
           <TranslateTeamateFormContainer
+            setEditId={setEditId}
             editId={editId as string}
             isPending={isTranslatePending}
             translateIdRef={translateIdRef}

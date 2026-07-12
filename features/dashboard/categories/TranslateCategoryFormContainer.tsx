@@ -3,7 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Button } from "@heroui/button";
 import { useQueryClient } from "@tanstack/react-query";
 import { Spinner } from "@heroui/spinner";
-import { MutableRefObject } from "react";
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
 
 import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
@@ -18,6 +18,7 @@ interface IFormContainerProps {
   isPending: boolean;
   editId: string;
   translateIdRef: MutableRefObject<string | undefined>;
+  setEditId: Dispatch<SetStateAction<string | undefined>>;
 }
 
 type TformValues = {
@@ -32,6 +33,7 @@ const TranslateCategoryFormContainer: React.FC<IFormContainerProps> = ({
   isPending,
   editId,
   translateIdRef,
+  setEditId,
 }) => {
   const queryClient = useQueryClient();
   const { mutate: updateMutate, isPending: isUpdatePending } =
@@ -63,7 +65,9 @@ const TranslateCategoryFormContainer: React.FC<IFormContainerProps> = ({
           queryKey: [categoriesRoute.findOne(editId as string)],
         });
         responseHandler.success("دسته بندی  با موفقیت ویرایش ایجاد شد");
+        translateIdRef.current = "";
         onOpenChangeTranslator();
+        setEditId(undefined);
       },
     });
   };

@@ -3,7 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Button } from "@heroui/button";
 import { useQueryClient } from "@tanstack/react-query";
 import { Spinner } from "@heroui/spinner";
-import { MutableRefObject } from "react";
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
 
 import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
@@ -18,6 +18,7 @@ interface IFormContainerProps {
   isPending: boolean;
   editId: string;
   translateIdRef: MutableRefObject<string | undefined>;
+  setEditId: Dispatch<SetStateAction<string | undefined>>;
 }
 
 type TformValues = {
@@ -32,6 +33,7 @@ const TranslateSliderFormContainer: React.FC<IFormContainerProps> = ({
   isPending,
   editId,
   translateIdRef,
+  setEditId
 }) => {
   const queryClient = useQueryClient();
   const { mutate: updateMutate, isPending: isUpdatePending } =
@@ -63,6 +65,7 @@ const TranslateSliderFormContainer: React.FC<IFormContainerProps> = ({
           queryKey: [sliderRoutes.findOne(editId as string)],
         });
         responseHandler.success("اسلایدر  با موفقیت ویرایش ایجاد شد");
+        setEditId(undefined)
         onOpenChangeTranslator();
       },
     });

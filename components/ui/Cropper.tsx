@@ -17,6 +17,7 @@ interface IProps {
   handleReset: () => void;
   onCropComplete: (_: CroppedPixels, croppedAreaPixels: CroppedPixels) => void;
   aspect: number;
+  isPending: boolean;
 }
 
 const ImageCropper: React.FC<IProps> = ({
@@ -30,61 +31,76 @@ const ImageCropper: React.FC<IProps> = ({
   handleSave,
   onCropComplete,
   aspect,
+  isPending,
 }) => {
   return (
-    <div className="flex justify-center z-[100000000] items-end p-6 fixed left-0 top-0 gap-4 w-full min-h-screen bg-dark/75">
-      <Cropper
-        aspect={aspect}
-        classes={{
-          containerClassName:
-            "w-full h-full flex relative justify-center items-center bg-dark/75",
-          cropAreaClassName: "size-full",
-        }}
-        crop={crop}
-        image={String(selectedImagePreview)}
-        zoom={Number(zoom)}
-        zoomWithScroll={true}
-        onCropChange={setCrop}
-        onCropComplete={onCropComplete}
-      />
-      <div className="flex flex-col gap-3">
-        <div className="w-full flex justify-center gap-2.5">
-          <Button
-            className="text-white text-xl font-bold"
-            color="success"
-            size="lg"
-            onPress={handleSave}
-          >
-            SAVE
-          </Button>
-          <Button
-            className="text-white text-xl font-bold"
-            color="danger"
-            size="lg"
-            onPress={handleCancel}
-          >
-            CANCEL
-          </Button>
-          <Button
-            className="text-white text-xl font-bold"
-            color="warning"
-            size="lg"
-            onPress={handleReset}
-          >
-            RESET
-          </Button>
-        </div>
-        <Slider
-          className="max-w-md"
-          dir="ltr"
-          label="zoom level"
-          marks={sliderMarks}
-          maxValue={2}
-          minValue={0}
-          step={0.1}
-          value={zoom}
-          onChange={setZoom}
+    <div className="fixed inset-0 flex flex-col z-10  bg-black">
+      {/* Cropper Section */}
+      <div className="flex-1 overflow-hidden bg-[#111827]">
+        <Cropper
+          aspect={aspect}
+          crop={crop}
+          image={String(selectedImagePreview)}
+          zoom={Number(zoom)}
+          zoomWithScroll
+          onCropChange={setCrop}
+          onCropComplete={onCropComplete}
+          classes={{
+            containerClassName: "relative h-full w-full bg-[#111827]",
+            cropAreaClassName:
+              "rounded-xl border-2 border-white shadow-[0_0_0_9999px_rgba(0,0,0,.55)]",
+          }}
         />
+      </div>
+
+      {/* Controls */}
+      <div className="border-t min-h-fit border-white/10 bg-zinc-900 px-6 py-5">
+        <div className="mx-auto flex max-w-4xl flex-col gap-6">
+          <Slider
+            isDisabled={isPending}
+            className="w-full"
+            dir="ltr"
+            label="Zoom"
+            marks={sliderMarks}
+            maxValue={2}
+            minValue={0}
+            step={0.1}
+            value={zoom}
+            onChange={setZoom}
+          />
+
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <Button
+              isLoading={isPending}
+              color="success"
+              size="lg"
+              className="font-semibold"
+              onPress={handleSave}
+            >
+              Save
+            </Button>
+
+            <Button
+              isDisabled={isPending}
+              color="warning"
+              size="lg"
+              className="font-semibold"
+              onPress={handleReset}
+            >
+              Reset
+            </Button>
+
+            <Button
+              isDisabled={isPending}
+              color="danger"
+              size="lg"
+              className="font-semibold"
+              onPress={handleCancel}
+            >
+              Cancel
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );

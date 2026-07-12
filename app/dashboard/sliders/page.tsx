@@ -70,7 +70,6 @@ const SlidersPage = () => {
     onOpenChangeTranslator();
   };
 
-  console.log("editId", editId);
 
   const translateHandler = (data: TSliderTranslatePayload) => {
     onOpenChange();
@@ -120,6 +119,7 @@ const SlidersPage = () => {
           onOpenChange={onOpenChangeTranslator}
         >
           <TranslateSliderFormContainer
+            setEditId={setEditId}
             editId={editId as string}
             isPending={isTranslatePending}
             translateIdRef={translateIdRef}

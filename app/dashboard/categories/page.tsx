@@ -116,6 +116,7 @@ const CategoriesPage = () => {
           onOpenChange={onOpenChangeTranslator}
         >
           <TranslateCategoryFormContainer
+            setEditId={setEditId}
             editId={editId as string}
             isPending={isTranslatePending}
             translateIdRef={translateIdRef}
