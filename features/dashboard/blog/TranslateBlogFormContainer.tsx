@@ -11,12 +11,14 @@ import { useUpdateBlog } from "@/lib/hooks/blog";
 import { blogsRoutes } from "@/lib/routes/apiRoutes";
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
 import { CustomWhen } from "@/components/ui/CustomWhen";
+import { MutableRefObject } from "react";
 
 interface IFormContainerProps {
   traslatedBlogPayload?: ITranslatedBlogPayload;
   onOpenChangeTranslator: () => void;
   isPending: boolean;
   editId: string;
+  translateIdRef: MutableRefObject<string | undefined>;
 }
 
 type TformValues = {
@@ -30,6 +32,7 @@ const TranslateBlogFormContainer: React.FC<IFormContainerProps> = ({
   traslatedBlogPayload,
   isPending,
   editId,
+  translateIdRef,
 }) => {
   const queryClient = useQueryClient();
   const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateBlog();
@@ -48,7 +51,7 @@ const TranslateBlogFormContainer: React.FC<IFormContainerProps> = ({
   const onSubmit = async (data: TformValues) => {
     const updatePayload = {
       ...data,
-      id: editId as string,
+      id: translateIdRef?.current || (editId as string),
     };
 
     updateMutate(updatePayload, {

@@ -13,10 +13,12 @@ import { useCreateBlog, useUpdateBlog } from "@/lib/hooks/blog";
 import { blogsRoutes } from "@/lib/routes/apiRoutes";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
+import { MutableRefObject } from "react";
 
 interface IFormContainerProps {
   blog?: IBlog;
   translateHandler: (payload: TBlogTranslatePayload) => void;
+  translateIdRef: MutableRefObject<string | undefined>;
 }
 
 export type TformValues = {
@@ -30,6 +32,7 @@ export type TformValues = {
 const FormContainer: React.FC<IFormContainerProps> = ({
   blog,
   translateHandler,
+  translateIdRef,
 }) => {
   const queryClient = useQueryClient();
   const { mutate: createMutate, isPending: isCreatePending } = useCreateBlog();
@@ -79,11 +82,12 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       });
     } else {
       createMutate(createPayload, {
-        onSuccess: () => {
+        onSuccess: (response) => {
           queryClient.invalidateQueries({
             queryKey: [blogsRoutes.getAll()],
           });
           responseHandler.success("مقاله با موفقیت ایجاد شد");
+          translateIdRef.current = response?.data?.data?.id;
           reset();
           translateHandler({
             title: data?.title as string,

@@ -10,12 +10,14 @@ import { ITranslatedSliderPayload } from "@/lib/types/slider";
 import { useUpdateSlider } from "@/lib/hooks/sliders";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { sliderRoutes } from "@/lib/routes/apiRoutes";
+import { MutableRefObject } from "react";
 
 interface IFormContainerProps {
   traslatedSliderPayload?: ITranslatedSliderPayload;
   onOpenChangeTranslator: () => void;
   isPending: boolean;
   editId: string;
+  translateIdRef: MutableRefObject<string | undefined>;
 }
 
 type TformValues = {
@@ -29,6 +31,7 @@ const TranslateSliderFormContainer: React.FC<IFormContainerProps> = ({
   traslatedSliderPayload,
   isPending,
   editId,
+  translateIdRef,
 }) => {
   const queryClient = useQueryClient();
   const { mutate: updateMutate, isPending: isUpdatePending } =
@@ -48,7 +51,7 @@ const TranslateSliderFormContainer: React.FC<IFormContainerProps> = ({
   const onSubmit = async (data: TformValues) => {
     const updatePayload = {
       ...data,
-      id: editId as string,
+      id: translateIdRef?.current || (editId as string),
     };
 
     updateMutate(updatePayload, {

@@ -13,10 +13,12 @@ import { isActiveOptions } from "@/lib/constants/isActive";
 import { categoriesRoute } from "@/lib/routes/apiRoutes";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { CustomWhen } from "@/components/ui/CustomWhen";
+import { MutableRefObject } from "react";
 
 interface IFormContainerProps {
   category?: ICategory;
   translateHandler: (payload: TCategoryTranslatePayload) => void;
+  translateIdRef: MutableRefObject<string | undefined>;
 }
 
 type TformValues = {
@@ -30,6 +32,7 @@ type TformValues = {
 const FormContainer: React.FC<IFormContainerProps> = ({
   category,
   translateHandler,
+  translateIdRef,
 }) => {
   const queryClient = useQueryClient();
   const { mutate: createMutate, isPending: isCreatePending } =
@@ -72,6 +75,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
             queryKey: [categoriesRoute.findOne(category?.id)],
           });
           responseHandler.success("دسته بندی با ویرایش ایجاد شد");
+
           translateHandler({
             title: data?.title as string,
             alt: data?.alt as string,
@@ -81,12 +85,13 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       });
     } else {
       createMutate(createPayload, {
-        onSuccess: () => {
+        onSuccess: (response) => {
           queryClient.invalidateQueries({
             queryKey: [categoriesRoute.getAll()],
           });
           responseHandler.success("دسته بندی با موفقیت ایجاد شد");
           reset();
+          translateIdRef.current = response?.data?.data?.id;
           translateHandler({
             title: data?.title as string,
             alt: data?.alt as string,

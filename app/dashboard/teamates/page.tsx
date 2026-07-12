@@ -1,6 +1,6 @@
 "use client";
 import { useDisclosure } from "@heroui/modal";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import CustomContainer from "@/components/ui/CustomContainer";
 import CustomModal from "@/components/ui/CustomModal";
@@ -35,6 +35,7 @@ const columns = [
 const TematesPage = () => {
   const { data, isLoading } = useGetTemates();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const translateIdRef = useRef<string>();
   const {
     isOpen: isTranslatorOpen,
     onOpen: onOpenTranslator,
@@ -94,6 +95,7 @@ const TematesPage = () => {
           onOpenChange={onOpenChange}
         >
           <FormContainer
+            translateIdRef={translateIdRef}
             teamate={editData?.data}
             translateHandler={translateHandler}
           />
@@ -112,6 +114,7 @@ const TematesPage = () => {
           onOpenChange={onOpenChangeTranslator}
         >
           <TranslateTeamateFormContainer
+            translateIdRef={translateIdRef}
             editId={editId as string}
             isPending={isTranslatePending}
             traslatedTeamatePayload={

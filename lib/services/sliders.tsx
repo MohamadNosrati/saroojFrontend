@@ -4,6 +4,7 @@ import { sliderRoutes } from "../routes/apiRoutes";
 import { ISlider, ISliderPayload } from "../types/slider";
 
 import axiosInstance from "./base";
+import { IBaseResponse } from "../types/base";
 
 export const getAll = async () => {
   return await axiosInstance.get<AxiosResponse<ISlider[]>>(
@@ -19,7 +20,10 @@ export const findOne = async (id: string) => {
 
 class SlidersServices {
   create(payload: ISliderPayload) {
-    return axiosInstance.post(sliderRoutes.create(), payload);
+    return axiosInstance.post<IBaseResponse<ISlider>>(
+      sliderRoutes.create(),
+      payload,
+    );
   }
 
   delete(id: string) {

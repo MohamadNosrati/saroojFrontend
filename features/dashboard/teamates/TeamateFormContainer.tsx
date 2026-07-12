@@ -13,10 +13,12 @@ import { ITeamate, TTeamateTranslatePayload } from "@/lib/types/teamate";
 import { useCreateTeamate, useUpdateTeamate } from "@/lib/hooks/temates";
 import { TeamatesRoute } from "@/lib/routes/apiRoutes";
 import { CustomWhen } from "@/components/ui/CustomWhen";
+import { MutableRefObject } from "react";
 
 interface IFormContainerProps {
   teamate?: ITeamate;
   translateHandler: (payload: TTeamateTranslatePayload) => void;
+  translateIdRef: MutableRefObject<string | undefined>;
 }
 
 type TformValues = {
@@ -33,6 +35,7 @@ type TformValues = {
 const FormContainer: React.FC<IFormContainerProps> = ({
   teamate,
   translateHandler,
+  translateIdRef,
 }) => {
   const queryClient = useQueryClient();
   const { mutate: createMutate, isPending: isCreatePending } =
@@ -88,12 +91,13 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       });
     } else {
       createMutate(createPayload, {
-        onSuccess: () => {
+        onSuccess: (response) => {
           queryClient.invalidateQueries({
             queryKey: [TeamatesRoute.getAll()],
           });
           responseHandler.success("عصو تیم با موفقیت ایجاد شد");
           reset();
+          translateIdRef.current = response?.data?.data?.id;
           translateHandler({
             title: data?.title as string,
             alt: data?.alt as string,

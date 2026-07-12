@@ -10,12 +10,14 @@ import { responseHandler } from "@/lib/tools/responseHandler";
 import { ITranslatedTeamatePayload } from "@/lib/types/teamate";
 import { useUpdateTeamate } from "@/lib/hooks/temates";
 import { TeamatesRoute } from "@/lib/routes/apiRoutes";
+import { MutableRefObject } from "react";
 
 interface IFormContainerProps {
   traslatedTeamatePayload?: ITranslatedTeamatePayload;
   onOpenChangeTranslator: () => void;
   isPending: boolean;
   editId: string;
+  translateIdRef: MutableRefObject<string | undefined>;
 }
 
 type TformValues = {
@@ -30,6 +32,7 @@ const TranslateTeamateFormContainer: React.FC<IFormContainerProps> = ({
   traslatedTeamatePayload,
   isPending,
   editId,
+  translateIdRef,
 }) => {
   const queryClient = useQueryClient();
   const { mutate: updateMutate, isPending: isUpdatePending } =
@@ -51,7 +54,7 @@ const TranslateTeamateFormContainer: React.FC<IFormContainerProps> = ({
   const onSubmit = async (data: TformValues) => {
     const updatePayload = {
       ...data,
-      id: editId as string,
+      id: translateIdRef?.current || (editId as string),
     };
 
     updateMutate(updatePayload, {

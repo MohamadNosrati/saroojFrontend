@@ -13,9 +13,11 @@ import { ISlider, TSliderTranslatePayload } from "@/lib/types/slider";
 import { useCreateSlider, useUpdateSlider } from "@/lib/hooks/sliders";
 import { sliderRoutes } from "@/lib/routes/apiRoutes";
 import { CustomWhen } from "@/components/ui/CustomWhen";
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
 interface IFormContainerProps {
   slider?: ISlider;
   translateHandler: (payload: TSliderTranslatePayload) => void;
+  translateIdRef: MutableRefObject<string | undefined>;
 }
 
 type TformValues = {
@@ -32,13 +34,13 @@ type TformValues = {
 const FormContainer: React.FC<IFormContainerProps> = ({
   slider,
   translateHandler,
+  translateIdRef
 }) => {
   const queryClient = useQueryClient();
   const { mutate: createMutate, isPending: isCreatePending } =
     useCreateSlider();
   const { mutate: updateMutate, isPending: isUpdatePending } =
     useUpdateSlider();
-
   const { handleSubmit, setValue, watch, control, reset } =
     useForm<TformValues>({
       defaultValues: {
@@ -90,12 +92,13 @@ const FormContainer: React.FC<IFormContainerProps> = ({
       });
     } else {
       createMutate(createPayload, {
-        onSuccess: () => {
+        onSuccess: (response) => {
           queryClient.invalidateQueries({
             queryKey: [sliderRoutes.getAll()],
           });
           responseHandler.success("اسلایدر با موفقیت ایجاد شد");
           reset();
+          translateIdRef.current = response?.data?.data?.id;
           translateHandler({
             title: data?.title as string,
             alt: data?.alt as string,

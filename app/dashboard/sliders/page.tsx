@@ -1,6 +1,6 @@
 "use client";
 import { useDisclosure } from "@heroui/modal";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import CustomContainer from "@/components/ui/CustomContainer";
 import CustomModal from "@/components/ui/CustomModal";
@@ -37,6 +37,7 @@ const columns = [
 
 const SlidersPage = () => {
   const { data, isLoading } = useGetSliders();
+  const translateIdRef = useRef<string>();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
     isOpen: isTranslatorOpen,
@@ -69,6 +70,8 @@ const SlidersPage = () => {
     onOpenChangeTranslator();
   };
 
+  console.log("editId", editId);
+
   const translateHandler = (data: TSliderTranslatePayload) => {
     onOpenChange();
     onOpenChangeTranslator();
@@ -98,6 +101,7 @@ const SlidersPage = () => {
           onOpenChange={onOpenChange}
         >
           <FormContainer
+            translateIdRef={translateIdRef}
             slider={editData?.data}
             translateHandler={translateHandler}
           />
@@ -116,6 +120,7 @@ const SlidersPage = () => {
           onOpenChange={onOpenChangeTranslator}
         >
           <TranslateSliderFormContainer
+            translateIdRef={translateIdRef}
             editId={editId as string}
             isPending={isTranslatePending}
             traslatedSliderPayload={

@@ -18,7 +18,10 @@ export const findOne = async (id: string) => {
 
 class CategoryServices {
   create(payload: ICategoryPayload) {
-    return axiosInstance.post(categoriesRoute.create(), payload);
+    return axiosInstance.post<IBaseResponse<ICategory>>(
+      categoriesRoute.create(),
+      payload,
+    );
   }
 
   delete(id: string) {

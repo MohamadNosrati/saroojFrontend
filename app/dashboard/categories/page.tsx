@@ -1,6 +1,6 @@
 "use client";
 import { useDisclosure } from "@heroui/modal";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import CustomContainer from "@/components/ui/CustomContainer";
 import CustomModal from "@/components/ui/CustomModal";
@@ -33,6 +33,7 @@ const columns = [
 
 const CategoriesPage = () => {
   const { data, isLoading } = useGetCategories();
+  const translateIdRef = useRef<string>();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { isPending, mutate: deleteCategory } = useDeleteCategory();
   const [editId, setEditId] = useState<string | undefined>(undefined);
@@ -96,6 +97,7 @@ const CategoriesPage = () => {
           onOpenChange={onOpenChange}
         >
           <FormContainer
+            translateIdRef={translateIdRef}
             category={editData?.data}
             translateHandler={translateHandler}
           />
@@ -114,6 +116,7 @@ const CategoriesPage = () => {
           onOpenChange={onOpenChangeTranslator}
         >
           <TranslateCategoryFormContainer
+            translateIdRef={translateIdRef}
             editId={editId as string}
             isPending={isTranslatePending}
             traslatedCategoryPayload={

@@ -10,12 +10,14 @@ import { responseHandler } from "@/lib/tools/responseHandler";
 import { ITranslatedCategoryPayload } from "@/lib/types/categories";
 import { useUpdateCategory } from "@/lib/hooks/categories";
 import { categoriesRoute } from "@/lib/routes/apiRoutes";
+import { MutableRefObject } from "react";
 
 interface IFormContainerProps {
   traslatedCategoryPayload?: ITranslatedCategoryPayload;
   onOpenChangeTranslator: () => void;
   isPending: boolean;
   editId: string;
+  translateIdRef: MutableRefObject<string | undefined>;
 }
 
 type TformValues = {
@@ -29,6 +31,7 @@ const TranslateCategoryFormContainer: React.FC<IFormContainerProps> = ({
   traslatedCategoryPayload,
   isPending,
   editId,
+  translateIdRef,
 }) => {
   const queryClient = useQueryClient();
   const { mutate: updateMutate, isPending: isUpdatePending } =
@@ -48,7 +51,7 @@ const TranslateCategoryFormContainer: React.FC<IFormContainerProps> = ({
   const onSubmit = async (data: TformValues) => {
     const updatePayload = {
       ...data,
-      id: editId as string,
+      id: translateIdRef?.current || (editId as string),
     };
 
     updateMutate(updatePayload, {
