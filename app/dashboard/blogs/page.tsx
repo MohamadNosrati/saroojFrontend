@@ -90,9 +90,9 @@ const BlogsPage = () => {
           onOpenChange={onOpenChange}
         >
           <FormContainer
-            translateIdRef={translateIdRef}
             blog={editData?.data}
             translateHandler={translateHandler}
+            translateIdRef={translateIdRef}
           />
         </CustomModal>
         <CustomModal
@@ -107,9 +107,9 @@ const BlogsPage = () => {
           onOpenChange={onOpenChangeTranslator}
         >
           <TranslateBlogFormContainer
-            translateIdRef={translateIdRef}
             editId={editId as string}
             isPending={isTranslatePending}
+            translateIdRef={translateIdRef}
             traslatedBlogPayload={
               translateData?.data?.data as ITranslatedBlogPayload
             }

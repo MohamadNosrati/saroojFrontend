@@ -2,9 +2,9 @@ import { AxiosResponse } from "axios";
 
 import { sliderRoutes } from "../routes/apiRoutes";
 import { ISlider, ISliderPayload } from "../types/slider";
+import { IBaseResponse } from "../types/base";
 
 import axiosInstance from "./base";
-import { IBaseResponse } from "../types/base";
 
 export const getAll = async () => {
   return await axiosInstance.get<AxiosResponse<ISlider[]>>(

@@ -16,7 +16,10 @@ export const findOne = async (id: string) => {
 
 class BlogServices {
   create(payload: IBlogPayload) {
-    return axiosInstance.post<IBaseResponse<IBlog>>(blogsRoutes.create(), payload);
+    return axiosInstance.post<IBaseResponse<IBlog>>(
+      blogsRoutes.create(),
+      payload,
+    );
   }
 
   delete(id: string) {

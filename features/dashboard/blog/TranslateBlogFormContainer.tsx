@@ -3,6 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Button } from "@heroui/button";
 import { useQueryClient } from "@tanstack/react-query";
 import { Spinner } from "@heroui/spinner";
+import { MutableRefObject } from "react";
 
 import CustomInput from "@/components/ui/CustomInput";
 import { responseHandler } from "@/lib/tools/responseHandler";
@@ -11,7 +12,6 @@ import { useUpdateBlog } from "@/lib/hooks/blog";
 import { blogsRoutes } from "@/lib/routes/apiRoutes";
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
 import { CustomWhen } from "@/components/ui/CustomWhen";
-import { MutableRefObject } from "react";
 
 interface IFormContainerProps {
   traslatedBlogPayload?: ITranslatedBlogPayload;

@@ -3,6 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Button } from "@heroui/button";
 import { useQueryClient } from "@tanstack/react-query";
 import { Spinner } from "@heroui/spinner";
+import { MutableRefObject } from "react";
 
 import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
@@ -10,7 +11,6 @@ import { ITranslatedSliderPayload } from "@/lib/types/slider";
 import { useUpdateSlider } from "@/lib/hooks/sliders";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { sliderRoutes } from "@/lib/routes/apiRoutes";
-import { MutableRefObject } from "react";
 
 interface IFormContainerProps {
   traslatedSliderPayload?: ITranslatedSliderPayload;

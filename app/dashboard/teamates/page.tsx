@@ -95,9 +95,9 @@ const TematesPage = () => {
           onOpenChange={onOpenChange}
         >
           <FormContainer
-            translateIdRef={translateIdRef}
             teamate={editData?.data}
             translateHandler={translateHandler}
+            translateIdRef={translateIdRef}
           />
         </CustomModal>
         <CustomModal
@@ -114,9 +114,9 @@ const TematesPage = () => {
           onOpenChange={onOpenChangeTranslator}
         >
           <TranslateTeamateFormContainer
-            translateIdRef={translateIdRef}
             editId={editId as string}
             isPending={isTranslatePending}
+            translateIdRef={translateIdRef}
             traslatedTeamatePayload={
               translateData?.data?.data as ITranslatedTeamatePayload
             }

@@ -2,6 +2,7 @@
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "@heroui/button";
 import { useQueryClient } from "@tanstack/react-query";
+import { MutableRefObject } from "react";
 
 import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
@@ -13,7 +14,6 @@ import { ISlider, TSliderTranslatePayload } from "@/lib/types/slider";
 import { useCreateSlider, useUpdateSlider } from "@/lib/hooks/sliders";
 import { sliderRoutes } from "@/lib/routes/apiRoutes";
 import { CustomWhen } from "@/components/ui/CustomWhen";
-import { Dispatch, MutableRefObject, SetStateAction } from "react";
 interface IFormContainerProps {
   slider?: ISlider;
   translateHandler: (payload: TSliderTranslatePayload) => void;
@@ -34,7 +34,7 @@ type TformValues = {
 const FormContainer: React.FC<IFormContainerProps> = ({
   slider,
   translateHandler,
-  translateIdRef
+  translateIdRef,
 }) => {
   const queryClient = useQueryClient();
   const { mutate: createMutate, isPending: isCreatePending } =

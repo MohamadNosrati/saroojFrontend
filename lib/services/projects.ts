@@ -25,7 +25,10 @@ export const findOne = async (id: string) => {
 
 class ProjectServices {
   create(payload: IProjectPayload) {
-    return axiosInstance.post<IBaseResponse<IProject>>(ProjectsRoute.create(), payload);
+    return axiosInstance.post<IBaseResponse<IProject>>(
+      ProjectsRoute.create(),
+      payload,
+    );
   }
 
   delete(id: string) {

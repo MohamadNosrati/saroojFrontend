@@ -101,9 +101,9 @@ const SlidersPage = () => {
           onOpenChange={onOpenChange}
         >
           <FormContainer
-            translateIdRef={translateIdRef}
             slider={editData?.data}
             translateHandler={translateHandler}
+            translateIdRef={translateIdRef}
           />
         </CustomModal>
         <CustomModal
@@ -120,9 +120,9 @@ const SlidersPage = () => {
           onOpenChange={onOpenChangeTranslator}
         >
           <TranslateSliderFormContainer
-            translateIdRef={translateIdRef}
             editId={editId as string}
             isPending={isTranslatePending}
+            translateIdRef={translateIdRef}
             traslatedSliderPayload={
               translateData?.data?.data as ITranslatedSliderPayload
             }

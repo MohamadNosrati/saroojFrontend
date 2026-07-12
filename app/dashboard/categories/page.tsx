@@ -97,9 +97,9 @@ const CategoriesPage = () => {
           onOpenChange={onOpenChange}
         >
           <FormContainer
-            translateIdRef={translateIdRef}
             category={editData?.data}
             translateHandler={translateHandler}
+            translateIdRef={translateIdRef}
           />
         </CustomModal>
         <CustomModal
@@ -108,17 +108,17 @@ const CategoriesPage = () => {
           isOpen={isTranslatorOpen}
           modalTitle={
             editData
-              ? `ترجمه اسلایدر ${editData?.data?.title}`
-              : "ترجمه اسلایدر"
+              ? `ترجمه دسته بندی ${editData?.data?.title}`
+              : "ترجمه دسته بندی"
           }
           onClose={handleTranlateModalClose}
           onOpen={onOpenTranslator}
           onOpenChange={onOpenChangeTranslator}
         >
           <TranslateCategoryFormContainer
-            translateIdRef={translateIdRef}
             editId={editId as string}
             isPending={isTranslatePending}
+            translateIdRef={translateIdRef}
             traslatedCategoryPayload={
               translateData?.data?.data as ITranslatedCategoryPayload
             }
