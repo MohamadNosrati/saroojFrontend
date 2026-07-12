@@ -22,9 +22,9 @@ import { ISocketAcknowledgement } from "@/lib/types/base";
 import { IConversation } from "@/lib/types/conversation";
 import { IMessage, MessageStatus, MessageType } from "@/lib/types/message";
 import { IUser } from "@/lib/types/user";
+import { useUpdateChatMessageCache } from "@/lib/hooks/updateCache";
 
 import MessageItem from "./MessageItem";
-import { useUpdateChatMessageCache } from "@/lib/hooks/updateCache";
 
 interface IProps {
   isConnected: boolean;

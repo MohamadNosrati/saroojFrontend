@@ -11,6 +11,10 @@ import {
 } from "@heroui/modal";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { Spinner } from "@heroui/spinner";
+import { useQueryClient } from "@tanstack/react-query";
+import { v4 as uuidv4 } from "uuid";
+import { Skeleton } from "@heroui/skeleton";
 
 import { yekanBakh } from "@/lib/config/fonts";
 import CustomInput from "@/components/ui/CustomInput";
@@ -18,12 +22,8 @@ import {
   useCreateAssistantMessage,
   useGetSessionIdAssistantMessages,
 } from "@/lib/hooks/assistant";
-import { Spinner } from "@heroui/spinner";
 import { useSessionStore } from "@/lib/stores/session";
 import { IAssitantMessageRole } from "@/lib/types/assistant";
-import { useQueryClient } from "@tanstack/react-query";
-import { v4 as uuidv4 } from "uuid";
-import { Skeleton } from "@heroui/skeleton";
 import { useUpdateAssistantMessageChace } from "@/lib/hooks/updateCache";
 import { assistantRoutes } from "@/lib/routes/apiRoutes";
 
@@ -171,7 +171,7 @@ const ChatBot = () => {
                       </>
                     ) : (
                       <div className="size-full flex justify-center items-center">
-                        <Spinner size="lg" color="primary" />
+                        <Spinner color="primary" size="lg" />
                       </div>
                     )}
                   </AnimatePresence>
@@ -190,14 +190,14 @@ const ChatBot = () => {
                     whileTap={{ scale: 0.95 }}
                   >
                     <Button
+                      ref={buttonRef}
+                      className="min-w-fit"
+                      color="primary"
                       isDisabled={
                         !(Boolean(userText) && sessionId) ||
                         isLoading ||
                         isPending
                       }
-                      ref={buttonRef}
-                      className="min-w-fit"
-                      color="primary"
                       onPress={handleSendMessage}
                     >
                       ارسال
@@ -206,8 +206,8 @@ const ChatBot = () => {
 
                   <div className="grow">
                     <CustomInput
-                      isDisabled={isLoading || isPending || !sessionId}
                       fullWidth
+                      isDisabled={isLoading || isPending || !sessionId}
                       value={userText}
                       onChange={(e) => setUserText(e?.target?.value?.trim())}
                     />

@@ -4,9 +4,9 @@ import "../public/globals.css";
 import clsx from "clsx";
 import { ToastContainer } from "react-toastify";
 import NextTopLoader from "nextjs-toploader";
+import { useEffect } from "react";
 
 import Providers from "@/lib/providers";
-import { useEffect } from "react";
 import { useSessionStore } from "@/lib/stores/session";
 
 // import Providers from "@/lib/providers";

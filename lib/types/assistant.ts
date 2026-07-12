@@ -3,13 +3,11 @@ export enum IAssitantMessageRole {
   USER = "user",
 }
 
-
 export interface IAssistantMessagePayload {
   text: string;
-  sessionId:string;
-  role:IAssitantMessageRole
+  sessionId: string;
+  role: IAssitantMessageRole;
 }
-
 
 export interface IAssistantMessage {
   text: string;

@@ -73,6 +73,7 @@ export const useUpdateAssistantMessageChace = () => {
   ) => {
     queryClient.setQueryData([sessionId], (old: any) => {
       if (!old) return old;
+
       return {
         ...old,
         data: {
