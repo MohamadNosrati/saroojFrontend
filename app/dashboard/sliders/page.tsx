@@ -70,7 +70,6 @@ const SlidersPage = () => {
     onOpenChangeTranslator();
   };
 
-
   const translateHandler = (data: TSliderTranslatePayload) => {
     onOpenChange();
     onOpenChangeTranslator();
@@ -119,9 +118,9 @@ const SlidersPage = () => {
           onOpenChange={onOpenChangeTranslator}
         >
           <TranslateSliderFormContainer
-            setEditId={setEditId}
             editId={editId as string}
             isPending={isTranslatePending}
+            setEditId={setEditId}
             translateIdRef={translateIdRef}
             traslatedSliderPayload={
               translateData?.data?.data as ITranslatedSliderPayload

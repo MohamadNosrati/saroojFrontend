@@ -1,6 +1,7 @@
 const backendUrl = new URL(process.env.NEXT_PUBLIC_BACKEND_URL);
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
   // Turbopack configuration (development only)
   turbopack: {
     rules: {

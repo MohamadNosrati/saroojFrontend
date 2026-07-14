@@ -199,12 +199,12 @@ const CustomImageLoader: React.FC<ICustomImageLoaderProps> = ({
         }
       >
         <ImageCropper
-          isPending={isPending}
           aspect={aspect}
           crop={crop}
           handleCancel={handleCancel}
           handleReset={handleReset}
           handleSave={handleSave}
+          isPending={isPending}
           selectedImagePreview={String(selectedImagePreview)}
           setCrop={setCrop}
           setZoom={setZoom}

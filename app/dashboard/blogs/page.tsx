@@ -107,9 +107,9 @@ const BlogsPage = () => {
           onOpenChange={onOpenChangeTranslator}
         >
           <TranslateBlogFormContainer
-            setEditId={setEditId}
             editId={editId as string}
             isPending={isTranslatePending}
+            setEditId={setEditId}
             translateIdRef={translateIdRef}
             traslatedBlogPayload={
               translateData?.data?.data as ITranslatedBlogPayload

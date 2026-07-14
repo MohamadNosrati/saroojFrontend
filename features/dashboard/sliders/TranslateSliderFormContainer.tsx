@@ -33,7 +33,7 @@ const TranslateSliderFormContainer: React.FC<IFormContainerProps> = ({
   isPending,
   editId,
   translateIdRef,
-  setEditId
+  setEditId,
 }) => {
   const queryClient = useQueryClient();
   const { mutate: updateMutate, isPending: isUpdatePending } =
@@ -65,7 +65,7 @@ const TranslateSliderFormContainer: React.FC<IFormContainerProps> = ({
           queryKey: [sliderRoutes.findOne(editId as string)],
         });
         responseHandler.success("اسلایدر  با موفقیت ویرایش ایجاد شد");
-        setEditId(undefined)
+        setEditId(undefined);
         onOpenChangeTranslator();
       },
     });

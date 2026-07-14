@@ -34,7 +34,7 @@ const TranslateTeamateFormContainer: React.FC<IFormContainerProps> = ({
   isPending,
   editId,
   translateIdRef,
-  setEditId
+  setEditId,
 }) => {
   const queryClient = useQueryClient();
   const { mutate: updateMutate, isPending: isUpdatePending } =
@@ -69,7 +69,7 @@ const TranslateTeamateFormContainer: React.FC<IFormContainerProps> = ({
         });
         responseHandler.success(" هم تیمی   با موفقیت ویرایش ایجاد شد");
         onOpenChangeTranslator();
-        setEditId(undefined)
+        setEditId(undefined);
       },
     });
   };

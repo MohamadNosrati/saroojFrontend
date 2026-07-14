@@ -38,18 +38,18 @@ const ImageCropper: React.FC<IProps> = ({
       {/* Cropper Section */}
       <div className="flex-1 overflow-hidden bg-[#111827]">
         <Cropper
-          aspect={aspect}
-          crop={crop}
-          image={String(selectedImagePreview)}
-          zoom={Number(zoom)}
           zoomWithScroll
-          onCropChange={setCrop}
-          onCropComplete={onCropComplete}
+          aspect={aspect}
           classes={{
             containerClassName: "relative h-full w-full bg-[#111827]",
             cropAreaClassName:
               "rounded-xl border-2 border-white shadow-[0_0_0_9999px_rgba(0,0,0,.55)]",
           }}
+          crop={crop}
+          image={String(selectedImagePreview)}
+          zoom={Number(zoom)}
+          onCropChange={setCrop}
+          onCropComplete={onCropComplete}
         />
       </div>
 
@@ -57,9 +57,9 @@ const ImageCropper: React.FC<IProps> = ({
       <div className="border-t min-h-fit border-white/10 bg-zinc-900 px-6 py-5">
         <div className="mx-auto flex max-w-4xl flex-col gap-6">
           <Slider
-            isDisabled={isPending}
             className="w-full"
             dir="ltr"
+            isDisabled={isPending}
             label="Zoom"
             marks={sliderMarks}
             maxValue={2}
@@ -71,30 +71,30 @@ const ImageCropper: React.FC<IProps> = ({
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <Button
-              isLoading={isPending}
-              color="success"
-              size="lg"
               className="font-semibold"
+              color="success"
+              isLoading={isPending}
+              size="lg"
               onPress={handleSave}
             >
               Save
             </Button>
 
             <Button
-              isDisabled={isPending}
-              color="warning"
-              size="lg"
               className="font-semibold"
+              color="warning"
+              isDisabled={isPending}
+              size="lg"
               onPress={handleReset}
             >
               Reset
             </Button>
 
             <Button
-              isDisabled={isPending}
-              color="danger"
-              size="lg"
               className="font-semibold"
+              color="danger"
+              isDisabled={isPending}
+              size="lg"
               onPress={handleCancel}
             >
               Cancel
