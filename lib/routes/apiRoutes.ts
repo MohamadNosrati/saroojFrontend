@@ -40,11 +40,19 @@ class Upload {
     this.base = "pictures";
   }
 
+  getAll() {
+    return this.base;
+  }
+
   upload() {
     return `${this.base}/upload`;
   }
 
   find(id: string) {
+    return `${this.base}/${id}`;
+  }
+
+  delete(id: string) {
     return `${this.base}/${id}`;
   }
 }

@@ -4,6 +4,10 @@ import { IFile, IFilePayload } from "../types/file";
 
 import axiosInstance from "./base";
 
+export const getAll = async () => {
+  return await axiosInstance.get<IBaseResponse<IFile[]>>(uploadRoutes.getAll());
+};
+
 export const findUpload = async (id: string) => {
   return await axiosInstance.get<IBaseResponse<IFile>>(uploadRoutes.find(id));
 };
@@ -22,6 +26,10 @@ class UploadService {
       uploadRoutes.upload(),
       formData,
     );
+  }
+
+  deleteFile(id: string) {
+    return axiosInstance.delete(uploadRoutes.delete(id));
   }
 }
 

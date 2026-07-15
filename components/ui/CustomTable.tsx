@@ -21,6 +21,7 @@ import { dateConvertor } from "@/lib/tools/dateConvertor";
 import { uploadUrl } from "@/lib/tools/upload";
 
 import { DeleteIcon, EditIcon } from "../icons";
+import { CustomWhen } from "./CustomWhen";
 
 interface IProps {
   items: any[];
@@ -57,6 +58,22 @@ export default function CustomTable({
                 className="rounded-full size-20 min-w-20 object-cover"
                 height={100}
                 src={uploadUrl(cellValue?.image)}
+                width={100}
+              />
+            ) : (
+              <div className="w-20 rounded-full h-20 bg-dark" />
+            )}
+          </div>
+        );
+      case "image":
+        return (
+          <div className="flex justify-center">
+            {cellValue ? (
+              <Image
+                alt={"image"}
+                className="rounded-full size-20 min-w-20 object-cover"
+                height={100}
+                src={uploadUrl(cellValue)}
                 width={100}
               />
             ) : (
@@ -307,22 +324,26 @@ export default function CustomTable({
       case "actions":
         return (
           <div className="relative flex justify-center items-center gap-2">
-            <Tooltip color="warning" content="Edit">
-              <Button
-                color="warning"
-                onPress={() => editHandler && editHandler(item.id)}
-              >
-                <EditIcon height={20} width={20} />
-              </Button>
-            </Tooltip>
-            <Tooltip color="danger" content="Delete">
-              <Button
-                color="danger"
-                onPress={() => deleteHandler && deleteHandler(item.id)}
-              >
-                <DeleteIcon height={20} width={20} />
-              </Button>
-            </Tooltip>
+            <CustomWhen condition={Boolean(editHandler)}>
+              <Tooltip color="warning" content="Edit">
+                <Button
+                  color="warning"
+                  onPress={() => editHandler && editHandler(item.id)}
+                >
+                  <EditIcon height={20} width={20} />
+                </Button>
+              </Tooltip>
+            </CustomWhen>
+            <CustomWhen condition={Boolean(deleteHandler)}>
+              <Tooltip color="danger" content="Delete">
+                <Button
+                  color="danger"
+                  onPress={() => deleteHandler && deleteHandler(item.id)}
+                >
+                  <DeleteIcon height={20} width={20} />
+                </Button>
+              </Tooltip>
+            </CustomWhen>
           </div>
         );
       default:

@@ -101,6 +101,10 @@ class DashboardRoute {
   users() {
     return `${this.base}/users`;
   }
+
+  uploads() {
+    return `${this.base}/uploads`;
+  }
 }
 
 class FrontAuthRoutes {

@@ -58,4 +58,8 @@ export const dashboardPages = [
     label: "اعضا",
     href: dashboardRoutes.users(),
   },
+  {
+    label: "تصاویر",
+    href: dashboardRoutes.uploads(),
+  },
 ];
