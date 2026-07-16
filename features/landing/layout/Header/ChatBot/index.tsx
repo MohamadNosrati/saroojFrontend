@@ -9,12 +9,10 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@heroui/modal";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Spinner } from "@heroui/spinner";
 import { useQueryClient } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
-import { Skeleton } from "@heroui/skeleton";
 
 import { yekanBakh } from "@/lib/config/fonts";
 import CustomInput from "@/components/ui/CustomInput";
@@ -26,8 +24,7 @@ import { useSessionStore } from "@/lib/stores/session";
 import { IAssitantMessageRole } from "@/lib/types/assistant";
 import { useUpdateAssistantMessageChace } from "@/lib/hooks/updateCache";
 import { assistantRoutes } from "@/lib/routes/apiRoutes";
-
-const STATICMESSAGE = "سلام 👋 چطور می‌توانم کمکتان کنم؟";
+import Messages from "./Messages";
 
 const ChatBot = () => {
   const queryClient = useQueryClient();
@@ -91,6 +88,8 @@ const ChatBot = () => {
       <Modal
         classNames={{
           base: "font-yekan",
+          body: "m-0",
+          header: "pb-0",
         }}
         dir="rtl"
         isOpen={isOpen}
@@ -111,71 +110,12 @@ const ChatBot = () => {
               </ModalHeader>
 
               <ModalBody>
-                <motion.div
-                  layout
-                  animate={{ opacity: 1 }}
-                  className="dark:bg-dark h-96 max-h-96 overflow-y-auto rounded-2xl bg-default-100 p-4 flex flex-col gap-3"
-                  initial={{ opacity: 0 }}
-                >
-                  <AnimatePresence>
-                    {!isLoading ? (
-                      <>
-                        <motion.div
-                          layout
-                          animate={{
-                            opacity: 1,
-                            y: 0,
-                            scale: 1,
-                          }}
-                          className={`rounded-2xl w-full px-4 py-3 shadow-sm self-end bg-secondary dark:text-white`}
-                          initial={{
-                            opacity: 0,
-                            y: 15,
-                            scale: 0.98,
-                          }}
-                          transition={{
-                            delay: 0,
-                            duration: 0.25,
-                          }}
-                        >
-                          {STATICMESSAGE}
-                        </motion.div>
-                        {data?.data?.map((message, index) => (
-                          <motion.div
-                            key={message.id}
-                            layout
-                            animate={{
-                              opacity: 1,
-                              y: 0,
-                              scale: 1,
-                            }}
-                            className={`max-w-[80%] rounded-2xl px-4 py-3 shadow-sm ${
-                              message.role === "assistant"
-                                ? "self-end bg-secondary dark:text-white"
-                                : "self-start bg-primary text-white"
-                            }`}
-                            initial={{
-                              opacity: 0,
-                              y: 15,
-                              scale: 0.98,
-                            }}
-                            transition={{
-                              delay: index * 0.05,
-                              duration: 0.25,
-                            }}
-                          >
-                            {message.text}
-                          </motion.div>
-                        ))}
-                        <Skeleton isLoaded={!isPending || !isFetching} />
-                      </>
-                    ) : (
-                      <div className="size-full flex justify-center items-center">
-                        <Spinner color="primary" size="lg" />
-                      </div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
+                <Messages
+                  data={data?.data || []}
+                  isFetching={isFetching}
+                  isLoading={isLoading}
+                  isPending={isPending}
+                />
               </ModalBody>
 
               <ModalFooter>
