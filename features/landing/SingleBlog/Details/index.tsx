@@ -6,6 +6,7 @@ import { dateConvertor } from "@/lib/tools/dateConvertor";
 import { uploadUrl } from "@/lib/tools/upload";
 
 import { SafeBlogContent } from "./SafeBlogContent";
+import ShareButton from "../../layout/ShareButton";
 
 interface IProps {
   blog: IBlog;
@@ -20,13 +21,13 @@ export default function BlogDetails({ blog }: IProps) {
             {blog?.title}
           </h1>
           <div className="min-w-fit">
-            {/* <ShareButton
+            <ShareButton
               paylod={{
                 text: blog?.userId?.userName,
                 title: blog?.title,
                 image: uploadUrl(blog?.pictureId?.image),
               }}
-            /> */}
+            />
           </div>
         </div>
         <div className="flex items-center mt-2.5 justify-between">
@@ -60,7 +61,7 @@ export default function BlogDetails({ blog }: IProps) {
             width={1194}
           />
         </div>
-        <div className="lg:mt-10 sm:mt-8 mt-6 dark:text-white">
+        <div className="lg:mt-10 sm:mt-8 mt-6 dark:!text-white">
           <SafeBlogContent html={blog?.description} />
         </div>
       </div>

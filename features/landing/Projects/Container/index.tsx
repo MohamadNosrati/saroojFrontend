@@ -144,7 +144,7 @@ const Container = () => {
         className="container mt-12 grid min-h-96 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 px-4"
         variants={itemVariants}
       >
-        {isLoading || isFetching || (!groupSelected?.length)
+        {isLoading || isFetching || !groupSelected?.length
           ? [1, 2, 3, 4, 5, 6]?.map((item) => <ProjectSclton key={item} />)
           : filteredProjects?.map((item) => (
               <ProjectItem key={item?.id} item={item as IProject} />
