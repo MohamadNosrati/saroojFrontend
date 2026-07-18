@@ -53,7 +53,7 @@ const CommentsPage = () => {
           buttonTitle="افزودن نظر"
           isOpen={isOpen}
           modalTitle={
-            editId ? `ویرایش نظر ${editData?.data?.title}` : "ساخت نظر"
+            editId ? `ویرایش نظر ${editData?.data?.fullName}` : "ساخت نظر"
           }
           onClose={handleModalClose}
           onOpen={onOpen}

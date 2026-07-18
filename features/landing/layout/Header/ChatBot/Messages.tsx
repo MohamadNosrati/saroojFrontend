@@ -1,7 +1,8 @@
-import { IAssistantMessage } from "@/lib/types/assistant";
 import { Skeleton } from "@heroui/skeleton";
 import { Spinner } from "@heroui/spinner";
 import { AnimatePresence, motion } from "framer-motion";
+
+import { IAssistantMessage } from "@/lib/types/assistant";
 
 const STATICMESSAGE = "سلام 👋 چطور می‌توانم کمکتان کنم؟";
 

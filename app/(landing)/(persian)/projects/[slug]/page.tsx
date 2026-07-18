@@ -156,10 +156,8 @@ export default async function SingleProjectPage({ params }: Props) {
         </div>
       </CustomWhen>
 
-      <div className="border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-[#09090b] py-8">
-        <div className="container px-4 mx-auto max-w-6xl">
-          <RelatedProjects suggsetions={data?.data?.suggestions || []} />
-        </div>
+      <div className="border-t border-neutral-200 dark:border-neutral-800 bg-gradient-to-b dark:bg-dark w-full bg-white from-primary/20 via-primary/10 to-transparent lg:pt-12 sm:pt-8 pt-6 lg:pb-16 pb-8">
+        <RelatedProjects suggsetions={data?.data?.suggestions || []} />
       </div>
     </main>
   );

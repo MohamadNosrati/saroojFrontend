@@ -12,7 +12,7 @@ interface IProps {
 
 export default function RelatedProjects({ suggsetions }: IProps) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b dark:bg-dark bg-white from-primary/20 via-primary/10 to-transparent lg:pt-12 sm:pt-8 pt-6 lg:pb-16 pb-8">
+    <section className="relative container  ">
       {/* Background glow */}
       <motion.div
         aria-hidden
@@ -29,7 +29,7 @@ export default function RelatedProjects({ suggsetions }: IProps) {
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/20 blur-[120px] rounded-full" />
       </motion.div>
 
-      <div className="container relative z-10">
+      <div className="overflow-hidden container relative z-10">
         {/* Title */}
         <motion.div
           className="mb-4"

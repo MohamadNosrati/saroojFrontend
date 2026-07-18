@@ -50,27 +50,33 @@ const Container = () => {
   const { data: categoriesData, isLoading: isLoadingCategories } =
     useGetCategories();
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteQuery({
-      queryKey: [ProjectsRoute.getAll(), selected],
-      queryFn: ({ pageParam = 1 }) =>
-        getData<IBaseResponse<IPaginatedResponse<IProject>>>(
-          ProjectsRoute.getAll({
-            page: pageParam,
-            limit: 9,
-            asc: selected === SortByEnum.NEWEST ? false : true,
-            sort: "createdAt",
-          }),
-        ),
-      initialPageParam: 1,
-      getNextPageParam: (lastPage, allPages, lastPageParam) => {
-        if (lastPageParam < Number(allPages[0]?.data?.totalPages)) {
-          return lastPageParam + 1;
-        }
+  const {
+    data,
+    fetchNextPage,
+    isFetching,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteQuery({
+    queryKey: [ProjectsRoute.getAll(), selected],
+    queryFn: ({ pageParam = 1 }) =>
+      getData<IBaseResponse<IPaginatedResponse<IProject>>>(
+        ProjectsRoute.getAll({
+          page: pageParam,
+          limit: 9,
+          asc: selected === SortByEnum.NEWEST ? false : true,
+          sort: "createdAt",
+        }),
+      ),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      if (lastPageParam < Number(allPages[0]?.data?.totalPages)) {
+        return lastPageParam + 1;
+      }
 
-        return undefined;
-      },
-    });
+      return undefined;
+    },
+  });
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -135,11 +141,11 @@ const Container = () => {
 
       {/* THE PORTFOLIO GRID */}
       <motion.div
-        className="container mt-12 grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 px-4"
+        className="container mt-12 grid min-h-96 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 px-4"
         variants={itemVariants}
       >
-        {isLoading
-          ? [1, 2, 3].map((item) => <ProjectSclton key={item} />)
+        {isLoading || isFetching || (!groupSelected?.length)
+          ? [1, 2, 3, 4, 5, 6]?.map((item) => <ProjectSclton key={item} />)
           : filteredProjects?.map((item) => (
               <ProjectItem key={item?.id} item={item as IProject} />
             ))}

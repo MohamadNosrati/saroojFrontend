@@ -32,7 +32,7 @@ const Comments = async () => {
         </div>
 
         {/* CONTAINER SPACING TIGHTENED */}
-        <div className="lg:mt-14 md:mt-10 mt-8 w-full">
+        <div className="lg:mt-14 md:mt-10 overflow-hidden pt-8 w-full">
           <Container
             data={
               data?.data?.filter(

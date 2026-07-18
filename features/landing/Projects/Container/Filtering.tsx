@@ -39,19 +39,30 @@ export default function Filtering({
     : null;
 
   useEffect(() => {
-    if (data) {
-      if (decodedSlug) {
-        const selectedCategory = data?.find(
-          (elem) => elem?.title === decodedSlug,
-        );
+    if (!data.length) return;
 
-        if (selectedCategory) {
-          setGroupSelected([selectedCategory?.id]);
-        }
-      } else {
-        setGroupSelected(data?.map((item) => item?.id));
-      }
+    let nextSelection: string[];
+
+    if (decodedSlug) {
+      const selectedCategory = data.find((item) => item.title === decodedSlug);
+
+      if (!selectedCategory) return;
+
+      nextSelection = [selectedCategory.id];
+    } else {
+      nextSelection = data.map((item) => item.id);
     }
+
+    setGroupSelected((prev) => {
+      if (
+        prev.length === nextSelection.length &&
+        prev.every((id, i) => id === nextSelection[i])
+      ) {
+        return prev;
+      }
+
+      return nextSelection;
+    });
   }, [data, decodedSlug]);
 
   const handleChangeCategories = (values: string[]) => {
@@ -105,11 +116,11 @@ export default function Filtering({
         value={groupSelected}
         onValueChange={handleChangeCategories}
       >
-        <div className="flex h-full sm:gap-4 gap-2.5 flex-wrap items-center justify-center">
+        <div className="flex h-full sm:gap-4 min-h-48 gap-2.5 flex-wrap items-center justify-center">
           {data?.map((item, index) => (
             <motion.div
               key={item?.id}
-              className="flex h-10 items-center rounded-xl bg-white px-2.5"
+              className="flex h-10 items-center rounded-xl bg-white dark:bg-gray-darker px-2.5"
               initial={{
                 opacity: 0,
                 y: 15,
@@ -139,7 +150,7 @@ export default function Filtering({
                 }
                 value={item?.id}
               >
-                <span className="text-dark text-sm font-bold">
+                <span className="text-dark dark:text-white text-sm font-bold">
                   {item?.title}
                 </span>
               </Checkbox>

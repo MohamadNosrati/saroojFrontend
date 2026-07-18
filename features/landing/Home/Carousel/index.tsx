@@ -9,7 +9,7 @@ const HomeCarousel = async () => {
   const data = await getData<IBaseResponse<ISlider[]>>(sliderRoutes.getAll());
 
   return (
-    <section className="">
+    <section>
       <SwiperContainer
         data={data?.data?.filter((item) => item?.isActive) || []}
       />
