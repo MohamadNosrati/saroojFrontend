@@ -45,7 +45,7 @@ export async function generateStaticParams() {
     },
   ]);
 
-  return slugs;
+  return slugs ?? [];
 }
 
 type IProps = {
