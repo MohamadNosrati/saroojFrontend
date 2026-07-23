@@ -5,7 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import DatePicker from "react-multi-date-picker";
-import { useEffect, useRef, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { RadioGroup, Radio } from "@heroui/radio";
 
 import CustomInput from "@/components/ui/CustomInput";
@@ -18,7 +18,7 @@ import {
   ImageItemPayload,
   IProject,
   IProjectType,
-  IStePItemPayload,
+  TProjectTranslatePayload,
 } from "@/lib/types/project";
 import { useCreateProject, useUpdateProject } from "@/lib/hooks/projects";
 import { ProjectsRoute } from "@/lib/routes/apiRoutes";
@@ -30,6 +30,8 @@ import StepDragable from "./StepDragable";
 
 interface IFormContainerProps {
   project?: IProject;
+  translateHandler: (payload: TProjectTranslatePayload) => void;
+  translateIdRef: MutableRefObject<string | undefined>;
 }
 
 export type TformValues = {
@@ -46,10 +48,23 @@ export type TformValues = {
   artitectureStyle?: string;
   address: string;
   video?: string;
-  steps: IStePItemPayload[];
+  steps: {
+    name: string;
+    pictureId: string;
+    alt: string;
+    description: string;
+    isActive: "0" | "1";
+    video?: string;
+    id?: string;
+  }[];
 };
 
-const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
+const FormContainer: React.FC<IFormContainerProps> = ({
+  project,
+  translateHandler,
+  translateIdRef,
+}) => {
+  console.log("project", project);
   const queryClient = useQueryClient();
   const datePickerRef = useRef<any>(null);
   const [projectType, setProjectType] = useState<IProjectType>(
@@ -90,7 +105,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
       steps:
         project?.steps?.map((item) => ({
           ...item,
-          isActive: item?.isActive === false ? "0" : "1",
+          isActive: item?.isActive === true ? "1" : "0",
           pictureId: item?.pictureId?.id,
         })) || [],
       video: project?.video || "",
@@ -113,7 +128,6 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
   const {
     append: appendImages,
     fields: imagesFields,
-    update: updateImages,
     remove: removeImages,
   } = useFieldArray({
     control: control,
@@ -157,6 +171,8 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
       id: project?.id as string,
     };
 
+    console.log("updatePayload", data?.steps);
+
     if (project) {
       updateMutate(updatePayload, {
         onSuccess: () => {
@@ -167,16 +183,41 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
             queryKey: [ProjectsRoute.findOne(updatePayload?.id)],
           });
           responseHandler.success("پروژه با موفقیت ویرایش شد");
+          translateHandler({
+            title: data?.title as string,
+            alt: data?.alt as string,
+            description: data?.description as string,
+            address: data?.address,
+            images: data?.images,
+            steps: data?.steps?.map((item) => ({
+              ...item,
+              isActive: item?.isActive === "1" ? true : false,
+            })),
+            artitectureStyle: data?.artitectureStyle,
+          });
         },
       });
     } else {
       createMutate(createPayload, {
-        onSuccess: () => {
+        onSuccess: (response) => {
           queryClient.invalidateQueries({
             queryKey: [ProjectsRoute.getAll()],
           });
           responseHandler.success("پروژه با موفقیت ایجاد شد");
           reset();
+          translateIdRef.current = response?.data?.data?.id;
+          translateHandler({
+            title: data?.title as string,
+            alt: data?.alt as string,
+            description: data?.description as string,
+            address: data?.address,
+            images: data?.images,
+            steps: data?.steps?.map((item) => ({
+              ...item,
+              isActive: item?.isActive === "1" ? true : false,
+            })),
+            artitectureStyle: data?.artitectureStyle,
+          });
         },
       });
     }
@@ -487,7 +528,6 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
             fields={imagesFields}
             remove={removeImages}
             setValue={setValue}
-            update={updateImages}
           />
           <div>
             <Button
@@ -516,7 +556,10 @@ const FormContainer: React.FC<IFormContainerProps> = ({ project }) => {
         <div className="flex flex-col gap-10">
           <StepDragable
             control={control}
-            fields={stepFields}
+            fields={stepFields?.map((item) => ({
+              ...item,
+              isActive: item?.isActive === "0" ? false : true,
+            }))}
             remove={removeSteps}
             setValue={setValue}
           />

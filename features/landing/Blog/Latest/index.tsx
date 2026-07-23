@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server";
+
 import { getData } from "@/lib/services/data";
 import { IBaseResponse, IPaginatedResponse } from "@/lib/types/base";
 import { IBlog } from "@/lib/types/blog";
@@ -6,6 +8,7 @@ import { blogsRoutes } from "@/lib/routes/apiRoutes";
 import LatestBlogItem from "./LatestBlogItem";
 
 export default async function BlogsLatest() {
+  const t = await getTranslations("Blogs");
   const data = await getData<IBaseResponse<IPaginatedResponse<IBlog>>>(
     blogsRoutes.getAll({
       limit: 4,
@@ -27,12 +30,11 @@ export default async function BlogsLatest() {
         {/* SECTION TITLE & CONTEXT GRID */}
         <div className="flex flex-col max-sm:items-center gap-2">
           <h2 className="font-black sm:text-4xl text-2xl text-gray-900 dark:text-white tracking-tight">
-            آخرین مقالات و رویدادها
+            {t("topTitle")}
           </h2>
           <span className="w-16 h-[3px] bg-primary rounded-full" />
           <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-lighter/60 font-medium max-w-md mt-1 max-sm:text-center">
-            تحلیل‌های فنی، دستاوردهای سازه‌ای و نوآوری‌های معماری در صنعت آهن و
-            فولاد
+            {t("description")}
           </p>
         </div>
 

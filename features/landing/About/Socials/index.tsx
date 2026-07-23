@@ -1,9 +1,12 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 import { InstagramIcon } from "@/components/icons";
 import { saroojInstagram } from "@/lib/constants/info";
 
-const Socials = () => {
+const Socials = async () => {
+  const t = await getTranslations("About.socials");
+
   return (
     <div className="lg:gap-10 gap-6 flex dark:bg-dark bg-white flex-col items-center py-10 px-6 relative overflow-hidden border border-gray-100 dark:border-white/[0.02] shadow-[0_4px_30px_rgba(0,0,0,0.02)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
       {/* Subtle Ambient Background Radial Glow */}
@@ -12,7 +15,7 @@ const Socials = () => {
       {/* Title & Glowing Underline */}
       <div className="flex flex-col items-center gap-3 relative z-10">
         <span className="dark:text-white text-dark text-2xl lg:text-3xl font-black tracking-wide">
-          با ما در تماس باشید
+          {t("title")}
         </span>
         <div className="w-10 h-[3px] bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
       </div>

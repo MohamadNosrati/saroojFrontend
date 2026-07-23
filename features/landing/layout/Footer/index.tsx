@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import {
   CallIcon,
@@ -6,16 +7,13 @@ import {
   InstagramIcon,
   SaroojIcon,
 } from "@/components/icons";
-import {
-  phones,
-  saroojAddress,
-  saroojDescription,
-  saroojEmail,
-  saroojInstagram,
-} from "@/lib/constants/info";
-import { persianRoutes } from "@/lib/routes/navigationRoutes";
+import { phones, saroojEmail, saroojInstagram } from "@/lib/constants/info";
+import { englishRoutes, persianRoutes } from "@/lib/routes/navigationRoutes";
 
-const Footer = () => {
+const Footer = async () => {
+  const t = await getTranslations("Footer");
+  const locale = await getLocale();
+
   return (
     <section className="bg-gray-darker border-t border-white/[0.04] lg:py-20 sm:py-14 py-10 relative overflow-hidden">
       {/* TOP DECORATIVE ACCENT PATTERN (Subtle hint of architecture line) */}
@@ -28,12 +26,16 @@ const Footer = () => {
         <div className="flex flex-col gap-4 max-sm:items-center lg:col-span-1 sm:col-span-2 col-span-4">
           <Link
             className="transition-transform duration-300 hover:scale-[1.02] inline-block"
-            href={persianRoutes.homePage()}
+            href={
+              locale === "fa"
+                ? persianRoutes.homePage()
+                : englishRoutes.homePage()
+            }
           >
             <SaroojIcon className="sm:w-28 h-12 text-white" />
           </Link>
           <p className="max-sm:text-center max-sm:text-sm text-gray-lighter/80 font-medium mt-2 text-justify text-sm leading-relaxed">
-            {saroojDescription.substring(0, 98)}...
+            {t("description").substring(0, 98)}...
           </p>
         </div>
 
@@ -41,7 +43,7 @@ const Footer = () => {
         <div className="flex flex-col gap-4 lg:col-span-1 sm:col-span-2 col-span-2">
           <div className="flex flex-col gap-1.5">
             <span className="text-white font-extrabold text-lg tracking-wide">
-              شبکه‌های اجتماعی
+              {t("socials")}
             </span>
             <span className="w-8 h-[2px] bg-primary rounded-full" />
           </div>
@@ -63,7 +65,7 @@ const Footer = () => {
         <div className="flex flex-col gap-4 lg:col-span-1 sm:col-span-2 col-span-2">
           <div className="flex flex-col gap-1.5">
             <span className="text-white font-extrabold text-lg tracking-wide">
-              تماس با ما
+              {t("contact")}
             </span>
             <span className="w-8 h-[2px] bg-primary rounded-full" />
           </div>
@@ -108,12 +110,12 @@ const Footer = () => {
         <div className="flex flex-col gap-4 lg:col-span-1 sm:col-span-2 col-span-4">
           <div className="flex flex-col gap-1.5">
             <span className="text-white font-extrabold text-lg tracking-wide">
-              آدرس شرکت
+              {t("addressLabel")}
             </span>
             <span className="w-8 h-[2px] bg-primary rounded-full" />
           </div>
           <p className="text-gray-lighter/80 max-sm:text-sm font-medium leading-relaxed text-sm text-justify mt-1">
-            {saroojAddress}
+            {t("addressValue")}
           </p>
         </div>
       </div>

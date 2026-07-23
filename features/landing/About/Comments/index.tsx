@@ -1,3 +1,5 @@
+import { getLocale, getTranslations } from "next-intl/server";
+
 import { CommentsRoute } from "@/lib/routes/apiRoutes";
 import CommentsBg from "@/public/images/commentsBg.png";
 import { getData } from "@/lib/services/data";
@@ -7,6 +9,10 @@ import Container from "./Container";
 
 const Comments = async () => {
   const data = await getData<IBaseResponse<IComment[]>>(CommentsRoute.getAll());
+  const locale = await getLocale();
+
+  const lang = locale === "fa" ? "persian" : "english";
+  const t = await getTranslations("About.comments");
 
   return (
     <section
@@ -21,13 +27,13 @@ const Comments = async () => {
         {/* COMPACT HEADER */}
         <div className="flex flex-col items-center text-center gap-1.5 max-w-xl">
           <span className="text-[10px] font-black tracking-widest text-primary uppercase">
-            صدای مشتریان ساروج
+            {t("firstTitle")}
           </span>
           <h4 className="text-gray-900 dark:text-white sm:text-2xl text-xl font-black tracking-tight">
-            نظر مشتری‌ها چیست؟
+            {t("secondTitle")}
           </h4>
           <p className="text-center sm:text-sm text-xs text-gray-600 dark:text-gray-300 font-medium tracking-wide">
-            اگر نظری دارید؛ لطفاً در ارسال پیام به ما تردید نکنید!
+            {t("thirdTitle")}
           </p>
         </div>
 
@@ -36,7 +42,7 @@ const Comments = async () => {
           <Container
             data={
               data?.data?.filter(
-                (item) => item?.isActive && item?.type === "persian",
+                (item) => item?.isActive && item?.type === lang,
               ) || []
             }
           />

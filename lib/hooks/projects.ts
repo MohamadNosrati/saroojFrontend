@@ -61,10 +61,10 @@ export const useDeleteProject = () => {
 
 export const useUpdateProject = () => {
   return useMutation({
-    mutationFn: async (payload: IUpdateProjectPayload) => {
+    mutationFn: async (payload: Partial<IUpdateProjectPayload>) => {
       const { id, ...rest } = payload;
 
-      return await projectServices.update(payload?.id, rest);
+      return await projectServices.update(payload?.id as string, rest);
     },
     onError: () => {
       responseHandler.fail("خطا در ویرایش پروژه ");

@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
+import { useTranslations } from "next-intl";
 
 import { yekanBakh } from "@/lib/config/fonts";
 import CustomInput from "@/components/ui/CustomInput";
@@ -28,6 +29,7 @@ import { assistantRoutes } from "@/lib/routes/apiRoutes";
 import Messages from "./Messages";
 
 const ChatBot = () => {
+  const t = useTranslations("Header");
   const queryClient = useQueryClient();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -82,8 +84,12 @@ const ChatBot = () => {
 
   return (
     <>
-      <Button color="primary" onPress={onOpen}>
-        دستیار
+      <Button
+        className="text-dark dark:text-white font-bold"
+        color="primary"
+        onPress={onOpen}
+      >
+        {t("bot")}
       </Button>
 
       <Modal

@@ -5,7 +5,7 @@ import axiosInstance from "./base";
 
 class TranslateServices {
   traslate(payload: Record<string, string>) {
-    return axiosInstance.post<IBaseResponse<Record<string, string>>>(
+    return axiosInstance.post<IBaseResponse<Record<string, any>>>(
       translateRoutes.translate(),
       payload,
     );

@@ -56,8 +56,6 @@ export const useDeleteCategory = () => {
 };
 
 export const useUpdateCategory = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: async (payload: UpdateCategoryPayload) => {
       const { id, ...rest } = payload;

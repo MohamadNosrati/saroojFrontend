@@ -15,13 +15,13 @@ import {
 } from "@dnd-kit/sortable";
 import { Control, UseFieldArrayRemove, UseFormSetValue } from "react-hook-form";
 
-import { IStePItemPayload } from "@/lib/types/project";
+import { IStepItemPayload } from "@/lib/types/project";
 
 import { TformValues } from "./ProjectsFormContainer";
 import StepItem from "./StepItem";
 
 interface IProps {
-  fields: IStePItemPayload[];
+  fields: IStepItemPayload[];
   remove: UseFieldArrayRemove;
   control: Control<TformValues, any, TformValues>;
   setValue: UseFormSetValue<TformValues>;
@@ -59,7 +59,13 @@ export default function StepDragable({
     if (oldIndex !== -1 && newIndex !== -1 && oldIndex !== newIndex) {
       const reorderedFields = arrayMove(fields, oldIndex, newIndex);
 
-      setValue("steps", reorderedFields);
+      setValue(
+        "steps",
+        reorderedFields?.map((item) => ({
+          ...item,
+          isActive: item?.isActive === true ? "1" : "0" as any,
+        })),
+      );
     }
   };
 

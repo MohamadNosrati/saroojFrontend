@@ -111,8 +111,6 @@ export default async function SingleProjectPage({ params }: Props) {
     notFound();
   }
 
-  console.log("project", data?.data?.project);
-
   return (
     <main className="bg-neutral-50 dark:bg-[#09090b] min-h-screen text-neutral-900 dark:text-neutral-50 overflow-x-hidden antialiased selection:bg-primary selection:text-black transition-colors duration-200">
       <section className="relative sm:py-8 py-4 mb-2.5 bg-gradient-to-b from-primary/5 via-neutral-100/50 to-neutral-50 dark:from-primary/10 dark:via-[#09090b]/40 dark:to-[#09090b]">

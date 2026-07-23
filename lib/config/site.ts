@@ -63,3 +63,5 @@ export const dashboardPages = [
     href: dashboardRoutes.uploads(),
   },
 ];
+
+export const locales = ["en", "fa"] as const;

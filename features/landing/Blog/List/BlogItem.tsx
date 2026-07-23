@@ -1,12 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useLocale } from "next-intl";
 
 import { CalandarIcon } from "@/components/icons";
-import { persianRoutes } from "@/lib/routes/navigationRoutes";
+import { englishRoutes, persianRoutes } from "@/lib/routes/navigationRoutes";
 import { dateConvertor } from "@/lib/tools/dateConvertor";
 import { IBlog } from "@/lib/types/blog";
 import { uploadUrl } from "@/lib/tools/upload";
 import { slugify } from "@/lib/tools/slugify";
+import { LocaleEnum } from "@/lib/types/base";
 
 interface IProps {
   item: IBlog;
@@ -26,29 +28,50 @@ interface IProps {
 }
 
 export default function BlogItem({ item }: IProps) {
+  const locale = useLocale();
+  const itemLang: Record<
+    LocaleEnum,
+    {
+      title: string;
+      alt: string;
+      href: string;
+    }
+  > = {
+    fa: {
+      title: item?.title,
+      alt: item?.alt,
+      href: persianRoutes.singleBlogPage(`${slugify(item?.title)}`),
+    },
+    en: {
+      title: item?.titleEn,
+      alt: item?.altEn,
+      href: englishRoutes.singleBlogPage(`${slugify(item?.titleEn)}`),
+    },
+  };
+
   return (
     <Link
       className="group block w-full overflow-hidden rounded-3xl border border-black/[0.06] dark:border-white/[0.06] bg-white dark:bg-gray-darker/30 backdrop-blur-sm shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] dark:hover:shadow-black/40 hover:-translate-y-1.5 transition-all duration-500 ease-out"
-      href={persianRoutes.singleBlogPage(`${slugify(item?.title)}`)}
+      href={itemLang[locale as LocaleEnum]?.href}
     >
       {/* ASPECT-VIDEO IMAGE FRAME WITH SHARP MASK BOUNDS */}
       <div className="aspect-video relative w-full overflow-hidden bg-gray-100 dark:bg-gray-900">
         {/* BACKGROUND SCALING PICTURE LAYER */}
         <Image
           fill
-          alt={item?.alt || item?.title}
+          alt={
+            itemLang[locale as LocaleEnum]?.alt ||
+            itemLang[locale as LocaleEnum]?.title
+          }
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           sizes="(max-w-7xl) 33vw, 100vw"
           src={uploadUrl(item?.pictureId?.image)}
         />
 
         {/* MODERN CORNER DATE ACCENT TAG */}
-        <div
-          className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 bg-dark/60 backdrop-blur-md border border-white/10 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-md select-none"
-          dir="rtl"
-        >
+        <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 bg-dark/60 backdrop-blur-md border border-white/10 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-md select-none">
+          <span>{dateConvertor(item?.createdAt, locale === "en")}</span>
           <CalandarIcon className="text-primary" height={14} width={14} />
-          <span>{dateConvertor(item?.createdAt)}</span>
         </div>
 
         {/* GRADIENT SHROUD TO CUSHION THE LOWER BOUNDARY */}
@@ -58,17 +81,17 @@ export default function BlogItem({ item }: IProps) {
       {/* DATA CONTAINER BLOCK (RTL-ALIGNED) */}
       <div
         className="sm:p-5 p-4 text-gray-900 dark:text-white flex flex-col gap-2.5 text-right select-none"
-        dir="rtl"
+        // dir="rtl"
       >
         {/* MINIMALIST INDUSTRY CLASSIFICATION LABEL */}
-        <span className="text-[10px] font-black tracking-widest text-primary uppercase">
+        <span className="text-[10px] block text-start font-black text-primary uppercase">
           نشریه فنی
         </span>
 
         {/* ARTICLE BLOCK HEADER WITH SMOOTH LINE CLAMP AND TRANSLATION MOVEMENT */}
         <div className="flex flex-col gap-2">
           <h3 className="font-extrabold block sm:text-lg text-base max-w-full truncate tracking-wide leading-snug text-gray-800 dark:text-gray-100 group-hover:text-primary transition-colors duration-300">
-            {item?.title}
+            {itemLang[locale as LocaleEnum]?.title}
           </h3>
 
           {/* Architectural indicator graphic line that rolls out smoothly on mouse hover */}

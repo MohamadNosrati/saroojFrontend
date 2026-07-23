@@ -1,23 +1,49 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getLocale } from "next-intl/server";
 
 import { InstagramIcon, TelegramIcon } from "@/components/icons";
 import { ITeamate } from "@/lib/types/teamate";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { uploadUrl } from "@/lib/tools/upload";
+import { LocaleEnum } from "@/lib/types/base";
 
 interface IProps {
   item: ITeamate;
 }
 
-const TeamItem: React.FC<IProps> = ({ item }) => {
+const TeamItem: React.FC<IProps> = async ({ item }) => {
+  const locale = await getLocale();
+  const itemLang: Record<
+    LocaleEnum,
+    {
+      title: string;
+      alt: string;
+      position: string;
+      description: string;
+    }
+  > = {
+    fa: {
+      title: item?.title,
+      alt: item?.alt,
+      description: item?.description,
+      position: item?.position,
+    },
+    en: {
+      title: item?.titleEn,
+      alt: item?.altEn,
+      description: item?.descriptionEn,
+      position: item?.positionEn,
+    },
+  };
+
   return (
     <div className="lg:col-span-4 sm:col-span-6 col-span-12 flex flex-col items-center group bg-gray-50/50 dark:bg-white/[0.02] border border-black/5 dark:border-white/5 py-6 px-1 rounded-3xl transition-all duration-300 hover:bg-white dark:hover:bg-gray-darker shadow-sm hover:shadow-[0_20px_40px_rgba(0,0,0,0.05)] dark:hover:shadow-black/40 hover:-translate-y-1">
       {/* AVATAR WRAPPER WITH DOUBLE RING GLOW */}
       <div className="relative p-1.5 rounded-full border-2 border-dashed border-primary/30 group-hover:border-primary transition-colors duration-500">
         <div className="overflow-hidden rounded-full aspect-square sm:w-40 sm:h-40 size-24 relative shadow-md">
           <Image
-            alt={item?.title || ""}
+            alt={itemLang[locale as LocaleEnum]?.alt || ""}
             className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
             height={160}
             src={uploadUrl(item?.pictureId?.image)}
@@ -28,17 +54,17 @@ const TeamItem: React.FC<IProps> = ({ item }) => {
 
       {/* MEMBER NAME */}
       <span className="block mt-6 text-center text-2xl text-gray-800 dark:text-white font-extrabold tracking-wide transition-colors duration-300 group-hover:text-primary">
-        {item?.title}
+        {itemLang[locale as LocaleEnum]?.title}
       </span>
 
       {/* MEMBER POSITION */}
       <span className="mt-1.5 block text-center font-bold text-base text-primary/90 bg-primary/10 px-3 py-0.5 rounded-full border border-primary/20">
-        {item?.position}
+        {itemLang[locale as LocaleEnum]?.position}
       </span>
 
       {/* MEMBER BIO / DESCRIPTION */}
       <p className="text-sm text-justify text-gray-500 dark:text-gray-lighter/80 font-medium mt-4 leading-relaxed max-w-[90%]">
-        {item?.description}
+        {itemLang[locale as LocaleEnum]?.description}
       </p>
       <div className="flex mt-6 gap-3 grow items-end">
         <CustomWhen condition={Boolean(item?.instagram)}>

@@ -4,6 +4,7 @@ import { Select, SelectItem } from "@heroui/select";
 import { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
+import { useLocale, useTranslations } from "next-intl";
 
 import { blogsRoutes } from "@/lib/routes/apiRoutes";
 import { getData } from "@/lib/services/data";
@@ -42,6 +43,8 @@ const itemVariants = {
 };
 
 export default function BlogsList() {
+  const t = useTranslations("Blogs");
+  const locale = useLocale();
   const [selected, setSelected] = useState<SortByEnum>(SortByEnum.NEWEST);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
@@ -104,7 +107,7 @@ export default function BlogsList() {
         >
           <div className="flex flex-col gap-1.5 max-sm:items-center">
             <h2 className="dark:text-white font-black sm:text-3xl text-xl text-gray-900 tracking-tight">
-              لیست مقالات ساروج
+              {t("lastTitle")}
             </h2>
             <span className="w-12 h-[2.5px] bg-primary rounded-full" />
           </div>
@@ -123,7 +126,6 @@ export default function BlogsList() {
                 base: "!font-yekan",
               }}
               defaultSelectedKeys={[SortByEnum.NEWEST]}
-              dir="rtl"
               selectedKeys={[selected]}
               onChange={(e) => {
                 if (e.target.value) {
@@ -135,9 +137,8 @@ export default function BlogsList() {
                 <SelectItem
                   key={option.key}
                   className="font-bold text-sm hover:bg-primary/10 dark:hover:bg-primary/20 rounded-lg"
-                  dir="rtl"
                 >
-                  {option.label}
+                  {option[locale === "fa" ? "label" : "labelEn"]}
                 </SelectItem>
               ))}
             </Select>

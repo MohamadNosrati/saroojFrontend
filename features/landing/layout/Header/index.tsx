@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { persianRoutes } from "@/lib/routes/navigationRoutes";
+import { englishRoutes, persianRoutes } from "@/lib/routes/navigationRoutes";
 import {
   AboutPageIcon,
   BlogsIcon,
@@ -20,22 +20,30 @@ import ChatBot from "./ChatBot";
 const data = [
   {
     href: persianRoutes.homePage(),
+    hrefEn: englishRoutes.homePage(),
     label: "خانه",
+    labelEn: "Home",
     icon: HouseIcon,
   },
   {
     href: persianRoutes.projectsPage(),
+    hrefEn: englishRoutes.projectsPage(),
     label: "پروژه ها",
+    labelEn: "Projects",
     icon: ProjectsIcon,
   },
   {
     href: persianRoutes.blogsPage(),
+    hrefEn: englishRoutes.blogsPage(),
     label: "مقالات",
+    labelEn: "Articles",
     icon: BlogsIcon,
   },
   {
     href: persianRoutes.aboutPage(),
+    hrefEn: englishRoutes.aboutPage(),
     label: "درباره ما",
+    labelEn: "About Us",
     icon: AboutPageIcon,
   },
 ];

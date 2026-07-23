@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 import FormBg from "@/public/images/formBg.png";
 import { responseHandler } from "@/lib/tools/responseHandler";
@@ -53,6 +54,7 @@ type TFormValues = {
 };
 
 const Form = () => {
+  const t = useTranslations("About.form");
   const [isPending, setIsPending] = useState(false);
   const { control, handleSubmit, reset } = useForm<TFormValues>({
     resolver: zodResolver(commentSchema),
@@ -119,8 +121,9 @@ const Form = () => {
           viewport={{ once: true }}
           whileInView={{ opacity: 1, y: 0 }}
         >
-          اگر سوالی دارید <br />
-          لطفا در ارسال پیام به ما تردید نکنید !
+          {t("firstTitle")}
+          <br />
+          {t("secondTitle")}
         </motion.p>
 
         {/* Sleek Decorative Line Under Title */}
@@ -148,6 +151,7 @@ const Form = () => {
                 fieldState: { error },
               }) => (
                 <Input
+                  // dir={locale === "fa" ? "rtl" : "ltr"}
                   fullWidth
                   classNames={{
                     inputWrapper:
@@ -157,7 +161,7 @@ const Form = () => {
                   }}
                   errorMessage={error?.message}
                   isInvalid={Boolean(error?.message)}
-                  placeholder="نام و نام خانوادگی"
+                  placeholder={t("fullName")}
                   type="text"
                   value={value}
                   onChange={onChange}
@@ -185,7 +189,7 @@ const Form = () => {
                   }}
                   errorMessage={error?.message}
                   isInvalid={Boolean(error?.message)}
-                  placeholder="ایمیل"
+                  placeholder={t("email")}
                   type="text"
                   value={value}
                   onChange={onChange}
@@ -213,7 +217,7 @@ const Form = () => {
                   }}
                   errorMessage={error?.message}
                   isInvalid={Boolean(error?.message)}
-                  placeholder="متن پیام"
+                  placeholder={t("text")}
                   type="text"
                   value={value}
                   onChange={onChange}
@@ -234,7 +238,7 @@ const Form = () => {
               isLoading={isPending}
               type="submit"
             >
-              ارسال پیام
+              {t("Button")}
             </Button>
           </motion.div>
         </motion.div>

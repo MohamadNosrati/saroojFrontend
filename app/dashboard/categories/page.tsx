@@ -69,11 +69,7 @@ const CategoriesPage = () => {
   const translateHandler = (data: TCategoryTranslatePayload) => {
     onOpenChange();
     onOpenChangeTranslator();
-    translateMutate({
-      title: data?.title as string,
-      alt: data?.alt as string,
-      description: data?.description as string,
-    });
+    translateMutate(data);
   };
 
   return (

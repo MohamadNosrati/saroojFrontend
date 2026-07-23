@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { Select, SelectItem } from "@heroui/select";
 import { useSearchParams } from "next/navigation";
+import { useLocale } from "next-intl";
 
 import { sortOptions } from "@/lib/config/sort";
 import { SortByEnum } from "@/lib/types/base";
@@ -27,6 +28,7 @@ export default function Filtering({
   data,
   isLoading,
 }: IProps) {
+  const locale = useLocale();
   const { selected, setSelected } = sort;
   const { groupSelected, setGroupSelected } = filtering;
 
@@ -95,7 +97,6 @@ export default function Filtering({
             base: "border-1 rounded-lg !font-yekan",
           }}
           defaultSelectedKeys={[SortByEnum.NEWEST]}
-          dir="rtl"
           selectedKeys={[selected]}
           onChange={(e) => {
             if (e.target.value) {
@@ -104,8 +105,8 @@ export default function Filtering({
           }}
         >
           {sortOptions.map((animal) => (
-            <SelectItem key={animal.key} dir="rtl">
-              {animal.label}
+            <SelectItem key={animal.key}>
+              {animal[locale === "fa" ? "label" : "labelEn"]}
             </SelectItem>
           ))}
         </Select>
@@ -116,7 +117,7 @@ export default function Filtering({
         value={groupSelected}
         onValueChange={handleChangeCategories}
       >
-        <div className="flex h-full sm:gap-4 min-h-48 gap-2.5 flex-wrap items-center justify-center">
+        <div className="flex h-full sm:gap-4 gap-2.5 flex-wrap items-center justify-center">
           {data?.map((item, index) => (
             <motion.div
               key={item?.id}

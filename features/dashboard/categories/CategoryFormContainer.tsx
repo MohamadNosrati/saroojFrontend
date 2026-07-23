@@ -34,12 +34,13 @@ const FormContainer: React.FC<IFormContainerProps> = ({
   translateHandler,
   translateIdRef,
 }) => {
+  console.log("category", category);
   const queryClient = useQueryClient();
   const { mutate: createMutate, isPending: isCreatePending } =
     useCreateCategory();
   const { mutate: updateMutate, isPending: isUpdatePending } =
     useUpdateCategory();
-  const { handleSubmit, watch, control, reset } = useForm<TformValues>({
+  const { handleSubmit, control, reset } = useForm<TformValues>({
     defaultValues: {
       title: "",
       pictureId: "",

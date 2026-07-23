@@ -1,0 +1,64 @@
+{
+  "Header": {
+    "bot": "Assistant"
+  },
+  "About": {
+    "sarooj": {
+      "title": "About the Architectural Engineering Company",
+      "secondTitle": "Sarooj",
+      "description": "Rahsaz Dej Sarooj is a Grade 5 certified construction and road engineering company in Iran with over ten years of experience in the construction and renovation of residential, commercial, office buildings, and villas across various regions of the country. Backed by a team of highly experienced professionals with academic expertise, the company is fully prepared to deliver architectural design and construction projects to the highest standards."
+    },
+    "comments": {
+      "firstTitle": "What Sarooj's Clients Say",
+      "secondTitle": "What Do Our Clients Think?",
+      "thirdTitle": "If you have any feedback, please don't hesitate to send us a message!"
+    },
+    "contact": {
+      "title": "Get in Touch with Us",
+      "email": "Email",
+      "centerOffice": "Head Office",
+      "address": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+      "phoneNumbers": "Phone Numbers"
+    },
+    "form": {
+      "firstTitle": "If You Have Any Questions",
+      "secondTitle": "Please don't hesitate to send us a message!",
+      "fullName": "Full Name",
+      "email": "Email",
+      "text": "Message",
+      "Button": "Send Message"
+    },
+    "socials": {
+      "title": "Contact With Us"
+    }
+  },
+  "Blogs": {
+    "topTitle": "Latest Articles & News",
+    "description": "Technical insights, structural achievements, and architectural innovations in the steel and iron industry.",
+    "lastTitle": "Sarooj Articles"
+  },
+  "Home": {
+    "categories": {
+      "title": "Categories"
+    },
+    "services": {
+      "title": "What Services Does Sarooj Architecture Company Offer?"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions"
+    },
+    "team": {
+      "title": "The Sarooj Team"
+    }
+  },
+  "Footer": {
+    "addressValue": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    "contact": "Contact Us",
+    "socials": "Social Media",
+    "addressLabel": "Company Address",
+    "description": "Rahsaz Dej Sarooj is a Grade 5 certified construction and road engineering company in Iran with over ten years of experience in the construction and renovation of residential, commercial, office buildings, and villas across various regions of the country. Backed by a team of highly experienced professionals with academic expertise, the company is fully prepared to deliver architectural design and construction projects to the highest standards."
+  },
+  "SingleBlog": {
+    "offering": "Offering Articles"
+  }
+}

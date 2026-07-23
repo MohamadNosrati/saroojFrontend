@@ -2,7 +2,6 @@ import {
   Control,
   Controller,
   UseFieldArrayRemove,
-  UseFieldArrayUpdate,
   UseFormSetValue,
 } from "react-hook-form";
 
@@ -22,7 +21,6 @@ import { TformValues } from "./ProjectsFormContainer";
 
 interface IProps {
   item: ImageItemPayload;
-  update: UseFieldArrayUpdate<TformValues, "images">;
   index: number;
   remove: UseFieldArrayRemove;
   control: Control<TformValues, any, TformValues>;
@@ -31,7 +29,6 @@ interface IProps {
 
 export default function BeforeAfterItem({
   item,
-  update,
   index,
   remove,
   control,

@@ -1,5 +1,8 @@
-export const dateConvertor = (timestamp: number | string | Date) => {
-  return new Date(timestamp).toLocaleDateString("fa-IR", {
+export const dateConvertor = (
+  timestamp: number | string | Date,
+  isEnglish = false,
+) => {
+  return new Date(timestamp).toLocaleDateString(isEnglish ? "en-US" : "fa-IR", {
     year: "numeric",
     month: "long",
     day: "2-digit",

@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server";
+
 import LinesImage from "@/public/images/lines.png";
 import { categoriesRoute } from "@/lib/routes/apiRoutes";
 import { ICategory } from "@/lib/types/categories";
@@ -7,6 +9,7 @@ import { getData } from "@/lib/services/data";
 import CategoryItem from "./CategoryItem";
 
 const Categories = async () => {
+  const t = await getTranslations("Home.categories");
   const data = await getData<IBaseResponse<ICategory[]>>(
     categoriesRoute.getAll(),
   );
@@ -21,7 +24,7 @@ const Categories = async () => {
       {/* ENHANCED HEADER WITH ACCENT LINE */}
       <div className="flex flex-col items-center gap-2 mb-2">
         <h5 className="text-center text-primary text-2xl font-extrabold tracking-wide drop-shadow-sm">
-          دسته بندی
+          {t("title")}
         </h5>
         <span className="w-12 h-[3px] bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
       </div>

@@ -11,7 +11,6 @@ import { Tooltip } from "@heroui/tooltip";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-import { IStePItemPayload } from "@/lib/types/project";
 import { DeleteIcon } from "@/components/icons";
 import CustomImageLoader from "@/components/ui/CustomImageLoader";
 import CustomInput from "@/components/ui/CustomInput";
@@ -19,11 +18,12 @@ import { CustomWhen } from "@/components/ui/CustomWhen";
 import CustomTextArea from "@/components/ui/customTextArea";
 import CustomSelect from "@/components/ui/CustomSelect";
 import { isActiveOptions } from "@/lib/constants/isActive";
+import { IStepItemPayload } from "@/lib/types/project";
 
 import { TformValues } from "./ProjectsFormContainer";
 
 interface IProps {
-  item: IStePItemPayload;
+  item: IStepItemPayload;
   index: number;
   remove: UseFieldArrayRemove;
   control: Control<TformValues, any, TformValues>;

@@ -14,12 +14,16 @@ export interface ITeamate {
   id: string;
   title: string;
   position: string;
+  titleEn: string;
+  positionEn: string;
   pictureId: IFile;
   description: string;
+  descriptionEn: string;
   createdAt: Date;
   updatedAt: Date;
   isActive: boolean;
   alt: string;
+  altEn: string;
   telegram?: string;
   instagram?: string;
 }

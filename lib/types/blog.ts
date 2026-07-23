@@ -11,12 +11,15 @@ export interface IBlogPayload {
 export interface IBlog {
   id: string;
   title: string;
+  titleEn: string;
   pictureId: IFile;
   description: string;
   createdAt: Date;
+  descriptionEn: string;
   updatedAt: Date;
   isActive: boolean;
   alt: string;
+  altEn: string;
   userId: {
     userName: string;
     id: string;

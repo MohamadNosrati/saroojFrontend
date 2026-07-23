@@ -1,30 +1,34 @@
 class PersianNavigationRoutes {
+  private readonly base: string;
+  constructor() {
+    this.base = "/fa";
+  }
   homePage() {
-    return "/";
+    return `${this.base}/`;
   }
 
   aboutPage() {
-    return "/about";
+    return `${this.base}/about`;
   }
 
   projectsPage() {
-    return "/projects";
+    return `${this.base}/projects`;
   }
 
   categoryProjectsPage(categoryTitle: string) {
-    return `/projects?categoryTitle=${categoryTitle}`;
+    return `${this.base}/projects?categoryTitle=${categoryTitle}`;
   }
 
-  singleProjectPage(slug: string) {
-    return `/projects/${slug}`;
+  singleProjectPage(id: string) {
+    return `${this.base}/projects/${id}`;
   }
 
   blogsPage() {
-    return "/blogs";
+    return `${this.base}/blogs/`;
   }
 
   singleBlogPage(slug: string) {
-    return `/blogs/${slug}`;
+    return `${this.base}/blogs/${slug}`;
   }
 }
 
@@ -32,7 +36,7 @@ class EnglishNavigationRoutes {
   private readonly base: string;
 
   constructor() {
-    this.base = "/english";
+    this.base = "/en";
   }
 
   homePage() {
@@ -53,6 +57,14 @@ class EnglishNavigationRoutes {
 
   singleProjectPage(id: string) {
     return `${this.base}/projects/${id}`;
+  }
+
+  blogsPage() {
+    return `${this.base}/blogs/`;
+  }
+
+  singleBlogPage(slug: string) {
+    return `${this.base}/blogs/${slug}`;
   }
 }
 

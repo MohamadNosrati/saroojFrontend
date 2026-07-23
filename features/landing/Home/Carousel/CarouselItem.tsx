@@ -3,10 +3,12 @@ import "swiper/css";
 import { Button } from "@heroui/button";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useLocale } from "next-intl";
 
 import { uploadUrl } from "@/lib/tools/upload";
 import { ISlider } from "@/lib/types/slider";
 import { CustomWhen } from "@/components/ui/CustomWhen";
+import { LocaleEnum } from "@/lib/types/base";
 
 export default function CarouselItem({
   item,
@@ -17,6 +19,30 @@ export default function CarouselItem({
   index: number;
   activeIndex: number;
 }) {
+  const locale = useLocale();
+  const itemLang: Record<
+    LocaleEnum,
+    {
+      title?: string;
+      alt?: string;
+      description?: string;
+      link?: string;
+    }
+  > = {
+    fa: {
+      title: item?.title,
+      alt: item?.alt,
+      description: item?.description,
+      link: item?.link,
+    },
+    en: {
+      title: item?.titleEn,
+      alt: item?.altEn,
+      description: item?.descriptionEn,
+      link: item?.linkEn,
+    },
+  };
+
   return (
     <>
       <motion.div
@@ -27,7 +53,7 @@ export default function CarouselItem({
       >
         <Image
           fill
-          alt={item?.alt || ""}
+          alt={itemLang[locale as LocaleEnum]?.alt || ""}
           className="object-cover" // Un-commented for proper scaling
           src={uploadUrl(item?.pictureId?.image)}
         />
@@ -49,7 +75,7 @@ export default function CarouselItem({
               initial={{ opacity: 0, y: 30 }}
               transition={{ duration: 0.6 }}
             >
-              {item?.title}
+              {itemLang[locale as LocaleEnum]?.title}
             </motion.h1>
             <motion.span
               animate={{ width: index === activeIndex ? "80px" : "0px" }}
@@ -67,7 +93,7 @@ export default function CarouselItem({
             initial={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            {item?.description}
+            {itemLang[locale as LocaleEnum]?.description}
           </motion.p>
           <CustomWhen condition={Boolean(item?.link)}>
             <motion.div
@@ -80,7 +106,7 @@ export default function CarouselItem({
               initial={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <Link href={item?.link || ""}>
+              <Link href={itemLang[locale as LocaleEnum]?.link || ""}>
                 <motion.div
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}

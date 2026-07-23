@@ -9,6 +9,8 @@ export interface ICategoryPayload {
 export interface ICategory {
   id: string;
   title: string;
+  titleEn: string;
+  altEn: string;
   pictureId: IFile;
   description: string;
   createdAt: Date;

@@ -3,19 +3,19 @@
 import Image from "next/image";
 
 // import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+
 import StaticImage from "@/public/images/serviceImage.png";
-import { saroojDescription } from "@/lib/constants/info";
 
 const AboutUs = () => {
+  const t = useTranslations("About.sarooj");
+
   return (
     <section className="relative bg-gray-darker py-16 sm:py-24 overflow-hidden border-b border-white/[0.03]">
       {/* INDUSTRIAL STRUCTURAL ACCENT LINE */}
       <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-primary/30 to-transparent z-10" />
 
-      <div
-        className="container relative z-10 flex flex-col md:flex-row items-center gap-10 md:gap-16 px-4"
-        dir="rtl"
-      >
+      <div className="container relative z-10 flex flex-col md:flex-row items-center gap-10 md:gap-16 px-4">
         {/* LEFT COLUMN: THE ARCHITECTURAL CANVAS FRAME */}
         <div className="relative w-full max-w-sm md:max-w-none md:w-[35%] lg:w-[30%] shrink-0 group">
           {/* Subtle warm industrial ambient glow backplate */}
@@ -37,18 +37,18 @@ const AboutUs = () => {
         </div>
 
         {/* RIGHT COLUMN: BRAND NARRATIVE TEXT PLATFORM */}
-        <div className="flex flex-col gap-5 md:gap-7 w-full md:w-[65%] lg:w-[70%] text-right select-none">
+        <div className="flex flex-col gap-5 md:gap-7 w-full md:w-[65%] lg:w-[70%] select-none">
           {/* MAIN PAGE HEADLINE */}
           <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-black tracking-tight max-md:text-center leading-tight">
-            درباره شرکت مهندسی معماری
-            <span className="text-primary mr-2 inline-block relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-primary/20">
-              ساروج
+            {t("title")}
+            <span className="text-primary mr-2 inline-block relative after:content-[''] after:absolute after:bottom-0 after:left-0 mx-2 after:w-full after:h-[2px] after:bg-primary/20">
+              {t("secondTitle")}
             </span>
           </h1>
 
           {/* PARAGRAPH DESCRIPTIONS BLOCK */}
           <p className="text-gray-200/90 text-justify md:text-lg font-medium leading-9 max-w-4xl text-sm tracking-wide">
-            {saroojDescription}
+            {t("description")}
           </p>
 
           {/* STRUCTURAL SEGMENT BAR ACCENT */}

@@ -1,17 +1,40 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useLocale } from "next-intl";
 
-import { persianRoutes } from "@/lib/routes/navigationRoutes";
+import { englishRoutes, persianRoutes } from "@/lib/routes/navigationRoutes";
 import { IProject } from "@/lib/types/project";
 import { slugify } from "@/lib/tools/slugify";
 import { uploadUrl } from "@/lib/tools/upload";
+import { LocaleEnum } from "@/lib/types/base";
 
 interface IProps {
   item: IProject;
 }
 
 const ProjectItem: React.FC<IProps> = ({ item }) => {
+  const locale = useLocale();
+  const itemLang: Record<
+    LocaleEnum,
+    {
+      title: string;
+      alt: string;
+      href: string;
+    }
+  > = {
+    fa: {
+      title: item?.title,
+      alt: item?.alt,
+      href: persianRoutes.singleProjectPage(`${slugify(item?.title)}`),
+    },
+    en: {
+      title: item?.titleEn,
+      alt: item?.altEn,
+      href: englishRoutes.singleProjectPage(`${slugify(item?.titleEn)}`),
+    },
+  };
+
   return (
     <motion.div
       className="group bg-transparent"
@@ -21,7 +44,7 @@ const ProjectItem: React.FC<IProps> = ({ item }) => {
       whileHover={{ y: -6 }}
       whileInView={{ opacity: 1, y: 0 }}
     >
-      <Link href={persianRoutes.singleProjectPage(slugify(item?.title))}>
+      <Link href={itemLang[locale as LocaleEnum]?.href}>
         {/* PORTFOLIO CARD BOX WITH SHADOW ELEVATION FRAME */}
         <div className="relative w-full aspect-[403/520] overflow-hidden rounded-3xl border border-black/5 dark:border-white/5 shadow-md group-hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.3)] dark:group-hover:shadow-black/60 transition-all duration-500">
           {/* ZOOM LAYER BACKGROUND IMAGE */}
@@ -32,7 +55,7 @@ const ProjectItem: React.FC<IProps> = ({ item }) => {
           >
             <Image
               fill
-              alt={item?.alt || ""}
+              alt={itemLang[locale as LocaleEnum]?.alt}
               className="object-cover w-full h-full"
               src={uploadUrl(item?.pictureId?.image)}
             />
@@ -45,7 +68,7 @@ const ProjectItem: React.FC<IProps> = ({ item }) => {
           <div className="absolute inset-0 z-20 flex flex-col justify-end py-8 px-6 text-right select-none">
             <div className="flex flex-col gap-2">
               <span className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-wide leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] transition-all duration-300 group-hover:text-primary group-hover:-translate-y-1">
-                {item?.title}
+                {itemLang[locale as LocaleEnum]?.title}
               </span>
 
               {/* Decorative design line that expands outwards from 0 across the bottom on card hover */}

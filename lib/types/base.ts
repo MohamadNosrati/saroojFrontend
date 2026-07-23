@@ -24,4 +24,12 @@ export enum SortByEnum {
 export type TOption = {
   label: string;
   key: SortByEnum;
+  labelEn?: string;
 };
+
+export type LocaleParams = Promise<{ locale: "en" | "fa" }>;
+
+export enum LocaleEnum {
+  FA = "fa",
+  En = "en",
+}

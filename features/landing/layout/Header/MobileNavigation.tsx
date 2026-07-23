@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
+import { useLocale } from "next-intl";
 
-import { persianRoutes } from "@/lib/routes/navigationRoutes";
+import { englishRoutes, persianRoutes } from "@/lib/routes/navigationRoutes";
 import {
   AboutPageIcon,
   ArrowIcon,
@@ -19,22 +20,30 @@ import {
 const data = [
   {
     href: persianRoutes.homePage(),
+    hrefEn: englishRoutes.homePage(),
     label: "خانه",
+    labelEn: "Home",
     icon: HouseIcon,
   },
   {
     href: persianRoutes.projectsPage(),
+    hrefEn: englishRoutes.projectsPage(),
     label: "پروژه ها",
+    labelEn: "Projects",
     icon: ProjectsIcon,
   },
   {
     href: persianRoutes.blogsPage(),
+    hrefEn: englishRoutes.blogsPage(),
     label: "مقالات",
+    labelEn: "Articles",
     icon: BlogsIcon,
   },
   {
     href: persianRoutes.aboutPage(),
+    hrefEn: englishRoutes.aboutPage(),
     label: "درباره ما",
+    labelEn: "About Us",
     icon: AboutPageIcon,
   },
 ];
@@ -42,6 +51,7 @@ const data = [
 export default function MobileNavigation() {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
   const pathname = usePathname();
+  const locale = useLocale();
 
   useEffect(() => {
     setIsOpen(false);
@@ -83,7 +93,7 @@ export default function MobileNavigation() {
         <div className="container mx-auto flex flex-col gap-2">
           {data?.map((item) => {
             const Icon = item?.icon;
-            const isActive = item?.href === pathname;
+            const isActive = (item?.href || item?.hrefEn) === pathname;
 
             return (
               <Link
@@ -94,7 +104,7 @@ export default function MobileNavigation() {
                     ? "bg-primary text-gray-darker border-primary/20 shadow-lg shadow-primary/10"
                     : "text-gray-800 dark:text-gray-200 bg-transparent border-transparent hover:bg-dark/[0.02] dark:hover:bg-white/[0.02] hover:text-primary dark:hover:text-primary",
                 ])}
-                href={item?.href}
+                href={locale === "fa" ? item?.href : item?.hrefEn}
                 onClick={() => setIsOpen(false)} // Auto-close drawer on click
               >
                 {/* RIGHT ALIGNED CONTENT BLOCK */}
@@ -109,7 +119,9 @@ export default function MobileNavigation() {
                   >
                     <Icon height={20} width={20} />
                   </span>
-                  <span className="tracking-wide">{item?.label}</span>
+                  <span className="tracking-wide">
+                    {locale === "fa" ? item?.label : item?.labelEn}
+                  </span>
                 </div>
 
                 {/* LEFT ALIGNED INDICATOR ACCENT */}

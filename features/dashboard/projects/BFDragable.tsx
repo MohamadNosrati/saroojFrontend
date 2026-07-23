@@ -13,12 +13,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import {
-  Control,
-  UseFieldArrayRemove,
-  UseFieldArrayUpdate,
-  UseFormSetValue,
-} from "react-hook-form";
+import { Control, UseFieldArrayRemove, UseFormSetValue } from "react-hook-form";
 
 import { ImageItemPayload } from "@/lib/types/project";
 
@@ -28,7 +23,6 @@ import { TformValues } from "./ProjectsFormContainer";
 interface IProps {
   fields: ImageItemPayload[];
   remove: UseFieldArrayRemove;
-  update: UseFieldArrayUpdate<TformValues, "images">;
   control: Control<TformValues, any, TformValues>;
   setValue: UseFormSetValue<TformValues>;
 }
@@ -36,7 +30,6 @@ interface IProps {
 export default function BfDragable({
   fields,
   remove,
-  update,
   control,
   setValue,
 }: IProps) {
@@ -89,7 +82,6 @@ export default function BfDragable({
               item={item}
               remove={remove}
               setValue={setValue}
-              update={update}
             />
           ))}
         </div>

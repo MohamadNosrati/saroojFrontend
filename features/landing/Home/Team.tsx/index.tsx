@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server";
+
 import { TeamatesRoute } from "@/lib/routes/apiRoutes";
 import { ITeamate } from "@/lib/types/teamate";
 import { getData } from "@/lib/services/data";
@@ -6,6 +8,7 @@ import { IBaseResponse } from "@/lib/types/base";
 import TeamItem from "./TeamItem";
 
 const Team = async () => {
+  const t = await getTranslations("Home.team");
   const data = await getData<IBaseResponse<ITeamate[]>>(TeamatesRoute.getAll());
 
   return (
@@ -13,7 +16,7 @@ const Team = async () => {
       {/* SECTION HEADER */}
       <div className="flex flex-col items-center gap-2 mb-2">
         <h5 className="text-center text-primary text-2xl font-extrabold tracking-wide drop-shadow-sm">
-          تیم ساروج
+          {t("title")}
         </h5>
         <span className="w-12 h-[3px] bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
       </div>

@@ -3,6 +3,7 @@ import { IFile } from "./file";
 
 export interface ImageInfo {
   name: string;
+  nameEn?: string;
   pictureId: {
     image: string;
     id: string;
@@ -13,24 +14,45 @@ export interface ImageInfoPayload {
   name: string;
   pictureId: string;
 }
+export interface ImageEnInfoPayload {
+  nameEn: string;
+  pictureIdEn: string;
+}
 
 export interface ImageItem {
   before: ImageInfo;
   after: ImageInfo;
   id: string;
 }
+
 export interface ImageItemPayload {
   before: ImageInfoPayload;
   after: ImageInfoPayload;
   id?: string;
 }
-export interface IStePItemPayload {
+export interface ImageEnItemPayload {
+  beforeEn: ImageEnInfoPayload;
+  afterEn: ImageEnInfoPayload;
+  id?: string;
+}
+
+export interface IStepItemPayload {
   name: string;
   pictureId: string;
   alt: string;
   description: string;
-  isActive: "0" | "1";
+  isActive: boolean;
   video?: string;
+  id?: string;
+}
+
+export interface ITranslatedStepItemPayload {
+  nameEn: string;
+  pictureIdEn: string;
+  altEn: string;
+  descriptionEn: string;
+  isActiveEn: boolean;
+  videoEn?: string;
   id?: string;
 }
 
@@ -41,15 +63,21 @@ export interface IStep {
   description: string;
   isActive: boolean;
   video?: string;
+  nameEn?: string;
+  altEn?: string;
+  descriptionEn?: string;
+  id?: string;
 }
 
 export interface IProject {
   id: string;
   title: string;
+  titleEn: string;
   categoryId: ICategory;
   pictureId: IFile;
   images: ImageItem[];
   alt: string;
+  altEn: string;
   area: number;
   startDate: number;
   endDate?: number;
@@ -67,7 +95,8 @@ export interface IProjectPayload {
   title: string;
   categoryId: string;
   pictureId: string;
-  images: Omit<ImageItemPayload, "id">[];
+  images: ImageItemPayload[];
+  steps: IStepItemPayload[];
   alt: string;
   area: number;
   startDate: number;
@@ -77,6 +106,11 @@ export interface IProjectPayload {
   artitectureStyle?: string;
   address: string;
   video?: string;
+  titleEn?: string;
+  altEn?: string;
+  descriptionEn?: string;
+  artitectureStyleEn?: string;
+  addressEn?: string;
 }
 
 export interface IUpdateProjectPayload extends IProjectPayload {
@@ -98,4 +132,25 @@ export interface IProjectWithSuggestions {
 export enum IProjectType {
   Steps = "steps",
   BeforeAfter = "beforeAfter",
+}
+
+export type TProjectTranslatePayload = {
+  title: string;
+  alt: string;
+  artitectureStyle?: string;
+  description: string;
+  address: string;
+  images: ImageItemPayload[];
+  steps: IStepItemPayload[];
+};
+
+export interface ITranslatedProjectPayload {
+  titleEn: string;
+  imagesEn: ImageEnItemPayload[];
+  altEn: string;
+  descriptionEn: string;
+  videoEn?: string;
+  artitectureStyleEn?: string;
+  addressEn: string;
+  stepsEn: ITranslatedStepItemPayload[];
 }

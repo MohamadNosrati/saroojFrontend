@@ -5,7 +5,7 @@ import { translateServices } from "../services/translate";
 
 export const useTranslate = () => {
   return useMutation({
-    mutationFn: async (payload: Record<string, string>) =>
+    mutationFn: async (payload: Record<string, any>) =>
       await translateServices.traslate(payload),
     onSuccess: () => {
       responseHandler.success("ترجمه با موفقیت انجام شد");

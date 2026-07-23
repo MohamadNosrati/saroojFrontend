@@ -1,3 +1,5 @@
+import createNextIntlPlugin from "next-intl/plugin";
+
 const backendUrl = new URL(process.env.NEXT_PUBLIC_BACKEND_URL);
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -59,4 +61,6 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+const withNextIntl = createNextIntlPlugin("./app/i18n/request.ts");
+
+export default withNextIntl(nextConfig);
