@@ -1,10 +1,11 @@
 "use client";
 
-import { LocaleEnum } from "@/lib/types/base";
-import { ICategory } from "@/lib/types/categories";
 import { Checkbox } from "@heroui/checkbox";
 import { motion } from "framer-motion";
 import { useLocale } from "next-intl";
+
+import { ICategory } from "@/lib/types/categories";
+import { LocaleEnum } from "@/lib/types/base";
 
 interface IProps {
   item: ICategory;
@@ -27,6 +28,7 @@ export default function FilteringItem({ item, index, groupSelected }: IProps) {
       title: item?.titleEn,
     },
   };
+
   return (
     <motion.div
       className="flex h-10 items-center rounded-xl bg-white dark:bg-gray-darker px-2.5"

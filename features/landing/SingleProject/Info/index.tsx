@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import {
   AreaIcon,
@@ -10,10 +11,9 @@ import {
 import { IProject } from "@/lib/types/project";
 import { dateConvertor } from "@/lib/tools/dateConvertor";
 import { CustomWhen } from "@/components/ui/CustomWhen";
+import { LocaleEnum } from "@/lib/types/base";
 
 import InfoItem from "./InfoItem";
-import { LocaleEnum } from "@/lib/types/base";
-import { getLocale, getTranslations } from "next-intl/server";
 
 interface IProps {
   project: IProject;
@@ -47,6 +47,7 @@ const Info: React.FC<IProps> = async ({ project }) => {
       artitectureStyle: project?.artitectureStyleEn || "",
     },
   };
+
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 border border-neutral-200/80 dark:border-neutral-800/80 rounded-xl bg-white/50 dark:bg-neutral-900/30 p-2 backdrop-blur-sm shadow-sm dark:shadow-none">
       <CustomWhen condition={Boolean(project?.area)}>

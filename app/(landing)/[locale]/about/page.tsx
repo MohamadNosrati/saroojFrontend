@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 import AboutUs from "@/features/landing/About/AboutUs";
 import Comments from "@/features/landing/About/Comments";
@@ -7,7 +7,6 @@ import Form from "@/features/landing/About/Form";
 import Map from "@/features/landing/About/Map";
 import Socials from "@/features/landing/About/Socials";
 import { createMetadata } from "@/lib/config/site";
-import { getTranslations } from "next-intl/server";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";

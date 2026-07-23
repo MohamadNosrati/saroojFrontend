@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 import HomeCarousel from "@/features/landing/Home/Carousel";
 import Categories from "@/features/landing/Home/Categories";
@@ -6,8 +7,6 @@ import Faqs from "@/features/landing/Home/Faq";
 import Services from "@/features/landing/Home/Services";
 import Team from "@/features/landing/Home/Team.tsx";
 import { createMetadata } from "@/lib/config/site";
-import { LocaleEnum } from "@/lib/types/base";
-import { getTranslations } from "next-intl/server";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";

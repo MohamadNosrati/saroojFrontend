@@ -87,7 +87,14 @@
     "description": "Rahsaz Dej Sarooj is a Grade 5 certified construction and road engineering company in Iran with over ten years of experience in the construction and renovation of residential, commercial, office buildings, and villas across various regions of the country. Backed by a team of highly experienced professionals with academic expertise, the company is fully prepared to deliver architectural design and construction projects to the highest standards."
   },
   "SingleBlog": {
-    "offering": "Offering Articles"
+    "offering": "Offering Articles",
+    "metadata": {
+      "notFoundTitle": "Article Not Found | Sarooj Construction Company",
+      "notFoundDescription": "The requested article could not be found.",
+      "blogTitleSuffix": "Sarooj Construction Magazine",
+      "constructionKeyword": "construction",
+      "companyName": "Sarooj Construction Company"
+    }
   },
   "Projects": {
     "list": {
@@ -118,6 +125,15 @@
     },
     "steps": {
       "button": "Watch Project Details"
+    },
+    "metadata": {
+      "notFoundTitle": "Project Not Found | Sarooj Construction Company",
+      "notFoundDescription": "The requested project could not be found.",
+      "projectsSuffix": "Sarooj Construction Projects",
+      "projectSuffix": "Sarooj Construction Project",
+      "constructionKeyword": "construction",
+      "companyName": "Sarooj Construction Company",
+      "defaultDescription": "Explore the {title} project by Sarooj Construction Company."
     }
   }
 }

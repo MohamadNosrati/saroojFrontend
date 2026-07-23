@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLocale, useTranslations } from "next-intl";
 
 import { IProject } from "@/lib/types/project";
 
 import RelatedProjectsContainer from "./Container";
-import { useLocale, useTranslations } from "next-intl";
 
 interface IProps {
   suggsetions: IProject[];
@@ -15,6 +15,7 @@ export default function RelatedProjects({ suggsetions }: IProps) {
   const t = useTranslations("SingleProject.SuggestedProjects");
   const locale = useLocale();
   const condition = locale === "fa" ? "title" : "titleEn";
+
   return (
     <section className="relative container  ">
       {/* Background glow */}

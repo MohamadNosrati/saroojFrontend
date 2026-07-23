@@ -7,11 +7,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Autoplay } from "swiper/modules";
+import { useLocale } from "next-intl";
 
 import { ISlider } from "@/lib/types/slider";
 
 import CarouselItem from "./CarouselItem";
-import { useLocale } from "next-intl";
 
 interface IProps {
   data: ISlider[];

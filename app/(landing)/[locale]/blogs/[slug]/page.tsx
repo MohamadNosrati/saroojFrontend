@@ -13,8 +13,20 @@ import { uploadUrl } from "@/lib/tools/upload";
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+import { getTranslations } from "next-intl/server";
+
+type IProps = {
+  params: Promise<{
+    locale: string;
+    slug: string;
+  }>;
+};
+
+export async function generateMetadata({ params }: IProps): Promise<Metadata> {
+  const { slug, locale } = await params;
+
+  const t = await getTranslations("SingleBlog.metadata");
+
   const decodedSlug = decodeURIComponent(slug).replaceAll("-", " ");
 
   const data = await getData<IBaseResponse<IBlogWithSuggestions>>(
@@ -25,57 +37,65 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!post) {
     return {
-      title: "مقاله یافت نشد | شرکت ساخت و ساز ساروج",
-      description: "مقاله مورد نظر یافت نشد.",
+      title: t("notFoundTitle"),
+      description: t("notFoundDescription"),
     };
   }
 
+  const title = locale === "fa" ? post.title : post.titleEn;
+  const description = locale === "fa" ? post.description : post.descriptionEn;
+
   const excerpt =
-    post.description
+    description
       ?.replace(/<[^>]*>/g, "")
       .slice(0, 160)
       .trim() + "...";
 
-  return createMetadata({
-    title: `${post.title} | مجله ساخت و ساز ساروج`,
-    description: excerpt,
-    keywords: `${post.title}, ساخت و ساز`,
-    authors: [{ name: "شرکت ساخت و ساز ساروج" }],
-    creator: "شرکت ساخت و ساز ساروج",
-    publisher: "شرکت ساخت و ساز ساروج",
-    robots: "index, follow",
-    alternates: {
-      canonical: `${baseUrl}/blog/${slug}`,
-    },
-    openGraph: {
-      title: `${post.title} | مجله ساخت و ساز ساروج`,
+  return createMetadata(
+    {
+      title: `${title} | ${t("blogTitleSuffix")}`,
       description: excerpt,
-      url: `${baseUrl}/blog/${slug}`,
-      siteName: "شرکت ساخت و ساز ساروج",
-      locale: "fa_IR",
-      type: "article",
-      publishedTime: post.createdAt,
-      modifiedTime: post.updatedAt || post.createdAt,
-      authors: ["شرکت ساخت و ساز ساروج"],
-      tags: ["شرکت ساخت و ساز ساروج", post?.title],
-      images: [
-        {
-          url: uploadUrl(post?.pictureId?.image),
-          width: 1200,
-          height: 630,
-          alt: post?.title,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${post.title} | مجله ساخت و ساز ساروج`,
-      description: excerpt,
-      images: [uploadUrl(post?.pictureId?.image)],
-    },
-  });
-}
+      keywords: `${title}, ${t("constructionKeyword")}`,
+      authors: [{ name: t("companyName") }],
+      creator: t("companyName"),
+      publisher: t("companyName"),
+      robots: "index, follow",
 
+      alternates: {
+        canonical: `${baseUrl}/${locale}/blog/${slug}`,
+      },
+
+      openGraph: {
+        title: `${title} | ${t("blogTitleSuffix")}`,
+        description: excerpt,
+        url: `${baseUrl}/${locale}/blog/${slug}`,
+        siteName: t("companyName"),
+        locale: locale === "fa" ? "fa_IR" : "en_US",
+        type: "article",
+        publishedTime: post.createdAt,
+        modifiedTime: post.updatedAt || post.createdAt,
+        authors: [t("companyName")],
+        tags: [t("companyName"), title],
+        images: [
+          {
+            url: uploadUrl(post.pictureId.image),
+            width: 1200,
+            height: 630,
+            alt: title,
+          },
+        ],
+      },
+
+      twitter: {
+        card: "summary_large_image",
+        title: `${title} | ${t("blogTitleSuffix")}`,
+        description: excerpt,
+        images: [uploadUrl(post.pictureId.image)],
+      },
+    },
+    t("companyName"),
+  );
+}
 export async function generateStaticParams() {
   const data = await getData<
     IBaseResponse<
@@ -96,6 +116,7 @@ export async function generateStaticParams() {
       slug: slugify(blog?.titleEn),
     },
   ]);
+
   return slugs;
 }
 

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import Carousel from "@/features/landing/SingleProject/Carousel";
 import Info from "@/features/landing/SingleProject/Info";
@@ -16,7 +17,6 @@ import { CustomWhen } from "@/components/ui/CustomWhen";
 import StepsContainer from "@/features/landing/SingleProject/Steps";
 
 import notFound from "../../not-found";
-import { getLocale } from "next-intl/server";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -44,14 +44,28 @@ export async function generateStaticParams() {
       slug: slugify(project?.titleEn),
     },
   ]);
+
   return slugs;
 }
+
+type IProps = {
+  params: Promise<{
+    locale: string;
+    slug: string;
+  }>;
+};
 
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+export async function generateMetadata({ params }: IProps): Promise<Metadata> {
+  const { slug, locale } = await params;
+
+  const t = await getTranslations({
+    locale,
+    namespace: "SingleProject.metadata",
+  });
+
   const decodedSlug = decodeURIComponent(slug).replaceAll("-", " ");
 
   const data = await getData<IBaseResponse<IProjectWithSuggestions>>(
@@ -62,49 +76,58 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!project) {
     return {
-      title: "پروژه یافت نشد | شرکت ساخت و ساز ساروج",
-      description: "پروژه مورد نظر یافت نشد.",
+      title: t("notFoundTitle"),
+      description: t("notFoundDescription"),
     };
   }
 
-  return createMetadata({
-    title: `${project.title} | پروژه‌های شرکت ساروج`,
-    description:
-      project.description ||
-      `مشاهده پروژه ${project.title} -  توسط شرکت ساخت و ساز ساروج`,
-    keywords: `${project.title}, پروژه ${project.address}, ساخت و ساز,`,
-    authors: [{ name: "شرکت ساخت و ساز ساروج" }],
-    creator: "شرکت ساخت و ساز ساروج",
-    publisher: "شرکت ساخت و ساز ساروج",
-    robots: "index, follow",
-    alternates: {
-      canonical: `${baseUrl}/projects/${slug}`,
+  const title = locale === "fa" ? project.title : project.titleEn;
+  const description =
+    locale === "fa" ? project.description : project.descriptionEn;
+  const address = locale === "fa" ? project.address : project.addressEn;
+
+  return createMetadata(
+    {
+      title: `${title} | ${t("projectsSuffix")}`,
+      description: description || t("defaultDescription", { title }),
+      keywords: `${title}, ${address}, ${t("constructionKeyword")}`,
+      authors: [{ name: t("companyName") }],
+      creator: t("companyName"),
+      publisher: t("companyName"),
+      robots: "index, follow",
+
+      alternates: {
+        canonical: `${baseUrl}/${locale}/projects/${slug}`,
+      },
+
+      openGraph: {
+        title: `${title} | ${t("projectSuffix")}`,
+        description,
+        url: `${baseUrl}/${locale}/projects/${slug}`,
+        siteName: t("companyName"),
+        locale: locale === "fa" ? "fa_IR" : "en_US",
+        type: "article",
+        publishedTime: project.createdAt,
+        modifiedTime: project.updatedAt,
+        authors: [t("companyName")],
+        images: [
+          {
+            url: uploadUrl(project.pictureId.image),
+            width: 1200,
+            height: 630,
+            alt: title,
+          },
+        ],
+      },
+
+      twitter: {
+        card: "summary_large_image",
+        title: `${title} | ${t("projectSuffix")}`,
+        description,
+      },
     },
-    openGraph: {
-      title: `${project.title} | پروژه شرکت ساروج`,
-      description: project.description,
-      url: `${baseUrl}/projects/${slug}`,
-      siteName: "شرکت ساخت و ساز ساروج",
-      locale: "fa_IR",
-      type: "article",
-      publishedTime: project.createdAt,
-      modifiedTime: project.updatedAt,
-      authors: ["شرکت ساخت و ساز ساروج"],
-      images: [
-        {
-          url: uploadUrl(project?.pictureId?.image),
-          width: 1200,
-          height: 630,
-          alt: project?.title,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${project.title} | پروژه شرکت ساروج`,
-      description: project.description,
-    },
-  });
+    t("companyName"),
+  );
 }
 
 export default async function SingleProjectPage({ params }: Props) {

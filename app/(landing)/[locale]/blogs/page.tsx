@@ -3,14 +3,13 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 import BlogsLatest from "@/features/landing/Blog/Latest";
 import BlogsList from "@/features/landing/Blog/List";
 import { createMetadata } from "@/lib/config/site";
 import { blogsRoutes } from "@/lib/routes/apiRoutes";
 import { getData } from "@/lib/services/data";
-import { getTranslations } from "next-intl/server";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";

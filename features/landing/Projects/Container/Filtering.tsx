@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxGroup } from "@heroui/checkbox";
+import { CheckboxGroup } from "@heroui/checkbox";
 import { motion } from "framer-motion";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { Select, SelectItem } from "@heroui/select";
@@ -6,8 +6,9 @@ import { useSearchParams } from "next/navigation";
 import { useLocale } from "next-intl";
 
 import { sortOptions } from "@/lib/config/sort";
-import { LocaleEnum, SortByEnum } from "@/lib/types/base";
+import { SortByEnum } from "@/lib/types/base";
 import { ICategory } from "@/lib/types/categories";
+
 import FilteringItem from "./FilteringItem";
 
 interface IProps {
@@ -126,9 +127,9 @@ export default function Filtering({
             ?.map((item, index) => (
               <FilteringItem
                 key={item?.id}
+                groupSelected={groupSelected}
                 index={index}
                 item={item}
-                groupSelected={groupSelected}
               />
             ))}
         </div>

@@ -4,6 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Spinner } from "@heroui/spinner";
 import { motion } from "framer-motion";
+import { useLocale, useTranslations } from "next-intl";
 
 import { ProjectsRoute } from "@/lib/routes/apiRoutes";
 import { IProject } from "@/lib/types/project";
@@ -20,7 +21,6 @@ import ProjectSclton from "@/components/ui/ProjectScleton";
 import ProjectItem from "../../ProjectItem";
 
 import Filtering from "./Filtering";
-import { useLocale, useTranslations } from "next-intl";
 
 const containerVariants = {
   hidden: {},

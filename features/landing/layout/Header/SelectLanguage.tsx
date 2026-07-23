@@ -8,10 +8,10 @@ import {
   DropdownTrigger,
 } from "@heroui/dropdown";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { ArrowIcon, WorldIcon } from "@/components/icons";
 import { englishRoutes, persianRoutes } from "@/lib/routes/navigationRoutes";
-import { useRouter } from "next/navigation";
 
 const items = [
   {

@@ -5,13 +5,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "@heroui/button";
 import { useEffect, useRef, useState } from "react";
 import { Swiper as SwiperType } from "swiper/types";
+import { useLocale, useTranslations } from "next-intl";
 
 import { IStep } from "@/lib/types/project";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 
 import LandingStepItem from "./StepItem";
 import StepsDetails from "./StepDetails";
-import { useLocale, useTranslations } from "next-intl";
 
 export interface IProps {
   steps: IStep[];
