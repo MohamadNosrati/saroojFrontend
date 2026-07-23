@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { TeamatesRoute } from "@/lib/routes/apiRoutes";
 import { ITeamate } from "@/lib/types/teamate";
@@ -10,6 +10,8 @@ import TeamItem from "./TeamItem";
 const Team = async () => {
   const t = await getTranslations("Home.team");
   const data = await getData<IBaseResponse<ITeamate[]>>(TeamatesRoute.getAll());
+  const locale = await getLocale();
+  const condition = locale === "fa" ? "title" : "titleEn";
 
   return (
     <section className="lg:pt-20 dark:bg-dark bg-white relative lg:pb-48 md:pt-14 md:pb-32 sm:pt-10 sm:pb-28 pt-6 pb-24 overflow-hidden">
@@ -22,9 +24,9 @@ const Team = async () => {
       </div>
 
       <div className="grid container relative z-10 lg:mt-16 mt-10 grid-cols-12 gap-y-12 sm:gap-x-6 sm:gap-y-16 px-4">
-        {data?.data?.map((item: ITeamate) => (
-          <TeamItem key={item?.id} item={item} />
-        ))}
+        {data?.data
+          ?.filter((item) => item[condition])
+          ?.map((item: ITeamate) => <TeamItem key={item?.id} item={item} />)}
       </div>
 
       {/* AMBIENT FOOTER GRADIENT (Smoothed out to feel more premium) */}

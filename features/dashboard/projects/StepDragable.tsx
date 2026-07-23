@@ -63,7 +63,7 @@ export default function StepDragable({
         "steps",
         reorderedFields?.map((item) => ({
           ...item,
-          isActive: item?.isActive === true ? "1" : "0" as any,
+          isActive: item?.isActive === true ? "1" : ("0" as any),
         })),
       );
     }

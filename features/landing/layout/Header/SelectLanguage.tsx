@@ -11,6 +11,7 @@ import { useState } from "react";
 
 import { ArrowIcon, WorldIcon } from "@/components/icons";
 import { englishRoutes, persianRoutes } from "@/lib/routes/navigationRoutes";
+import { useRouter } from "next/navigation";
 
 const items = [
   {
@@ -25,6 +26,12 @@ const items = [
 
 export default function SelectLanguage() {
   const [selectedKeys, setSelectedKeys] = useState<string>("Persian");
+  const router = useRouter();
+
+  const handleAction = (label: any) => {
+    setSelectedKeys(label);
+    router.push(items?.find((item) => item?.label === label)?.key as string);
+  };
 
   return (
     <Dropdown>
@@ -54,7 +61,7 @@ export default function SelectLanguage() {
       </DropdownTrigger>
       <DropdownMenu
         aria-label="Static Actions"
-        onAction={(label) => setSelectedKeys(label as any)}
+        onAction={(label) => handleAction(label as any)}
       >
         {items?.map((item) => (
           <DropdownItem key={item?.label}>{item?.label}</DropdownItem>

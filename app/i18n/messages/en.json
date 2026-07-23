@@ -30,12 +30,32 @@
     },
     "socials": {
       "title": "Contact With Us"
+    },
+    "metadata": {
+      "title": "About Us | Sarooj Construction Company",
+      "description": "Learn about Sarooj Construction Company, our experience, achievements, professional team, and approach to residential, renovation, and industrial projects in Iran.",
+      "keywords": "construction company about, Sarooj experience, construction team, construction achievements, contracting company in Iran",
+      "companyName": "Sarooj Construction Company",
+      "openGraphTitle": "About Sarooj Construction Company | Experience and Achievements",
+      "openGraphDescription": "Over 20 years of experience in residential construction, renovation, and industrial projects in Iran.",
+      "twitterTitle": "About Us | Sarooj Construction Company",
+      "twitterDescription": "Discover Sarooj's professional team, experience, and achievements in Iran's construction industry."
     }
   },
   "Blogs": {
     "topTitle": "Latest Articles & News",
     "description": "Technical insights, structural achievements, and architectural innovations in the steel and iron industry.",
-    "lastTitle": "Sarooj Articles"
+    "lastTitle": "Sarooj Articles",
+    "metadata": {
+      "title": "Construction Magazine | Sarooj Articles and News",
+      "description": "Expert construction articles, building renovation tips, industrial project news, and practical guides for owners and contractors.",
+      "keywords": "construction magazine, construction articles, building industry news, renovation tips, contractor blog, construction in Iran",
+      "companyName": "Sarooj Construction Company",
+      "openGraphTitle": "Sarooj Construction Magazine | Articles and News",
+      "openGraphDescription": "Latest expert articles and news about construction, renovation, and industrial projects in Iran.",
+      "twitterTitle": "Sarooj Construction Magazine",
+      "twitterDescription": "Expert articles, practical tips, and construction industry news in Iran."
+    }
   },
   "Home": {
     "categories": {
@@ -49,6 +69,14 @@
     },
     "team": {
       "title": "The Sarooj Team"
+    },
+    "metadata": {
+      "title": "Sarooj Construction Company | Building, Renovation and Industrial Projects Contractor",
+      "description": "Specialized construction, renovation, and industrial project execution in Iran with modern standards.",
+      "keywords": "construction company, building contractor, renovation, industrial projects, Iran construction",
+      "companyName": "Sarooj Construction Company",
+      "twitterTitle": "Sarooj Construction | Building and Industrial Contractor in Iran",
+      "twitterDescription": "High-quality construction, renovation, and industrial projects."
     }
   },
   "Footer": {
@@ -60,5 +88,36 @@
   },
   "SingleBlog": {
     "offering": "Offering Articles"
+  },
+  "Projects": {
+    "list": {
+      "title": "Sarooj Projects"
+    },
+    "metadata": {
+      "title": "Construction Projects | Sarooj Construction Company",
+      "description": "A gallery of Sarooj's successful projects including residential construction, renovation of old buildings, and industrial projects across Iran.",
+      "keywords": "construction projects, construction portfolio, residential projects, industrial projects, building renovation, Sarooj project gallery",
+      "companyName": "Sarooj Construction Company",
+      "openGraphTitle": "Construction Projects | Sarooj Company",
+      "openGraphDescription": "Explore Sarooj's successful residential, renovation, and industrial construction projects across Iran.",
+      "twitterTitle": "Construction Projects | Sarooj Company",
+      "twitterDescription": "A gallery of successful residential, renovation, and industrial projects across Iran."
+    }
+  },
+  "SingleProject": {
+    "info": {
+      "area": "Area",
+      "address": "Address",
+      "artitectureStyle": "Architectural Style",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "description": "Description"
+    },
+    "SuggestedProjects": {
+      "title": "Suggested Projects"
+    },
+    "steps": {
+      "button": "Watch Project Details"
+    }
   }
 }

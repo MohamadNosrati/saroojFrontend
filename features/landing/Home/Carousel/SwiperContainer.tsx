@@ -11,6 +11,7 @@ import { Autoplay } from "swiper/modules";
 import { ISlider } from "@/lib/types/slider";
 
 import CarouselItem from "./CarouselItem";
+import { useLocale } from "next-intl";
 
 interface IProps {
   data: ISlider[];
@@ -19,6 +20,8 @@ interface IProps {
 const SwiperContainer: React.FC<IProps> = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const swiperRef = useRef<SwiperType | null>(null);
+  const locale = useLocale();
+  const condition = locale === "fa" ? "title" : "titleEn";
 
   return (
     <motion.div
@@ -44,16 +47,18 @@ const SwiperContainer: React.FC<IProps> = ({ data }) => {
           swiperRef.current = swiper;
         }}
       >
-        {data?.map((item, index) => (
-          <SwiperSlide key={item?.id} className="!relative overflow-hidden">
-            <CarouselItem
-              key={item?.id}
-              activeIndex={activeIndex}
-              index={index}
-              item={item}
-            />
-          </SwiperSlide>
-        ))}
+        {data
+          ?.filter((item) => item[condition])
+          ?.map((item, index) => (
+            <SwiperSlide key={item?.id} className="!relative overflow-hidden">
+              <CarouselItem
+                key={item?.id}
+                activeIndex={activeIndex}
+                index={index}
+                item={item}
+              />
+            </SwiperSlide>
+          ))}
       </Swiper>
 
       {/* DOT NAVIGATION */}

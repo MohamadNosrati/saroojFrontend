@@ -11,16 +11,20 @@ import { CustomWhen } from "@/components/ui/CustomWhen";
 
 import LandingStepItem from "./StepItem";
 import StepsDetails from "./StepDetails";
+import { useLocale, useTranslations } from "next-intl";
 
 export interface IProps {
   steps: IStep[];
 }
 
 export default function StepsContainer({ steps }: IProps) {
+  const t = useTranslations("SingleProject.steps");
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const swiperRef = useRef<SwiperType | null>(null);
+  const locale = useLocale();
+  const condition = locale === "fa" ? "name" : "nameEn";
 
   useEffect(() => {
     setMounted(true);
@@ -67,19 +71,24 @@ export default function StepsContainer({ steps }: IProps) {
             swiperRef.current = swiper;
           }}
         >
-          {steps?.map((item, index) => (
-            <SwiperSlide key={item?.name} className="bg-transparent !relative">
-              <LandingStepItem
+          {steps
+            ?.filter((item) => item[condition])
+            ?.map((item, index) => (
+              <SwiperSlide
                 key={item?.name}
-                activeIndex={activeIndex}
-                index={index}
-                item={item}
-              />
-            </SwiperSlide>
-          ))}
+                className="bg-transparent !relative"
+              >
+                <LandingStepItem
+                  key={item?.name}
+                  activeIndex={activeIndex}
+                  index={index}
+                  item={item}
+                />
+              </SwiperSlide>
+            ))}
         </Swiper>
       </div>
-      <CustomWhen condition={!isOpen}>
+      <CustomWhen condition={!isOpen && Boolean(steps?.length)}>
         <div className="w-full mt-10">
           <Button
             fullWidth
@@ -89,7 +98,7 @@ export default function StepsContainer({ steps }: IProps) {
             variant="bordered"
             onPress={() => setIsOpen(true)}
           >
-            مشاهداه جزییات مراحل
+            {t("button")}
           </Button>
         </div>
       </CustomWhen>

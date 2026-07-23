@@ -5,12 +5,16 @@ import { motion } from "framer-motion";
 import { IProject } from "@/lib/types/project";
 
 import RelatedProjectsContainer from "./Container";
+import { useLocale, useTranslations } from "next-intl";
 
 interface IProps {
   suggsetions: IProject[];
 }
 
 export default function RelatedProjects({ suggsetions }: IProps) {
+  const t = useTranslations("SingleProject.SuggestedProjects");
+  const locale = useLocale();
+  const condition = locale === "fa" ? "title" : "titleEn";
   return (
     <section className="relative container  ">
       {/* Background glow */}
@@ -43,7 +47,7 @@ export default function RelatedProjects({ suggsetions }: IProps) {
             transition={{ duration: 0.6 }}
             whileInView={{ scale: [0.95, 1.05, 1] }}
           >
-            پروژه های پیشنهادی
+            {t("title")}
           </motion.span>
 
           {/* underline animation */}
@@ -63,7 +67,9 @@ export default function RelatedProjects({ suggsetions }: IProps) {
           viewport={{ once: true, amount: 0.3 }}
           whileInView={{ opacity: 1, y: 0 }}
         >
-          <RelatedProjectsContainer suggsetions={suggsetions} />
+          <RelatedProjectsContainer
+            suggsetions={suggsetions?.filter((item) => item[condition])}
+          />
         </motion.div>
       </div>
     </section>

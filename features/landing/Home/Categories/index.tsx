@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import LinesImage from "@/public/images/lines.png";
 import { categoriesRoute } from "@/lib/routes/apiRoutes";
@@ -10,9 +10,12 @@ import CategoryItem from "./CategoryItem";
 
 const Categories = async () => {
   const t = await getTranslations("Home.categories");
+  const locale = await getLocale();
   const data = await getData<IBaseResponse<ICategory[]>>(
     categoriesRoute.getAll(),
   );
+
+  const condition = locale === "fa" ? "title" : "titleEn";
 
   return (
     <section
@@ -30,7 +33,9 @@ const Categories = async () => {
       </div>
 
       <div className="grid container lg:mt-12 sm:mt-8 mt-4 grid-cols-12 gap-y-5 gap-x-5 px-4">
-        {data?.data?.map((item) => <CategoryItem key={item?.id} item={item} />)}
+        {data?.data
+          ?.filter((item) => item[condition])
+          ?.map((item) => <CategoryItem key={item?.id} item={item} />)}
       </div>
     </section>
   );

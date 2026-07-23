@@ -20,6 +20,7 @@ import ProjectSclton from "@/components/ui/ProjectScleton";
 import ProjectItem from "../../ProjectItem";
 
 import Filtering from "./Filtering";
+import { useLocale, useTranslations } from "next-intl";
 
 const containerVariants = {
   hidden: {},
@@ -45,6 +46,9 @@ const itemVariants = {
 };
 
 const Container = () => {
+  const locale = useLocale();
+  const condition = locale === "fa" ? "title" : "titleEn";
+  const t = useTranslations("Projects.list");
   const [selected, setSelected] = useState<SortByEnum>(SortByEnum.NEWEST);
   const [groupSelected, setGroupSelected] = useState<string[]>([]);
   const { data: categoriesData, isLoading: isLoadingCategories } =
@@ -105,7 +109,8 @@ const Container = () => {
       ?.flatMap((page) => page?.data?.result)
       ?.filter((elem) =>
         groupSelected?.includes(elem?.categoryId?.id as string),
-      );
+      )
+      ?.filter((elem) => elem && elem[condition]);
   }, [groupSelected, data]);
 
   return (
@@ -123,7 +128,7 @@ const Container = () => {
           variants={itemVariants}
         >
           <span className="font-black sm:text-4xl text-2xl text-gray-900 dark:text-white tracking-tight">
-            پروژه‌های ساروج
+            {t("title")}
           </span>
           <span className="w-16 h-[3px] bg-primary rounded-full max-lg:mx-auto" />
         </motion.div>

@@ -82,9 +82,12 @@ export interface IProject {
   startDate: number;
   endDate?: number;
   description: string;
+  descriptionEn?: string;
   isActive: boolean;
   artitectureStyle?: string;
+  artitectureStyleEn?: string;
   address: string;
+  addressEn?: string;
   createdAt: number;
   updatedAt: number;
   video?: string;

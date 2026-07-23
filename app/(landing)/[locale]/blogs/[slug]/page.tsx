@@ -82,14 +82,21 @@ export async function generateStaticParams() {
       {
         id: string;
         title: string;
+        titleEn: string;
       }[]
     >
   >(blogsRoutes.getAllSlugs());
-  const blogs = data?.data?.map((item) => ({
-    slug: slugify(item?.title),
-  }));
-
-  return blogs || [];
+  const slugs = data?.data?.flatMap((blog) => [
+    {
+      locale: "fa",
+      slug: slugify(blog?.title),
+    },
+    {
+      locale: "en",
+      slug: slugify(blog?.titleEn),
+    },
+  ]);
+  return slugs;
 }
 
 type Props = {

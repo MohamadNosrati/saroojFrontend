@@ -82,7 +82,6 @@ export default function RelatedProjectsContainer({ suggsetions }: IProps) {
                 rounded-2xl
                 transition-shadow
                 duration-300
-  
               "
               transition={{
                 type: "spring",

@@ -6,8 +6,9 @@ import { useSearchParams } from "next/navigation";
 import { useLocale } from "next-intl";
 
 import { sortOptions } from "@/lib/config/sort";
-import { SortByEnum } from "@/lib/types/base";
+import { LocaleEnum, SortByEnum } from "@/lib/types/base";
 import { ICategory } from "@/lib/types/categories";
+import FilteringItem from "./FilteringItem";
 
 interface IProps {
   sort: {
@@ -74,6 +75,8 @@ export default function Filtering({
     window.history.replaceState(null, "", cleanUrl);
   };
 
+  const condition = locale === "fa" ? "title" : "titleEn";
+
   return (
     <motion.div
       className="flex items-center max-lg:flex-col gap-2.5"
@@ -118,45 +121,16 @@ export default function Filtering({
         onValueChange={handleChangeCategories}
       >
         <div className="flex h-full sm:gap-4 gap-2.5 flex-wrap items-center justify-center">
-          {data?.map((item, index) => (
-            <motion.div
-              key={item?.id}
-              className="flex h-10 items-center rounded-xl bg-white dark:bg-gray-darker px-2.5"
-              initial={{
-                opacity: 0,
-                y: 15,
-              }}
-              transition={{
-                delay: index * 0.05,
-              }}
-              whileHover={{
-                y: -2,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-            >
-              <Checkbox
-                classNames={{
-                  base: [
-                    "inline-flex w-full !max-h-none !h-10 max-w-none text-no-wrap",
-                    "justify-start",
-                    "cursor-pointer rounded-lg data-[hover=true]:bg-transparent border-2 border-transparent",
-                  ].join(" "),
-                  label: "!h-full !min-w-fit",
-                }}
-                isDisabled={
-                  groupSelected?.length === 1 && groupSelected[0] === item?.id
-                }
-                value={item?.id}
-              >
-                <span className="text-dark dark:text-white text-sm font-bold">
-                  {item?.title}
-                </span>
-              </Checkbox>
-            </motion.div>
-          ))}
+          {data
+            ?.filter((item) => item[condition])
+            ?.map((item, index) => (
+              <FilteringItem
+                key={item?.id}
+                index={index}
+                item={item}
+                groupSelected={groupSelected}
+              />
+            ))}
         </div>
       </CheckboxGroup>
     </motion.div>

@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { getData } from "@/lib/services/data";
 import { IBaseResponse, IPaginatedResponse } from "@/lib/types/base";
@@ -9,6 +9,7 @@ import LatestBlogItem from "./LatestBlogItem";
 
 export default async function BlogsLatest() {
   const t = await getTranslations("Blogs");
+  const locale = await getLocale();
   const data = await getData<IBaseResponse<IPaginatedResponse<IBlog>>>(
     blogsRoutes.getAll({
       limit: 4,
@@ -17,6 +18,8 @@ export default async function BlogsLatest() {
       sort: "createdAt",
     }),
   );
+
+  const condition = locale === "fa" ? "title" : "titleEn";
 
   return (
     <section className="relative lg:pt-24 dark:bg-dark bg-gray-50/50 lg:pb-28 md:pt-16 md:pb-24 sm:pt-12 sm:pb-20 pt-8 pb-16 overflow-hidden">
@@ -42,6 +45,7 @@ export default async function BlogsLatest() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
           {data?.data?.result
             ?.filter((item) => item?.isActive)
+            ?.filter((item) => item[condition])
             ?.map((item) => <LatestBlogItem key={item?.id} item={item} />)}
         </div>
       </div>

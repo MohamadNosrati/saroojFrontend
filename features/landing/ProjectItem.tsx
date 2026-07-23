@@ -55,7 +55,7 @@ const ProjectItem: React.FC<IProps> = ({ item }) => {
           >
             <Image
               fill
-              alt={itemLang[locale as LocaleEnum]?.alt}
+              alt={itemLang[locale as LocaleEnum]?.alt || ""}
               className="object-cover w-full h-full"
               src={uploadUrl(item?.pictureId?.image)}
             />

@@ -7,7 +7,7 @@ import Video from "@/features/landing/SingleProject/Video";
 import { ProjectsRoute } from "@/lib/routes/apiRoutes";
 import { getData } from "@/lib/services/data";
 import { slugify } from "@/lib/tools/slugify";
-import { IBaseResponse } from "@/lib/types/base";
+import { IBaseResponse, LocaleEnum } from "@/lib/types/base";
 import { IProject, IProjectWithSuggestions } from "@/lib/types/project";
 import { createMetadata } from "@/lib/config/site";
 import ShareButton from "@/features/landing/layout/ShareButton";
@@ -16,6 +16,7 @@ import { CustomWhen } from "@/components/ui/CustomWhen";
 import StepsContainer from "@/features/landing/SingleProject/Steps";
 
 import notFound from "../../not-found";
+import { getLocale } from "next-intl/server";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -28,15 +29,22 @@ export async function generateStaticParams() {
       {
         id: string;
         title: string;
+        titleEn: string;
       }[]
     >
   >(ProjectsRoute.getAllSlugs());
 
-  const projects = data?.data?.map((item) => ({
-    slug: slugify(item?.title),
-  }));
-
-  return projects || [];
+  const slugs = data?.data?.flatMap((project) => [
+    {
+      locale: "fa",
+      slug: slugify(project?.title),
+    },
+    {
+      locale: "en",
+      slug: slugify(project?.titleEn),
+    },
+  ]);
+  return slugs;
 }
 
 const baseUrl =
@@ -102,6 +110,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function SingleProjectPage({ params }: Props) {
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug).replaceAll("-", " ");
+  const locale = await getLocale();
+  const condition = locale === "fa" ? "title" : "titleEn";
 
   const data = await getData<IBaseResponse<IProjectWithSuggestions>>(
     ProjectsRoute.findBySlug(decodedSlug),
@@ -110,6 +120,30 @@ export default async function SingleProjectPage({ params }: Props) {
   if (!data) {
     notFound();
   }
+
+  const projectData = data?.data?.project;
+  const suggestionsData =
+    data?.data?.suggestions?.filter((item) => item[condition]) || [];
+
+  const itemLang: Record<
+    LocaleEnum,
+    {
+      title: string;
+      alt: string;
+      description: string;
+    }
+  > = {
+    fa: {
+      title: projectData?.title as string,
+      alt: projectData?.alt as string,
+      description: projectData?.description as string,
+    },
+    en: {
+      title: projectData?.titleEn as string,
+      alt: projectData?.altEn as string,
+      description: projectData?.descriptionEn as string,
+    },
+  };
 
   return (
     <main className="bg-neutral-50 dark:bg-[#09090b] min-h-screen text-neutral-900 dark:text-neutral-50 overflow-x-hidden antialiased selection:bg-primary selection:text-black transition-colors duration-200">
@@ -121,15 +155,13 @@ export default async function SingleProjectPage({ params }: Props) {
           {/* Tightened, sharper header layout */}
           <div className="flex items-center justify-between gap-4  dark:border-neutral-800">
             <h1 className="text-xl font-semibold tracking-tight sm:text-2xl lg:text-3xl text-neutral-800 dark:text-neutral-100">
-              {data?.data?.project?.title}
+              {itemLang[locale as LocaleEnum]?.title}
             </h1>
             <ShareButton
               paylod={{
-                text: "",
-                title: data?.data?.project?.title || "",
-                image: uploadUrl(
-                  data?.data?.project?.pictureId?.image as string,
-                ),
+                text: itemLang[locale as LocaleEnum]?.description || "",
+                title: itemLang[locale as LocaleEnum]?.title || "",
+                image: uploadUrl(projectData?.pictureId?.image as string),
               }}
             />
           </div>
@@ -155,7 +187,7 @@ export default async function SingleProjectPage({ params }: Props) {
       </CustomWhen>
 
       <div className="border-t border-neutral-200 dark:border-neutral-800 bg-gradient-to-b dark:bg-dark w-full bg-white from-primary/20 via-primary/10 to-transparent lg:pt-12 sm:pt-8 pt-6 lg:pb-16 pb-8">
-        <RelatedProjects suggsetions={data?.data?.suggestions || []} />
+        <RelatedProjects suggsetions={suggestionsData} />
       </div>
     </main>
   );

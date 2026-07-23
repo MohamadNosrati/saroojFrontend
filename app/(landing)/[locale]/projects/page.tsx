@@ -11,39 +11,52 @@ import Container from "@/features/landing/Projects/Container";
 import { createMetadata } from "@/lib/config/site";
 import { ProjectsRoute } from "@/lib/routes/apiRoutes";
 import { getData } from "@/lib/services/data";
+import { getTranslations } from "next-intl/server";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
 
-export const metadata: Metadata = createMetadata({
-  title: "پروژه‌های ساخت و ساز | شرکت ساخت و ساز ساروج",
-  description:
-    "گالری پروژه‌های موفق شرکت ساروج شامل ساخت مسکن، بازسازی ساختمان‌های فرسوده و پروژه‌های صنعتی در سراسر ایران.",
-  keywords:
-    "پروژه ساختمانی, نمونه کار ساخت و ساز, پروژه مسکونی, پروژه صنعتی, بازسازی ساختمان, گالری پروژه ساروج",
-  authors: [{ name: "شرکت ساخت و ساز ساروج" }],
-  creator: "شرکت ساخت و ساز ساروج",
-  publisher: "شرکت ساخت و ساز ساروج",
-  robots: "index, follow",
-  alternates: {
-    canonical: `${baseUrl}/projects`,
-  },
-  openGraph: {
-    title: "پروژه‌های ساخت و ساز | شرکت ساروج",
-    description:
-      "مشاهده پروژه‌های موفق شرکت ساروج در زمینه ساخت مسکن، بازسازی و پروژه‌های صنعتی در ایران.",
-    url: `${baseUrl}/projects`,
-    siteName: "شرکت ساخت و ساز ساروج",
-    locale: "fa_IR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "پروژه‌های ساخت و ساز | شرکت ساروج",
-    description:
-      "گالری پروژه‌های موفق ساخت مسکن، بازسازی و صنعتی در سراسر ایران.",
-  },
-});
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+
+  const t = await getTranslations("Projects.metadata");
+
+  return createMetadata(
+    {
+      title: t("title"),
+      description: t("description"),
+      keywords: t("keywords"),
+      authors: [{ name: t("companyName") }],
+      creator: t("companyName"),
+      publisher: t("companyName"),
+      robots: "index, follow",
+
+      alternates: {
+        canonical: `${baseUrl}/${locale}/projects`,
+      },
+
+      openGraph: {
+        title: t("openGraphTitle"),
+        description: t("openGraphDescription"),
+        url: `${baseUrl}/${locale}/projects`,
+        siteName: t("companyName"),
+        locale: locale === "fa" ? "fa_IR" : "en_US",
+        type: "website",
+      },
+
+      twitter: {
+        card: "summary_large_image",
+        title: t("twitterTitle"),
+        description: t("twitterDescription"),
+      },
+    },
+    t("companyName"),
+  );
+}
 
 export default async function ProjectsPage() {
   const queryClient = new QueryClient();

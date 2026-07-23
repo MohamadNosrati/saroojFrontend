@@ -91,6 +91,8 @@ export default function BlogsList() {
     return () => observer.disconnect();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
+  const condition = locale === "fa" ? "title" : "titleEn";
+
   return (
     <motion.section
       className="relative dark:bg-dark bg-white lg:pb-32 md:pb-24 sm:pb-20 pb-16 overflow-hidden border-t border-black/[0.03] dark:border-white/[0.03]"
@@ -152,6 +154,7 @@ export default function BlogsList() {
         >
           {data?.pages
             ?.flatMap((page) => page?.data?.result)
+            ?.filter((item) => item && item[condition])
             ?.map((item) => (
               <BlogItem
                 key={item?.id}

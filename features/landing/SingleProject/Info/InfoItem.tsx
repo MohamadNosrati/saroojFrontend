@@ -24,7 +24,7 @@ export default function InfoItem({ item }: IProps) {
         <span className="text-[10px] sm:text-xs font-medium tracking-wide text-neutral-400 dark:text-neutral-500 uppercase">
           {item?.key}
         </span>
-        <span className="text-xs sm:text-sm font-semibold text-neutral-800 dark:text-neutral-200 truncate">
+        <span className="text-xs sm:text-sm font-semibold text-neutral-800 dark:text-neutral-200">
           {item.value}
         </span>
       </div>

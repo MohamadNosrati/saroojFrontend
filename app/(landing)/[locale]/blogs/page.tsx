@@ -10,38 +10,52 @@ import BlogsList from "@/features/landing/Blog/List";
 import { createMetadata } from "@/lib/config/site";
 import { blogsRoutes } from "@/lib/routes/apiRoutes";
 import { getData } from "@/lib/services/data";
+import { getTranslations } from "next-intl/server";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
 
-export const metadata: Metadata = createMetadata({
-  title: "مجله ساخت و ساز | مقالات و اخبار شرکت ساروج",
-  description:
-    "مقالات تخصصی ساخت و ساز، نکات بازسازی ساختمان، اخبار پروژه‌های صنعتی و راهنمایی‌های کاربردی برای مالکان و پیمانکاران.",
-  keywords:
-    "مجله ساخت و ساز, مقاله ساختمانی, اخبار صنعت ساختمان, نکات بازسازی, وبلاگ پیمانکاری, ساخت و ساز در ایران",
-  authors: [{ name: "شرکت ساخت و ساز ساروج" }],
-  creator: "شرکت ساخت و ساز ساروج",
-  publisher: "شرکت ساخت و ساز ساروج",
-  robots: "index, follow",
-  alternates: {
-    canonical: `${baseUrl}/blog`,
-  },
-  openGraph: {
-    title: "مجله ساخت و ساز ساروج | مقالات و اخبار",
-    description:
-      "جدیدترین مقالات تخصصی و اخبار صنعت ساخت و ساز، بازسازی و پروژه‌های صنعتی در ایران.",
-    url: `${baseUrl}/blog`,
-    siteName: "شرکت ساخت و ساز ساروج",
-    locale: "fa_IR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "مجله ساخت و ساز ساروج",
-    description: "مقالات تخصصی، نکات کاربردی و اخبار صنعت ساخت و ساز در ایران.",
-  },
-});
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+
+  const t = await getTranslations("Blogs.metadata");
+
+  return createMetadata(
+    {
+      title: t("title"),
+      description: t("description"),
+      keywords: t("keywords"),
+      authors: [{ name: t("companyName") }],
+      creator: t("companyName"),
+      publisher: t("companyName"),
+      robots: "index, follow",
+
+      alternates: {
+        canonical: `${baseUrl}/${locale}/blog`,
+      },
+
+      openGraph: {
+        title: t("openGraphTitle"),
+        description: t("openGraphDescription"),
+        url: `${baseUrl}/${locale}/blog`,
+        siteName: t("companyName"),
+        locale: locale === "fa" ? "fa_IR" : "en_US",
+        type: "website",
+      },
+
+      twitter: {
+        card: "summary_large_image",
+        title: t("twitterTitle"),
+        description: t("twitterDescription"),
+      },
+    },
+    t("companyName"),
+  );
+}
 
 export default async function BlogsPage() {
   const queryClient = new QueryClient();

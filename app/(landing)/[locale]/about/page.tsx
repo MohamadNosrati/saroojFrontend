@@ -7,39 +7,52 @@ import Form from "@/features/landing/About/Form";
 import Map from "@/features/landing/About/Map";
 import Socials from "@/features/landing/About/Socials";
 import { createMetadata } from "@/lib/config/site";
+import { getTranslations } from "next-intl/server";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
 
-export const metadata: Metadata = createMetadata({
-  title: "درباره ما | شرکت ساخت و ساز ساروج",
-  description:
-    "آشنایی با شرکت ساخت و ساز ساروج، سابقه، افتخارات، تیم متخصص و رویکرد ما در اجرای پروژه‌های مسکونی، بازسازی و صنعتی در ایران.",
-  keywords:
-    "درباره شرکت ساختمانی, سابقه شرکت ساروج, تیم ساخت و ساز, افتخارات ساختمانی, شرکت پیمانکاری در ایران",
-  authors: [{ name: "شرکت ساخت و ساز ساروج" }],
-  creator: "شرکت ساخت و ساز ساروج",
-  publisher: "شرکت ساخت و ساز ساروج",
-  robots: "index, follow",
-  alternates: {
-    canonical: `${baseUrl}/about`,
-  },
-  openGraph: {
-    title: "درباره شرکت ساخت و ساز ساروج | سابقه و افتخارات",
-    description:
-      "با بیش از ۲۰ سال تجربه در زمینه ساخت مسکن، بازسازی و پروژه‌های صنعتی در ایران.",
-    url: `${baseUrl}/about`,
-    siteName: "شرکت ساخت و ساز ساروج",
-    locale: "fa_IR",
-    type: "profile",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "درباره ما | شرکت ساخت و ساز ساروج",
-    description:
-      "آشنایی با تیم متخصص، سابقه و افتخارات شرکت ساروج در صنعت ساخت و ساز ایران.",
-  },
-});
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+
+  const t = await getTranslations("About.metadata");
+
+  return createMetadata(
+    {
+      title: t("title"),
+      description: t("description"),
+      keywords: t("keywords"),
+      authors: [{ name: t("companyName") }],
+      creator: t("companyName"),
+      publisher: t("companyName"),
+      robots: "index, follow",
+
+      alternates: {
+        canonical: `${baseUrl}/${locale}/about`,
+      },
+
+      openGraph: {
+        title: t("openGraphTitle"),
+        description: t("openGraphDescription"),
+        url: `${baseUrl}/${locale}/about`,
+        siteName: t("companyName"),
+        locale: locale === "fa" ? "fa_IR" : "en_US",
+        type: "profile",
+      },
+
+      twitter: {
+        card: "summary_large_image",
+        title: t("twitterTitle"),
+        description: t("twitterDescription"),
+      },
+    },
+    t("companyName"),
+  );
+}
 
 const AboutPage = () => {
   return (
