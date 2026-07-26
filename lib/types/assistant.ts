@@ -17,3 +17,6 @@ export interface IAssistantMessage {
   role: IAssitantMessageRole;
   id: string;
 }
+export interface IAssistantStatus {
+  success: boolean;
+}

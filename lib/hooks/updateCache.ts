@@ -2,6 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 import { GroupedMessageItem, IMessage } from "../types/message";
 import { IAssistantMessage } from "../types/assistant";
+import { assistantRoutes } from "../routes/apiRoutes";
 const getDateKey = (timestamp: string | number | Date) =>
   new Date(timestamp).toISOString().split("T")[0];
 
@@ -71,17 +72,20 @@ export const useUpdateAssistantMessageChace = () => {
     sessionId: string,
     newAssistantMessage: IAssistantMessage,
   ) => {
-    queryClient.setQueryData([sessionId], (old: any) => {
-      if (!old) return old;
+    queryClient.setQueryData(
+      [assistantRoutes.getSessionIdMessages(sessionId)],
+      (old: any) => {
+        if (!old) return old;
 
-      return {
-        ...old,
-        data: {
-          ...old.data,
-          data: [...(old.data?.data || []), newAssistantMessage],
-        },
-      };
-    });
+        return {
+          ...old,
+          data: {
+            ...old.data,
+            data: [...(old.data?.data || []), newAssistantMessage],
+          },
+        };
+      },
+    );
   };
 
   return { updateCache };

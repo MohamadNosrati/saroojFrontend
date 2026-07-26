@@ -1,6 +1,9 @@
 {
   "Header": {
-    "bot": "Assistant"
+    "bot": {
+      "button": "Assistant",
+      "title": "Saroj Ai Assistant"
+    }
   },
   "About": {
     "sarooj": {

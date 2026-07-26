@@ -4,6 +4,7 @@ import { responseHandler } from "../tools/responseHandler";
 import { assistantRoutes } from "../routes/apiRoutes";
 import {
   assistantServices,
+  getAssistantStatus,
   getSessionIdAssitantMessages,
 } from "../services/assistant";
 import { IAssistantMessagePayload } from "../types/assistant";
@@ -19,6 +20,17 @@ export const useGetSessionIdAssistantMessages = (sessionId: string) => {
     data: data?.data,
     isLoading,
     isFetching: isFetching,
+  };
+};
+export const useCheckAssistantStatus = () => {
+  const { data, isLoading, isFetching } = useQuery({
+    queryKey: [assistantRoutes.checkStatus()],
+    queryFn: async () => await getAssistantStatus(),
+  });
+
+  return {
+    data: data?.data,
+    isLoading,
   };
 };
 

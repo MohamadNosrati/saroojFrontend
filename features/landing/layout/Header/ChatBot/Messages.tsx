@@ -3,8 +3,12 @@ import { Spinner } from "@heroui/spinner";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { IAssistantMessage } from "@/lib/types/assistant";
+import { useEffect, useRef } from "react";
+import { CustomWhen } from "@/components/ui/CustomWhen";
+import { useLocale } from "next-intl";
 
-const STATICMESSAGE = "سلام 👋 چطور می‌توانم کمکتان کنم؟";
+const PERSIANSTATICMESSAGE = "سلام 👋 چطور می‌توانم کمکتان کنم؟";
+const ENGLISHSTATICMESSAGE = "hi 👋 how can i help you!";
 
 interface IProps {
   data: IAssistantMessage[];
@@ -19,6 +23,18 @@ export default function Messages({
   isFetching,
   isPending,
 }: IProps) {
+  const locale = useLocale();
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const container = messagesContainerRef.current;
+
+    if (!container) return;
+
+    container.scrollTo({
+      top: container.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [data, isPending]);
   return (
     <motion.div
       layout
@@ -28,7 +44,10 @@ export default function Messages({
     >
       <AnimatePresence>
         {!isLoading ? (
-          <div className="w-full overflow-hidden">
+          <div
+            ref={messagesContainerRef}
+            className="w-full flex flex-col gap-2 overflow-y-auto overflow-x-hidden"
+          >
             <motion.div
               layout
               animate={{
@@ -36,7 +55,7 @@ export default function Messages({
                 y: 0,
                 scale: 1,
               }}
-              className={`max-w-[80%] rounded-2xl px-4 py-3 shadow-sm self-end bg-secondary dark:text-white`}
+              className={`max-w-[80%] mx-2.5 rounded-2xl px-4 py-3 shadow-sm self-end bg-secondary dark:text-dark`}
               initial={{
                 opacity: 0,
                 y: 15,
@@ -47,7 +66,7 @@ export default function Messages({
                 duration: 0.25,
               }}
             >
-              {STATICMESSAGE}
+              {locale === "fa" ? PERSIANSTATICMESSAGE : ENGLISHSTATICMESSAGE}
             </motion.div>
             {data?.map((message, index) => (
               <motion.div
@@ -60,7 +79,7 @@ export default function Messages({
                 }}
                 className={`max-w-[80%] rounded-2xl px-4 py-3 shadow-sm ${
                   message.role === "assistant"
-                    ? "self-end bg-secondary dark:text-white"
+                    ? "self-end bg-secondary dark:text-dark"
                     : "self-start bg-primary text-white"
                 }`}
                 initial={{
@@ -76,7 +95,11 @@ export default function Messages({
                 {message.text}
               </motion.div>
             ))}
-            <Skeleton isLoaded={!isPending || !isFetching} />
+            <CustomWhen condition={isPending}>
+              <div className="w-4/5 py-3 bg-secondary self-end flex justify-center items-center rounded-2xl">
+                <Spinner />
+              </div>
+            </CustomWhen>
           </div>
         ) : (
           <div className="size-full flex justify-center items-center">

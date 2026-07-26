@@ -284,6 +284,10 @@ class Assistant {
     this.base = "assistant";
   }
 
+  checkStatus() {
+    return `${this.base}/status`;
+  }
+
   getSessionIdMessages(sessionId: string) {
     return `${this.base}/${sessionId}`;
   }

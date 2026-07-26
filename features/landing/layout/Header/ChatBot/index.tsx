@@ -13,11 +13,12 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import { yekanBakh } from "@/lib/config/fonts";
 import CustomInput from "@/components/ui/CustomInput";
 import {
+  useCheckAssistantStatus,
   useCreateAssistantMessage,
   useGetSessionIdAssistantMessages,
 } from "@/lib/hooks/assistant";
@@ -29,9 +30,12 @@ import { assistantRoutes } from "@/lib/routes/apiRoutes";
 import Messages from "./Messages";
 
 const ChatBot = () => {
-  const t = useTranslations("Header");
+  const locale = useLocale();
+  const t = useTranslations("Header.bot");
   const queryClient = useQueryClient();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { data: assistantStatus, isLoading: isLoadingStatus } =
+    useCheckAssistantStatus();
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const sessionId = useSessionStore((state) => state.sessionId);
   const { data, isLoading, isFetching } = useGetSessionIdAssistantMessages(
@@ -85,11 +89,13 @@ const ChatBot = () => {
   return (
     <>
       <Button
+        isLoading={isLoadingStatus}
+        isDisabled={!Boolean(assistantStatus?.data?.success)}
         className="text-dark dark:text-white font-bold"
         color="primary"
         onPress={onOpen}
       >
-        {t("bot")}
+        {t("button")}
       </Button>
 
       <Modal
@@ -98,7 +104,7 @@ const ChatBot = () => {
           body: "m-0",
           header: "pb-0",
         }}
-        dir="rtl"
+        dir={locale === "fa" ? "rtl" : "ltr"}
         isOpen={isOpen}
         size="5xl"
         style={
@@ -112,7 +118,7 @@ const ChatBot = () => {
               <ModalHeader>
                 <div className="flex items-center gap-2">
                   <div className="size-3 rounded-full bg-green-500 animate-pulse" />
-                  دستیار هوش مصنوعی ساروج
+                  {t("title")}
                 </div>
               </ModalHeader>
 
@@ -140,6 +146,7 @@ const ChatBot = () => {
                       ref={buttonRef}
                       className="min-w-fit"
                       color="primary"
+                      isLoading={isPending}
                       isDisabled={
                         !(Boolean(userText) && sessionId) ||
                         isLoading ||
@@ -154,9 +161,10 @@ const ChatBot = () => {
                   <div className="grow">
                     <CustomInput
                       fullWidth
+                      className="border border-gray rounded-2xl overflow-hidden"
                       isDisabled={isLoading || isPending || !sessionId}
                       value={userText}
-                      onChange={(e) => setUserText(e?.target?.value?.trim())}
+                      onChange={(e) => setUserText(e?.target?.value)}
                     />
                   </div>
                 </motion.div>
