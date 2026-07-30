@@ -5,94 +5,56 @@ import {
   Modal,
   ModalBody,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   useDisclosure,
 } from "@heroui/modal";
-import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import { v4 as uuidv4 } from "uuid";
 import { useLocale, useTranslations } from "next-intl";
 
 import { yekanBakh } from "@/lib/config/fonts";
-import CustomInput from "@/components/ui/CustomInput";
-import {
-  useCheckAssistantStatus,
-  useCreateAssistantMessage,
-  useGetSessionIdAssistantMessages,
-} from "@/lib/hooks/assistant";
-import { useSessionStore } from "@/lib/stores/session";
-import { IAssitantMessageRole } from "@/lib/types/assistant";
-import { useUpdateAssistantMessageChace } from "@/lib/hooks/updateCache";
-import { assistantRoutes } from "@/lib/routes/apiRoutes";
+import { useCheckAssistantStatus } from "@/lib/hooks/assistant";
 
 import Messages from "./Messages";
 
+const fakeChats = [
+  {
+    id: "1",
+    title: "Villa renovation consultation",
+    date: "Today",
+  },
+  {
+    id: "2",
+    title: "Factory construction advice",
+    date: "Yesterday",
+  },
+  {
+    id: "3",
+    title: "Office remodeling project",
+    date: "2 days ago",
+  },
+];
+
 const ChatBot = () => {
   const locale = useLocale();
+
   const t = useTranslations("Header.bot");
-  const queryClient = useQueryClient();
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   const { data: assistantStatus, isLoading: isLoadingStatus } =
     useCheckAssistantStatus();
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
-  const sessionId = useSessionStore((state) => state.sessionId);
-  const { data, isLoading, isFetching } = useGetSessionIdAssistantMessages(
-    sessionId || "",
-  );
-  const [userText, setUserText] = useState<string>("");
-  const { mutate, isPending } = useCreateAssistantMessage();
-  const { updateCache } = useUpdateAssistantMessageChace();
-  const date = new Date();
-
-  const handleSendMessage = () => {
-    updateCache(sessionId as string, {
-      id: uuidv4(),
-      createdAt: date?.getTime(),
-      updatedAt: date?.getTime(),
-      role: IAssitantMessageRole.USER,
-      sessionId: sessionId as string,
-      text: userText,
-    });
-    mutate(
-      {
-        text: userText,
-        sessionId: sessionId as string,
-        role: IAssitantMessageRole.USER,
-      },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries({
-            queryKey: [
-              assistantRoutes.getSessionIdMessages(sessionId as string),
-            ],
-          });
-        },
-      },
-    );
-    setUserText("");
-  };
-
-  useEffect(() => {
-    const handleClick = (e: KeyboardEvent) => {
-      if (e?.key === "Enter") {
-        buttonRef.current?.click();
-      }
-    };
-
-    document.addEventListener("keydown", handleClick);
-
-    return () => document.removeEventListener("keydown", handleClick);
-  }, []);
 
   return (
     <>
       <Button
-        isLoading={isLoadingStatus}
-        isDisabled={!Boolean(assistantStatus?.data?.success)}
-        className="text-dark dark:text-white font-bold"
+        className="
+          font-bold
+          text-dark
+          dark:text-white
+          shadow-lg
+        "
         color="primary"
+        isDisabled={!Boolean(assistantStatus?.data?.success)}
+        isLoading={isLoadingStatus}
         onPress={onOpen}
       >
         {t("button")}
@@ -100,75 +62,210 @@ const ChatBot = () => {
 
       <Modal
         classNames={{
-          base: "font-yekan",
-          body: "m-0",
-          header: "pb-0",
+          base: `
+            font-yekan
+
+            bg-white/90
+            dark:bg-zinc-950/90
+
+            backdrop-blur-xl
+
+            border
+            border-white/20
+
+            shadow-[0_25px_100px_rgba(0,0,0,.35)]
+
+            rounded-3xl
+
+            overflow-hidden
+          `,
+
+          body: "p-0",
+
+          header: "p-5",
+
+          footer: "p-5",
         }}
         dir={locale === "fa" ? "rtl" : "ltr"}
         isOpen={isOpen}
         size="5xl"
         style={
-          { "--font-yekan": yekanBakh.style.fontFamily } as React.CSSProperties
+          {
+            "--font-yekan": yekanBakh.style.fontFamily,
+          } as React.CSSProperties
         }
         onOpenChange={onOpenChange}
       >
         <ModalContent>
-          {(onClose) => (
+          {() => (
             <>
               <ModalHeader>
-                <div className="flex items-center gap-2">
-                  <div className="size-3 rounded-full bg-green-500 animate-pulse" />
-                  {t("title")}
+                <div
+                  className="
+                flex
+                items-center
+                gap-3
+              "
+                >
+                  <div
+                    className="
+                  size-12
+
+                  rounded-2xl
+
+                  flex
+                  items-center
+                  justify-center
+
+                  bg-gradient-to-br
+                  from-primary
+                  to-secondary
+
+                  shadow-lg
+
+                  text-xl
+                "
+                  >
+                    🤖
+                  </div>
+
+                  <div>
+                    <h2
+                      className="
+                    font-bold
+                    text-lg
+                  "
+                    >
+                      {t("title")}
+                    </h2>
+
+                    <div
+                      className="
+                    flex
+                    items-center
+                    gap-2
+
+                    text-xs
+                    text-default-500
+                  "
+                    >
+                      <span
+                        className="
+                      size-2
+                      rounded-full
+                      bg-green-500
+                      animate-pulse
+                    "
+                      />
+                      Online assistant
+                    </div>
+                  </div>
                 </div>
               </ModalHeader>
 
               <ModalBody>
-                <Messages
-                  data={data?.data || []}
-                  isFetching={isFetching}
-                  isLoading={isLoading}
-                  isPending={isPending}
-                />
-              </ModalBody>
-
-              <ModalFooter>
-                <motion.div
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex w-full gap-2.5"
-                  initial={{ opacity: 0, y: 15 }}
-                  transition={{ delay: 0.2 }}
+                <div
+                  className="
+                flex
+                h-[520px]
+              "
                 >
-                  <motion.div
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.95 }}
+                  {/* History sidebar */}
+
+                  <aside
+                    className="
+                  w-64
+                  hidden
+                  md:flex
+
+                  flex-col
+
+                  border-default-200
+                  dark:border-zinc-800
+
+                  border-e
+
+                  p-4
+
+                  gap-4
+                "
                   >
                     <Button
-                      ref={buttonRef}
-                      className="min-w-fit"
                       color="primary"
-                      isLoading={isPending}
-                      isDisabled={
-                        !(Boolean(userText) && sessionId) ||
-                        isLoading ||
-                        isPending
-                      }
-                      onPress={handleSendMessage}
+                      className="
+                    rounded-2xl
+                    font-semibold
+                  "
                     >
-                      ارسال
+                      + New chat
                     </Button>
-                  </motion.div>
 
-                  <div className="grow">
-                    <CustomInput
-                      fullWidth
-                      className="border border-gray rounded-2xl overflow-hidden"
-                      isDisabled={isLoading || isPending || !sessionId}
-                      value={userText}
-                      onChange={(e) => setUserText(e?.target?.value)}
-                    />
+                    <div
+                      className="
+                    flex
+                    flex-col
+                    gap-2
+                    overflow-y-auto
+                  "
+                    >
+                      {fakeChats.map((chat) => (
+                        <button
+                          key={chat.id}
+                          className="
+                        text-start
+
+                        rounded-2xl
+
+                        p-3
+
+                        hover:bg-default-100
+                        dark:hover:bg-zinc-800
+
+                        transition
+
+                        text-sm
+                      "
+                        >
+                          <p
+                            className="
+                          font-medium
+                          truncate
+                        "
+                          >
+                            {chat.title}
+                          </p>
+
+                          <span
+                            className="
+                          text-xs
+                          text-default-500
+                        "
+                          >
+                            {chat.date}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </aside>
+
+                  {/* Chat */}
+
+                  <div
+                    className="
+                  flex-1
+
+                  flex
+                  flex-col
+
+                  gap-3
+
+                  p-5
+                "
+                  >
+                    <Messages />
                   </div>
-                </motion.div>
-              </ModalFooter>
+                </div>
+              </ModalBody>
             </>
           )}
         </ModalContent>
