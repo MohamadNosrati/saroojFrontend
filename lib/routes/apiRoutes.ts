@@ -277,7 +277,20 @@ class Notification {
     return `${this.base}`;
   }
 }
-class Assistant {
+
+class AssistantChat {
+  private readonly base: string;
+
+  constructor() {
+    this.base = "chats";
+  }
+
+  getSessionChats(sessionId: string) {
+    return `${this.base}/${sessionId}`;
+  }
+}
+
+class AssistantMessage {
   private readonly base: string;
 
   constructor() {
@@ -288,7 +301,7 @@ class Assistant {
     return `${this.base}/status`;
   }
 
-  getSessionIdMessages(sessionId: string) {
+  getChatMessages(sessionId: string) {
     return `${this.base}/${sessionId}`;
   }
 
@@ -345,4 +358,5 @@ export const notificationRoutes = new Notification();
 export const conversationRoutes = new Conversation();
 export const messageRoutes = new Message();
 export const translateRoutes = new Translate();
-export const assistantRoutes = new Assistant();
+export const assistantMessageRoutes = new AssistantMessage();
+export const assistantChatRoutes = new AssistantChat();

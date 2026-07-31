@@ -5,6 +5,7 @@ export enum IAssitantMessageRole {
 
 export interface IAssistantMessagePayload {
   text: string;
+  chatId: string;
   sessionId: string;
   role: IAssitantMessageRole;
 }
@@ -17,6 +18,12 @@ export interface IAssistantMessage {
   role: IAssitantMessageRole;
   id: string;
 }
+
 export interface IAssistantStatus {
   success: boolean;
+}
+
+export interface ICreateMessageResponse {
+  content:string;
+  chatId:string
 }

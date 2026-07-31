@@ -1,32 +1,31 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
-
-import { IAssistantMessage, IAssitantMessageRole } from "@/lib/types/assistant";
-import { CustomWhen } from "@/components/ui/CustomWhen";
 import { Button } from "@heroui/button";
-import {
-  useCreateAssistantMessage,
-  useGetSessionIdAssistantMessages,
-} from "@/lib/hooks/assistant";
 import { v4 as uuidv4 } from "uuid";
 import { useQueryClient } from "@tanstack/react-query";
+
+import {
+  IAssistantMessage,
+  IAssitantMessageRole,
+} from "@/lib/types/assistantMessage";
+import { CustomWhen } from "@/components/ui/CustomWhen";
+import {
+  useCreateAssistantMessage,
+  useGetChatAssistantMessages,
+} from "@/lib/hooks/assistantMessage";
 import { useUpdateAssistantMessageChace } from "@/lib/hooks/updateCache";
 import { useSessionStore } from "@/lib/stores/session";
-import { assistantRoutes } from "@/lib/routes/apiRoutes";
+import {
+  assistantChatRoutes,
+  assistantMessageRoutes,
+} from "@/lib/routes/apiRoutes";
 import CustomInput from "@/components/ui/CustomInput";
 
 const PERSIANSTATICMESSAGE = "سلام 👋 چطور می‌توانم کمکتان کنم؟";
 const ENGLISHSTATICMESSAGE = "Hi 👋 How can I help you?";
-
-interface IProps {
-  data: IAssistantMessage[];
-  isLoading: boolean;
-  isPending: boolean;
-  isFetching: boolean;
-}
 
 function TypingIndicator() {
   return (
@@ -109,10 +108,15 @@ function Avatar({ type }: { type: "assistant" | "user" }) {
   );
 }
 
-export default function Messages() {
-  const sessionId = useSessionStore((state) => state.sessionId);
-  const { data, isLoading, isFetching } = useGetSessionIdAssistantMessages(
-    sessionId || "",
+interface IProps {
+  chatId: string;
+  sessionId: string;
+  setChatId: Dispatch<SetStateAction<string>>;
+}
+
+export default function Messages({ chatId, sessionId, setChatId }: IProps) {
+  const { data, isLoading, isFetching } = useGetChatAssistantMessages(
+    chatId || "",
   );
   const queryClient = useQueryClient();
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -122,6 +126,8 @@ export default function Messages() {
 
   const { updateCache } = useUpdateAssistantMessageChace();
   const date = new Date();
+
+  console.log("chatId", chatId);
 
   const handleSendMessage = () => {
     updateCache(sessionId as string, {
@@ -136,14 +142,23 @@ export default function Messages() {
     mutate(
       {
         text: userText,
-        sessionId: sessionId as string,
+        chatId: chatId,
+        sessionId: sessionId,
         role: IAssitantMessageRole.USER,
       },
       {
-        onSuccess: () => {
+        onSuccess: (response) => {
+          if (!chatId) {
+            setChatId(response?.data?.data?.chatId || "");
+          }
           queryClient.invalidateQueries({
             queryKey: [
-              assistantRoutes.getSessionIdMessages(sessionId as string),
+              assistantMessageRoutes.getChatMessages(chatId as string),
+            ],
+          });
+          queryClient.invalidateQueries({
+            queryKey: [
+              assistantChatRoutes.getSessionChats(sessionId as string),
             ],
           });
         },
@@ -179,12 +194,13 @@ export default function Messages() {
   }, [data, isPending]);
 
   return (
-    <motion.div
-      animate={{
-        opacity: 1,
-        scale: 1,
-      }}
-      className="
+    <div className="flex flex-1 flex-col gap-3 p-5">
+      <motion.div
+        animate={{
+          opacity: 1,
+          scale: 1,
+        }}
+        className="
         relative
         h-full
         overflow-hidden
@@ -204,14 +220,14 @@ export default function Messages() {
         shadow-inner
         p-4
       "
-      initial={{
-        opacity: 0,
-        scale: 0.98,
-      }}
-    >
-      {/* Background glow */}
-      <div
-        className="
+        initial={{
+          opacity: 0,
+          scale: 0.98,
+        }}
+      >
+        {/* Background glow */}
+        <div
+          className="
           pointer-events-none
           absolute
           -top-32
@@ -221,10 +237,10 @@ export default function Messages() {
           bg-primary/20
           blur-3xl
         "
-      />
+        />
 
-      <div
-        className="
+        <div
+          className="
           pointer-events-none
           absolute
           -bottom-32
@@ -234,19 +250,19 @@ export default function Messages() {
           bg-secondary/20
           blur-3xl
         "
-      />
+        />
 
-      <AnimatePresence mode="popLayout">
-        <div className="flex w-full flex-col h-full gap-2.5">
-          <div
-            className="grow overflow-y-auto
+        <AnimatePresence mode="popLayout">
+          <div className="flex w-full flex-col h-full gap-2.5">
+            <div
+              className="grow overflow-y-auto
               overflow-x-hidden
               scrollbar-thin w-full"
-          >
-            {!isLoading ? (
-              <div
-                ref={messagesContainerRef}
-                className="
+            >
+              {!isLoading ? (
+                <div
+                  ref={messagesContainerRef}
+                  className="
               relative
               z-10
               h-full
@@ -255,27 +271,27 @@ export default function Messages() {
               gap-4
               
             "
-              >
-                {/* Welcome message */}
-                <motion.div
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  className="
+                >
+                  {/* Welcome message */}
+                  <motion.div
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    className="
                 self-end
                 flex
                 items-end
                 gap-2
                 max-w-[80%]
               "
-                  initial={{
-                    opacity: 0,
-                    y: 15,
-                  }}
-                >
-                  <div
-                    className="
+                    initial={{
+                      opacity: 0,
+                      y: 15,
+                    }}
+                  >
+                    <div
+                      className="
                   rounded-xl
                   px-2
                   py-1
@@ -293,27 +309,27 @@ export default function Messages() {
 
                   leading-7
                 "
-                  >
-                    {locale === "fa"
-                      ? PERSIANSTATICMESSAGE
-                      : ENGLISHSTATICMESSAGE}
-                  </div>
+                    >
+                      {locale === "fa"
+                        ? PERSIANSTATICMESSAGE
+                        : ENGLISHSTATICMESSAGE}
+                    </div>
 
-                  <Avatar type="assistant" />
-                </motion.div>
+                    <Avatar type="assistant" />
+                  </motion.div>
 
-                {data?.data?.map((message, index) => {
-                  const isAssistant = message.role === "assistant";
+                  {data?.data?.map((message, index) => {
+                    const isAssistant = message.role === "assistant";
 
-                  return (
-                    <motion.div
-                      key={message.id}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                      }}
-                      className={`
+                    return (
+                      <motion.div
+                        key={message.id}
+                        animate={{
+                          opacity: 1,
+                          y: 0,
+                          scale: 1,
+                        }}
+                        className={`
                     flex
                     items-start
                     gap-2
@@ -322,22 +338,22 @@ export default function Messages() {
 
                     max-w-[85%]
                   `}
-                      initial={{
-                        opacity: 0,
-                        y: 20,
-                        scale: 0.96,
-                      }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 220,
-                        damping: 22,
-                        delay: index * 0.03,
-                      }}
-                    >
-                      {!isAssistant && <Avatar type="user" />}
+                        initial={{
+                          opacity: 0,
+                          y: 20,
+                          scale: 0.96,
+                        }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 220,
+                          damping: 22,
+                          delay: index * 0.03,
+                        }}
+                      >
+                        {!isAssistant && <Avatar type="user" />}
 
-                      <div
-                        className={`
+                        <div
+                          className={`
                       rounded-xl
                       px-2
                       py-1
@@ -368,58 +384,54 @@ export default function Messages() {
                           `
                       }
                     `}
-                      >
-                        {message.text}
-                      </div>
+                        >
+                          {message.text}
+                        </div>
 
-                      {isAssistant && <Avatar type="assistant" />}
-                    </motion.div>
-                  );
-                })}
+                        {isAssistant && <Avatar type="assistant" />}
+                      </motion.div>
+                    );
+                  })}
 
-                <CustomWhen condition={isPending}>
-                  <TypingIndicator />
-                </CustomWhen>
-              </div>
-            ) : (
-              <div
-                className="
+                  <CustomWhen condition={isPending}>
+                    <TypingIndicator />
+                  </CustomWhen>
+                </div>
+              ) : (
+                <div
+                  className="
               size-full
               flex
               items-center
               justify-center
             "
-              >
-                <motion.div
-                  animate={{
-                    rotate: 360,
-                  }}
-                  className="
+                >
+                  <motion.div
+                    animate={{
+                      rotate: 360,
+                    }}
+                    className="
                 size-10
                 rounded-full
                 border-4
                 border-primary/30
                 border-t-primary
               "
-                  transition={{
-                    repeat: Infinity,
-                    duration: 1,
-                    ease: "linear",
-                  }}
-                />
-              </div>
-            )}
-          </div>
-          <motion.div
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            initial={{
-              opacity: 0,
-              y: 15,
-            }}
-            className="
+                    transition={{
+                      repeat: Infinity,
+                      duration: 1,
+                      ease: "linear",
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+            <motion.div
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              className="
     relative
     mt-2
     flex
@@ -444,10 +456,14 @@ export default function Messages() {
     shadow-black/5
     dark:shadow-black/20
   "
-          >
-            <CustomInput
-              fullWidth
-              className="
+              initial={{
+                opacity: 0,
+                y: 15,
+              }}
+            >
+              <CustomInput
+                fullWidth
+                className="
       flex-1
 
       rounded-2xl
@@ -462,14 +478,14 @@ export default function Messages() {
 
       focus-within:ring-0
     "
-              isDisabled={isLoading || isPending || !sessionId}
-              value={userText}
-              onChange={(e) => setUserText(e.target.value)}
-            />
+                isDisabled={isLoading || isPending || !sessionId}
+                value={userText}
+                onChange={(e) => setUserText(e.target.value)}
+              />
 
-            <Button
-              ref={buttonRef}
-              className="
+              <Button
+                ref={buttonRef}
+                className="
       shrink-0
 
       rounded-2xl
@@ -492,15 +508,16 @@ export default function Messages() {
 
       hover:scale-105
     "
-              isDisabled={!userText || !sessionId || isLoading || isPending}
-              isLoading={isPending}
-              onPress={handleSendMessage}
-            >
-              ارسال
-            </Button>
-          </motion.div>
-        </div>
-      </AnimatePresence>
-    </motion.div>
+                isDisabled={!userText || !sessionId || isLoading || isPending}
+                isLoading={isPending}
+                onPress={handleSendMessage}
+              >
+                ارسال
+              </Button>
+            </motion.div>
+          </div>
+        </AnimatePresence>
+      </motion.div>
+    </div>
   );
 }

@@ -1,28 +1,32 @@
-import { assistantRoutes } from "../routes/apiRoutes";
+import { assistantMessageRoutes } from "../routes/apiRoutes";
 import {
   IAssistantMessage,
   IAssistantMessagePayload,
   IAssistantStatus,
-} from "../types/assistant";
+  ICreateMessageResponse,
+} from "../types/assistantMessage";
 import { IBaseResponse } from "../types/base";
 
 import axiosInstance from "./base";
 
-export const getSessionIdAssitantMessages = async (sessionId: string) => {
+export const getChatAssitantMessages = async (sessionId: string) => {
   return await axiosInstance.get<IBaseResponse<IAssistantMessage[]>>(
-    assistantRoutes.getSessionIdMessages(sessionId),
+    assistantMessageRoutes.getChatMessages(sessionId),
   );
 };
 
 export const getAssistantStatus = async () => {
   return await axiosInstance.get<IBaseResponse<IAssistantStatus>>(
-    assistantRoutes.checkStatus(),
+    assistantMessageRoutes.checkStatus(),
   );
 };
 
 class AssistantServices {
   create(payload: IAssistantMessagePayload) {
-    return axiosInstance.post(assistantRoutes.create(), payload);
+    return axiosInstance.post<IBaseResponse<ICreateMessageResponse>>(
+      assistantMessageRoutes.create(),
+      payload,
+    );
   }
 }
 

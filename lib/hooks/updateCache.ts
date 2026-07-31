@@ -1,8 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
 
 import { GroupedMessageItem, IMessage } from "../types/message";
-import { IAssistantMessage } from "../types/assistant";
-import { assistantRoutes } from "../routes/apiRoutes";
+import { IAssistantMessage } from "../types/assistantMessage";
+import { assistantMessageRoutes } from "../routes/apiRoutes";
 const getDateKey = (timestamp: string | number | Date) =>
   new Date(timestamp).toISOString().split("T")[0];
 
@@ -69,11 +69,11 @@ export const useUpdateChatMessageCache = () => {
 export const useUpdateAssistantMessageChace = () => {
   const queryClient = useQueryClient();
   const updateCache = (
-    sessionId: string,
+    chatId: string,
     newAssistantMessage: IAssistantMessage,
   ) => {
     queryClient.setQueryData(
-      [assistantRoutes.getSessionIdMessages(sessionId)],
+      [assistantMessageRoutes.getChatMessages(chatId)],
       (old: any) => {
         if (!old) return old;
 

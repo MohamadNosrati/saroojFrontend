@@ -1,19 +1,21 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { responseHandler } from "../tools/responseHandler";
-import { assistantRoutes } from "../routes/apiRoutes";
+import { assistantMessageRoutes } from "../routes/apiRoutes";
 import {
   assistantServices,
   getAssistantStatus,
-  getSessionIdAssitantMessages,
-} from "../services/assistant";
-import { IAssistantMessagePayload } from "../types/assistant";
+  getChatAssitantMessages,
+} from "../services/assistantMessage";
+import {
+  IAssistantMessagePayload,
+} from "../types/assistantMessage";
 
-export const useGetSessionIdAssistantMessages = (sessionId: string) => {
+export const useGetChatAssistantMessages = (chatId: string) => {
   const { data, isLoading, isFetching } = useQuery({
-    queryKey: [assistantRoutes.getSessionIdMessages(sessionId)],
-    queryFn: async () => await getSessionIdAssitantMessages(sessionId),
-    enabled: Boolean(sessionId),
+    queryKey: [assistantMessageRoutes.getChatMessages(chatId)],
+    queryFn: async () => await getChatAssitantMessages(chatId),
+    enabled: Boolean(chatId),
   });
 
   return {
@@ -24,7 +26,7 @@ export const useGetSessionIdAssistantMessages = (sessionId: string) => {
 };
 export const useCheckAssistantStatus = () => {
   const { data, isLoading, isFetching } = useQuery({
-    queryKey: [assistantRoutes.checkStatus()],
+    queryKey: [assistantMessageRoutes.checkStatus()],
     queryFn: async () => await getAssistantStatus(),
   });
 
@@ -37,7 +39,9 @@ export const useCheckAssistantStatus = () => {
 export const useCreateAssistantMessage = () => {
   return useMutation({
     mutationFn: async (payload: IAssistantMessagePayload) =>
-      await assistantServices.create(payload),
+      await assistantServices.create(
+        payload,
+      ),
 
     onError: (error) => {
       responseHandler.fail(error?.message || "خطا در ایجاد پیام دستیار");
