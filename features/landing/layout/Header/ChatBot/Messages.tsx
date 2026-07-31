@@ -126,12 +126,12 @@ export default function Messages({ chatId, sessionId, setChatId }: IProps) {
   console.log("chatId", chatId);
 
   const handleSendMessage = () => {
-    updateCache(sessionId as string, {
+    updateCache(chatId as string, {
       id: uuidv4(),
       createdAt: date.getTime(),
       updatedAt: date.getTime(),
       role: IAssitantMessageRole.USER,
-      sessionId: sessionId as string,
+      chatId: sessionId as string,
       text: userText,
     });
 

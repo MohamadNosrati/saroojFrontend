@@ -39,10 +39,8 @@ export default function Chats({ sessionId, chatId, setChatId }: IProps) {
             <button
               key={chat.id}
               className={clsx(
-                "rounded-2xl py-1.5 px-2.5 flex flex-col text-start text-sm transition",
-                chatId === chat?.id
-                  ? "hover:bg-default-100 bg-white dark:hover:bg-zinc-800"
-                  : "border-2 border-primary",
+                "rounded-2xl py-1.5 px-2.5 flex flex-col text-start text-sm transition hover:bg-default-100 bg-white dark:hover:bg-zinc-800",
+                chatId === chat?.id ? "border-2 border-primary " : "",
               )}
               onClick={() => setChatId(chat.id)}
             >

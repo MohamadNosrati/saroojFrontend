@@ -14,7 +14,7 @@ export interface IAssistantMessage {
   text: string;
   createdAt: number;
   updatedAt: number;
-  sessionId: string;
+  chatId: string;
   role: IAssitantMessageRole;
   id: string;
 }

@@ -75,13 +75,19 @@ export const useUpdateAssistantMessageChace = () => {
     queryClient.setQueryData(
       [assistantMessageRoutes.getChatMessages(chatId)],
       (old: any) => {
-        if (!old) return old;
+        if (!old) {
+          return {
+            data: {
+              data: [newAssistantMessage],
+            },
+          };
+        }
 
         return {
           ...old,
           data: {
             ...old.data,
-            data: [...(old.data?.data || []), newAssistantMessage],
+            data: [...(old.data?.data ?? []), newAssistantMessage],
           },
         };
       },
