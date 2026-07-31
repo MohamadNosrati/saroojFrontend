@@ -5,4 +5,3 @@ export interface IAssistantChat {
   sessionId: string;
   id: string;
 }
-

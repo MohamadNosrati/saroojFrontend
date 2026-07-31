@@ -7,17 +7,13 @@ import { Button } from "@heroui/button";
 import { v4 as uuidv4 } from "uuid";
 import { useQueryClient } from "@tanstack/react-query";
 
-import {
-  IAssistantMessage,
-  IAssitantMessageRole,
-} from "@/lib/types/assistantMessage";
+import { IAssitantMessageRole } from "@/lib/types/assistantMessage";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import {
   useCreateAssistantMessage,
   useGetChatAssistantMessages,
 } from "@/lib/hooks/assistantMessage";
 import { useUpdateAssistantMessageChace } from "@/lib/hooks/updateCache";
-import { useSessionStore } from "@/lib/stores/session";
 import {
   assistantChatRoutes,
   assistantMessageRoutes,

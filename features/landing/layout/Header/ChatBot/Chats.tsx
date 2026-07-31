@@ -1,10 +1,11 @@
-import { useGetSessionAssistantMessages } from "@/lib/hooks/assistantChat";
-import { dateConvertor } from "@/lib/tools/dateConvertor";
 import { Button } from "@heroui/button";
 import { Spinner } from "@heroui/spinner";
 import clsx from "clsx";
 import { useLocale } from "next-intl";
 import { Dispatch, SetStateAction } from "react";
+
+import { dateConvertor } from "@/lib/tools/dateConvertor";
+import { useGetSessionAssistantMessages } from "@/lib/hooks/assistantChat";
 
 interface IProps {
   sessionId: string;
@@ -17,12 +18,13 @@ export default function Chats({ sessionId, chatId, setChatId }: IProps) {
     sessionId as string,
   );
   const locale = useLocale();
+
   return (
     <aside className="hidden w-64 flex-col gap-4 border-e border-default-200 p-4 dark:border-zinc-800 md:flex">
       <Button
+        className="rounded-2xl font-semibold"
         color="primary"
         onPress={() => setChatId("")}
-        className="rounded-2xl font-semibold"
       >
         + New chat
       </Button>
@@ -36,13 +38,13 @@ export default function Chats({ sessionId, chatId, setChatId }: IProps) {
           data?.data?.map((chat) => (
             <button
               key={chat.id}
-              onClick={() => setChatId(chat.id)}
               className={clsx(
                 "rounded-2xl py-1.5 px-2.5 flex flex-col text-start text-sm transition",
                 chatId === chat?.id
                   ? "hover:bg-default-100 bg-white dark:hover:bg-zinc-800"
                   : "border-2 border-primary",
               )}
+              onClick={() => setChatId(chat.id)}
             >
               <p className="truncate font-medium">
                 {chat?.title.substring(0, 20)}

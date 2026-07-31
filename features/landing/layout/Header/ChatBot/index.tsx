@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-
 import { Button } from "@heroui/button";
 import {
   Modal,
@@ -13,7 +12,6 @@ import {
 import { useLocale, useTranslations } from "next-intl";
 
 import { yekanBakh } from "@/lib/config/fonts";
-import { useGetSessionAssistantMessages } from "@/lib/hooks/assistantChat";
 import { useCheckAssistantStatus } from "@/lib/hooks/assistantMessage";
 import { useSessionStore } from "@/lib/stores/session";
 
@@ -35,25 +33,16 @@ const ChatBot = () => {
   return (
     <>
       <Button
-        color="primary"
-        onPress={onOpen}
-        isLoading={isLoadingStatus}
-        isDisabled={!assistantStatus?.data?.success}
         className="font-bold text-dark shadow-lg dark:text-white"
+        color="primary"
+        isDisabled={!assistantStatus?.data?.success}
+        isLoading={isLoadingStatus}
+        onPress={onOpen}
       >
         {t("button")}
       </Button>
 
       <Modal
-        isOpen={true}
-        onOpenChange={onOpenChange}
-        size="5xl"
-        dir={locale === "fa" ? "rtl" : "ltr"}
-        style={
-          {
-            "--font-yekan": yekanBakh.style.fontFamily,
-          } as React.CSSProperties
-        }
         classNames={{
           base: `
             font-yekan
@@ -67,6 +56,15 @@ const ChatBot = () => {
           body: "p-0",
           footer: "p-5",
         }}
+        dir={locale === "fa" ? "rtl" : "ltr"}
+        isOpen={isOpen}
+        size="5xl"
+        style={
+          {
+            "--font-yekan": yekanBakh.style.fontFamily,
+          } as React.CSSProperties
+        }
+        onOpenChange={onOpenChange}
       >
         <ModalContent>
           {() => (
@@ -96,8 +94,8 @@ const ChatBot = () => {
                     setChatId={setChatId}
                   />
                   <Messages
-                    sessionId={sessionId as string}
                     chatId={chatId}
+                    sessionId={sessionId as string}
                     setChatId={setChatId}
                   />
                 </div>

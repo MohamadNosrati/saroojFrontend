@@ -7,9 +7,7 @@ import {
   getAssistantStatus,
   getChatAssitantMessages,
 } from "../services/assistantMessage";
-import {
-  IAssistantMessagePayload,
-} from "../types/assistantMessage";
+import { IAssistantMessagePayload } from "../types/assistantMessage";
 
 export const useGetChatAssistantMessages = (chatId: string) => {
   const { data, isLoading, isFetching } = useQuery({
@@ -39,9 +37,7 @@ export const useCheckAssistantStatus = () => {
 export const useCreateAssistantMessage = () => {
   return useMutation({
     mutationFn: async (payload: IAssistantMessagePayload) =>
-      await assistantServices.create(
-        payload,
-      ),
+      await assistantServices.create(payload),
 
     onError: (error) => {
       responseHandler.fail(error?.message || "خطا در ایجاد پیام دستیار");

@@ -24,6 +24,6 @@ export interface IAssistantStatus {
 }
 
 export interface ICreateMessageResponse {
-  content:string;
-  chatId:string
+  content: string;
+  chatId: string;
 }
