@@ -23,7 +23,7 @@ const Contact = async () => {
       {/* We use grid layouts but let individual children handle their own sharp architectural borders */}
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 border border-black/[0.06] dark:border-white/[0.06] rounded-3xl bg-gray-50/30 dark:bg-gray-darker/10 backdrop-blur-sm overflow-hidden">
         {/* EMAIL BLOCK (Left in RTL - has a right border on desktop) */}
-        <div className="border-b md:border-b-0 md:border-l border-black/[0.08] dark:border-white/[0.08] w-full">
+        <div className="border-b md:border-b-0  border-black/[0.08] dark:border-white/[0.08] w-full">
           <ContactItem icon={EnvelopeIcon} title={t("email")}>
             <Link
               className="text-gray-600 dark:text-gray-300 font-bold hover:text-primary dark:hover:text-primary transition-colors duration-300 text-sm sm:text-base tracking-wide"
@@ -35,7 +35,7 @@ const Contact = async () => {
         </div>
 
         {/* LOCATION BLOCK (Center - has a right border on desktop) */}
-        <div className="border-b md:border-b-0 md:border-l border-black/[0.08] dark:border-white/[0.08] w-full">
+        <div className="border-b md:border-b-0  border-black/[0.08] dark:border-white/[0.08] w-full">
           <ContactItem icon={LocationIcon} title={t("centerOffice")}>
             <p className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 text-center leading-7 max-w-xs">
               {t("address")}

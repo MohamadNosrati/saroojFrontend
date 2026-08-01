@@ -9,7 +9,7 @@ interface IProps {
 
 const CommentItem: React.FC<IProps> = ({ item }) => {
   return (
-    <div className="group relative flex flex-col items-center px-6 pt-16 pb-10 rounded-3xl bg-gradient-to-b from-gray-darker via-gray-dark to-gray-darker/90 border border-white/[0.06] shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] hover:border-primary/30 transition-all duration-500 ease-out text-center select-none backdrop-blur-sm">
+    <div className="group relative flex flex-col items-center px-6 pt-16 pb-10 rounded-3xl bg-gradient-to-b from-gray-darker via-gray-dark to-gray-darker/90 border border-white/[0.06]  hover:border-primary/30 transition-all duration-500 ease-out text-center select-none backdrop-blur-sm">
       <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-primary/[0.08] to-transparent rounded-t-3xl pointer-events-none group-hover:from-primary/[0.15] transition-all duration-500" />
       <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full p-[3px] bg-gradient-to-b from-white/20 to-white/5 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.5)] group-hover:from-primary/40 group-hover:to-primary/10 transition-all duration-500">
         <div className="relative size-full rounded-full overflow-hidden bg-gray-darker border border-white/5">
