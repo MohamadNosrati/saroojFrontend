@@ -21,7 +21,7 @@ const ShareButton: React.FC<IProps> = ({ paylod }) => {
   return (
     <Button
       className="min-w-0 sm:size-10 size-8 !p-0"
-      color="warning"
+      color="primary"
       variant="shadow"
       onPress={() => shareHandler()}
     >

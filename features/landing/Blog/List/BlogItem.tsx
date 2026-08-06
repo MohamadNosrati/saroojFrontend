@@ -35,17 +35,20 @@ export default function BlogItem({ item }: IProps) {
       title: string;
       alt: string;
       href: string;
+      writer: string;
     }
   > = {
     fa: {
       title: item?.title,
       alt: item?.alt,
       href: persianRoutes.singleBlogPage(`${slugify(item?.title)}`),
+      writer: "نشریه فنی",
     },
     en: {
       title: item?.titleEn,
       alt: item?.altEn,
       href: englishRoutes.singleBlogPage(`${slugify(item?.titleEn)}`),
+      writer: "Technical Departement",
     },
   };
 

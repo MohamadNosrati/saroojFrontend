@@ -188,13 +188,20 @@ export default async function SingleProjectPage({ params }: Props) {
               }}
             />
           </div>
-          <div className="w-full sm:mt-4 mt-2.5 rounded-xl bg-white dark:bg-neutral-900/30 border border-neutral-200 dark:border-neutral-800/60 shadow-sm dark:shadow-none px-1 sm:px-2 sm:py-6 py-4">
-            {false ? (
-              <Carousel images={data?.data?.project?.images || []} />
-            ) : (
-              <StepsContainer steps={data?.data?.project?.steps || []} />
-            )}
-          </div>
+          <CustomWhen
+            condition={
+              Boolean(projectData?.images?.length) ||
+              Boolean(projectData?.steps?.length)
+            }
+          >
+            <div className="w-full sm:mt-4 mt-2.5 rounded-xl bg-white dark:bg-neutral-900/30 border border-neutral-200 dark:border-neutral-800/60 shadow-sm dark:shadow-none px-1 sm:px-2 sm:py-6 py-4">
+              {projectData?.images ? (
+                <Carousel images={data?.data?.project?.images || []} />
+              ) : (
+                <StepsContainer steps={data?.data?.project?.steps || []} />
+              )}
+            </div>
+          </CustomWhen>
           <div className="sm:mt-8 mt-4">
             <Info project={data?.data?.project as IProject} />
           </div>

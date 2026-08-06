@@ -512,7 +512,10 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           نوع نمایش پروژه را انتخاب کنید.
         </span>
         <RadioGroup
-          isDisabled={Boolean(project)}
+          isDisabled={
+            Boolean(project) &&
+            Boolean(project?.images?.length || project?.steps?.length)
+          }
           orientation="horizontal"
           value={projectType}
           onValueChange={(value: any) => setProjectType(value)}
