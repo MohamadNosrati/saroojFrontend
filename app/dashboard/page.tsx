@@ -5,38 +5,99 @@ import CustomContainer from "@/components/ui/CustomContainer";
 
 const Dashboard = () => {
   return (
-    <CustomContainer className="w-full bg-slate-900/40 border border-slate-800 backdrop-blur-md p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 shadow-xl shadow-black/20 group">
-      <div className="flex flex-col gap-1.5">
-        <div className="flex items-center gap-2">
-          {/* Decorative pulse indicator */}
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
-          </span>
-          <h3 className="text-slate-100 font-extrabold text-lg sm:text-xl tracking-wide">
-            تحلیل و بررسی داده‌های وب‌سایت (Web Analytics)
-          </h3>
+    <div className="flex flex-col gap-4">
+      <CustomContainer className="w-full bg-slate-900/40 border border-slate-800 backdrop-blur-md p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 shadow-xl shadow-black/20 group">
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-center gap-2">
+            {/* Decorative pulse indicator */}
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+            </span>
+            <h3 className="text-slate-100 font-extrabold text-lg sm:text-xl tracking-wide">
+              تحلیل و بررسی داده‌های وب‌سایت (PostHog Web Analytics)
+            </h3>
+          </div>
+          <p className="text-slate-400 text-sm font-medium leading-relaxed max-w-xl">
+            برای مشاهده و رصد دقیق متریک‌های مختلف رفتاری کاربران، روی دکمه ورود
+            به پنل تحلیلی کلیک کنید.
+          </p>
         </div>
-        <p className="text-slate-400 text-sm font-medium leading-relaxed max-w-xl">
-          برای مشاهده و رصد دقیق متریک‌های مختلف رفتاری کاربران، روی دکمه ورود
-          به پنل تحلیلی کلیک کنید.
-        </p>
-      </div>
-
-      <Link
-        className="w-full sm:w-auto"
-        href={process.env.NEXT_PUBLIC_POSTHOG_ANALYTICS_LINK as string}
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        <Button
-          className="w-full sm:w-auto px-6 h-12 bg-primary text-slate-950 font-extrabold text-sm rounded-xl shadow-lg shadow-primary/10 hover:shadow-primary/20 hover:scale-[1.02] transition-all duration-200"
-          size="lg"
+        <Link
+          className="w-full sm:w-auto"
+          href={process.env.NEXT_PUBLIC_POSTHOG_ANALYTICS_LINK as string}
+          rel="noopener noreferrer"
+          target="_blank"
         >
-          ورود به پنل PostHog
-        </Button>
-      </Link>
-    </CustomContainer>
+          <Button
+            className="w-full sm:w-auto px-6 h-12 bg-primary text-slate-950 font-extrabold text-sm rounded-xl shadow-lg shadow-primary/10 hover:shadow-primary/20 hover:scale-[1.02] transition-all duration-200"
+            size="lg"
+          >
+            ورود به پنل PostHog
+          </Button>
+        </Link>
+      </CustomContainer>
+      <CustomContainer className="w-full bg-slate-900/40 border border-slate-800 backdrop-blur-md p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 shadow-xl shadow-black/20 group">
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-center gap-2">
+            {/* Decorative pulse indicator */}
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+            </span>
+            <h3 className="text-slate-100 font-extrabold text-lg sm:text-xl tracking-wide">
+              تحلیل و بررسی داده‌های seo وب‌سایت (Search Console)
+            </h3>
+          </div>
+          <p className="text-slate-400 text-sm font-medium leading-relaxed max-w-xl">
+            برای برسی موارد مربوط به سئو وبسایت به لینک روبرو مراجعه کنید.
+          </p>
+        </div>
+        <Link
+          className="w-full sm:w-auto"
+          href={process.env.NEXT_PUBLIC_GOOGLE_SEARCH_CONSOLE_LINK as string}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <Button
+            className="w-full sm:w-auto px-6 h-12 bg-primary text-slate-950 font-extrabold text-sm rounded-xl shadow-lg shadow-primary/10 hover:shadow-primary/20 hover:scale-[1.02] transition-all duration-200"
+            size="lg"
+          >
+            ورود به پنل Google Search Console
+          </Button>
+        </Link>
+      </CustomContainer>
+      <CustomContainer className="w-full bg-slate-900/40 border border-slate-800 backdrop-blur-md p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 shadow-xl shadow-black/20 group">
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-center gap-2">
+            {/* Decorative pulse indicator */}
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+            </span>
+            <h3 className="text-slate-100 font-extrabold text-lg sm:text-xl tracking-wide">
+              تحلیل و برسی عملکرد بازدید کنندگان(Google Analytics)
+            </h3>
+          </div>
+          <p className="text-slate-400 text-sm font-medium leading-relaxed max-w-xl">
+            برای برسی عملکرد کابران به لینک روبرو مراجعه کنید.
+          </p>
+        </div>
+        <Link
+          className="w-full sm:w-auto"
+          href={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_LINK as string}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <Button
+            className="w-full sm:w-auto px-6 h-12 bg-primary text-slate-950 font-extrabold text-sm rounded-xl shadow-lg shadow-primary/10 hover:shadow-primary/20 hover:scale-[1.02] transition-all duration-200"
+            size="lg"
+          >
+            ورود به پنل Google Analytics
+          </Button>
+        </Link>
+      </CustomContainer>
+    </div>
   );
 };
 
