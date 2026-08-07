@@ -1,8 +1,9 @@
+import { MetadataRoute } from "next";
+
 import { blogsRoutes, ProjectsRoute } from "@/lib/routes/apiRoutes";
 import { getData } from "@/lib/services/data";
 import { slugify } from "@/lib/tools/slugify";
 import { IBaseResponse } from "@/lib/types/base";
-import { MetadataRoute } from "next";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const locales = ["fa", "en"] as const;
@@ -127,5 +128,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getProjectsDaynamicPage(),
     getBlogsDaynamicPage(),
   ]);
+
   return [...getStaticPages(), ...projectPages, ...blogPages];
 }
