@@ -27,16 +27,13 @@ const ChatBot = () => {
   const sessionId = useSessionStore((state) => state.sessionId);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const { data: assistantStatus, isLoading: isLoadingStatus } =
-    useCheckAssistantStatus();
+
 
   return (
     <>
       <Button
         className="font-bold text-dark shadow-lg dark:text-white"
         color="primary"
-        isDisabled={!assistantStatus?.data?.success}
-        isLoading={isLoadingStatus}
         onPress={onOpen}
       >
         {t("button")}

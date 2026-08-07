@@ -10,6 +10,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { IAssitantMessageRole } from "@/lib/types/assistantMessage";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import {
+  useCheckAssistantStatus,
   useCreateAssistantMessage,
   useGetChatAssistantMessages,
 } from "@/lib/hooks/assistantMessage";
@@ -114,6 +115,8 @@ export default function Messages({ chatId, sessionId, setChatId }: IProps) {
   const { data, isLoading, isFetching } = useGetChatAssistantMessages(
     chatId || "",
   );
+  // const { data: assistantStatus, isLoading: isLoadingStatus } =
+  //   useCheckAssistantStatus();
   const queryClient = useQueryClient();
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [userText, setUserText] = useState("");
