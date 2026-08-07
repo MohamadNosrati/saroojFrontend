@@ -10,7 +10,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { IAssitantMessageRole } from "@/lib/types/assistantMessage";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import {
-  useCheckAssistantStatus,
   useCreateAssistantMessage,
   useGetChatAssistantMessages,
 } from "@/lib/hooks/assistantMessage";

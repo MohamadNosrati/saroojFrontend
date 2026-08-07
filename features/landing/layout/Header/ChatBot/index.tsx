@@ -12,7 +12,6 @@ import {
 import { useLocale, useTranslations } from "next-intl";
 
 import { yekanBakh } from "@/lib/config/fonts";
-import { useCheckAssistantStatus } from "@/lib/hooks/assistantMessage";
 import { useSessionStore } from "@/lib/stores/session";
 
 import Messages from "./Messages";
@@ -26,8 +25,6 @@ const ChatBot = () => {
 
   const sessionId = useSessionStore((state) => state.sessionId);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-
 
   return (
     <>
