@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { ToastContainer } from "react-toastify";
 import NextTopLoader from "nextjs-toploader";
 import { useEffect } from "react";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import Providers from "@/lib/providers";
 import { useSessionStore } from "@/lib/stores/session";
@@ -33,6 +34,7 @@ export default function RootLayout({
         />
         <Providers>{children}</Providers>
         <ToastContainer autoClose={3000} position="top-center" />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID as string} />
       </body>
     </html>
   );
