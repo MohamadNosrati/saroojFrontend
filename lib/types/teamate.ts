@@ -15,17 +15,32 @@ export interface ITeamate {
   title: string;
   position: string;
   titleEn: string;
+  titleAr: string;
   positionEn: string;
+  positionAr: string;
   pictureId: IFile;
   description: string;
   descriptionEn: string;
+  descriptionAr: string;
   createdAt: Date;
   updatedAt: Date;
   isActive: boolean;
   alt: string;
   altEn: string;
+  altAr: string;
   telegram?: string;
   instagram?: string;
+}
+
+export interface ITranslatedTeamatePayload {
+  titleEn?: string;
+  descriptionEn?: string;
+  altEn?: string;
+  positionEn?: string;
+  titleAr?: string;
+  descriptionAr?: string;
+  altAr?: string;
+  positionAr?: string;
 }
 
 export interface IUpdateTeamatePayload extends Partial<ITeamatePayload> {
@@ -37,9 +52,4 @@ export type TTeamateTranslatePayload = Pick<
   "alt" | "title" | "description" | "position"
 >;
 
-export interface ITranslatedTeamatePayload {
-  titleEn?: string;
-  descriptionEn?: string;
-  altEn?: string;
-  positionEn?: string;
-}
+

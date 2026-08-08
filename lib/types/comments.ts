@@ -1,8 +1,10 @@
+type TLanguage = "persian" | "english" | "arabic"
+
 interface ICommentPayload {
   fullName: string;
   email: string;
   text: string;
-  type: "persian" | "english";
+  type: TLanguage;
 }
 
 interface IComment {
@@ -13,7 +15,7 @@ interface IComment {
   createdAt: Date;
   updatedAt: Date;
   isActive: boolean;
-  type: "persian" | "english";
+  type: TLanguage;
 }
 
 interface IUpdateCommentPayload extends Partial<ICommentPayload> {

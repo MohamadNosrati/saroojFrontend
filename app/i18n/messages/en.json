@@ -49,6 +49,9 @@
     "topTitle": "Latest Articles & News",
     "description": "Technical insights, structural achievements, and architectural innovations in the steel and iron industry.",
     "lastTitle": "Sarooj Articles",
+    "blogItem": {
+      "department": "Technical Department"
+    },
     "metadata": {
       "title": "Construction Magazine | Sarooj Articles and News",
       "description": "Expert construction articles, building renovation tips, industrial project news, and practical guides for owners and contractors.",
@@ -61,6 +64,9 @@
     }
   },
   "Home": {
+    "carousel": {
+      "button": "View Details"
+    },
     "categories": {
       "title": "Categories"
     },

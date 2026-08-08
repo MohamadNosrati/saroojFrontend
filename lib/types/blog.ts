@@ -12,14 +12,17 @@ export interface IBlog {
   id: string;
   title: string;
   titleEn: string;
+  titleAr: string;
   pictureId: IFile;
   description: string;
   createdAt: Date;
   descriptionEn: string;
+  descriptionAr: string;
   updatedAt: Date;
   isActive: boolean;
   alt: string;
   altEn: string;
+  altAr: string;
   userId: {
     userName: string;
     id: string;
@@ -27,6 +30,14 @@ export interface IBlog {
   };
 }
 
+export interface ITranslatedBlogPayload {
+  titleEn?: string;
+  descriptionEn?: string;
+  altEn?: string;
+  titleAr?: string;
+  descriptionAr?: string;
+  altAr?: string;
+}
 export interface UpdateBlogPayload extends Partial<IBlogPayload> {
   id: string;
 }
@@ -48,8 +59,4 @@ export type TBlogTranslatePayload = Pick<
   "alt" | "title" | "description"
 >;
 
-export interface ITranslatedBlogPayload {
-  titleEn?: string;
-  descriptionEn?: string;
-  altEn?: string;
-}
+

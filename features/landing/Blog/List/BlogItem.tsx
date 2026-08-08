@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import { CalandarIcon } from "@/components/icons";
 import { englishRoutes, persianRoutes } from "@/lib/routes/navigationRoutes";
@@ -28,6 +28,7 @@ interface IProps {
 }
 
 export default function BlogItem({ item }: IProps) {
+  const t = useTranslations("Blogs.blogItem");
   const locale = useLocale();
   const itemLang: Record<
     LocaleEnum,
@@ -35,20 +36,17 @@ export default function BlogItem({ item }: IProps) {
       title: string;
       alt: string;
       href: string;
-      writer: string;
     }
   > = {
     fa: {
       title: item?.title,
       alt: item?.alt,
       href: persianRoutes.singleBlogPage(`${slugify(item?.title)}`),
-      writer: "نشریه فنی",
     },
     en: {
       title: item?.titleEn,
       alt: item?.altEn,
       href: englishRoutes.singleBlogPage(`${slugify(item?.titleEn)}`),
-      writer: "Technical Departement",
     },
   };
 
@@ -88,7 +86,7 @@ export default function BlogItem({ item }: IProps) {
       >
         {/* MINIMALIST INDUSTRY CLASSIFICATION LABEL */}
         <span className="text-[10px] block text-start font-black text-primary uppercase">
-          نشریه فنی
+          {t("department")}
         </span>
 
         {/* ARTICLE BLOCK HEADER WITH SMOOTH LINE CLAMP AND TRANSLATION MOVEMENT */}

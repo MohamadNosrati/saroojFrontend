@@ -3,7 +3,7 @@ import "swiper/css";
 import { Button } from "@heroui/button";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import { uploadUrl } from "@/lib/tools/upload";
 import { ISlider } from "@/lib/types/slider";
@@ -19,6 +19,7 @@ export default function CarouselItem({
   index: number;
   activeIndex: number;
 }) {
+  const t = useTranslations("Home.carousel");
   const locale = useLocale();
   const itemLang: Record<
     LocaleEnum,
@@ -36,6 +37,12 @@ export default function CarouselItem({
       link: item?.link,
     },
     en: {
+      title: item?.titleEn,
+      alt: item?.altEn,
+      description: item?.descriptionEn,
+      link: item?.linkEn,
+    },
+    ar: {
       title: item?.titleEn,
       alt: item?.altEn,
       description: item?.descriptionEn,
@@ -112,13 +119,17 @@ export default function CarouselItem({
                   whileTap={{ scale: 0.97 }}
                 >
                   {/* Glassmorphism primary ghost button */}
-                  <Button
-                    className="font-bold text-base px-8 py-6 rounded-xl border-2 backdrop-blur-md bg-primary/5 hover:bg-primary/20 shadow-[0_0_15px_rgba(0,0,0,0.2)] transition-all duration-300"
-                    color="primary"
-                    variant="ghost"
+                  <CustomWhen
+                    condition={Boolean(itemLang[locale as LocaleEnum]?.link)}
                   >
-                    مشاهده جزییات
-                  </Button>
+                    <Button
+                      className="font-bold text-base px-8 py-6 rounded-xl border-2 backdrop-blur-md bg-primary/5 hover:bg-primary/20 shadow-[0_0_15px_rgba(0,0,0,0.2)] transition-all duration-300"
+                      color="primary"
+                      variant="ghost"
+                    >
+                      {t("button")}
+                    </Button>
+                  </CustomWhen>
                 </motion.div>
               </Link>
             </motion.div>
