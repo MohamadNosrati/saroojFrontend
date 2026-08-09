@@ -114,3 +114,16 @@ export const langSelector = (locale: LocaleEnum) => {
       return "fa_IR";
   }
 };
+
+export const languageSelector = (locale: LocaleEnum) => {
+  switch (locale) {
+    case "fa":
+      return "persian";
+    case "en":
+      return "english";
+    case "ar":
+      return "arabic";
+    default:
+      return "persian";
+  }
+};

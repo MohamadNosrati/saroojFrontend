@@ -15,9 +15,9 @@ import ShareButton from "@/features/landing/layout/ShareButton";
 import { uploadUrl } from "@/lib/tools/upload";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import StepsContainer from "@/features/landing/SingleProject/Steps";
+import { langSelector, projectDataSelector } from "@/lib/tools/dataSelectors";
 
 import notFound from "../../not-found";
-import { langSelector, projectDataSelector } from "@/lib/tools/dataSelectors";
 
 type Props = {
   params: Promise<{ slug: string }>;

@@ -3,15 +3,16 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { CommentsRoute } from "@/lib/routes/apiRoutes";
 import CommentsBg from "@/public/images/commentsBg.png";
 import { getData } from "@/lib/services/data";
-import { IBaseResponse } from "@/lib/types/base";
+import { IBaseResponse, LocaleEnum } from "@/lib/types/base";
 
 import Container from "./Container";
+import { languageSelector } from "@/lib/tools/dataSelectors";
 
 const Comments = async () => {
   const data = await getData<IBaseResponse<IComment[]>>(CommentsRoute.getAll());
   const locale = await getLocale();
 
-  const lang = locale === "fa" ? "persian" : "english";
+  const lang = languageSelector(locale as LocaleEnum);
   const t = await getTranslations("About.comments");
 
   return (

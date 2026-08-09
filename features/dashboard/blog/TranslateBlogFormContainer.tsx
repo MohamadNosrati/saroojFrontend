@@ -26,6 +26,9 @@ type TformValues = {
   titleEn: string;
   altEn: string;
   descriptionEn: string;
+  titleAr: string;
+  altAr: string;
+  descriptionAr: string;
 };
 
 const TranslateBlogFormContainer: React.FC<IFormContainerProps> = ({
@@ -43,11 +46,17 @@ const TranslateBlogFormContainer: React.FC<IFormContainerProps> = ({
       titleEn: "",
       descriptionEn: "",
       altEn: "",
+      titleAr: "",
+      descriptionAr: "",
+      altAr: "",
     },
     values: {
       titleEn: traslatedBlogPayload?.titleEn || "",
       descriptionEn: traslatedBlogPayload?.descriptionEn || "",
       altEn: traslatedBlogPayload?.altEn || "",
+      altAr: traslatedBlogPayload?.altAr || "",
+      descriptionAr: traslatedBlogPayload?.descriptionAr || "",
+      titleAr: traslatedBlogPayload?.titleAr || "",
     },
   });
   const onSubmit = async (data: TformValues) => {
@@ -141,6 +150,83 @@ const TranslateBlogFormContainer: React.FC<IFormContainerProps> = ({
               }) => (
                 <CustomInput
                   dir="ltr"
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label="توضیحات عکس"
+                  labelPlacement="outside-top"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "altEn is required!",
+                },
+              }}
+            />
+          </div>
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="titleAr"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <CustomInput
+                  dir="rtl"
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label="عنوان مقاله"
+                  labelPlacement="outside-top"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "title is required!",
+                },
+              }}
+            />
+          </div>
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="descriptionAr"
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <div>
+                  <SimpleEditor initialContent={value} onChange={onChange} />
+                  <CustomWhen condition={Boolean(error?.message)}>
+                    <p className="text-danger mt-1 text-sm font-bold">
+                      {error?.message}
+                    </p>
+                  </CustomWhen>
+                </div>
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "descriptionEn is required!",
+                },
+              }}
+            />
+          </div>
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="altAr"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <CustomInput
+                  dir="rtl"
                   errorMessage={error?.message}
                   isInvalid={Boolean(error?.message)}
                   label="توضیحات عکس"

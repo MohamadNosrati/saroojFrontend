@@ -14,6 +14,7 @@ const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
 
 import { getTranslations } from "next-intl/server";
+
 import { blogDataSelector, langSelector } from "@/lib/tools/dataSelectors";
 
 type IProps = {
