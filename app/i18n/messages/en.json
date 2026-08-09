@@ -133,7 +133,8 @@
       "title": "Suggested Projects"
     },
     "steps": {
-      "button": "Watch Project Details"
+      "button": "Watch Project Details",
+      "title": "step"
     },
     "metadata": {
       "notFoundTitle": "Project Not Found | Sarooj Construction Company",

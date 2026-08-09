@@ -39,7 +39,6 @@ export interface ITranslatedSliderPayload {
   altAr?: string;
 }
 
-
 export interface UpdateSliderPayload extends Partial<ISliderPayload> {
   id: string;
 }
@@ -48,4 +47,3 @@ export type TSliderTranslatePayload = Pick<
   ISlider,
   "alt" | "title" | "description"
 >;
-

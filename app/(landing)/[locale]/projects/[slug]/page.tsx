@@ -166,6 +166,11 @@ export default async function SingleProjectPage({ params }: Props) {
       alt: projectData?.altEn as string,
       description: projectData?.descriptionEn as string,
     },
+    ar: {
+      title: projectData?.titleAr as string,
+      alt: projectData?.altAr as string,
+      description: projectData?.descriptionAr as string,
+    },
   };
 
   return (

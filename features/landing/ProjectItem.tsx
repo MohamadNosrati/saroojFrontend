@@ -3,7 +3,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useLocale } from "next-intl";
 
-import { englishRoutes, persianRoutes } from "@/lib/routes/navigationRoutes";
+import {
+  arabicRoutes,
+  englishRoutes,
+  persianRoutes,
+} from "@/lib/routes/navigationRoutes";
 import { IProject } from "@/lib/types/project";
 import { slugify } from "@/lib/tools/slugify";
 import { uploadUrl } from "@/lib/tools/upload";
@@ -32,6 +36,11 @@ const ProjectItem: React.FC<IProps> = ({ item }) => {
       title: item?.titleEn,
       alt: item?.altEn,
       href: englishRoutes.singleProjectPage(`${slugify(item?.titleEn)}`),
+    },
+    ar: {
+      title: item?.titleAr,
+      alt: item?.altAr,
+      href: arabicRoutes.singleProjectPage(`${slugify(item?.titleAr)}`),
     },
   };
 

@@ -43,10 +43,10 @@ export default function CarouselItem({
       link: item?.linkEn,
     },
     ar: {
-      title: item?.titleEn,
-      alt: item?.altEn,
-      description: item?.descriptionEn,
-      link: item?.linkEn,
+      title: item?.titleAr,
+      alt: item?.altAr,
+      description: item?.descriptionAr,
+      link: item?.linkAr,
     },
   };
 

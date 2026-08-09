@@ -1,4 +1,4 @@
-type TLanguage = "persian" | "english" | "arabic"
+type TLanguage = "persian" | "english" | "arabic";
 
 interface ICommentPayload {
   fullName: string;

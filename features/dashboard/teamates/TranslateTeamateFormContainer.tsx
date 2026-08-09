@@ -26,6 +26,10 @@ type TformValues = {
   altEn: string;
   descriptionEn: string;
   positionEn: string;
+  titleAr: string;
+  altAr: string;
+  descriptionAr: string;
+  positionAr: string;
 };
 
 const TranslateTeamateFormContainer: React.FC<IFormContainerProps> = ({
@@ -45,12 +49,20 @@ const TranslateTeamateFormContainer: React.FC<IFormContainerProps> = ({
       descriptionEn: "",
       altEn: "",
       positionEn: "",
+      titleAr: "",
+      descriptionAr: "",
+      altAr: "",
+      positionAr: "",
     },
     values: {
       titleEn: traslatedTeamatePayload?.titleEn || "",
       descriptionEn: traslatedTeamatePayload?.descriptionEn || "",
       altEn: traslatedTeamatePayload?.altEn || "",
       positionEn: traslatedTeamatePayload?.positionEn || "",
+      titleAr: traslatedTeamatePayload?.titleEn || "",
+      descriptionAr: traslatedTeamatePayload?.descriptionAr || "",
+      altAr: traslatedTeamatePayload?.altAr || "",
+      positionAr: traslatedTeamatePayload?.positionAr || "",
     },
   });
   const onSubmit = async (data: TformValues) => {
@@ -112,6 +124,32 @@ const TranslateTeamateFormContainer: React.FC<IFormContainerProps> = ({
           <div className="w-full">
             <Controller
               control={control}
+              name="positionEn"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <CustomInput
+                  dir="ltr"
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label="عنوان هم تیمی"
+                  labelPlacement="outside-top"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "positionEn is required!",
+                },
+              }}
+            />
+          </div>
+          <div className="w-full">
+            <Controller
+              control={control}
               name="descriptionEn"
               render={({
                 field: { value, onChange },
@@ -146,6 +184,109 @@ const TranslateTeamateFormContainer: React.FC<IFormContainerProps> = ({
                   errorMessage={error?.message}
                   isInvalid={Boolean(error?.message)}
                   label="توضیحات عکس"
+                  labelPlacement="outside-top"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "altEn is required!",
+                },
+              }}
+            />
+          </div>
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="titleAr"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <CustomInput
+                  dir="rtl"
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label="عنوان هم تیمی عربی"
+                  labelPlacement="outside-top"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "title is required!",
+                },
+              }}
+            />
+          </div>
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="positionEn"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <CustomInput
+                  dir="rtl"
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label=" عربی موقعیت هم تیمی"
+                  labelPlacement="outside-top"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "positionEn is required!",
+                },
+              }}
+            />
+          </div>
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="descriptionAr"
+              render={({
+                field: { value, onChange },
+                formState: { errors },
+              }) => (
+                <CustomTextArea
+                  dir="rtl"
+                  errorMessage={errors?.descriptionEn?.message}
+                  isInvalid={Boolean(errors.descriptionEn?.message)}
+                  label={"نوضحات عربی"}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "descriptionAr is required!",
+                },
+              }}
+            />
+          </div>
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="altAr"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <CustomInput
+                  dir="rtl"
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label="توضیحات عکس عربی"
                   labelPlacement="outside-top"
                   value={value}
                   onChange={onChange}

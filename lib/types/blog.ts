@@ -58,5 +58,3 @@ export type TBlogTranslatePayload = Pick<
   IBlog,
   "alt" | "title" | "description"
 >;
-
-

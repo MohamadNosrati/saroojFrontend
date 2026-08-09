@@ -7,4 +7,8 @@ export const typeOptions = [
     label: "english",
     key: "english",
   },
+  {
+    label: "عربی",
+    key: "arabic",
+  },
 ];

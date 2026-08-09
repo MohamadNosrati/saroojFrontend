@@ -1,9 +1,12 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import clsx from "clsx";
+import { useLocale } from "next-intl";
+import { useTranslations } from "use-intl";
 
 import { uploadUrl } from "@/lib/tools/upload";
 import { IStep } from "@/lib/types/project";
+import { LocaleEnum } from "@/lib/types/base";
 
 interface IProps {
   item: IStep;
@@ -12,6 +15,25 @@ interface IProps {
 }
 
 export default function LandingStepItem({ item, index, activeIndex }: IProps) {
+  const locale = useLocale();
+  const t = useTranslations("SingleProject.steps");
+  const itemLang: Record<
+    LocaleEnum,
+    {
+      title: string;
+    }
+  > = {
+    fa: {
+      title: item?.name || "",
+    },
+    en: {
+      title: item?.nameEn || "",
+    },
+    ar: {
+      title: item?.nameAr || "",
+    },
+  };
+
   return (
     <motion.div
       animate={{ opacity: 1, y: 0 }}
@@ -44,12 +66,12 @@ export default function LandingStepItem({ item, index, activeIndex }: IProps) {
           <div className="flex flex-col gap-1.5">
             {/* Step Counter Tag */}
             <span className="text-xs sm:text-sm font-bold text-primary/90 uppercase tracking-widest drop-shadow-sm">
-              مرحله {index + 1}
+              {t("title")} {index + 1}
             </span>
 
             {/* Step Title */}
             <span className="text-lg sm:text-xl lg:text-2xl font-black text-white tracking-wide leading-tight drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]">
-              {item?.name}
+              {itemLang[locale as LocaleEnum]?.title}
             </span>
           </div>
         </div>

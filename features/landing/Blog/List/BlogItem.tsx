@@ -3,7 +3,11 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 
 import { CalandarIcon } from "@/components/icons";
-import { englishRoutes, persianRoutes } from "@/lib/routes/navigationRoutes";
+import {
+  arabicRoutes,
+  englishRoutes,
+  persianRoutes,
+} from "@/lib/routes/navigationRoutes";
 import { dateConvertor } from "@/lib/tools/dateConvertor";
 import { IBlog } from "@/lib/types/blog";
 import { uploadUrl } from "@/lib/tools/upload";
@@ -47,6 +51,11 @@ export default function BlogItem({ item }: IProps) {
       title: item?.titleEn,
       alt: item?.altEn,
       href: englishRoutes.singleBlogPage(`${slugify(item?.titleEn)}`),
+    },
+    ar: {
+      title: item?.titleAr,
+      alt: item?.altAr,
+      href: arabicRoutes.singleBlogPage(`${slugify(item?.titleAr)}`),
     },
   };
 

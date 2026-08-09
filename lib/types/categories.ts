@@ -38,5 +38,3 @@ export type TCategoryTranslatePayload = Pick<
   ICategory,
   "alt" | "title" | "description"
 >;
-
-

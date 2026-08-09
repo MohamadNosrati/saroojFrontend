@@ -31,6 +31,6 @@ export type LocaleParams = Promise<{ locale: "en" | "fa" }>;
 
 export enum LocaleEnum {
   FA = "fa",
-  En = "en",
-  AR = "ar"
+  EN = "en",
+  AR = "ar",
 }

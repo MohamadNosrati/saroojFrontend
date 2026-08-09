@@ -2,7 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 
-import { englishRoutes, persianRoutes } from "@/lib/routes/navigationRoutes";
+import {
+  arabicRoutes,
+  englishRoutes,
+  persianRoutes,
+} from "@/lib/routes/navigationRoutes";
 import { WriterIcon } from "@/components/icons";
 import { IBlog } from "@/lib/types/blog";
 import { uploadUrl } from "@/lib/tools/upload";
@@ -32,6 +36,11 @@ export default function LatestBlogItem({ item }: IProps) {
       title: item?.titleEn,
       alt: item?.altEn,
       href: englishRoutes.singleBlogPage(`${slugify(item?.titleEn)}`),
+    },
+    ar: {
+      title: item?.titleAr,
+      alt: item?.altAr,
+      href: arabicRoutes.singleBlogPage(`${slugify(item?.titleAr)}`),
     },
   };
 

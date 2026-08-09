@@ -22,7 +22,7 @@ type TformValues = {
   isActive: "0" | "1";
   email: string;
   text: string;
-  type: "persian" | "english";
+  type: "persian" | "english" | "arabic";
 };
 
 const FormContainer: React.FC<IFormContainerProps> = ({
@@ -118,7 +118,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           name="fullName"
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <CustomInput
-              dir={type === "persian" ? "rtl" : "ltr"}
+              dir={type === "english" ? "ltr" : "rtl"}
               errorMessage={error?.message}
               isInvalid={Boolean(error?.message)}
               label="نام و نام خانوادگی"
@@ -186,7 +186,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
           name="text"
           render={({ field: { value, onChange }, formState: { errors } }) => (
             <CustomTextArea
-              dir={type === "persian" ? "rtl" : "ltr"}
+              dir={type === "english" ? "ltr" : "rtl"}
               errorMessage={errors?.text?.message}
               isInvalid={Boolean(errors?.text)}
               value={value}

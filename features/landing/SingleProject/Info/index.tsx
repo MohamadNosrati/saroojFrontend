@@ -46,6 +46,13 @@ const Info: React.FC<IProps> = async ({ project }) => {
       description: project?.descriptionEn || "",
       artitectureStyle: project?.artitectureStyleEn || "",
     },
+    ar: {
+      address: project?.addressAr || "",
+      startDate: dateConvertor(project?.startDate, true),
+      endDate: dateConvertor(project?.endDate as number, true),
+      description: project?.descriptionAr || "",
+      artitectureStyle: project?.artitectureStyleAr || "",
+    },
   };
 
   return (

@@ -67,6 +67,41 @@ class EnglishNavigationRoutes {
     return `${this.base}/blogs/${slug}`;
   }
 }
+class ArabicNavigationRoutes {
+  private readonly base: string;
+
+  constructor() {
+    this.base = "/ar";
+  }
+
+  homePage() {
+    return `${this.base}/`;
+  }
+
+  aboutPage() {
+    return `${this.base}/about`;
+  }
+
+  projectsPage() {
+    return `${this.base}/projects`;
+  }
+
+  categoryProjectsPage(categoryTitle: string) {
+    return `${this.base}/projects?categoryTitle=${categoryTitle}`;
+  }
+
+  singleProjectPage(id: string) {
+    return `${this.base}/projects/${id}`;
+  }
+
+  blogsPage() {
+    return `${this.base}/blogs/`;
+  }
+
+  singleBlogPage(slug: string) {
+    return `${this.base}/blogs/${slug}`;
+  }
+}
 
 class DashboardRoute {
   private readonly base: string;
@@ -128,4 +163,5 @@ class FrontAuthRoutes {
 export const dashboardRoutes = new DashboardRoute();
 export const persianRoutes = new PersianNavigationRoutes();
 export const englishRoutes = new EnglishNavigationRoutes();
+export const arabicRoutes = new ArabicNavigationRoutes();
 export const frontAuthRoutes = new FrontAuthRoutes();

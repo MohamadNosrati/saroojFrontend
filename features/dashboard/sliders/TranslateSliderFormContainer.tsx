@@ -25,6 +25,9 @@ type TformValues = {
   titleEn: string;
   altEn: string;
   descriptionEn: string;
+  titleAr: string;
+  altAr: string;
+  descriptionAr: string;
 };
 
 const TranslateSliderFormContainer: React.FC<IFormContainerProps> = ({
@@ -43,11 +46,17 @@ const TranslateSliderFormContainer: React.FC<IFormContainerProps> = ({
       titleEn: "",
       descriptionEn: "",
       altEn: "",
+      titleAr: "",
+      descriptionAr: "",
+      altAr: "",
     },
     values: {
       titleEn: traslatedSliderPayload?.titleEn || "",
       descriptionEn: traslatedSliderPayload?.descriptionEn || "",
       altEn: traslatedSliderPayload?.altEn || "",
+      titleAr: traslatedSliderPayload?.titleAr || "",
+      descriptionAr: traslatedSliderPayload?.descriptionAr || "",
+      altAr: traslatedSliderPayload?.altAr || "",
     },
   });
   const onSubmit = async (data: TformValues) => {
@@ -143,6 +152,83 @@ const TranslateSliderFormContainer: React.FC<IFormContainerProps> = ({
                   errorMessage={error?.message}
                   isInvalid={Boolean(error?.message)}
                   label="توضیحات عکس"
+                  labelPlacement="outside-top"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "altEn is required!",
+                },
+              }}
+            />
+          </div>
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="titleAr"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <CustomInput
+                  dir="rtl"
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label="عنوان هم تیمی عربی"
+                  labelPlacement="outside-top"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "title is required!",
+                },
+              }}
+            />
+          </div>
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="descriptionAr"
+              render={({
+                field: { value, onChange },
+                formState: { errors },
+              }) => (
+                <CustomTextArea
+                  dir="rtl"
+                  errorMessage={errors?.descriptionEn?.message}
+                  isInvalid={Boolean(errors.descriptionEn?.message)}
+                  label={"نوضحات عربی"}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "descriptionAr is required!",
+                },
+              }}
+            />
+          </div>
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="altAr"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <CustomInput
+                  dir="rtl"
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label="توضیحات عکس عربی"
                   labelPlacement="outside-top"
                   value={value}
                   onChange={onChange}

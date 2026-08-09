@@ -35,6 +35,11 @@ export default async function BlogDetails({ blog }: IProps) {
       alt: blog?.altEn,
       description: blog?.descriptionEn,
     },
+    ar: {
+      title: blog?.titleAr,
+      alt: blog?.altAr,
+      description: blog?.descriptionAr,
+    },
   };
 
   return (

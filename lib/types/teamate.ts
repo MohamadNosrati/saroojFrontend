@@ -51,5 +51,3 @@ export type TTeamateTranslatePayload = Pick<
   ITeamate,
   "alt" | "title" | "description" | "position"
 >;
-
-

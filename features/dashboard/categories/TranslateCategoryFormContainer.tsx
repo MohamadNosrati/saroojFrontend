@@ -25,6 +25,9 @@ type TformValues = {
   titleEn: string;
   altEn: string;
   descriptionEn: string;
+  titleAr: string;
+  altAr: string;
+  descriptionAr: string;
 };
 
 const TranslateCategoryFormContainer: React.FC<IFormContainerProps> = ({
@@ -43,11 +46,17 @@ const TranslateCategoryFormContainer: React.FC<IFormContainerProps> = ({
       titleEn: "",
       descriptionEn: "",
       altEn: "",
+      titleAr: "",
+      descriptionAr: "",
+      altAr: "",
     },
     values: {
       titleEn: traslatedCategoryPayload?.titleEn || "",
       descriptionEn: traslatedCategoryPayload?.descriptionEn || "",
       altEn: traslatedCategoryPayload?.altEn || "",
+      titleAr: traslatedCategoryPayload?.titleAr || "",
+      descriptionAr: traslatedCategoryPayload?.descriptionAr || "",
+      altAr: traslatedCategoryPayload?.altAr || "",
     },
   });
   const onSubmit = async (data: TformValues) => {
@@ -158,6 +167,83 @@ const TranslateCategoryFormContainer: React.FC<IFormContainerProps> = ({
             />
           </div>
           <div className="w-full">
+            <Controller
+              control={control}
+              name="titleAr"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <CustomInput
+                  dir="rtl"
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label="عنوان دسته بندی عربی"
+                  labelPlacement="outside-top"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "titleAr is required!",
+                },
+              }}
+            />
+          </div>
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="descriptionAr"
+              render={({
+                field: { value, onChange },
+                formState: { errors },
+              }) => (
+                <CustomTextArea
+                  dir="rtl"
+                  errorMessage={errors?.descriptionAr?.message}
+                  isInvalid={Boolean(errors.descriptionAr?.message)}
+                  label={"توضیحات عربی"}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "descriptionAr is required!",
+                },
+              }}
+            />
+          </div>
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="altAr"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <CustomInput
+                  dir="rtl"
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label="عربی توضیحات عکس"
+                  labelPlacement="outside-top"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "altAr is required!",
+                },
+              }}
+            />
+          </div>
+          <div className="w-full">
             <Button
               fullWidth
               className="font-bold"
@@ -175,3 +261,4 @@ const TranslateCategoryFormContainer: React.FC<IFormContainerProps> = ({
 };
 
 export default TranslateCategoryFormContainer;
+

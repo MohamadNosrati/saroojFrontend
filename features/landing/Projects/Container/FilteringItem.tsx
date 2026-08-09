@@ -3,7 +3,6 @@
 import { Checkbox } from "@heroui/checkbox";
 import { motion } from "framer-motion";
 import { useLocale } from "next-intl";
-
 import { ICategory } from "@/lib/types/categories";
 import { LocaleEnum } from "@/lib/types/base";
 
@@ -26,6 +25,9 @@ export default function FilteringItem({ item, index, groupSelected }: IProps) {
     },
     en: {
       title: item?.titleEn,
+    },
+    ar: {
+      title: item?.titleAr,
     },
   };
 

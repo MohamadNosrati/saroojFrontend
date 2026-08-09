@@ -35,6 +35,12 @@ const TeamItem: React.FC<IProps> = async ({ item }) => {
       description: item?.descriptionEn,
       position: item?.positionEn,
     },
+    ar: {
+      title: item?.titleAr,
+      alt: item?.altAr,
+      description: item?.descriptionAr,
+      position: item?.positionAr,
+    },
   };
 
   return (

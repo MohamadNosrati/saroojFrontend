@@ -100,6 +100,20 @@ export default function TranslateStepItem({ item, index, control }: IProps) {
             />
           )}
         />
+        <Controller
+          control={control}
+          name={`stepsEn.${index}.videoAr`}
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <CustomInput
+              errorMessage={error?.message}
+              isInvalid={Boolean(error?.message)}
+              label="ویدیو مرحله"
+              labelPlacement="outside-top"
+              value={value}
+              onChange={onChange}
+            />
+          )}
+        />
       </div>
     </div>
   );

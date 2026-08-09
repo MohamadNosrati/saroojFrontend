@@ -10,7 +10,7 @@ const CustomTextArea: React.FC<TextAreaProps> = (props) => {
           "bg-white data-[hover=true]:bg-white dark:bg-white group-data-[focus=true]:!bg-white p-2.5",
         input: "font-bold placehoder:font-bold !text-dark",
       }}
-      label="توضبحات"
+      label={props?.label || "توضبحات"}
       labelPlacement="outside-top"
       {...props}
     />

@@ -4,6 +4,7 @@ import { IFile } from "./file";
 export interface ImageInfo {
   name: string;
   nameEn?: string;
+  nameAr?: string;
   pictureId: {
     image: string;
     id: string;
@@ -17,6 +18,10 @@ export interface ImageInfoPayload {
 export interface ImageEnInfoPayload {
   nameEn: string;
   pictureIdEn: string;
+}
+export interface ImageArInfoPayload {
+  nameAr: string;
+  pictureIdAr: string;
 }
 
 export interface ImageItem {
@@ -35,6 +40,11 @@ export interface ImageEnItemPayload {
   afterEn: ImageEnInfoPayload;
   id?: string;
 }
+export interface ImageArItemPayload {
+  beforeEn: ImageArInfoPayload;
+  afterEn: ImageArInfoPayload;
+  id?: string;
+}
 
 export interface IStepItemPayload {
   name: string;
@@ -48,11 +58,17 @@ export interface IStepItemPayload {
 
 export interface ITranslatedStepItemPayload {
   nameEn: string;
+  nameAr: string;
   pictureIdEn: string;
+  pictureIdAr: string;
   altEn: string;
+  altAr: string;
   descriptionEn: string;
+  descriptionAr: string;
   isActiveEn: boolean;
-  videoEn?: string;
+  isActiveAr: boolean;
+  videoEn: string;
+  videoAr: string;
   id?: string;
 }
 
@@ -66,6 +82,9 @@ export interface IStep {
   nameEn?: string;
   altEn?: string;
   descriptionEn?: string;
+  nameAr?: string;
+  altAr?: string;
+  descriptionAr?: string;
   id?: string;
 }
 
@@ -73,21 +92,26 @@ export interface IProject {
   id: string;
   title: string;
   titleEn: string;
+  titleAr: string;
   categoryId: ICategory;
   pictureId: IFile;
   images: ImageItem[];
   alt: string;
   altEn: string;
+  altAr: string;
   area: number;
   startDate: number;
   endDate?: number;
   description: string;
   descriptionEn?: string;
+  descriptionAr?: string;
   isActive: boolean;
   artitectureStyle?: string;
   artitectureStyleEn?: string;
+  artitectureStyleAr?: string;
   address: string;
   addressEn?: string;
+  addressAr?: string;
   createdAt: number;
   updatedAt: number;
   video?: string;
@@ -110,10 +134,15 @@ export interface IProjectPayload {
   address: string;
   video?: string;
   titleEn?: string;
+  titleAr?: string;
   altEn?: string;
+  altAr?: string;
   descriptionEn?: string;
+  descriptionAr?: string;
   artitectureStyleEn?: string;
+  artitectureStyleAr?: string;
   addressEn?: string;
+  addressAr?: string;
 }
 
 export interface IUpdateProjectPayload extends IProjectPayload {
@@ -149,11 +178,18 @@ export type TProjectTranslatePayload = {
 
 export interface ITranslatedProjectPayload {
   titleEn: string;
+  titleAr: string;
   imagesEn: ImageEnItemPayload[];
+  imagesAr: ImageArItemPayload[];
   altEn: string;
+  altAr: string;
   descriptionEn: string;
-  videoEn?: string;
+  descriptionAr: string;
+  video?: string;
   artitectureStyleEn?: string;
+  artitectureStyleAr?: string;
   addressEn: string;
+  addressAr: string;
   stepsEn: ITranslatedStepItemPayload[];
+  stepsAr: ITranslatedStepItemPayload[];
 }

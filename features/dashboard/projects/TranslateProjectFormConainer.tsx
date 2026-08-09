@@ -37,7 +37,6 @@ export type TformValues = {
   artitectureStyleEn?: string;
   addressEn: string;
   stepsEn: ITranslatedStepItemPayload[];
-  videoEn?: string;
 };
 
 const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
@@ -60,7 +59,6 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
       stepsEn: [],
       addressEn: "",
       artitectureStyleEn: "",
-      videoEn: "",
     },
     values: {
       titleEn: traslatedProjectPayload?.titleEn || "",
@@ -70,7 +68,6 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
       stepsEn: traslatedProjectPayload?.stepsEn || [],
       artitectureStyleEn: traslatedProjectPayload?.artitectureStyleEn || "",
       addressEn: traslatedProjectPayload?.addressEn || "",
-      videoEn: traslatedProjectPayload?.videoEn || "",
     },
   });
 
@@ -190,26 +187,6 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
                   message: "altEn is required!",
                 },
               }}
-            />
-          </div>
-          <div className="w-full">
-            <Controller
-              control={control}
-              name="videoEn"
-              render={({
-                field: { value, onChange },
-                fieldState: { error },
-              }) => (
-                <CustomInput
-                  dir="ltr"
-                  errorMessage={error?.message}
-                  isInvalid={Boolean(error?.message)}
-                  label="ویدیو امگلیسی"
-                  labelPlacement="outside-top"
-                  value={value}
-                  onChange={onChange}
-                />
-              )}
             />
           </div>
           <div className="w-full">

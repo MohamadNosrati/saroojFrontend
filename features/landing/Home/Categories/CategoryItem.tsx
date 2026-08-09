@@ -2,7 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { getLocale } from "next-intl/server";
 
-import { englishRoutes, persianRoutes } from "@/lib/routes/navigationRoutes";
+import {
+  arabicRoutes,
+  englishRoutes,
+  persianRoutes,
+} from "@/lib/routes/navigationRoutes";
 import { ICategory } from "@/lib/types/categories";
 import { uploadUrl } from "@/lib/tools/upload";
 import { slugify } from "@/lib/tools/slugify";
@@ -31,6 +35,11 @@ const CategoryItem: React.FC<IProps> = async ({ item }) => {
       title: item?.titleEn,
       alt: item?.altEn,
       href: englishRoutes.categoryProjectsPage(`${slugify(item?.titleEn)}`),
+    },
+    ar: {
+      title: item?.titleAr,
+      alt: item?.altAr,
+      href: arabicRoutes.categoryProjectsPage(`${slugify(item?.titleAr)}`),
     },
   };
 
