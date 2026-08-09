@@ -10,6 +10,8 @@ import BlogsList from "@/features/landing/Blog/List";
 import { createMetadata } from "@/lib/config/site";
 import { blogsRoutes } from "@/lib/routes/apiRoutes";
 import { getData } from "@/lib/services/data";
+import { LocaleEnum } from "@/lib/types/base";
+import { langSelector } from "@/lib/tools/dataSelectors";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
@@ -42,7 +44,7 @@ export async function generateMetadata({
         description: t("openGraphDescription"),
         url: `${baseUrl}/${locale}/blog`,
         siteName: t("companyName"),
-        locale: locale === "fa" ? "fa_IR" : "en_US",
+        locale: langSelector(locale as LocaleEnum),
         type: "website",
       },
 

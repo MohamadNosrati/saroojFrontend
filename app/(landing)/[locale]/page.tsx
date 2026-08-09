@@ -7,6 +7,8 @@ import Faqs from "@/features/landing/Home/Faq";
 import Services from "@/features/landing/Home/Services";
 import Team from "@/features/landing/Home/Team.tsx";
 import { createMetadata } from "@/lib/config/site";
+import { LocaleEnum } from "@/lib/types/base";
+import { langSelector } from "@/lib/tools/dataSelectors";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
@@ -39,7 +41,7 @@ export async function generateMetadata({
       openGraph: {
         url: `${baseUrl}/${locale}`,
         siteName: t("companyName"),
-        locale: locale === "fa" ? "fa_IR" : "en_US",
+        locale: langSelector(locale as LocaleEnum),
         type: "website",
       },
 

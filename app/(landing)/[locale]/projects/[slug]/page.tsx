@@ -17,6 +17,7 @@ import { CustomWhen } from "@/components/ui/CustomWhen";
 import StepsContainer from "@/features/landing/SingleProject/Steps";
 
 import notFound from "../../not-found";
+import { langSelector, projectDataSelector } from "@/lib/tools/dataSelectors";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -30,6 +31,7 @@ export async function generateStaticParams() {
         id: string;
         title: string;
         titleEn: string;
+        titleAr: string;
       }[]
     >
   >(ProjectsRoute.getAllSlugs());
@@ -42,6 +44,10 @@ export async function generateStaticParams() {
     {
       locale: "en",
       slug: slugify(project?.titleEn),
+    },
+    {
+      locale: "ar",
+      slug: slugify(project?.titleAr),
     },
   ]);
 
@@ -81,10 +87,10 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
     };
   }
 
-  const title = locale === "fa" ? project.title : project.titleEn;
-  const description =
-    locale === "fa" ? project.description : project.descriptionEn;
-  const address = locale === "fa" ? project.address : project.addressEn;
+  const { title, description, address } = projectDataSelector(
+    locale as LocaleEnum,
+    project,
+  );
 
   return createMetadata(
     {
@@ -105,7 +111,7 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
         description,
         url: `${baseUrl}/${locale}/projects/${slug}`,
         siteName: t("companyName"),
-        locale: locale === "fa" ? "fa_IR" : "en_US",
+        locale: langSelector(locale as LocaleEnum),
         type: "article",
         publishedTime: project.createdAt,
         modifiedTime: project.updatedAt,

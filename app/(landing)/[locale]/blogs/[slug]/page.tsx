@@ -6,7 +6,7 @@ import { createMetadata } from "@/lib/config/site";
 import { blogsRoutes } from "@/lib/routes/apiRoutes";
 import { getData } from "@/lib/services/data";
 import { slugify } from "@/lib/tools/slugify";
-import { IBaseResponse } from "@/lib/types/base";
+import { IBaseResponse, LocaleEnum } from "@/lib/types/base";
 import { IBlog, IBlogWithSuggestions } from "@/lib/types/blog";
 import { uploadUrl } from "@/lib/tools/upload";
 
@@ -14,6 +14,7 @@ const baseUrl =
   process.env.NEXT_PUBLIC_FRONT_URL || "https://default-domain.ir";
 
 import { getTranslations } from "next-intl/server";
+import { blogDataSelector, langSelector } from "@/lib/tools/dataSelectors";
 
 type IProps = {
   params: Promise<{
@@ -42,8 +43,7 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
     };
   }
 
-  const title = locale === "fa" ? post.title : post.titleEn;
-  const description = locale === "fa" ? post.description : post.descriptionEn;
+  const { title, description } = blogDataSelector(locale as LocaleEnum, post);
 
   const excerpt =
     description
@@ -64,13 +64,12 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
       alternates: {
         canonical: `${baseUrl}/${locale}/blog/${slug}`,
       },
-
       openGraph: {
         title: `${title} | ${t("blogTitleSuffix")}`,
         description: excerpt,
         url: `${baseUrl}/${locale}/blog/${slug}`,
         siteName: t("companyName"),
-        locale: locale === "fa" ? "fa_IR" : "en_US",
+        locale: langSelector(locale as LocaleEnum),
         type: "article",
         publishedTime: post.createdAt,
         modifiedTime: post.updatedAt || post.createdAt,

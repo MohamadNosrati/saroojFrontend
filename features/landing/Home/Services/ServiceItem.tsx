@@ -1,7 +1,3 @@
-import { useLocale } from "next-intl";
-
-import { LocaleEnum } from "@/lib/types/base";
-
 interface IProps {
   item: {
     title: string;

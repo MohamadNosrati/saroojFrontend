@@ -261,4 +261,3 @@ const TranslateCategoryFormContainer: React.FC<IFormContainerProps> = ({
 };
 
 export default TranslateCategoryFormContainer;
-
