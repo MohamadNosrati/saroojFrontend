@@ -16,42 +16,46 @@ import {
   HouseIcon,
   ProjectsIcon,
 } from "@/components/icons";
+import { INavItem } from ".";
 
-const data = [
-  {
-    href: persianRoutes.homePage(),
-    hrefEn: englishRoutes.homePage(),
-    label: "خانه",
-    labelEn: "Home",
-    icon: HouseIcon,
-  },
-  {
-    href: persianRoutes.projectsPage(),
-    hrefEn: englishRoutes.projectsPage(),
-    label: "پروژه ها",
-    labelEn: "Projects",
-    icon: ProjectsIcon,
-  },
-  {
-    href: persianRoutes.blogsPage(),
-    hrefEn: englishRoutes.blogsPage(),
-    label: "مقالات",
-    labelEn: "Articles",
-    icon: BlogsIcon,
-  },
-  {
-    href: persianRoutes.aboutPage(),
-    hrefEn: englishRoutes.aboutPage(),
-    label: "درباره ما",
-    labelEn: "About Us",
-    icon: AboutPageIcon,
-  },
-];
+// const data = [
+//   {
+//     href: persianRoutes.homePage(),
+//     hrefEn: englishRoutes.homePage(),
+//     label: "خانه",
+//     labelEn: "Home",
+//     icon: HouseIcon,
+//   },
+//   {
+//     href: persianRoutes.projectsPage(),
+//     hrefEn: englishRoutes.projectsPage(),
+//     label: "پروژه ها",
+//     labelEn: "Projects",
+//     icon: ProjectsIcon,
+//   },
+//   {
+//     href: persianRoutes.blogsPage(),
+//     hrefEn: englishRoutes.blogsPage(),
+//     label: "مقالات",
+//     labelEn: "Articles",
+//     icon: BlogsIcon,
+//   },
+//   {
+//     href: persianRoutes.aboutPage(),
+//     hrefEn: englishRoutes.aboutPage(),
+//     label: "درباره ما",
+//     labelEn: "About Us",
+//     icon: AboutPageIcon,
+//   },
+// ];
 
-export default function MobileNavigation() {
+interface IProps {
+  data: Pick<INavItem, "label" | "href" | "icon">[];
+}
+
+export default function MobileNavigation({ data }: IProps) {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
   const pathname = usePathname();
-  const locale = useLocale();
 
   useEffect(() => {
     setIsOpen(false);
@@ -93,7 +97,7 @@ export default function MobileNavigation() {
         <div className="container mx-auto flex flex-col gap-2">
           {data?.map((item) => {
             const Icon = item?.icon;
-            const isActive = (item?.href || item?.hrefEn) === pathname;
+            const isActive = (item?.href) === pathname;
 
             return (
               <Link
@@ -104,7 +108,7 @@ export default function MobileNavigation() {
                     ? "bg-primary text-gray-darker border-primary/20 shadow-lg shadow-primary/10"
                     : "text-gray-800 dark:text-gray-200 bg-transparent border-transparent hover:bg-dark/[0.02] dark:hover:bg-white/[0.02] hover:text-primary dark:hover:text-primary",
                 ])}
-                href={locale === "fa" ? item?.href : item?.hrefEn}
+                href={item?.href}
                 onClick={() => setIsOpen(false)} // Auto-close drawer on click
               >
                 {/* RIGHT ALIGNED CONTENT BLOCK */}
@@ -120,7 +124,7 @@ export default function MobileNavigation() {
                     <Icon height={20} width={20} />
                   </span>
                   <span className="tracking-wide">
-                    {locale === "fa" ? item?.label : item?.labelEn}
+                    {item?.label}
                   </span>
                 </div>
 

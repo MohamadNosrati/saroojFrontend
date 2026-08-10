@@ -84,7 +84,7 @@ const Header = () => {
         <div className="flex items-center xl:gap-20 lg:gap-12 gap-4">
           {/* Mobile nav trigger box */}
           <div className="lg:hidden p-1.5 hover:bg-dark/5 dark:hover:bg-white/5 rounded-xl transition-colors duration-200">
-            <MobileNavigation />
+            <MobileNavigation data={data} />
           </div>
 
           {/* Brand logo container */}

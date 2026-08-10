@@ -7,31 +7,52 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@heroui/dropdown";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 import { ArrowIcon, WorldIcon } from "@/components/icons";
-import { englishRoutes, persianRoutes } from "@/lib/routes/navigationRoutes";
+import {
+  arabicRoutes,
+  englishRoutes,
+  persianRoutes,
+} from "@/lib/routes/navigationRoutes";
 
 const items = [
   {
     key: persianRoutes.homePage(),
-    label: "Persian",
+    label: "فارسی",
+    locale: "/fa",
   },
   {
     key: englishRoutes.homePage(),
     label: "English",
+    locale: "/en",
+  },
+  {
+    key: arabicRoutes.homePage(),
+    label: "عربی",
+    locale: "/ar",
   },
 ];
 
 export default function SelectLanguage() {
   const [selectedKeys, setSelectedKeys] = useState<string>("Persian");
   const router = useRouter();
+  const pathName = usePathname();
 
   const handleAction = (label: any) => {
     setSelectedKeys(label);
     router.push(items?.find((item) => item?.label === label)?.key as string);
   };
+  useEffect(() => {
+    console.log("pathName", pathName);
+    const currentItem = items?.find((item) => pathName.startsWith(item.locale));
+    console.log("ci", currentItem);
+
+    if (currentItem) {
+      setSelectedKeys(currentItem.label);
+    }
+  }, [pathName]);
 
   return (
     <Dropdown>
