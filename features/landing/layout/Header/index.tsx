@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useLocale } from "next-intl";
 
 import {
   arabicRoutes,
@@ -14,15 +15,14 @@ import {
   ProjectsIcon,
   SaroojIcon,
 } from "@/components/icons";
+import { navDataSelector } from "@/lib/tools/dataSelectors";
+import { LocaleEnum } from "@/lib/types/base";
 
 import DeskTopNavigation from "./DesktopNavigation";
 import MobileNavigation from "./MobileNavigation";
 import SelectLanguage from "./SelectLanguage";
 import ToggleTheme from "./ToggleTheme";
 import ChatBot from "./ChatBot";
-import { useLocale } from "next-intl";
-import { navDataSelector } from "@/lib/tools/dataSelectors";
-import { LocaleEnum } from "@/lib/types/base";
 
 export interface INavItem {
   href: string;
@@ -76,6 +76,7 @@ const navData: INavItem[] = [
 const Header = () => {
   const locale = useLocale();
   const data = navDataSelector(locale as LocaleEnum, navData);
+
   return (
     <section className="h-20 sticky top-0 w-full z-50 bg-white/70 dark:bg-dark/70 backdrop-blur-md border-b border-black/[0.04] dark:border-white/[0.04] transition-all duration-300 shadow-[0_2px_20px_rgba(0,0,0,0.02)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.2)]">
       <div className="container h-full mx-auto flex items-center justify-between px-4 sm:px-6">

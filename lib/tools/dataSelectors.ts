@@ -1,4 +1,5 @@
 import { INavItem } from "@/features/landing/layout/Header";
+
 import { LocaleEnum } from "../types/base";
 import { IBlog } from "../types/blog";
 import { IProject } from "../types/project";

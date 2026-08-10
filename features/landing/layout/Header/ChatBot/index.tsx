@@ -13,11 +13,11 @@ import { useLocale, useTranslations } from "next-intl";
 
 import { yekanBakh } from "@/lib/config/fonts";
 import { useSessionStore } from "@/lib/stores/session";
+import { dirSelector } from "@/lib/tools/dataSelectors";
+import { LocaleEnum } from "@/lib/types/base";
 
 import Messages from "./Messages";
 import Chats from "./Chats";
-import { dirSelector } from "@/lib/tools/dataSelectors";
-import { LocaleEnum } from "@/lib/types/base";
 
 const ChatBot = () => {
   const locale = useLocale();

@@ -32,9 +32,7 @@ const CommentItem: React.FC<IProps> = ({ item }) => {
       <div className="mt-5 mb-1 text-primary/60 group-hover:text-primary group-hover:scale-110 transition-all duration-500">
         <DobleQuatesIcon height={16} width={20} />
       </div>
-      <p
-        className="mt-4 text-sm font-medium text-gray-300/90 leading-8 tracking-wide max-w-prose group-hover:text-white transition-colors duration-500 line-clamp-2"
-      >
+      <p className="mt-4 text-sm font-medium text-gray-300/90 leading-8 tracking-wide max-w-prose group-hover:text-white transition-colors duration-500 line-clamp-2">
         {item.text}
       </p>
     </div>

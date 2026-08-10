@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useLocale } from "next-intl";
+
 import { INavItem } from ".";
 
 interface IProps {
@@ -18,6 +18,7 @@ export default function DeskTopNavigation({ data }: IProps) {
       {data?.map((item) => {
         const Icon = item?.icon;
         const isActive = item?.href === pathName;
+
         return (
           <Link
             key={item?.label}

@@ -6,16 +6,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
 import { Button } from "@heroui/button";
 import { Swiper as SwiperType } from "swiper/types";
+import { useLocale } from "next-intl";
 
 import { IStep } from "@/lib/types/project";
 import { DescriptionIcon } from "@/components/icons";
 import { yekanBakh } from "@/lib/config/fonts";
 import { CustomWhen } from "@/components/ui/CustomWhen";
+import { dirSelector } from "@/lib/tools/dataSelectors";
+import { LocaleEnum } from "@/lib/types/base";
 
 import Video from "../Video";
-import { dirSelector } from "@/lib/tools/dataSelectors";
-import { useLocale } from "next-intl";
-import { LocaleEnum } from "@/lib/types/base";
 
 interface IProps {
   steps: IStep[];
@@ -34,6 +34,7 @@ export default function StepsDetails({
 }: IProps) {
   const locale = useLocale();
   const dir = dirSelector(locale as LocaleEnum);
+
   return createPortal(
     <AnimatePresence>
       {isOpen && (

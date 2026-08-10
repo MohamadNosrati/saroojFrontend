@@ -27,6 +27,7 @@ const PersianLyout = async ({
   const isPersian = locale === "fa";
   const messages = await getMessages();
   const dir = dirSelector(locale as LocaleEnum);
+
   return (
     <NextIntlClientProvider messages={messages}>
       <main
