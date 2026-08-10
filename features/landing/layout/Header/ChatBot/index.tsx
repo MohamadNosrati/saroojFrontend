@@ -16,6 +16,8 @@ import { useSessionStore } from "@/lib/stores/session";
 
 import Messages from "./Messages";
 import Chats from "./Chats";
+import { dirSelector } from "@/lib/tools/dataSelectors";
+import { LocaleEnum } from "@/lib/types/base";
 
 const ChatBot = () => {
   const locale = useLocale();
@@ -25,6 +27,7 @@ const ChatBot = () => {
 
   const sessionId = useSessionStore((state) => state.sessionId);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const dir = dirSelector(locale as LocaleEnum);
 
   return (
     <>
@@ -50,7 +53,7 @@ const ChatBot = () => {
           body: "p-0",
           footer: "p-5",
         }}
-        dir={locale === "fa" ? "rtl" : "ltr"}
+        dir={dir}
         isOpen={isOpen}
         size="5xl"
         style={

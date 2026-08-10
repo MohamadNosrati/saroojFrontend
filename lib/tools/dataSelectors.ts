@@ -1,3 +1,4 @@
+import { INavItem } from "@/features/landing/layout/Header";
 import { LocaleEnum } from "../types/base";
 import { IBlog } from "../types/blog";
 import { IProject } from "../types/project";
@@ -102,6 +103,34 @@ export const blogDataSelector = (
   }
 };
 
+export const navDataSelector = (
+  locale: LocaleEnum,
+  data: INavItem[],
+): Pick<INavItem, "label" | "href" | "icon">[] => {
+  switch (locale) {
+    case "fa":
+      return data?.map((item) => ({
+        label: item?.label,
+        href: item?.href,
+        icon: item?.icon,
+      }));
+    case "en":
+      return data?.map((item) => ({
+        label: item?.labelEn,
+        href: item?.hrefEn,
+        icon: item?.icon,
+      }));
+    case "ar":
+      return data?.map((item) => ({
+        label: item?.labelAr,
+        href: item?.hrefAr,
+        icon: item?.icon,
+      }));
+    default:
+      return data;
+  }
+};
+
 export const langSelector = (locale: LocaleEnum) => {
   switch (locale) {
     case "fa":
@@ -125,5 +154,17 @@ export const languageSelector = (locale: LocaleEnum) => {
       return "arabic";
     default:
       return "persian";
+  }
+};
+export const dirSelector = (locale: LocaleEnum): "rtl" | "ltr" => {
+  switch (locale) {
+    case "fa":
+      return "rtl";
+    case "en":
+      return "ltr";
+    case "ar":
+      return "rtl";
+    default:
+      return "rtl";
   }
 };

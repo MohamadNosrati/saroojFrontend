@@ -151,7 +151,6 @@ const Form = () => {
                 fieldState: { error },
               }) => (
                 <Input
-                  // dir={locale === "fa" ? "rtl" : "ltr"}
                   fullWidth
                   classNames={{
                     inputWrapper:

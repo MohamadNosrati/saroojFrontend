@@ -5,10 +5,7 @@ export default function Map() {
         {/* Decorative Map Frame Wrapper */}
         <div className="relative overflow-hidden rounded-3xl border border-gray-200/80 dark:border-white/[0.06] bg-slate-50 dark:bg-gray-darker p-2 shadow-[0_12px_40px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.25)] group transition-all duration-500">
           {/* Top Frame Status Bar / Header Look */}
-          <div
-            className="flex items-center justify-between px-4 pt-2 pb-3 select-none"
-            dir="rtl"
-          >
+          <div className="flex items-center justify-between px-4 pt-2 pb-3 select-none">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
               <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />

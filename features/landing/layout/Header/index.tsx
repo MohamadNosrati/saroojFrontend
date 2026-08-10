@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 
-import { englishRoutes, persianRoutes } from "@/lib/routes/navigationRoutes";
+import {
+  arabicRoutes,
+  englishRoutes,
+  persianRoutes,
+} from "@/lib/routes/navigationRoutes";
 import {
   AboutPageIcon,
   BlogsIcon,
@@ -16,39 +20,62 @@ import MobileNavigation from "./MobileNavigation";
 import SelectLanguage from "./SelectLanguage";
 import ToggleTheme from "./ToggleTheme";
 import ChatBot from "./ChatBot";
+import { useLocale } from "next-intl";
+import { navDataSelector } from "@/lib/tools/dataSelectors";
+import { LocaleEnum } from "@/lib/types/base";
 
-const data = [
+export interface INavItem {
+  href: string;
+  hrefEn: string;
+  hrefAr: string;
+  label: string;
+  labelEn: string;
+  labelAr: string;
+  icon: any;
+}
+
+const navData: INavItem[] = [
   {
     href: persianRoutes.homePage(),
     hrefEn: englishRoutes.homePage(),
+    hrefAr: arabicRoutes.homePage(),
     label: "خانه",
     labelEn: "Home",
+    labelAr: "الرئيسية",
     icon: HouseIcon,
   },
   {
     href: persianRoutes.projectsPage(),
     hrefEn: englishRoutes.projectsPage(),
+    hrefAr: arabicRoutes.projectsPage(),
     label: "پروژه ها",
     labelEn: "Projects",
+    labelAr: "المشاريع",
     icon: ProjectsIcon,
   },
   {
     href: persianRoutes.blogsPage(),
     hrefEn: englishRoutes.blogsPage(),
+    hrefAr: arabicRoutes.blogsPage(),
     label: "مقالات",
     labelEn: "Articles",
+    labelAr: "المقالات",
     icon: BlogsIcon,
   },
   {
     href: persianRoutes.aboutPage(),
     hrefEn: englishRoutes.aboutPage(),
+    hrefAr: arabicRoutes.aboutPage(),
     label: "درباره ما",
     labelEn: "About Us",
+    labelAr: "من نحن",
     icon: AboutPageIcon,
   },
 ];
 
 const Header = () => {
+  const locale = useLocale();
+  const data = navDataSelector(locale as LocaleEnum, navData);
   return (
     <section className="h-20 sticky top-0 w-full z-50 bg-white/70 dark:bg-dark/70 backdrop-blur-md border-b border-black/[0.04] dark:border-white/[0.04] transition-all duration-300 shadow-[0_2px_20px_rgba(0,0,0,0.02)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.2)]">
       <div className="container h-full mx-auto flex items-center justify-between px-4 sm:px-6">

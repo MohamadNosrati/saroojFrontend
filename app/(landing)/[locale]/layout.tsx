@@ -6,7 +6,8 @@ import { getMessages } from "next-intl/server";
 import Header from "@/features/landing/layout/Header";
 import Footer from "@/features/landing/layout/Footer";
 import { yekanBakh } from "@/lib/config/fonts";
-import { LocaleParams } from "@/lib/types/base";
+import { LocaleEnum, LocaleParams } from "@/lib/types/base";
+import { dirSelector } from "@/lib/tools/dataSelectors";
 
 export const viewport: Viewport = {
   themeColor: [
@@ -25,7 +26,7 @@ const PersianLyout = async ({
   const { locale } = await params;
   const isPersian = locale === "fa";
   const messages = await getMessages();
-
+  const dir = dirSelector(locale as LocaleEnum);
   return (
     <NextIntlClientProvider messages={messages}>
       <main
@@ -33,7 +34,7 @@ const PersianLyout = async ({
           "flex flex-col justify-between min-h-screen",
           isPersian ? "font-yekan" : "font-inter",
         ])}
-        dir={isPersian ? "rtl" : "ltr"}
+        dir={dir}
         style={
           { "--font-yekan": yekanBakh.style.fontFamily } as React.CSSProperties
         }

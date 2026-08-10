@@ -4,9 +4,9 @@ import { CommentsRoute } from "@/lib/routes/apiRoutes";
 import CommentsBg from "@/public/images/commentsBg.png";
 import { getData } from "@/lib/services/data";
 import { IBaseResponse, LocaleEnum } from "@/lib/types/base";
+import { languageSelector } from "@/lib/tools/dataSelectors";
 
 import Container from "./Container";
-import { languageSelector } from "@/lib/tools/dataSelectors";
 
 const Comments = async () => {
   const data = await getData<IBaseResponse<IComment[]>>(CommentsRoute.getAll());

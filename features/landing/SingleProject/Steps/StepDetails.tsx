@@ -13,6 +13,9 @@ import { yekanBakh } from "@/lib/config/fonts";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 
 import Video from "../Video";
+import { dirSelector } from "@/lib/tools/dataSelectors";
+import { useLocale } from "next-intl";
+import { LocaleEnum } from "@/lib/types/base";
 
 interface IProps {
   steps: IStep[];
@@ -29,6 +32,8 @@ export default function StepsDetails({
   swiperRef,
   isOpen,
 }: IProps) {
+  const locale = useLocale();
+  const dir = dirSelector(locale as LocaleEnum);
   return createPortal(
     <AnimatePresence>
       {isOpen && (
@@ -41,7 +46,7 @@ export default function StepsDetails({
             "fixed w-full left-0 z-[1000000] font-yekan sm:py-6 py-4",
             "bottom-0 rounded-t-3xl border-t border-primary/20 bg-white dark:bg-dark shadow-[0_-10px_40px_rgba(0,0,0,0.15)] dark:shadow-[0_-10px_40px_rgba(0,0,0,0.5)]",
           )}
-          dir="rtl"
+          dir={dir}
           exit={{
             y: "100%",
             opacity: 0,
