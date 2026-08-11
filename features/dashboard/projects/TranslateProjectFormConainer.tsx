@@ -207,12 +207,6 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
                   onChange={onChange}
                 />
               )}
-              rules={{
-                required: {
-                  value: true,
-                  message: "altEn is required!",
-                },
-              }}
             />
           </div>
           <div className="flex w-full flex-col gap-10">
