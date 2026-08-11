@@ -2,7 +2,11 @@
   "Header": {
     "bot": {
       "button": "Assistant",
-      "title": "Saroj Ai Assistant"
+      "title": "Sarooj Ai Assistant",
+      "newCchatButton" : "+ New chat",
+      "subTitle":"Online assistant",
+      "defaultMessage":"Hi 👋 How can I help you?",
+      "sendButton":"Send"
     }
   },
   "About": {

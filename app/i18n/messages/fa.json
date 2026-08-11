@@ -2,7 +2,11 @@
   "Header": {
     "bot": {
       "button": "دستیار",
-      "title": "دستیار هوش مصنوعی ساروج"
+      "title": "دستیار هوش مصنوعی ساروج",
+      "newCchatButton": "+ گفتگوی جدید",
+      "subTitle": "دستیار آنلاین",
+      "defaultMessage": "سلام 👋 چطور می‌تونم کمکتون کنم؟",
+      "sendButton": "ارسال"
     }
   },
   "About": {

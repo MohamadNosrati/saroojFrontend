@@ -1,11 +1,12 @@
 import { Button } from "@heroui/button";
 import { Spinner } from "@heroui/spinner";
 import clsx from "clsx";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Dispatch, SetStateAction } from "react";
 
 import { dateConvertor } from "@/lib/tools/dateConvertor";
 import { useGetSessionAssistantMessages } from "@/lib/hooks/assistantChat";
+import { LocaleEnum } from "@/lib/types/base";
 
 interface IProps {
   sessionId: string;
@@ -18,6 +19,7 @@ export default function Chats({ sessionId, chatId, setChatId }: IProps) {
     sessionId as string,
   );
   const locale = useLocale();
+  const t = useTranslations("Header.bot");
 
   return (
     <aside className="hidden w-64 flex-col gap-4 border-e border-default-200 p-4 dark:border-zinc-800 md:flex">
@@ -26,7 +28,7 @@ export default function Chats({ sessionId, chatId, setChatId }: IProps) {
         color="primary"
         onPress={() => setChatId("")}
       >
-        + New chat
+        {t("newCchatButton")}
       </Button>
 
       <div className="flex h-full flex-col gap-2 overflow-y-auto">
@@ -48,7 +50,7 @@ export default function Chats({ sessionId, chatId, setChatId }: IProps) {
                 {chat?.title.substring(0, 20)}
               </p>
               <span className="text-xs block text-default-500">
-                {dateConvertor(chat.createdAt, locale === "en")}
+                {dateConvertor(chat.createdAt, locale as LocaleEnum)}
               </span>
             </button>
           ))

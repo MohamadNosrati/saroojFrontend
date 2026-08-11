@@ -77,7 +77,7 @@ const ChatBot = () => {
 
                     <div className="flex items-center gap-2 text-xs text-default-500">
                       <span className="size-2 animate-pulse rounded-full bg-green-500" />
-                      Online assistant
+                      {t("subTitle")}
                     </div>
                   </div>
                 </div>

@@ -1,8 +1,11 @@
+import { LocaleEnum } from "../types/base";
+import { langSelector } from "./dataSelectors";
+
 export const dateConvertor = (
   timestamp: number | string | Date,
-  isEnglish = false,
+  language: LocaleEnum = LocaleEnum.FA,
 ) => {
-  return new Date(timestamp).toLocaleDateString(isEnglish ? "en-US" : "fa-IR", {
+  return new Date(timestamp).toLocaleDateString(langSelector(language), {
     year: "numeric",
     month: "long",
     day: "2-digit",

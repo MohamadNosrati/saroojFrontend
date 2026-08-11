@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@heroui/button";
 import { v4 as uuidv4 } from "uuid";
 import { useQueryClient } from "@tanstack/react-query";
@@ -19,9 +19,6 @@ import {
   assistantMessageRoutes,
 } from "@/lib/routes/apiRoutes";
 import CustomInput from "@/components/ui/CustomInput";
-
-const PERSIANSTATICMESSAGE = "سلام 👋 چطور می‌توانم کمکتان کنم؟";
-const ENGLISHSTATICMESSAGE = "Hi 👋 How can I help you?";
 
 function TypingIndicator() {
   return (
@@ -177,7 +174,7 @@ export default function Messages({ chatId, sessionId, setChatId }: IProps) {
 
     return () => document.removeEventListener("keydown", handleClick);
   }, []);
-  const locale = useLocale();
+  const t = useTranslations("Header.bot");
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -308,9 +305,7 @@ export default function Messages({ chatId, sessionId, setChatId }: IProps) {
                   leading-7
                 "
                     >
-                      {locale === "fa"
-                        ? PERSIANSTATICMESSAGE
-                        : ENGLISHSTATICMESSAGE}
+                      {t("defaultMessage")}
                     </div>
 
                     <Avatar type="assistant" />
@@ -509,8 +504,7 @@ export default function Messages({ chatId, sessionId, setChatId }: IProps) {
                 isDisabled={!userText || !sessionId || isLoading || isPending}
                 isLoading={isPending}
                 onPress={handleSendMessage}
-              >
-                ارسال
+              >{t("sendButton")}
               </Button>
             </motion.div>
           </div>

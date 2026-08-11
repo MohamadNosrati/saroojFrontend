@@ -45,14 +45,14 @@ const CategoryItem: React.FC<IProps> = async ({ item }) => {
 
   return (
     <Link
-      className="lg:col-span-4 col-span-6 aspect-[403/572] relative overflow-hidden rounded-2xl group shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)] dark:hover:shadow-primary/10 border border-black/5 dark:border-white/5"
+      className="lg:col-span-4 sm:col-span-6 col-span-full aspect-[403/572] relative overflow-hidden rounded-2xl group shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)] dark:hover:shadow-primary/10 border border-black/5 dark:border-white/5"
       href={itemLang[locale as LocaleEnum]?.href}
     >
       {/* LAYERED CINEMATIC OVERLAY */}
       <div className="size-full absolute left-0 top-0 z-10 bg-gradient-to-t from-black via-black/40 to-transparent flex py-8 px-5 flex-col items-center justify-end text-primary transition-all duration-300 group-hover:bg-dark/50">
         {/* TITLE WRAPPER WITH HOVER GLOW EFFECT */}
         <div className="w-full flex flex-col items-center gap-2 text-center">
-          <span className="text-2xl sm:text-3xl lg:text-4xl max-w-full truncate font-black text-primary drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] group-hover:scale-[1.02] transition-transform duration-300">
+          <span className="text-2xl sm:text-3xl lg:text-2xl max-w-full truncate font-black text-primary drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] group-hover:scale-[1.02] transition-transform duration-300">
             {itemLang[locale as LocaleEnum]?.title}
           </span>
 
