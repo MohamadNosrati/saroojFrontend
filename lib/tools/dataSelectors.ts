@@ -1,6 +1,6 @@
 import { INavItem } from "@/features/landing/layout/Header";
 
-import { LocaleEnum } from "../types/base";
+import { LocaleEnum, SortByEnum, TOption } from "../types/base";
 import { IBlog } from "../types/blog";
 import { IProject } from "../types/project";
 
@@ -132,6 +132,34 @@ export const navDataSelector = (
   }
 };
 
+export const sortingDataSelector = (
+  locale: LocaleEnum,
+  data: TOption[],
+): {
+  label: string;
+  key: SortByEnum;
+}[] => {
+  switch (locale) {
+    case "fa":
+      return data?.map((item) => ({
+        key: item?.key,
+        label: item?.label,
+      }));
+    case "en":
+      return data?.map((item) => ({
+        key: item?.key,
+        label: item?.labelEn || "",
+      }));
+    case "ar":
+      return data?.map((item) => ({
+        key: item?.key,
+        label: item?.labelAr || "",
+      }));
+    default:
+      return data;
+  }
+};
+
 export const langSelector = (locale: LocaleEnum) => {
   switch (locale) {
     case "fa":
@@ -147,13 +175,16 @@ export const langSelector = (locale: LocaleEnum) => {
 export const dateTimeSelector = (locale: LocaleEnum) => {
   switch (locale) {
     case "fa":
-      return "fa-IR";
+      return "fa-IR-u-ca-persian";
+
     case "en":
-      return "en-US";
+      return "en-US-u-ca-gregory";
+
     case "ar":
-      return "ar-SA";
+      return "ar-SA-u-ca-islamic";
+
     default:
-      return "fa-IR";
+      return "fa-IR-u-ca-persian";
   }
 };
 

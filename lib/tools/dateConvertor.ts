@@ -6,12 +6,11 @@ export const dateConvertor = (
   timestamp: number | string | Date,
   language: LocaleEnum = LocaleEnum.FA,
 ) => {
-  return new Date(timestamp).toLocaleDateString(dateTimeSelector(language), {
+  return new Intl.DateTimeFormat(dateTimeSelector(language), {
     year: "numeric",
     month: "long",
-    day: "2-digit",
-    formatMatcher: "basic",
-  });
+    day: "numeric",
+  }).format(new Date(timestamp));
 };
 
 export const timeConvertor = (timestamp: number | string | Date) => {

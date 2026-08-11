@@ -6,10 +6,11 @@ import { useSearchParams } from "next/navigation";
 import { useLocale } from "next-intl";
 
 import { sortOptions } from "@/lib/config/sort";
-import { SortByEnum } from "@/lib/types/base";
+import { LocaleEnum, SortByEnum } from "@/lib/types/base";
 import { ICategory } from "@/lib/types/categories";
 
 import FilteringItem from "./FilteringItem";
+import { sortingDataSelector } from "@/lib/tools/dataSelectors";
 
 interface IProps {
   sort: {
@@ -77,7 +78,10 @@ export default function Filtering({
   };
 
   const condition = locale === "fa" ? "title" : "titleEn";
-
+  const localeSortOptions = sortingDataSelector(
+    locale as LocaleEnum,
+    sortOptions,
+  );
   return (
     <motion.div
       className="flex items-center max-lg:flex-col gap-2.5"
@@ -108,10 +112,8 @@ export default function Filtering({
             }
           }}
         >
-          {sortOptions.map((animal) => (
-            <SelectItem key={animal.key}>
-              {animal[locale === "fa" ? "label" : "labelEn"]}
-            </SelectItem>
+          {localeSortOptions.map((animal) => (
+            <SelectItem key={animal.key}>{animal?.label}</SelectItem>
           ))}
         </Select>
       </motion.div>

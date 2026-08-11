@@ -71,9 +71,6 @@ export default function LatestBlogItem({ item }: IProps) {
       <div className="absolute inset-x-0 bottom-0 z-20 w-full flex flex-col items-start justify-end lg:p-8 sm:p-6 p-4 text-right select-none">
         <div className="flex flex-col w-full gap-2.5 sm:gap-3.5">
           {/* BLOG CATEGORY TAG BADGE */}
-          <span className="w-fit bg-primary/20 backdrop-blur-md border border-primary/30 text-primary text-[10px] sm:text-xs font-black uppercase tracking-wider px-2.5 py-1 rounded-md mb-1 shadow-[0_0_15px_rgba(var(--primary-rgb),0.1)]">
-            مقاله ویژه
-          </span>
 
           {/* ARTICLE TITLE WITH HOVER UNDERLINE EFFECTS */}
           <h3 className="text-white sm:text-2xl text-lg font-black tracking-wide leading-snug drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)] transition-colors duration-300 group-hover:text-primary line-clamp-2">

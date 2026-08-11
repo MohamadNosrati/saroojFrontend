@@ -11,6 +11,7 @@ import { getData } from "@/lib/services/data";
 import {
   IBaseResponse,
   IPaginatedResponse,
+  LocaleEnum,
   SortByEnum,
 } from "@/lib/types/base";
 import { IBlog } from "@/lib/types/blog";
@@ -18,6 +19,7 @@ import { CustomWhen } from "@/components/ui/CustomWhen";
 import { sortOptions } from "@/lib/config/sort";
 
 import BlogItem from "./BlogItem";
+import { sortingDataSelector } from "@/lib/tools/dataSelectors";
 
 const sectionVariants = {
   hidden: {},
@@ -93,6 +95,11 @@ export default function BlogsList() {
 
   const condition = locale === "fa" ? "title" : "titleEn";
 
+  const localeSortingOptions = sortingDataSelector(
+    locale as LocaleEnum,
+    sortOptions,
+  );
+
   return (
     <motion.section
       className="relative dark:bg-dark bg-white lg:pb-32 md:pb-24 sm:pb-20 pb-16 overflow-hidden border-t border-black/[0.03] dark:border-white/[0.03]"
@@ -135,12 +142,12 @@ export default function BlogsList() {
                 }
               }}
             >
-              {sortOptions.map((option) => (
+              {localeSortingOptions?.map((option) => (
                 <SelectItem
                   key={option.key}
                   className="font-bold text-sm hover:bg-primary/10 dark:hover:bg-primary/20 rounded-lg"
                 >
-                  {option[locale === "fa" ? "label" : "labelEn"]}
+                  {option?.label}
                 </SelectItem>
               ))}
             </Select>

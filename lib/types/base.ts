@@ -25,6 +25,7 @@ export type TOption = {
   label: string;
   key: SortByEnum;
   labelEn?: string;
+  labelAr?: string;
 };
 
 export type LocaleParams = Promise<{ locale: "en" | "fa" }>;
