@@ -4,18 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
-import { useLocale } from "next-intl";
 
-import { englishRoutes, persianRoutes } from "@/lib/routes/navigationRoutes";
-import {
-  AboutPageIcon,
-  ArrowIcon,
-  BlogsIcon,
-  CloseIcon,
-  HamburgerIcon,
-  HouseIcon,
-  ProjectsIcon,
-} from "@/components/icons";
+import { ArrowIcon, CloseIcon, HamburgerIcon } from "@/components/icons";
+
 import { INavItem } from ".";
 
 // const data = [
@@ -97,7 +88,7 @@ export default function MobileNavigation({ data }: IProps) {
         <div className="container mx-auto flex flex-col gap-2">
           {data?.map((item) => {
             const Icon = item?.icon;
-            const isActive = (item?.href) === pathname;
+            const isActive = item?.href === pathname;
 
             return (
               <Link
@@ -123,9 +114,7 @@ export default function MobileNavigation({ data }: IProps) {
                   >
                     <Icon height={20} width={20} />
                   </span>
-                  <span className="tracking-wide">
-                    {item?.label}
-                  </span>
+                  <span className="tracking-wide">{item?.label}</span>
                 </div>
 
                 {/* LEFT ALIGNED INDICATOR ACCENT */}

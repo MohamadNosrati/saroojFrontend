@@ -29,6 +29,7 @@ type TformValues = {
   description: string;
   isActive: "0" | "1";
   linkEn?: string;
+  linkAr?: string;
 };
 
 const FormContainer: React.FC<IFormContainerProps> = ({
@@ -51,6 +52,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         alt: "",
         link: "",
         linkEn: "",
+        linkAr: "",
         mobilePictureId: "",
       },
       values: {
@@ -61,6 +63,7 @@ const FormContainer: React.FC<IFormContainerProps> = ({
         isActive: slider?.isActive === false ? "0" : "1",
         link: slider?.link || "",
         linkEn: slider?.linkEn || "",
+        linkAr: slider?.linkAr || "",
         mobilePictureId: slider?.mobilePictureId?.id || "",
       },
     });

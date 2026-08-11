@@ -44,9 +44,11 @@ export default function SelectLanguage() {
     setSelectedKeys(label);
     router.push(items?.find((item) => item?.label === label)?.key as string);
   };
+
   useEffect(() => {
     console.log("pathName", pathName);
     const currentItem = items?.find((item) => pathName.startsWith(item.locale));
+
     console.log("ci", currentItem);
 
     if (currentItem) {

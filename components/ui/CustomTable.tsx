@@ -106,6 +106,14 @@ export default function CustomTable({
             </p>
           </div>
         );
+      case "nameAr":
+        return (
+          <div className="flex flex-col max-w-20 truncate">
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
+              {cellValue}
+            </p>
+          </div>
+        );
       case "link":
         return (
           <div className="flex flex-col" dir="ltr">
@@ -122,6 +130,14 @@ export default function CustomTable({
             </p>
           </div>
         );
+      case "linkAr":
+        return (
+          <div className="flex flex-col" dir="ltr">
+            <p className="text-bold text-sm capitalize  line-clamp-1">
+              {cellValue}
+            </p>
+          </div>
+        );
       case "description":
         return (
           <div className="flex flex-col max-w-20">
@@ -131,6 +147,14 @@ export default function CustomTable({
           </div>
         );
       case "descriptionEn":
+        return (
+          <div className="flex flex-col max-w-20">
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
+              {cellValue}
+            </p>
+          </div>
+        );
+      case "descriptionAr":
         return (
           <div className="flex flex-col max-w-20">
             <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
@@ -186,6 +210,14 @@ export default function CustomTable({
             </p>
           </div>
         );
+      case "titleAr":
+        return (
+          <div className="flex flex-col max-w-20 truncate">
+            <p className="text-bold text-sm max-w-full truncate capitalize  line-clamp-1">
+              {cellValue}
+            </p>
+          </div>
+        );
       case "titleEn":
         return (
           <div className="flex flex-col max-w-20 truncate">
@@ -228,6 +260,12 @@ export default function CustomTable({
             <p className="text-bold text-sm capitalize">{cellValue || ""}</p>
           </div>
         );
+      case "positionAr":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">{cellValue || ""}</p>
+          </div>
+        );
       case "alt":
         return (
           <div className="flex flex-col">
@@ -235,6 +273,12 @@ export default function CustomTable({
           </div>
         );
       case "altEn":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">{cellValue || ""}</p>
+          </div>
+        );
+      case "altAr":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-sm capitalize">{cellValue || ""}</p>

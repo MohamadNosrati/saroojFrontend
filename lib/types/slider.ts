@@ -4,6 +4,8 @@ export interface ISliderPayload {
   title: string;
   alt: string;
   link?: string;
+  linkAr?: string;
+  linkEn?: string;
   description: string;
   pictureId: string;
   isActive: boolean;
