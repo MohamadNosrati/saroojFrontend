@@ -1,4 +1,5 @@
 "use client";
+
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { Button } from "@heroui/button";
 import { useQueryClient } from "@tanstack/react-query";
@@ -11,14 +12,17 @@ import { responseHandler } from "@/lib/tools/responseHandler";
 import { useUpdateProject } from "@/lib/hooks/projects";
 import { ProjectsRoute } from "@/lib/routes/apiRoutes";
 import {
+  ImageArItemPayload,
   ImageEnItemPayload,
   ITranslatedProjectPayload,
   ITranslatedStepItemPayload,
 } from "@/lib/types/project";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 
-import TranslateBfItem from "./TranslateBfItem";
-import TranslateStepItem from "./TranslateStepItem";
+import TranslateArBfItem from "./TranslateEnBfItem";
+import TranslateEnStepItem from "./TranslateEnStepItem";
+import TranslateEnBfItem from "./TranslateEnBfItem";
+import TranslateArStepItem from "./TranslateArStepItem";
 
 interface IFormContainerProps {
   traslatedProjectPayload?: ITranslatedProjectPayload;
@@ -37,6 +41,13 @@ export type TformValues = {
   artitectureStyleEn?: string;
   addressEn: string;
   stepsEn: ITranslatedStepItemPayload[];
+  titleAr: string;
+  imagesAr: ImageArItemPayload[];
+  altAr: string;
+  descriptionAr: string;
+  artitectureStyleAr?: string;
+  addressAr: string;
+  stepsAr: Partial<ITranslatedStepItemPayload>[];
 };
 
 const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
@@ -48,10 +59,13 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
   setEditId,
 }) => {
   const queryClient = useQueryClient();
+
   const { mutate: updateMutate, isPending: isUpdatePending } =
     useUpdateProject();
+
   const { handleSubmit, control } = useForm<TformValues>({
     defaultValues: {
+      // English
       titleEn: "",
       descriptionEn: "",
       altEn: "",
@@ -59,25 +73,54 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
       stepsEn: [],
       addressEn: "",
       artitectureStyleEn: "",
+
+      // Arabic
+      titleAr: "",
+      descriptionAr: "",
+      altAr: "",
+      imagesAr: [],
+      stepsAr: [],
+      addressAr: "",
+      artitectureStyleAr: "",
     },
+
     values: {
+      // English
       titleEn: traslatedProjectPayload?.titleEn || "",
       descriptionEn: traslatedProjectPayload?.descriptionEn || "",
       altEn: traslatedProjectPayload?.altEn || "",
       imagesEn: traslatedProjectPayload?.imagesEn || [],
       stepsEn: traslatedProjectPayload?.stepsEn || [],
-      artitectureStyleEn: traslatedProjectPayload?.artitectureStyleEn || "",
       addressEn: traslatedProjectPayload?.addressEn || "",
+      artitectureStyleEn: traslatedProjectPayload?.artitectureStyleEn || "",
+
+      // Arabic
+      titleAr: traslatedProjectPayload?.titleAr || "",
+      descriptionAr: traslatedProjectPayload?.descriptionAr || "",
+      altAr: traslatedProjectPayload?.altAr || "",
+      imagesAr: traslatedProjectPayload?.imagesAr || [],
+      stepsAr: traslatedProjectPayload?.stepsAr || [],
+      addressAr: traslatedProjectPayload?.addressAr || "",
+      artitectureStyleAr: traslatedProjectPayload?.artitectureStyleAr || "",
     },
   });
 
-  const { fields: imagesFields } = useFieldArray({
-    control: control,
+  const { fields: imagesEnFields } = useFieldArray({
+    control,
     name: "imagesEn",
   });
-  const { fields: stepFields } = useFieldArray({
-    control: control,
+  const { fields: imagesArFields } = useFieldArray({
+    control,
+    name: "imagesAr",
+  });
+
+  const { fields: stepEnFields } = useFieldArray({
+    control,
     name: "stepsEn",
+  });
+  const { fields: stepsArFields } = useFieldArray({
+    control,
+    name: "stepsAr",
   });
 
   const onSubmit = async (data: TformValues) => {
@@ -91,10 +134,13 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
         queryClient.invalidateQueries({
           queryKey: [ProjectsRoute.getAll()],
         });
+
         queryClient.invalidateQueries({
           queryKey: [ProjectsRoute.findOne(editId as string)],
         });
-        responseHandler.success("پروژه  با موفقیت ویرایش ایجاد شد");
+
+        responseHandler.success("پروژه با موفقیت ویرایش ایجاد شد");
+
         translateIdRef.current = "";
         onOpenChangeTranslator();
         setEditId(undefined);
@@ -104,15 +150,17 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
 
   return (
     <form
-      className="flex flex-col gap-y-10 items-center justify-center"
+      className="flex flex-col items-center justify-center gap-y-10"
       onSubmit={handleSubmit(onSubmit)}
     >
       {isPending ? (
-        <div className="flex items-center justify-center min-h-48">
+        <div className="flex min-h-48 items-center justify-center">
           <Spinner size="lg" />
         </div>
       ) : (
         <>
+          {/* ==================== ENGLISH ==================== */}
+
           <div className="w-full">
             <Controller
               control={control}
@@ -125,7 +173,7 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
                   dir="ltr"
                   errorMessage={error?.message}
                   isInvalid={Boolean(error?.message)}
-                  label="عنوان پروژه"
+                  label="English Project Title"
                   labelPlacement="outside-top"
                   value={value}
                   onChange={onChange}
@@ -139,18 +187,20 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
               }}
             />
           </div>
+
           <div className="w-full">
             <Controller
               control={control}
               name="descriptionEn"
               render={({
                 field: { value, onChange },
-                formState: { errors },
+                fieldState: { error },
               }) => (
                 <CustomTextArea
                   dir="ltr"
-                  errorMessage={errors?.descriptionEn?.message}
-                  isInvalid={Boolean(errors.descriptionEn?.message)}
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label="English Project Description"
                   value={value}
                   onChange={onChange}
                 />
@@ -163,6 +213,7 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
               }}
             />
           </div>
+
           <div className="w-full">
             <Controller
               control={control}
@@ -175,7 +226,7 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
                   dir="ltr"
                   errorMessage={error?.message}
                   isInvalid={Boolean(error?.message)}
-                  label="توضیحات عکس"
+                  label="English Image Alt Text"
                   labelPlacement="outside-top"
                   value={value}
                   onChange={onChange}
@@ -189,6 +240,7 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
               }}
             />
           </div>
+
           <div className="w-full">
             <Controller
               control={control}
@@ -201,7 +253,7 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
                   dir="ltr"
                   errorMessage={error?.message}
                   isInvalid={Boolean(error?.message)}
-                  label="معماری انکلیسی"
+                  label="English Architecture Style"
                   labelPlacement="outside-top"
                   value={value}
                   onChange={onChange}
@@ -209,12 +261,160 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
               )}
             />
           </div>
+
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="addressEn"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <CustomInput
+                  dir="ltr"
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label="English Project Address"
+                  labelPlacement="outside-top"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            />
+          </div>
+
+          {/* ==================== ARABIC ==================== */}
+
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="titleAr"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <CustomInput
+                  dir="rtl"
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label="عنوان المشروع بالعربية"
+                  labelPlacement="outside-top"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "titleAr is required!",
+                },
+              }}
+            />
+          </div>
+
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="descriptionAr"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <CustomTextArea
+                  dir="rtl"
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label="وصف المشروع بالعربية"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "descriptionAr is required!",
+                },
+              }}
+            />
+          </div>
+
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="altAr"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <CustomInput
+                  dir="rtl"
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label="النص البديل للصورة بالعربية"
+                  labelPlacement="outside-top"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "altAr is required!",
+                },
+              }}
+            />
+          </div>
+
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="artitectureStyleAr"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <CustomInput
+                  dir="rtl"
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label="نمط العمارة بالعربية"
+                  labelPlacement="outside-top"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            />
+          </div>
+
+          <div className="w-full">
+            <Controller
+              control={control}
+              name="addressAr"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <CustomInput
+                  dir="rtl"
+                  errorMessage={error?.message}
+                  isInvalid={Boolean(error?.message)}
+                  label="عنوان المشروع بالعربية"
+                  labelPlacement="outside-top"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            />
+          </div>
+
+          {/* ==================== IMAGES & STEPS ==================== */}
+
           <div className="flex w-full flex-col gap-10">
             <CustomWhen
               condition={Boolean(traslatedProjectPayload?.imagesEn?.length)}
             >
-              {imagesFields.map((item, index) => (
-                <TranslateBfItem
+              {imagesEnFields?.map((item, index) => (
+                <TranslateEnBfItem
                   key={item.id}
                   control={control}
                   index={index}
@@ -222,11 +422,12 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
                 />
               ))}
             </CustomWhen>
+
             <CustomWhen
               condition={Boolean(traslatedProjectPayload?.stepsEn?.length)}
             >
-              {stepFields.map((item, index) => (
-                <TranslateStepItem
+              {stepEnFields?.map((item, index) => (
+                <TranslateEnStepItem
                   key={item.id}
                   control={control}
                   index={index}
@@ -235,11 +436,41 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
               ))}
             </CustomWhen>
           </div>
+          <div className="flex w-full flex-col gap-10 mt-6">
+            <CustomWhen
+              condition={Boolean(traslatedProjectPayload?.imagesAr?.length)}
+            >
+              {imagesArFields?.map((item, index) => (
+                <TranslateArBfItem
+                  key={item.id}
+                  control={control}
+                  index={index}
+                  item={item}
+                />
+              ))}
+            </CustomWhen>
+
+            <CustomWhen
+              condition={Boolean(traslatedProjectPayload?.stepsEn?.length)}
+            >
+              {stepsArFields?.map((item, index) => (
+                <TranslateArStepItem
+                  key={item.id}
+                  control={control}
+                  index={index}
+                  item={item}
+                />
+              ))}
+            </CustomWhen>
+          </div>
+
+          {/* ==================== SUBMIT ==================== */}
+
           <div className="w-full">
             <Button
               fullWidth
               className="font-bold"
-              color={"warning"}
+              color="warning"
               isLoading={isUpdatePending}
               type="submit"
             >

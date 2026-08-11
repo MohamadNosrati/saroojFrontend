@@ -68,7 +68,10 @@
 
 "use client";
 
-import { ReactCompareSlider, ReactCompareSliderImage } from "react-compare-slider";
+import {
+  ReactCompareSlider,
+  ReactCompareSliderImage,
+} from "react-compare-slider";
 import { useLocale } from "next-intl";
 
 import { uploadUrl } from "@/lib/tools/upload";
@@ -81,7 +84,11 @@ interface IProps {
   total?: number;
 }
 
-export default function BeforeAfterItem({ item, index = 0, total = 1 }: IProps) {
+export default function BeforeAfterItem({
+  item,
+  index = 0,
+  total = 1,
+}: IProps) {
   const locale = useLocale();
 
   const itemLang: Record<LocaleEnum, { before: string; after: string }> = {
@@ -133,7 +140,11 @@ export default function BeforeAfterItem({ item, index = 0, total = 1 }: IProps) 
 
       <div className="pointer-events-none absolute bottom-3 left-1/2 z-20 -translate-x-1/2 sm:bottom-5">
         <div className="rounded-full border border-white/20 bg-black/35 px-3 py-1.5 text-[9px] font-medium tracking-wide text-white/90 backdrop-blur-md sm:px-4 sm:py-2 sm:text-[10px]">
-          {locale === "fa" ? "برای مقایسه بکشید" : locale === "ar" ? "اسحب للمقارنة" : "Drag to compare"}
+          {locale === "fa"
+            ? "برای مقایسه بکشید"
+            : locale === "ar"
+              ? "اسحب للمقارنة"
+              : "Drag to compare"}
         </div>
       </div>
 

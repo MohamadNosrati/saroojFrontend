@@ -5,14 +5,16 @@ import { ImageEnItemPayload } from "@/lib/types/project";
 import CustomInput from "@/components/ui/CustomInput";
 
 import { TformValues } from "./TranslateProjectFormConainer";
+import Image from "next/image";
+import { uploadUrl } from "@/lib/tools/upload";
 
 interface IProps {
-  item: ImageEnItemPayload;
+  item: Partial<ImageEnItemPayload>;
   index: number;
   control: Control<TformValues, any, TformValues>;
 }
 
-export default function TranslateBfItem({ index, control }: IProps) {
+export default function TranslateEnBfItem({ index, control, item }: IProps) {
   return (
     <div className="flex w-full flex-col px-4 py-6 rounded-2xl bg-dark justify-between gap-4">
       <div className="flex justify-between items-center">
@@ -21,7 +23,14 @@ export default function TranslateBfItem({ index, control }: IProps) {
         </Button>
       </div>
       <div className="flex grow justify-between gap-20">
-        <div className="flex-1/2 flex gap-2.5">
+        <div className="flex-1/2 flex flex-col gap-2.5">
+          <Image
+            alt=""
+            width={100}
+            height={100}
+            className="size-20 rounded-full object-cover"
+            src={uploadUrl(item?.beforeEn?.pictureIdEn as string)}
+          />
           <Controller
             control={control}
             name={`imagesEn.${index}.beforeEn.nameEn`}
@@ -44,6 +53,13 @@ export default function TranslateBfItem({ index, control }: IProps) {
           />
         </div>
         <div className="flex-1/2 flex gap-2.5">
+          <Image
+            alt=""
+            width={100}
+            height={100}
+            className="size-20 rounded-full object-cover"
+            src={uploadUrl(item?.afterEn?.pictureIdEn as string)}
+          />
           <Controller
             control={control}
             name={`imagesEn.${index}.afterEn.nameEn`}

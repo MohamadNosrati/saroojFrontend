@@ -41,8 +41,8 @@ export interface ImageEnItemPayload {
   id?: string;
 }
 export interface ImageArItemPayload {
-  beforeEn: ImageArInfoPayload;
-  afterEn: ImageArInfoPayload;
+  beforeAr: ImageArInfoPayload;
+  afterAr: ImageArInfoPayload;
   id?: string;
 }
 

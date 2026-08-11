@@ -21,9 +21,7 @@ const BeforeAfterItem = dynamic(() => import("./BeforeAfterItem"), {
 
 import dynamic from "next/dynamic";
 
-import cn from "@/lib/tools/cn";
 import { ArrowIcon } from "@/components/icons";
-import { ImageItem } from "@/lib/types/project";
 import { uploadUrl } from "@/lib/tools/upload";
 
 // interface IProps {
@@ -168,7 +166,7 @@ export default function Carousel({ images }: IProps) {
 
   if (!total) return null;
 
-  console.log("images",images)
+  console.log("images", images);
 
   return (
     <section className="w-full">
@@ -188,7 +186,7 @@ export default function Carousel({ images }: IProps) {
         >
           {images.map((item, index) => (
             <SwiperSlide key={item?.id} className="w-full">
-              <BeforeAfterItem item={item} index={index} total={total} />
+              <BeforeAfterItem index={index} item={item} total={total} />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -269,8 +267,8 @@ export default function Carousel({ images }: IProps) {
                   fill
                   alt=""
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  src={uploadUrl(item?.before?.pictureId?.image)}
                   sizes="(max-width: 640px) 45vw, (max-width: 1024px) 25vw, 16vw"
+                  src={uploadUrl(item?.before?.pictureId?.image)}
                 />
 
                 <div
