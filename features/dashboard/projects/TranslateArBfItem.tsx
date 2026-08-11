@@ -1,12 +1,12 @@
 import { Control, Controller } from "react-hook-form";
 import { Button } from "@heroui/button";
+import Image from "next/image";
 
 import { ImageArItemPayload } from "@/lib/types/project";
 import CustomInput from "@/components/ui/CustomInput";
+import { uploadUrl } from "@/lib/tools/upload";
 
 import { TformValues } from "./TranslateProjectFormConainer";
-import Image from "next/image";
-import { uploadUrl } from "@/lib/tools/upload";
 
 interface IProps {
   item: ImageArItemPayload;
@@ -26,10 +26,10 @@ export default function TranslateArBfItem({ index, control, item }: IProps) {
         <div className="flex-1/2 flex flex-col gap-2.5">
           <Image
             alt=""
-            width={100}
-            height={100}
             className="size-20 rounded-full object-cover"
+            height={100}
             src={uploadUrl(item?.beforeAr?.pictureIdAr)}
+            width={100}
           />
           <Controller
             control={control}
@@ -55,10 +55,10 @@ export default function TranslateArBfItem({ index, control, item }: IProps) {
         <div className="flex-1/2 flex gap-2.5">
           <Image
             alt=""
-            width={100}
-            height={100}
             className="size-20 rounded-full object-cover"
+            height={100}
             src={uploadUrl(item?.afterAr?.pictureIdAr)}
+            width={100}
           />
           <Controller
             control={control}

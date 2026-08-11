@@ -1,13 +1,13 @@
 import { Control, Controller } from "react-hook-form";
 import { Button } from "@heroui/button";
+import Image from "next/image";
 
 import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
 import { ITranslatedStepItemPayload } from "@/lib/types/project";
+import { uploadUrl } from "@/lib/tools/upload";
 
 import { TformValues } from "./TranslateProjectFormConainer";
-import Image from "next/image";
-import { uploadUrl } from "@/lib/tools/upload";
 
 interface IProps {
   item: Partial<ITranslatedStepItemPayload>;
@@ -24,10 +24,10 @@ export default function TranslateArStepItem({ item, index, control }: IProps) {
         </Button>
         <Image
           alt=""
-          width={100}
-          height={100}
           className="size-20 rounded-full object-cover"
+          height={100}
           src={uploadUrl(item?.pictureIdAr as string)}
+          width={100}
         />
       </div>
       <div className="flex-1/2 flex flex-col gap-2.5">
