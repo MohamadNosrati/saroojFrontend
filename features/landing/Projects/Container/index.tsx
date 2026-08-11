@@ -18,11 +18,11 @@ import {
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { useGetCategories } from "@/lib/hooks/categories";
 import ProjectSclton from "@/components/ui/ProjectScleton";
+import { titleSelector } from "@/lib/tools/dataSelectors";
 
 import ProjectItem from "../../ProjectItem";
 
 import Filtering from "./Filtering";
-import { titleSelector } from "@/lib/tools/dataSelectors";
 
 const containerVariants = {
   hidden: {},
