@@ -1,12 +1,12 @@
 import { LocaleEnum } from "../types/base";
 
-import { langSelector } from "./dataSelectors";
+import { dateTimeSelector } from "./dataSelectors";
 
 export const dateConvertor = (
   timestamp: number | string | Date,
   language: LocaleEnum = LocaleEnum.FA,
 ) => {
-  return new Date(timestamp).toLocaleDateString(langSelector(language), {
+  return new Date(timestamp).toLocaleDateString(dateTimeSelector(language), {
     year: "numeric",
     month: "long",
     day: "2-digit",

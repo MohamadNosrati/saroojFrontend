@@ -144,6 +144,18 @@ export const langSelector = (locale: LocaleEnum) => {
       return "fa_IR";
   }
 };
+export const dateTimeSelector = (locale: LocaleEnum) => {
+  switch (locale) {
+    case "fa":
+      return "fa-IR";
+    case "en":
+      return "en-US";
+    case "ar":
+      return "ar-SA";
+    default:
+      return "fa-IR";
+  }
+};
 
 export const languageSelector = (locale: LocaleEnum) => {
   switch (locale) {
