@@ -12,6 +12,7 @@ import { getData } from "@/lib/services/data";
 import {
   IBaseResponse,
   IPaginatedResponse,
+  LocaleEnum,
   SortByEnum,
 } from "@/lib/types/base";
 import { CustomWhen } from "@/components/ui/CustomWhen";
@@ -21,6 +22,7 @@ import ProjectSclton from "@/components/ui/ProjectScleton";
 import ProjectItem from "../../ProjectItem";
 
 import Filtering from "./Filtering";
+import { titleSelector } from "@/lib/tools/dataSelectors";
 
 const containerVariants = {
   hidden: {},
@@ -47,8 +49,7 @@ const itemVariants = {
 
 const Container = () => {
   const locale = useLocale();
-  const condition =
-    locale === "fa" ? "title" : locale === "en" ? "titleEn" : "titleAr";
+  const condition = titleSelector(locale as LocaleEnum);
   const t = useTranslations("Projects.list");
   const [selected, setSelected] = useState<SortByEnum>(SortByEnum.NEWEST);
   const [groupSelected, setGroupSelected] = useState<string[]>([]);

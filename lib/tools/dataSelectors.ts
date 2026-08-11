@@ -212,3 +212,16 @@ export const dirSelector = (locale: LocaleEnum): "rtl" | "ltr" => {
       return "rtl";
   }
 };
+
+export const titleSelector = (locale: LocaleEnum): "title" | "titleEn" | "titleAr" => {
+  switch (locale) {
+    case "fa":
+      return "title";
+    case "en":
+      return "titleEn";
+    case "ar":
+      return "titleAr";
+    default:
+      return "title";
+  }
+};

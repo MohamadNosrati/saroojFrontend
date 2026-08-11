@@ -8,7 +8,7 @@ import { useLocale } from "next-intl";
 import { sortOptions } from "@/lib/config/sort";
 import { LocaleEnum, SortByEnum } from "@/lib/types/base";
 import { ICategory } from "@/lib/types/categories";
-import { sortingDataSelector } from "@/lib/tools/dataSelectors";
+import { sortingDataSelector, titleSelector } from "@/lib/tools/dataSelectors";
 
 import FilteringItem from "./FilteringItem";
 
@@ -49,7 +49,9 @@ export default function Filtering({
     let nextSelection: string[];
 
     if (decodedSlug) {
-      const selectedCategory = data.find((item) => item.title === decodedSlug);
+      const selectedCategory = data.find(
+        (item) => item[titleSelector(locale as LocaleEnum)] === decodedSlug,
+      );
 
       if (!selectedCategory) return;
 
@@ -77,7 +79,7 @@ export default function Filtering({
     window.history.replaceState(null, "", cleanUrl);
   };
 
-  const condition = locale === "fa" ? "title" : "titleEn";
+  const condition = titleSelector(locale as LocaleEnum);
   const localeSortOptions = sortingDataSelector(
     locale as LocaleEnum,
     sortOptions,
