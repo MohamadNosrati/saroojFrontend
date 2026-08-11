@@ -77,7 +77,7 @@ export default async function BlogDetails({ blog }: IProps) {
               <CalandarIcon height={20} width={20} />
             </span>
             <span className="font-bold sm:text-lg text-sm">
-              {dateConvertor(blog?.createdAt, locale === "en")}
+              {dateConvertor(blog?.createdAt, locale as LocaleEnum)}
             </span>
           </div>
         </div>

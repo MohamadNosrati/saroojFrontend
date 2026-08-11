@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Button } from "@heroui/button";
 import { v4 as uuidv4 } from "uuid";
 import { useQueryClient } from "@tanstack/react-query";
@@ -504,7 +504,8 @@ export default function Messages({ chatId, sessionId, setChatId }: IProps) {
                 isDisabled={!userText || !sessionId || isLoading || isPending}
                 isLoading={isPending}
                 onPress={handleSendMessage}
-              >{t("sendButton")}
+              >
+                {t("sendButton")}
               </Button>
             </motion.div>
           </div>
