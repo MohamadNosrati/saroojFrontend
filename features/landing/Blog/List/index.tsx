@@ -17,9 +17,9 @@ import {
 import { IBlog } from "@/lib/types/blog";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { sortOptions } from "@/lib/config/sort";
+import { sortingDataSelector } from "@/lib/tools/dataSelectors";
 
 import BlogItem from "./BlogItem";
-import { sortingDataSelector } from "@/lib/tools/dataSelectors";
 
 const sectionVariants = {
   hidden: {},

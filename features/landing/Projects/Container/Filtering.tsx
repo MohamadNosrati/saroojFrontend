@@ -8,9 +8,9 @@ import { useLocale } from "next-intl";
 import { sortOptions } from "@/lib/config/sort";
 import { LocaleEnum, SortByEnum } from "@/lib/types/base";
 import { ICategory } from "@/lib/types/categories";
+import { sortingDataSelector } from "@/lib/tools/dataSelectors";
 
 import FilteringItem from "./FilteringItem";
-import { sortingDataSelector } from "@/lib/tools/dataSelectors";
 
 interface IProps {
   sort: {
@@ -82,6 +82,7 @@ export default function Filtering({
     locale as LocaleEnum,
     sortOptions,
   );
+
   return (
     <motion.div
       className="flex items-center max-lg:flex-col gap-2.5"

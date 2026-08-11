@@ -47,7 +47,8 @@ const itemVariants = {
 
 const Container = () => {
   const locale = useLocale();
-  const condition = locale === "fa" ? "title" : locale === "en" ? "titleEn" : "titleAr" ;
+  const condition =
+    locale === "fa" ? "title" : locale === "en" ? "titleEn" : "titleAr";
   const t = useTranslations("Projects.list");
   const [selected, setSelected] = useState<SortByEnum>(SortByEnum.NEWEST);
   const [groupSelected, setGroupSelected] = useState<string[]>([]);
