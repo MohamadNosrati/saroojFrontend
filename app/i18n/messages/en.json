@@ -148,7 +148,9 @@
         "title": "Project Details",
         "after": "next step",
         "progress": "progress",
-        "before": "prv step"
+        "before": "prv step",
+        "active": "Active",
+        "deActive": "DeActive"
       },
       "item": {
         "before": "BEFORE",

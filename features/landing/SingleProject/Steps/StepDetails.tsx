@@ -160,6 +160,7 @@ import { LocaleEnum } from "@/lib/types/base";
 import { IStep } from "@/lib/types/project";
 
 import Video from "../Video";
+import { yekanBakh } from "@/lib/config/fonts";
 
 interface IProps {
   steps: IStep[];
@@ -202,7 +203,14 @@ export default function StepsDetails({
   return createPortal(
     <AnimatePresence>
       {isOpen && (
-        <>
+        <section
+          className="font-yekan"
+          style={
+            {
+              "--font-yekan": yekanBakh.style.fontFamily,
+            } as React.CSSProperties
+          }
+        >
           {/* Backdrop */}
           <motion.div
             animate={{ opacity: 1 }}
@@ -297,7 +305,7 @@ export default function StepsDetails({
                         color="success"
                         size="sm"
                       >
-                        {t("active")}
+                        {td("active")}
                       </Chip>
                     ) : (
                       <Chip
@@ -305,7 +313,7 @@ export default function StepsDetails({
                         color="warning"
                         size="sm"
                       >
-                        {t("deActive")}
+                        {td("deActive")}
                       </Chip>
                     )}
                   </div>
@@ -331,15 +339,13 @@ export default function StepsDetails({
                     onPress={goPrevious}
                   >
                     <span>←</span>
-                    <span className="hidden sm:inline">
-                      {t("before")}
-                    </span>
+                    <span className="hidden sm:inline">{td("before")}</span>
                   </Button>
 
                   {/* Progress */}
                   <div className="flex flex-col items-center">
                     <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-neutral-400">
-                      {t("progress")}
+                      {td("progress")}
                     </span>
 
                     <div className="mt-1 flex items-center gap-1">
@@ -359,9 +365,7 @@ export default function StepsDetails({
                     isDisabled={activeIndex === steps.length - 1}
                     onPress={goNext}
                   >
-                    <span className="hidden sm:inline">
-                      {t("after")}
-                    </span>
+                    <span className="hidden sm:inline">{td("after")}</span>
                     <span>→</span>
                   </Button>
                 </div>
@@ -379,7 +383,7 @@ export default function StepsDetails({
               </div>
             </div>
           </motion.div>
-        </>
+        </section>
       )}
     </AnimatePresence>,
     document.body,
