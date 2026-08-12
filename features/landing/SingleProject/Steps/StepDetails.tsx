@@ -158,9 +158,9 @@ import { CustomWhen } from "@/components/ui/CustomWhen";
 import { dirSelector } from "@/lib/tools/dataSelectors";
 import { LocaleEnum } from "@/lib/types/base";
 import { IStep } from "@/lib/types/project";
+import { yekanBakh } from "@/lib/config/fonts";
 
 import Video from "../Video";
-import { yekanBakh } from "@/lib/config/fonts";
 
 interface IProps {
   steps: IStep[];
