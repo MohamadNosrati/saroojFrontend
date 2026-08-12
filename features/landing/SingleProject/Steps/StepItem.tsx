@@ -1,65 +1,4 @@
-// import { motion } from "framer-motion";
-// import Image from "next/image";
-// import clsx from "clsx";
-// import { useTranslations } from "use-intl";
 
-// import { uploadUrl } from "@/lib/tools/upload";
-// import { IStep } from "@/lib/types/project";
-
-// interface IProps {
-//   item: IStep;
-//   index: number;
-//   activeIndex: number;
-// }
-
-// export default function LandingStepItem({ item, index, activeIndex }: IProps) {
-//   const t = useTranslations("SingleProject.steps");
-
-//   return (
-//     <motion.div
-//       animate={{ opacity: 1, y: 0 }}
-//       className="group rounded-xl relative overflow-hidden  w-full"
-//       initial={{ opacity: 0, y: 30 }}
-//       transition={{ duration: 0.5, delay: index * 0.1 }}
-//       whileHover={{ y: -4 }}
-//     >
-//       <div
-//         className={clsx(
-//           "relative w-full aspect-square overflow-hidden border border-black/5 dark:border-white/5 transition-all duration-500",
-//           activeIndex === index ? "grayscale-0" : "grayscale-100",
-//         )}
-//       >
-//         <motion.div
-//           className="absolute inset-0 z-0"
-//           transition={{ duration: 0.8, ease: "easeOut" }}
-//           whileHover={{ scale: 1.05 }}
-//         >
-//           <Image
-//             fill
-//             alt={item?.alt || `Project Step ${index + 1}`}
-//             className="object-cover w-full h-full"
-//             priority={index < 2} // Optimizes loading for the first couple of visible steps
-//             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-//             src={uploadUrl(item?.pictureId?.image)}
-//           />
-//         </motion.div>
-//         <div className="absolute inset-0 z-20 flex flex-col justify-end py-6 px-6 text-right select-none">
-//           <div className="flex flex-col gap-1.5">
-//             {/* Step Counter Tag */}
-//             <span className="text-xs sm:text-sm font-bold text-primary/90 uppercase tracking-widest drop-shadow-sm">
-//               {t("title")} {index + 1}
-//             </span>
-
-//             {/* Step Title */}
-//             <span className="text-lg sm:text-xl lg:text-2xl font-black text-white tracking-wide leading-tight drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]">
-//               {item?.name}
-//             </span>
-//           </div>
-//         </div>
-//       </div>
-//     </motion.div>
-//   );
-// }
 
 "use client";
 
@@ -144,11 +83,11 @@ export default function LandingStepItem({ item, index, activeIndex }: IProps) {
 
             {/* Before After */}
             <div className="flex items-center gap-1.5 rounded-full border border-white/15 bg-black/35 px-3 py-1.5 backdrop-blur-md">
-              <span className="text-[9px] font-bold text-white/50">BEFORE</span>
+              <span className="text-[9px] font-bold text-white/50">{t("SingleProject.steps.item.before")}</span>
 
               <span className="text-xs font-bold text-primary">→</span>
 
-              <span className="text-[9px] font-bold text-white">AFTER</span>
+              <span className="text-[9px] font-bold text-white">{t("SingleProject.steps.item.after")}</span>
             </div>
           </div>
 
@@ -164,7 +103,7 @@ export default function LandingStepItem({ item, index, activeIndex }: IProps) {
                   className="mb-1 text-[9px] font-bold uppercase tracking-[0.22em] text-primary sm:text-[10px]"
                   transition={{ duration: 0.35 }}
                 >
-                  {t("title")} {index + 1}
+                  {t("sectionTitle")} {index + 1}
                 </motion.p>
 
                 <h3 className="truncate text-xl font-black leading-tight tracking-tight text-white sm:text-2xl">

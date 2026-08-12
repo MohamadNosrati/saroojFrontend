@@ -128,6 +128,7 @@ export interface IProps {
 }
 
 export default function StepsContainer({ steps }: IProps) {
+  console.log("steps-in-container",steps)
   const t = useTranslations("SingleProject.steps");
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -154,7 +155,7 @@ export default function StepsContainer({ steps }: IProps) {
               <div className="mb-2 flex items-center gap-2">
                 <span className="size-1.5 rounded-full bg-primary" />
                 <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-primary sm:text-xs">
-                  Project Journey
+                  {t("sectionTitle")}
                 </span>
               </div>
 

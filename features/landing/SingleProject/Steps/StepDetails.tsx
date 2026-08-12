@@ -231,7 +231,8 @@ export default function StepsDetails({
                 <div className="min-w-0">
                   <div className="mb-2 flex items-center gap-2">
                     <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
-                      {t("title")} {String(activeIndex + 1).padStart(2, "0")}
+                      {t("sectionTitle")}{" "}
+                      {String(activeIndex + 1).padStart(2, "0")}
                     </span>
 
                     <span className="text-xs text-neutral-300 dark:text-neutral-700">
@@ -274,7 +275,7 @@ export default function StepsDetails({
 
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-neutral-400">
-                        Project Details
+                        {t("details.title")}
                       </p>
 
                       <p className="text-sm font-bold text-neutral-900 dark:text-white">
@@ -295,7 +296,7 @@ export default function StepsDetails({
                         color="success"
                         size="sm"
                       >
-                        فعال
+                        {t("details.active")}
                       </Chip>
                     ) : (
                       <Chip
@@ -303,7 +304,7 @@ export default function StepsDetails({
                         color="warning"
                         size="sm"
                       >
-                        غیر فعال
+                        {t("details.deActive")}
                       </Chip>
                     )}
                   </div>
@@ -329,13 +330,13 @@ export default function StepsDetails({
                     onPress={goPrevious}
                   >
                     <span>←</span>
-                    <span className="hidden sm:inline">مرحله قبل</span>
+                    <span className="hidden sm:inline">{t("details.before")}</span>
                   </Button>
 
                   {/* Progress */}
                   <div className="flex flex-col items-center">
                     <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-neutral-400">
-                      Progress
+                      {t("details.progress")}
                     </span>
 
                     <div className="mt-1 flex items-center gap-1">
@@ -355,7 +356,7 @@ export default function StepsDetails({
                     isDisabled={activeIndex === steps.length - 1}
                     onPress={goNext}
                   >
-                    <span className="hidden sm:inline">مرحله بعد</span>
+                    <span className="hidden sm:inline">{t("details.after")}</span>
                     <span>→</span>
                   </Button>
                 </div>

@@ -141,8 +141,19 @@
       "title": "Suggested Projects"
     },
     "steps": {
-      "button": "Watch Project Details",
-      "title": "step"
+      "button": "Explore project steps",
+      "title": "Explore the project journey and see how each stage transformed the final result.",
+      "sectionTitle": "Project Journey",
+      "details": {
+        "title": "Project Details",
+        "after": "next step",
+        "progress": "progress",
+        "before": "prv step"
+      },
+      "item":{
+        "before":"BEFORE",
+        "after":"AFTER"
+      }
     },
     "metadata": {
       "notFoundTitle": "Project Not Found | Sarooj Construction Company",
