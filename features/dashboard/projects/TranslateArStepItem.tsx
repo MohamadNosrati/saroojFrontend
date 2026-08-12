@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
-import { IStep, IStepAr } from "@/lib/types/project";
+import { IStep } from "@/lib/types/project";
 import { uploadUrl } from "@/lib/tools/upload";
 
 import { TformValues } from "./TranslateProjectFormConainer";

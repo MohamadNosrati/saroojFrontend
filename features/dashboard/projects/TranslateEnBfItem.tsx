@@ -2,7 +2,7 @@ import { Control, Controller } from "react-hook-form";
 import { Button } from "@heroui/button";
 import Image from "next/image";
 
-import { ImageEnItem, ImageItem } from "@/lib/types/project";
+import { ImageItem } from "@/lib/types/project";
 import CustomInput from "@/components/ui/CustomInput";
 import { uploadUrl } from "@/lib/tools/upload";
 
