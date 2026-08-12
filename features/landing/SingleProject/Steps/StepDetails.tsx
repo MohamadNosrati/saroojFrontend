@@ -178,6 +178,7 @@ export default function StepsDetails({
 }: IProps) {
   const locale = useLocale();
   const t = useTranslations("SingleProject.steps");
+  const td = useTranslations("SingleProject.steps.details");
 
   const dir = dirSelector(locale as LocaleEnum);
   const activeStep = steps[activeIndex];
@@ -275,7 +276,7 @@ export default function StepsDetails({
 
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-neutral-400">
-                        {t("details.title")}
+                        {t("title")}
                       </p>
 
                       <p className="text-sm font-bold text-neutral-900 dark:text-white">
@@ -296,7 +297,7 @@ export default function StepsDetails({
                         color="success"
                         size="sm"
                       >
-                        {t("details.active")}
+                        {t("active")}
                       </Chip>
                     ) : (
                       <Chip
@@ -304,7 +305,7 @@ export default function StepsDetails({
                         color="warning"
                         size="sm"
                       >
-                        {t("details.deActive")}
+                        {t("deActive")}
                       </Chip>
                     )}
                   </div>
@@ -331,14 +332,14 @@ export default function StepsDetails({
                   >
                     <span>←</span>
                     <span className="hidden sm:inline">
-                      {t("details.before")}
+                      {t("before")}
                     </span>
                   </Button>
 
                   {/* Progress */}
                   <div className="flex flex-col items-center">
                     <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-neutral-400">
-                      {t("details.progress")}
+                      {t("progress")}
                     </span>
 
                     <div className="mt-1 flex items-center gap-1">
@@ -359,7 +360,7 @@ export default function StepsDetails({
                     onPress={goNext}
                   >
                     <span className="hidden sm:inline">
-                      {t("details.after")}
+                      {t("after")}
                     </span>
                     <span>→</span>
                   </Button>

@@ -66,33 +66,6 @@ export default function LandingStepItem({ item, index, activeIndex }: IProps) {
           {/* Image Gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/5" />
 
-          {/* Top Information */}
-          <div className="absolute left-4 right-4 top-4 flex items-center justify-between gap-2">
-            {/* Step Number */}
-            <div className="flex items-center gap-2 rounded-full border border-white/15 bg-black/35 px-3 py-1.5 backdrop-blur-md">
-              <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-white/55">
-                {t("title")}
-              </span>
-
-              <span className="text-xs font-black text-white">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-            </div>
-
-            {/* Before After */}
-            <div className="flex items-center gap-1.5 rounded-full border border-white/15 bg-black/35 px-3 py-1.5 backdrop-blur-md">
-              <span className="text-[9px] font-bold text-white/50">
-                {t("SingleProject.steps.item.before")}
-              </span>
-
-              <span className="text-xs font-bold text-primary">→</span>
-
-              <span className="text-[9px] font-bold text-white">
-                {t("SingleProject.steps.item.after")}
-              </span>
-            </div>
-          </div>
-
           {/* Bottom Content */}
           <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
             <div className="flex items-end justify-between gap-4">
@@ -112,15 +85,6 @@ export default function LandingStepItem({ item, index, activeIndex }: IProps) {
                   {item?.name}
                 </h3>
               </div>
-
-              {/* Arrow */}
-              <motion.div
-                animate={{ x: isActive ? 0 : -4, opacity: isActive ? 1 : 0.5 }}
-                className="flex size-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-md"
-                transition={{ duration: 0.35 }}
-              >
-                <span className="text-lg">↗</span>
-              </motion.div>
             </div>
           </div>
 
