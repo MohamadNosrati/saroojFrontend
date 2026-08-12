@@ -330,7 +330,9 @@ export default function StepsDetails({
                     onPress={goPrevious}
                   >
                     <span>←</span>
-                    <span className="hidden sm:inline">{t("details.before")}</span>
+                    <span className="hidden sm:inline">
+                      {t("details.before")}
+                    </span>
                   </Button>
 
                   {/* Progress */}
@@ -356,7 +358,9 @@ export default function StepsDetails({
                     isDisabled={activeIndex === steps.length - 1}
                     onPress={goNext}
                   >
-                    <span className="hidden sm:inline">{t("details.after")}</span>
+                    <span className="hidden sm:inline">
+                      {t("details.after")}
+                    </span>
                     <span>→</span>
                   </Button>
                 </div>

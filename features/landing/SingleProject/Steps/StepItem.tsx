@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { motion } from "framer-motion";
@@ -83,11 +81,15 @@ export default function LandingStepItem({ item, index, activeIndex }: IProps) {
 
             {/* Before After */}
             <div className="flex items-center gap-1.5 rounded-full border border-white/15 bg-black/35 px-3 py-1.5 backdrop-blur-md">
-              <span className="text-[9px] font-bold text-white/50">{t("SingleProject.steps.item.before")}</span>
+              <span className="text-[9px] font-bold text-white/50">
+                {t("SingleProject.steps.item.before")}
+              </span>
 
               <span className="text-xs font-bold text-primary">→</span>
 
-              <span className="text-[9px] font-bold text-white">{t("SingleProject.steps.item.after")}</span>
+              <span className="text-[9px] font-bold text-white">
+                {t("SingleProject.steps.item.after")}
+              </span>
             </div>
           </div>
 

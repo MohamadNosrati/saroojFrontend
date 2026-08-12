@@ -128,7 +128,7 @@ export interface IProps {
 }
 
 export default function StepsContainer({ steps }: IProps) {
-  console.log("steps-in-container",steps)
+  console.log("steps-in-container", steps);
   const t = useTranslations("SingleProject.steps");
 
   const [activeIndex, setActiveIndex] = useState(0);

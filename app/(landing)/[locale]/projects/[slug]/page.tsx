@@ -162,7 +162,8 @@ export default async function SingleProjectPage({ params }: Props) {
 
   console.log("projectData", projectData);
 
-  const hasImages = Boolean(projectData) && Boolean(projectData?.[imageKey]?.length);
+  const hasImages =
+    Boolean(projectData) && Boolean(projectData?.[imageKey]?.length);
   const suggestionsData =
     data?.data?.suggestions?.filter((item) => item[condition]) || [];
 

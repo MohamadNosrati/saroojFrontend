@@ -150,9 +150,9 @@
         "progress": "progress",
         "before": "prv step"
       },
-      "item":{
-        "before":"BEFORE",
-        "after":"AFTER"
+      "item": {
+        "before": "BEFORE",
+        "after": "AFTER"
       }
     },
     "metadata": {
