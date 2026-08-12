@@ -108,7 +108,6 @@
 //   );
 // }
 
-
 "use client";
 
 import { Button } from "@heroui/button";
@@ -183,15 +182,6 @@ export default function StepsContainer({ steps }: IProps) {
             <Swiper
               centeredSlides
               grabCursor
-              effect="coverflow"
-              modules={[EffectCoverflow]}
-              coverflowEffect={{
-                rotate: 0,
-                stretch: -20,
-                depth: 180,
-                modifier: 1,
-                slideShadows: false,
-              }}
               breakpoints={{
                 320: {
                   slidesPerView: 1.15,
@@ -211,6 +201,15 @@ export default function StepsContainer({ steps }: IProps) {
                 },
               }}
               className="!w-full !overflow-visible"
+              coverflowEffect={{
+                rotate: 0,
+                stretch: -20,
+                depth: 180,
+                modifier: 1,
+                slideShadows: false,
+              }}
+              effect="coverflow"
+              modules={[EffectCoverflow]}
               onSlideChange={(swiper) => {
                 setActiveIndex(swiper.realIndex);
               }}
@@ -219,8 +218,15 @@ export default function StepsContainer({ steps }: IProps) {
               }}
             >
               {steps.map((item, index) => (
-                <SwiperSlide key={item?.name} className="!h-auto !bg-transparent">
-                  <LandingStepItem activeIndex={activeIndex} index={index} item={item} />
+                <SwiperSlide
+                  key={item?.name}
+                  className="!h-auto !bg-transparent"
+                >
+                  <LandingStepItem
+                    activeIndex={activeIndex}
+                    index={index}
+                    item={item}
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>

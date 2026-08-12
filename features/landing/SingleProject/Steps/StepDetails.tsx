@@ -324,8 +324,8 @@ export default function StepsDetails({
                 <div className="flex items-center justify-between gap-3">
                   {/* Previous */}
                   <Button
-                    isDisabled={activeIndex === 0}
                     className="h-11 rounded-full bg-neutral-100 px-5 font-bold text-neutral-800 dark:bg-white/10 dark:text-white"
+                    isDisabled={activeIndex === 0}
                     onPress={goPrevious}
                   >
                     <span>←</span>
@@ -351,8 +351,8 @@ export default function StepsDetails({
 
                   {/* Next */}
                   <Button
-                    isDisabled={activeIndex === steps.length - 1}
                     className="h-11 rounded-full bg-primary px-5 font-bold text-white shadow-lg shadow-primary/20"
+                    isDisabled={activeIndex === steps.length - 1}
                     onPress={goNext}
                   >
                     <span className="hidden sm:inline">مرحله بعد</span>

@@ -61,7 +61,6 @@
 //   );
 // }
 
-
 "use client";
 
 import { motion } from "framer-motion";
@@ -85,10 +84,14 @@ export default function LandingStepItem({ item, index, activeIndex }: IProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 25 }}
-      animate={{ opacity: isActive ? 1 : 0.55, y: 0, scale: isActive ? 1 : 0.92 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      animate={{
+        opacity: isActive ? 1 : 0.55,
+        y: 0,
+        scale: isActive ? 1 : 0.92,
+      }}
       className="relative w-full"
+      initial={{ opacity: 0, y: 25 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
       {/* Active Border / Glow */}
       <div
@@ -101,14 +104,16 @@ export default function LandingStepItem({ item, index, activeIndex }: IProps) {
       <div
         className={clsx(
           "relative overflow-hidden rounded-[25px] border bg-neutral-950 transition-all duration-500",
-          isActive ? "border-primary/40 shadow-2xl shadow-primary/20" : "border-white/10",
+          isActive
+            ? "border-primary/40 shadow-2xl shadow-primary/20"
+            : "border-white/10",
         )}
       >
         {/* Image */}
         <div className="relative aspect-[4/5] overflow-hidden">
           <motion.div
-            className="absolute inset-0"
             animate={{ scale: isActive ? 1 : 1.04 }}
+            className="absolute inset-0"
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <Image
@@ -139,17 +144,11 @@ export default function LandingStepItem({ item, index, activeIndex }: IProps) {
 
             {/* Before After */}
             <div className="flex items-center gap-1.5 rounded-full border border-white/15 bg-black/35 px-3 py-1.5 backdrop-blur-md">
-              <span className="text-[9px] font-bold text-white/50">
-                BEFORE
-              </span>
+              <span className="text-[9px] font-bold text-white/50">BEFORE</span>
 
-              <span className="text-xs font-bold text-primary">
-                →
-              </span>
+              <span className="text-xs font-bold text-primary">→</span>
 
-              <span className="text-[9px] font-bold text-white">
-                AFTER
-              </span>
+              <span className="text-[9px] font-bold text-white">AFTER</span>
             </div>
           </div>
 
@@ -158,9 +157,12 @@ export default function LandingStepItem({ item, index, activeIndex }: IProps) {
             <div className="flex items-end justify-between gap-4">
               <div className="min-w-0">
                 <motion.p
-                  animate={{ opacity: isActive ? 1 : 0.6, x: isActive ? 0 : -6 }}
-                  transition={{ duration: 0.35 }}
+                  animate={{
+                    opacity: isActive ? 1 : 0.6,
+                    x: isActive ? 0 : -6,
+                  }}
                   className="mb-1 text-[9px] font-bold uppercase tracking-[0.22em] text-primary sm:text-[10px]"
+                  transition={{ duration: 0.35 }}
                 >
                   {t("title")} {index + 1}
                 </motion.p>
@@ -173,8 +175,8 @@ export default function LandingStepItem({ item, index, activeIndex }: IProps) {
               {/* Arrow */}
               <motion.div
                 animate={{ x: isActive ? 0 : -4, opacity: isActive ? 1 : 0.5 }}
-                transition={{ duration: 0.35 }}
                 className="flex size-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-md"
+                transition={{ duration: 0.35 }}
               >
                 <span className="text-lg">↗</span>
               </motion.div>
