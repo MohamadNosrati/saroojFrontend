@@ -253,10 +253,11 @@ export default async function SingleProjectPage({ params }: Props) {
           </div>
         </div>
       </CustomWhen>
-
-      <div className="border-t border-neutral-200 dark:border-neutral-800 bg-gradient-to-b dark:bg-dark w-full bg-white from-primary/20 via-primary/10 to-transparent lg:pt-12 sm:pt-8 pt-6 lg:pb-16 pb-8">
-        <RelatedProjects suggsetions={suggestionsData} />
-      </div>
+      <CustomWhen condition={Boolean(suggestionsData?.length)}>
+        <div className="border-t border-neutral-200 dark:border-neutral-800 bg-gradient-to-b dark:bg-dark w-full bg-white from-primary/20 via-primary/10 to-transparent lg:pt-12 sm:pt-8 pt-6 lg:pb-16 pb-8">
+          <RelatedProjects suggsetions={suggestionsData} />
+        </div>
+      </CustomWhen>
     </main>
   );
 }
