@@ -28,7 +28,7 @@ export type TOption = {
   labelAr?: string;
 };
 
-export type LocaleParams = Promise<{ locale: "en" | "fa" }>;
+export type LocaleParams = Promise<{ locale: "en" | "fa" | "ar" }>;
 
 export enum LocaleEnum {
   FA = "fa",

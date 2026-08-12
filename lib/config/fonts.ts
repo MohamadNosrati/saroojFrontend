@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import { Inter, Noto_Sans_Arabic } from "next/font/google";
 
 export const yekanBakh = localFont({
   variable: "--font-yekan",
@@ -25,4 +26,18 @@ export const yekanBakh = localFont({
       weight: "900",
     },
   ],
+});
+
+
+export const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+
+export const notoSansArabic = Noto_Sans_Arabic({
+  subsets: ["arabic"],
+  variable: "--arabic-font",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });

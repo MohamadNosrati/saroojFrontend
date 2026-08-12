@@ -99,7 +99,6 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
     project,
   );
 
-
   return createMetadata(
     {
       title: `${title} | ${t("projectsSuffix")}`,

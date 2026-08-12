@@ -1,22 +1,17 @@
 import { ICategory } from "./categories";
 import { IFile } from "./file";
 
-interface IImageData {
-  image: string;
-  id: string;
-}
-
 export interface ImageInfo {
   name: string;
-  pictureId: IImageData;
+  pictureId: IFile;
 }
 export interface ImageEnInfo {
   nameEn?: string;
-  pictureIdEn: IImageData;
+  pictureIdEn: IFile;
 }
 export interface ImageArInfo {
   nameAr?: string;
-  pictureIdAr: IImageData;
+  pictureIdAr: IFile;
 }
 
 export interface ImageInfoPayload {

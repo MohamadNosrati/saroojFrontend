@@ -22,6 +22,7 @@ const config = {
       fontFamily: {
         yekan: ["var(--font-yekan)"],
         mono: ["var(--font-mono)"],
+        inter: ["var(--inter-font)"],
       },
       colors: {
         primary: {
