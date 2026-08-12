@@ -1,12 +1,10 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import clsx from "clsx";
-import { useLocale } from "next-intl";
 import { useTranslations } from "use-intl";
 
 import { uploadUrl } from "@/lib/tools/upload";
 import { IStep } from "@/lib/types/project";
-import { LocaleEnum } from "@/lib/types/base";
 
 interface IProps {
   item: IStep;

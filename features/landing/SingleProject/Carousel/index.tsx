@@ -20,11 +20,11 @@ const BeforeAfterItem = dynamic(() => import("./BeforeAfterItem"), {
 });
 
 import dynamic from "next/dynamic";
+import { useTranslations } from "next-intl";
 
 import { ArrowIcon } from "@/components/icons";
 import { uploadUrl } from "@/lib/tools/upload";
 import { ImageItem } from "@/lib/types/project";
-import { useTranslations } from "next-intl";
 interface IProps {
   images: ImageItem[];
 }

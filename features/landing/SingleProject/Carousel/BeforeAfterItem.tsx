@@ -4,7 +4,8 @@ import {
   ReactCompareSlider,
   ReactCompareSliderImage,
 } from "react-compare-slider";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
+
 import { uploadUrl } from "@/lib/tools/upload";
 import { ImageItem } from "@/lib/types/project";
 
@@ -20,6 +21,7 @@ export default function BeforeAfterItem({
   total = 1,
 }: IProps) {
   const t = useTranslations("SingleProject.beforeAfter");
+
   return (
     <div className="relative w-full aspect-video overflow-hidden rounded-2xl bg-black shadow-[0_20px_60px_rgba(0,0,0,0.16)]">
       <ReactCompareSlider

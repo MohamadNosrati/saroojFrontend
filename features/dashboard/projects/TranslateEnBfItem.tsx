@@ -16,14 +16,14 @@ interface IProps {
 
 export default function TranslateEnBfItem({ index, control, item }: IProps) {
   return (
-    <div className="flex w-full flex-col px-4 py-6 rounded-2xl bg-dark justify-between gap-4">
+    <div className="flex w-full px-4 py-6 rounded-2xl bg-dark justify-between gap-4">
       <div className="flex justify-between items-center">
         <Button className="text-white size-10 min-w-10 bg-sky-700 rounded-full flex justify-center items-center cursor-grab active:cursor-grabbing">
           {index + 1}
         </Button>
       </div>
       <div className="flex grow justify-between gap-20">
-        <div className="flex-1/2 flex flex-col gap-2.5">
+        <div className="flex-1/2 flex gap-2.5">
           <Image
             alt=""
             className="size-20 rounded-full object-cover"

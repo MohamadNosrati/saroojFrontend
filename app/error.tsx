@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@heroui/button";
+import { useTranslations } from "next-intl";
 
 interface ErrorProps {
   error: Error;
@@ -10,6 +11,7 @@ interface ErrorProps {
 }
 
 export default function Error({ error, reset }: ErrorProps) {
+  const t = useTranslations("Error")
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -65,12 +67,11 @@ export default function Error({ error, reset }: ErrorProps) {
           </motion.div>
 
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Oops! Something went wrong
+            {t("title")}
           </h2>
 
           <p className="text-default-500 text-lg leading-relaxed max-w-md mx-auto">
-            An unexpected error occurred while loading this page. Please try
-            again or return to the homepage.
+            {t("description")}
           </p>
 
           <motion.div
@@ -88,7 +89,7 @@ export default function Error({ error, reset }: ErrorProps) {
                 window.location.reload();
               }}
             >
-              Try Again
+              {t("try")}
             </Button>
 
             <Button
@@ -99,7 +100,7 @@ export default function Error({ error, reset }: ErrorProps) {
               size="lg"
               variant="bordered"
             >
-              Back to Home
+              {t("home")}
             </Button>
           </motion.div>
         </motion.div>
