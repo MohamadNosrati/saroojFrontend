@@ -28,12 +28,10 @@ export const yekanBakh = localFont({
   ],
 });
 
-
 export const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 });
-
 
 export const notoSansArabic = Noto_Sans_Arabic({
   subsets: ["arabic"],
