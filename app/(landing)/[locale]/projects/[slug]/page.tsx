@@ -15,7 +15,14 @@ import ShareButton from "@/features/landing/layout/ShareButton";
 import { uploadUrl } from "@/lib/tools/upload";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import StepsContainer from "@/features/landing/SingleProject/Steps";
-import { langSelector, projectDataSelector } from "@/lib/tools/dataSelectors";
+import {
+  imageDataSelector,
+  imageSelector,
+  langSelector,
+  projectDataSelector,
+  stepDataSelector,
+  titleSelector,
+} from "@/lib/tools/dataSelectors";
 
 import notFound from "../../not-found";
 
@@ -140,7 +147,8 @@ export default async function SingleProjectPage({ params }: Props) {
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug).replaceAll("-", " ");
   const locale = await getLocale();
-  const condition = locale === "fa" ? "title" : "titleEn";
+  const condition = titleSelector(locale as LocaleEnum);
+  const imageKey = imageSelector(locale as LocaleEnum);
 
   const data = await getData<IBaseResponse<IProjectWithSuggestions>>(
     ProjectsRoute.findBySlug(decodedSlug),
@@ -151,6 +159,7 @@ export default async function SingleProjectPage({ params }: Props) {
   }
 
   const projectData = data?.data?.project;
+  const hasImages = Boolean(projectData) && Boolean(projectData?.[imageKey]);
   const suggestionsData =
     data?.data?.suggestions?.filter((item) => item[condition]) || [];
 
@@ -206,10 +215,24 @@ export default async function SingleProjectPage({ params }: Props) {
             }
           >
             <div className="w-full sm:mt-4 mt-2.5 rounded-xl bg-white dark:bg-neutral-900/30 border border-neutral-200 dark:border-neutral-800/60 shadow-sm dark:shadow-none px-1 sm:px-2 sm:py-6 py-4">
-              {projectData?.images ? (
-                <Carousel images={data?.data?.project?.images || []} />
+              {hasImages ? (
+                <Carousel
+                  images={
+                    imageDataSelector(
+                      locale as LocaleEnum,
+                      projectData as IProject,
+                    ) || []
+                  }
+                />
               ) : (
-                <StepsContainer steps={data?.data?.project?.steps || []} />
+                <StepsContainer
+                  steps={
+                    stepDataSelector(
+                      locale as LocaleEnum,
+                      projectData as IProject,
+                    ) || []
+                  }
+                />
               )}
             </div>
           </CustomWhen>

@@ -13,6 +13,7 @@ import {
 } from "@/lib/hooks/projects";
 import { useTranslate } from "@/lib/hooks/translate";
 import {
+  IProject,
   ITranslatedProjectPayload,
   TProjectTranslatePayload,
 } from "@/lib/types/project";
@@ -84,35 +85,6 @@ const ProjectsPage = () => {
     translateMutate(data);
   };
 
-  const translatedProject = {
-    titleEn: "Test Project",
-    altEn: "Test Project Ams",
-    descriptionEn: "Test Project description",
-    addressEn: "Tehran She'r Ziba",
-    imagesEn: [],
-    stepsEn: [
-      {
-        nameEn: "First Step",
-        pictureIdEn: "6a5e556fe791850dd75b327d",
-        altEn: "bispsy",
-        isActiveEn: true,
-        videoEn: "fdsfdsfds",
-        descriptionEn: "First Step description",
-        _idEn: "6a6140dca38c13ffebf75e32",
-      },
-      {
-        nameEn: "Second Step ",
-        pictureIdEn: "6a5e557fe791850dd75b3281",
-        altEn: "Second step description image",
-        isActiveEn: "1",
-        videoEn: "4353",
-        descriptionEn: "Second step description",
-        _idEn: "6a6140dca38c13ffebf75e33",
-      },
-    ],
-    artitectureStyleEn: "Classic",
-  };
-
   return (
     <CustomContainer className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
@@ -149,6 +121,7 @@ const ProjectsPage = () => {
           <TranslateProjectFormContainer
             editId={editId as string}
             isPending={isTranslatePending}
+            project={editData?.data as IProject}
             setEditId={setEditId}
             translateIdRef={translateIdRef}
             traslatedProjectPayload={

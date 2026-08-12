@@ -4,13 +4,13 @@ import Image from "next/image";
 
 import CustomInput from "@/components/ui/CustomInput";
 import CustomTextArea from "@/components/ui/customTextArea";
-import { ITranslatedStepItemPayload } from "@/lib/types/project";
+import { IStepEn } from "@/lib/types/project";
 import { uploadUrl } from "@/lib/tools/upload";
 
 import { TformValues } from "./TranslateProjectFormConainer";
 
 interface IProps {
-  item: Partial<ITranslatedStepItemPayload>;
+  item: IStepEn;
   index: number;
   control: Control<TformValues, any, TformValues>;
 }
@@ -26,7 +26,7 @@ export default function TranslateEnStepItem({ item, index, control }: IProps) {
           alt=""
           className="size-20 rounded-full object-cover"
           height={100}
-          src={uploadUrl(item?.pictureIdEn as string)}
+          src={uploadUrl(item?.pictureIdEn?.image as string)}
           width={100}
         />
       </div>

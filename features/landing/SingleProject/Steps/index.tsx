@@ -23,8 +23,6 @@ export default function StepsContainer({ steps }: IProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const swiperRef = useRef<SwiperType | null>(null);
-  const locale = useLocale();
-  const condition = locale === "fa" ? "name" : "nameEn";
 
   useEffect(() => {
     setMounted(true);
@@ -71,21 +69,16 @@ export default function StepsContainer({ steps }: IProps) {
             swiperRef.current = swiper;
           }}
         >
-          {steps
-            ?.filter((item) => item[condition])
-            ?.map((item, index) => (
-              <SwiperSlide
+          {steps?.map((item, index) => (
+            <SwiperSlide key={item?.name} className="bg-transparent !relative">
+              <LandingStepItem
                 key={item?.name}
-                className="bg-transparent !relative"
-              >
-                <LandingStepItem
-                  key={item?.name}
-                  activeIndex={activeIndex}
-                  index={index}
-                  item={item}
-                />
-              </SwiperSlide>
-            ))}
+                activeIndex={activeIndex}
+                index={index}
+                item={item}
+              />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
       <CustomWhen condition={!isOpen && Boolean(steps?.length)}>

@@ -15,24 +15,7 @@ interface IProps {
 }
 
 export default function LandingStepItem({ item, index, activeIndex }: IProps) {
-  const locale = useLocale();
   const t = useTranslations("SingleProject.steps");
-  const itemLang: Record<
-    LocaleEnum,
-    {
-      title: string;
-    }
-  > = {
-    fa: {
-      title: item?.name || "",
-    },
-    en: {
-      title: item?.nameEn || "",
-    },
-    ar: {
-      title: item?.nameAr || "",
-    },
-  };
 
   return (
     <motion.div
@@ -71,7 +54,7 @@ export default function LandingStepItem({ item, index, activeIndex }: IProps) {
 
             {/* Step Title */}
             <span className="text-lg sm:text-xl lg:text-2xl font-black text-white tracking-wide leading-tight drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]">
-              {itemLang[locale as LocaleEnum]?.title}
+              {item?.name}
             </span>
           </div>
         </div>

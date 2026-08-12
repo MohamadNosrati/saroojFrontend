@@ -125,6 +125,10 @@
     }
   },
   "SingleProject": {
+    "beforeAfter": {
+      "text": "اسحب للمقارنة",
+      "title": "قبل وبعد"
+    },
     "info": {
       "area": "المساحة",
       "address": "العنوان",

@@ -2,7 +2,7 @@ import { INavItem } from "@/features/landing/layout/Header";
 
 import { LocaleEnum, SortByEnum, TOption } from "../types/base";
 import { IBlog } from "../types/blog";
-import { IProject } from "../types/project";
+import { ImageItem, IProject, IStep } from "../types/project";
 
 export const faqDataSelector = (locale: LocaleEnum, data: any[]) => {
   switch (locale) {
@@ -160,6 +160,87 @@ export const sortingDataSelector = (
   }
 };
 
+export const imageDataSelector = (
+  locale: LocaleEnum,
+  project: IProject,
+): ImageItem[] => {
+  switch (locale) {
+    case "fa":
+      return project?.images || [];
+    case "en":
+      return (
+        project?.imagesEn?.map((item) => ({
+          after: {
+            name: item?.afterEn?.nameEn || "",
+            pictureId: item?.afterEn?.pictureIdEn || "",
+          },
+          before: {
+            name: item?.beforeEn?.nameEn || "",
+            pictureId: item?.beforeEn?.pictureIdEn || "",
+          },
+          id: item?.id || "",
+        })) || []
+      );
+    case "ar":
+      return (
+        project?.imagesAr?.map((item) => ({
+          after: {
+            name: item?.afterAr?.nameAr || "",
+            pictureId: item?.afterAr?.pictureIdAr || "",
+          },
+          before: {
+            name: item?.beforeAr?.nameAr || "",
+            pictureId: item?.beforeAr?.pictureIdAr || "",
+          },
+          id: item?.id || "",
+        })) || []
+      );
+    default:
+      return project?.images || [];
+  }
+};
+export const stepDataSelector = (
+  locale: LocaleEnum,
+  project: IProject,
+): IStep[] => {
+  switch (locale) {
+    case "fa":
+      return project?.steps || [];
+    case "en":
+      return (
+        project?.stepsEn?.map((item) => ({
+          id: item?._idEn || "",
+          alt: item?.altEn || "",
+          description: item?.descriptionEn || "",
+          isActive: item?.isActiveEn || false,
+          name: item?.nameEn || "",
+          video: item?.videoEn || "",
+          pictureId: {
+            id: item?.pictureIdEn?.id,
+            image: item?.pictureIdEn?.image,
+          },
+        })) || []
+      );
+    case "ar":
+      return (
+        project?.stepsAr?.map((item) => ({
+          id: item?._idAr || "",
+          alt: item?.altAr || "",
+          description: item?.descriptionAr || "",
+          isActive: item?.isActiveAr || false,
+          name: item?.nameAr || "",
+          video: item?.videoAr || "",
+          pictureId: {
+            id: item?.pictureIdAr?.id,
+            image: item?.pictureIdAr?.image,
+          },
+        })) || []
+      );
+    default:
+      return project?.steps || [];
+  }
+};
+
 export const langSelector = (locale: LocaleEnum) => {
   switch (locale) {
     case "fa":
@@ -225,5 +306,20 @@ export const titleSelector = (
       return "titleAr";
     default:
       return "title";
+  }
+};
+
+export const imageSelector = (
+  locale: LocaleEnum,
+): "images" | "imagesEn" | "imagesAr" => {
+  switch (locale) {
+    case "fa":
+      return "images";
+    case "en":
+      return "imagesEn";
+    case "ar":
+      return "imagesAr";
+    default:
+      return "images";
   }
 };

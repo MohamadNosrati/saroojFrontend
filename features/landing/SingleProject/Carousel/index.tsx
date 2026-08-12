@@ -23,141 +23,14 @@ import dynamic from "next/dynamic";
 
 import { ArrowIcon } from "@/components/icons";
 import { uploadUrl } from "@/lib/tools/upload";
-
-// interface IProps {
-//   images: ImageItem[];
-// }
-
-// const Carousel: React.FC<IProps> = ({ images }) => {
-//   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
-//   const swiperRef = useRef<SwiperType | null>(null);
-//   const [activeIndex, setActiveIndex] = useState<number>(0);
-
-//   return (
-//     <div>
-//       <Swiper
-//         allowTouchMove={false}
-//         autoHeight={true}
-//         className="sm:mb-5 aspect-video mb-3"
-//         modules={[Thumbs]}
-//         slidesPerView={1}
-//         spaceBetween={20}
-//         thumbs={{ swiper: thumbsSwiper }}
-//         onSlideChange={(swiper) => {
-//           setActiveIndex(swiper.realIndex);
-//         }}
-//         onSwiper={(swiper) => {
-//           swiperRef.current = swiper;
-//         }}
-//       >
-//         {images?.map((item) => (
-//           <SwiperSlide key={item?.id}>
-//             <BeforeAfterItem item={item} />
-//           </SwiperSlide>
-//         ))}
-//       </Swiper>
-//       <div className="relative">
-//         <Button
-//           className={cn(
-//             "sm:size-8 size-6 min-w-0 p-0 z-10 rounded-none bg-primary absolute top-0 bottom-0 my-auto right-0",
-//           )}
-//           isDisabled={activeIndex === images?.length - 1}
-//           onPress={() => swiperRef.current?.slideNext()}
-//         >
-//           <span>
-//             <ArrowIcon
-//               className="text-[0E0E0E] max-sm:w-2 max-sm:h-3 "
-//               height={20}
-//               width={12}
-//             />
-//           </span>
-//         </Button>
-//         <Button
-//           className={cn(
-//             "sm:size-8 size-6 min-w-0 p-0 z-10 rounded-none bg-primary absolute top-0 bottom-0 my-auto left-0",
-//           )}
-//           isDisabled={activeIndex === 0}
-//           onPress={() => swiperRef.current?.slidePrev()}
-//         >
-//           <span>
-//             <ArrowIcon
-//               className="text-[0E0E0E] max-sm:w-2 max-sm:h-3 rotate-180"
-//               height={20}
-//               width={12}
-//             />
-//           </span>
-//         </Button>
-//         <Swiper
-//           autoplay={{
-//             delay: 2500,
-//             pauseOnMouseEnter: true,
-//           }}
-//           breakpoints={{
-//             1020: {
-//               slidesPerView: 3,
-//               spaceBetween: 20,
-//             },
-//             768: {
-//               slidesPerView: 2.4,
-//               spaceBetween: 16,
-//             },
-//             540: {
-//               slidesPerView: 1.6,
-//               spaceBetween: 12,
-//             },
-//             320: {
-//               slidesPerView: 2.2,
-//               spaceBetween: 8,
-//             },
-//           }}
-//           className="mySwiper"
-//           freeMode={true}
-//           modules={[Thumbs]}
-//           spaceBetween={20}
-//           watchSlidesProgress={true}
-//           onSwiper={setThumbsSwiper}
-//         >
-//           {images?.map((item, index) => (
-//             <SwiperSlide
-//               key={item?.id}
-//               className="aspect-video relative sm:border-5 border-2 overflow-hidden border-white"
-//             >
-//               <Image
-//                 fill
-//                 alt=""
-//                 className={clsx([
-//                   "size-full absolute bg-cover",
-//                   activeIndex === index ? "grayscale" : "",
-//                 ])}
-//                 src={uploadUrl(item?.before?.pictureId?.image)}
-//               />
-//             </SwiperSlide>
-//           ))}
-//         </Swiper>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Carousel;
-
-// import { useRef, useState } from "react";
-// import Image from "next/image";
-// import clsx from "clsx";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import { FreeMode, Thumbs, Autoplay } from "swiper/modules";
-// import type { Swiper as SwiperType } from "swiper";
-// import { Button } from "@heroui/react";
-
-// import BeforeAfterItem from "./BeforeAfterItem";
-// import { uploadUrl } from "@/lib/tools/upload";
-// import { ArrowIcon } from "@/components/icons/ArrowIcon";
-
+import { ImageItem } from "@/lib/types/project";
+import { useTranslations } from "next-intl";
 interface IProps {
-  images: any[];
+  images: ImageItem[];
 }
 
 export default function Carousel({ images }: IProps) {
+  const t = useTranslations("SingleProject.beforeAfter");
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   const swiperRef = useRef<SwiperType | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -165,8 +38,6 @@ export default function Carousel({ images }: IProps) {
   const total = images?.length || 0;
 
   if (!total) return null;
-
-  console.log("images", images);
 
   return (
     <section className="w-full">
@@ -184,7 +55,7 @@ export default function Carousel({ images }: IProps) {
             swiperRef.current = swiper;
           }}
         >
-          {images.map((item, index) => (
+          {images?.map((item, index) => (
             <SwiperSlide key={item?.id} className="w-full">
               <BeforeAfterItem index={index} item={item} total={total} />
             </SwiperSlide>
@@ -218,7 +89,7 @@ export default function Carousel({ images }: IProps) {
         <div className="flex min-w-0 items-center gap-2">
           <span className="size-1.5 shrink-0 rounded-full bg-primary" />
           <span className="truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-foreground/50 sm:text-[11px]">
-            Before & After
+            {t("title")}
           </span>
         </div>
 
@@ -250,7 +121,7 @@ export default function Carousel({ images }: IProps) {
           watchSlidesProgress={true}
           onSwiper={setThumbsSwiper}
         >
-          {images.map((item, index) => (
+          {images?.map((item, index) => (
             <SwiperSlide
               key={item?.id}
               className="group aspect-video cursor-pointer overflow-hidden rounded-xl"

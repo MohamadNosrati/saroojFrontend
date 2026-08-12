@@ -125,6 +125,10 @@
     }
   },
   "SingleProject": {
+    "beforeAfter": {
+      "text": "برای مقایسه بکشید",
+      "title": "قبل و بعد"
+    },
     "info": {
       "area": "مساحت",
       "address": "آدرس",
@@ -138,7 +142,12 @@
     },
     "steps": {
       "button": " مشاهده جزییات مراحل",
-      "title": "مرحله"
+      "title": "مرحله",
+      "details": {
+        "close": "",
+        "next": "",
+        "prev": ""
+      }
     },
     "metadata": {
       "notFoundTitle": "پروژه یافت نشد | شرکت ساخت و ساز ساروج",

@@ -14,15 +14,16 @@ import { ProjectsRoute } from "@/lib/routes/apiRoutes";
 import {
   ImageArItemPayload,
   ImageEnItemPayload,
+  IProject,
   ITranslatedProjectPayload,
   ITranslatedStepItemPayload,
 } from "@/lib/types/project";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 
-import TranslateArBfItem from "./TranslateEnBfItem";
+import TranslateArStepItem from "./TranslateArStepItem";
+import TranslateArBfItem from "./TranslateArBfItem";
 import TranslateEnStepItem from "./TranslateEnStepItem";
 import TranslateEnBfItem from "./TranslateEnBfItem";
-import TranslateArStepItem from "./TranslateArStepItem";
 
 interface IFormContainerProps {
   traslatedProjectPayload?: ITranslatedProjectPayload;
@@ -31,6 +32,7 @@ interface IFormContainerProps {
   editId: string;
   translateIdRef: MutableRefObject<string | undefined>;
   setEditId: Dispatch<SetStateAction<string | undefined>>;
+  project: IProject;
 }
 
 export type TformValues = {
@@ -57,6 +59,7 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
   editId,
   translateIdRef,
   setEditId,
+  project,
 }) => {
   const queryClient = useQueryClient();
 
@@ -413,7 +416,7 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
             <CustomWhen
               condition={Boolean(traslatedProjectPayload?.imagesEn?.length)}
             >
-              {imagesEnFields?.map((item, index) => (
+              {project?.imagesEn?.map((item, index) => (
                 <TranslateEnBfItem
                   key={item.id}
                   control={control}
@@ -426,9 +429,9 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
             <CustomWhen
               condition={Boolean(traslatedProjectPayload?.stepsEn?.length)}
             >
-              {stepEnFields?.map((item, index) => (
+              {project?.stepsEn?.map((item, index) => (
                 <TranslateEnStepItem
-                  key={item.id}
+                  key={index}
                   control={control}
                   index={index}
                   item={item}
@@ -440,9 +443,9 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
             <CustomWhen
               condition={Boolean(traslatedProjectPayload?.imagesAr?.length)}
             >
-              {imagesArFields?.map((item, index) => (
+              {project?.imagesAr?.map((item, index) => (
                 <TranslateArBfItem
-                  key={item.id}
+                  key={index}
                   control={control}
                   index={index}
                   item={item}
@@ -453,9 +456,9 @@ const TranslateProjectFormContainer: React.FC<IFormContainerProps> = ({
             <CustomWhen
               condition={Boolean(traslatedProjectPayload?.stepsEn?.length)}
             >
-              {stepsArFields?.map((item, index) => (
+              {project?.stepsAr?.map((item, index) => (
                 <TranslateArStepItem
-                  key={item.id}
+                  key={item?._idAr}
                   control={control}
                   index={index}
                   item={item}

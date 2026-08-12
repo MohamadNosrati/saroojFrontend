@@ -125,6 +125,10 @@
     }
   },
   "SingleProject": {
+    "beforeAfter": {
+      "text": "Drag to compare",
+      "title": "Before & After"
+    },
     "info": {
       "area": "Area",
       "address": "Address",

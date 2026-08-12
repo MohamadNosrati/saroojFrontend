@@ -2,14 +2,14 @@ import { Control, Controller } from "react-hook-form";
 import { Button } from "@heroui/button";
 import Image from "next/image";
 
-import { ImageEnItemPayload } from "@/lib/types/project";
+import { ImageEnItem } from "@/lib/types/project";
 import CustomInput from "@/components/ui/CustomInput";
 import { uploadUrl } from "@/lib/tools/upload";
 
 import { TformValues } from "./TranslateProjectFormConainer";
 
 interface IProps {
-  item: Partial<ImageEnItemPayload>;
+  item: ImageEnItem;
   index: number;
   control: Control<TformValues, any, TformValues>;
 }
@@ -28,7 +28,7 @@ export default function TranslateEnBfItem({ index, control, item }: IProps) {
             alt=""
             className="size-20 rounded-full object-cover"
             height={100}
-            src={uploadUrl(item?.beforeEn?.pictureIdEn as string)}
+            src={uploadUrl(item?.beforeEn?.pictureIdEn?.image as string)}
             width={100}
           />
           <Controller
@@ -57,7 +57,7 @@ export default function TranslateEnBfItem({ index, control, item }: IProps) {
             alt=""
             className="size-20 rounded-full object-cover"
             height={100}
-            src={uploadUrl(item?.afterEn?.pictureIdEn as string)}
+            src={uploadUrl(item?.afterEn?.pictureIdEn?.image as string)}
             width={100}
           />
           <Controller
