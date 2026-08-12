@@ -154,10 +154,10 @@
       "defaultDescription": "Explore the {title} project by Sarooj Construction Company."
     }
   },
-  "Error":{
-    "title":"Oops! Something went wrong",
-    "description":"An unexpected error occurred while loading this page. Please try again or return to the homepage.",
-    "try":"Try Again",
-    "home":"Back to Home"
+  "Error": {
+    "title": "",
+    "description": "",
+    "try": "",
+    "home": ""
   }
 }

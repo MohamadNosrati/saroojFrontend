@@ -20,7 +20,7 @@ const BeforeAfterItem = dynamic(() => import("./BeforeAfterItem"), {
 });
 
 import dynamic from "next/dynamic";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import { ArrowIcon } from "@/components/icons";
 import { uploadUrl } from "@/lib/tools/upload";
@@ -30,12 +30,14 @@ interface IProps {
 }
 
 export default function Carousel({ images }: IProps) {
+  const locale = useLocale();
   const t = useTranslations("SingleProject.beforeAfter");
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   const swiperRef = useRef<SwiperType | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-
   const total = images?.length || 0;
+
+  const isRtl = locale === "fa" || locale === "ar";
 
   if (!total) return null;
 
@@ -62,7 +64,12 @@ export default function Carousel({ images }: IProps) {
           ))}
         </Swiper>
 
-        <div className="pointer-events-none absolute inset-y-0 left-0 right-0 z-30 flex items-center justify-between px-2 sm:px-4">
+        <div
+          className={clsx([
+            "pointer-events-none absolute inset-y-0 left-0 right-0 z-30 flex items-center justify-between px-2 sm:px-4",
+            // isRtl ? "flex-row-reverse" : "",
+          ])}
+        >
           <Button
             isIconOnly
             aria-label="Previous image"
@@ -70,7 +77,11 @@ export default function Carousel({ images }: IProps) {
             isDisabled={activeIndex === 0}
             onPress={() => swiperRef.current?.slidePrev()}
           >
-            <ArrowIcon className="rotate-180" height={16} width={10} />
+            <ArrowIcon
+              className={isRtl ? "" : "rotate-180"}
+              height={16}
+              width={10}
+            />
           </Button>
 
           <Button
@@ -80,7 +91,11 @@ export default function Carousel({ images }: IProps) {
             isDisabled={activeIndex === total - 1}
             onPress={() => swiperRef.current?.slideNext()}
           >
-            <ArrowIcon height={16} width={10} />
+            <ArrowIcon
+              className={!isRtl ? "" : "rotate-180"}
+              height={16}
+              width={10}
+            />
           </Button>
         </div>
       </div>
