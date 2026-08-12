@@ -35,17 +35,19 @@ export interface ImageArInfoPayload {
 export interface ImageItem {
   before: ImageInfo;
   after: ImageInfo;
-  id: string;
+  _id: string;
 }
+
 export interface ImageEnItem {
   beforeEn: ImageEnInfo;
   afterEn: ImageEnInfo;
-  id: string;
+  _id: string;
 }
+
 export interface ImageArItem {
   beforeAr: ImageArInfo;
   afterAr: ImageArInfo;
-  id: string;
+  _id: string;
 }
 
 export interface ImageItemPayload {

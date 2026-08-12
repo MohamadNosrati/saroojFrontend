@@ -58,7 +58,7 @@ export default function Carousel({ images }: IProps) {
           }}
         >
           {images?.map((item, index) => (
-            <SwiperSlide key={item?.id} className="w-full">
+            <SwiperSlide key={item?._id || index} className="w-full">
               <BeforeAfterItem index={index} item={item} total={total} />
             </SwiperSlide>
           ))}
@@ -138,7 +138,7 @@ export default function Carousel({ images }: IProps) {
         >
           {images?.map((item, index) => (
             <SwiperSlide
-              key={item?.id}
+              key={item?._id || index}
               className="group aspect-video cursor-pointer overflow-hidden rounded-xl"
             >
               <div

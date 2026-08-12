@@ -104,12 +104,12 @@ export default async function BlogDetails({ blog }: IProps) {
 
             <div className="group relative overflow-hidden rounded-2xl bg-black/5 shadow-2xl shadow-black/10 sm:rounded-3xl">
               <Image
+                priority
                 alt={blogLang[locale as LocaleEnum]?.alt}
                 className="aspect-video w-full object-cover transition-transform duration-700 group-hover:scale-[1.015]"
                 height={700}
                 src={uploadUrl(blog?.pictureId?.image)}
                 width={1194}
-                priority
               />
 
               {/* Image overlay */}

@@ -178,7 +178,7 @@ export const imageDataSelector = (
             name: item?.beforeEn?.nameEn || "",
             pictureId: item?.beforeEn?.pictureIdEn || "",
           },
-          id: item?.id || "",
+          _id: item?._id || "",
         })) || []
       );
     case "ar":
@@ -192,7 +192,7 @@ export const imageDataSelector = (
             name: item?.beforeAr?.nameAr || "",
             pictureId: item?.beforeAr?.pictureIdAr || "",
           },
-          id: item?.id || "",
+          _id: item?._id || "",
         })) || []
       );
     default:
