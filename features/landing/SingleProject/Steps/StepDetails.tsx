@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
 import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { AnimatePresence, motion, PanInfo } from "framer-motion";
@@ -114,6 +113,7 @@ export default function StepsDetails({
           {/* Bottom Sheet */}
           <motion.div
             ref={sheetRef}
+            dragMomentum
             animate={{ y: 0, opacity: 1 }}
             className="fixed inset-x-0 bottom-0 z-[999999] max-h-[90vh] cursor-grab overflow-hidden rounded-t-[32px] border-t border-black/5 bg-white/95 font-yekan shadow-[0_-20px_80px_rgba(0,0,0,0.2)] backdrop-blur-2xl dark:border-white/10 dark:bg-neutral-950/95"
             dir={dir}
@@ -123,7 +123,6 @@ export default function StepsDetails({
               bottom: 300,
             }}
             dragElastic={0.1}
-            dragMomentum
             exit={{
               y: "100%",
               opacity: 0,
@@ -132,7 +131,6 @@ export default function StepsDetails({
               y: "100%",
               opacity: 0,
             }}
-            onDragEnd={handleDragEnd}
             style={
               {
                 "--font-yekan": yekanBakh.style.fontFamily,
@@ -143,6 +141,7 @@ export default function StepsDetails({
               stiffness: 300,
               damping: 32,
             }}
+            onDragEnd={handleDragEnd}
           >
             <div className="mx-auto flex max-h-[90vh] w-full max-w-6xl flex-col px-4 pb-6 pt-3 sm:px-6 sm:pb-8 sm:pt-4">
               {/* Handle */}
@@ -190,9 +189,7 @@ export default function StepsDetails({
                   <div
                     className={clsx(
                       "flex flex-col justify-center",
-                      activeStep?.video
-                        ? "lg:col-span-7"
-                        : "lg:col-span-12",
+                      activeStep?.video ? "lg:col-span-7" : "lg:col-span-12",
                     )}
                   >
                     <div className="mb-4 flex items-center gap-3">
@@ -258,9 +255,7 @@ export default function StepsDetails({
                     >
                       <span>←</span>
 
-                      <span className="hidden sm:inline">
-                        {td("before")}
-                      </span>
+                      <span className="hidden sm:inline">{td("before")}</span>
                     </Button>
 
                     {/* Progress */}
@@ -286,9 +281,7 @@ export default function StepsDetails({
                       isDisabled={activeIndex === steps.length - 1}
                       onPress={goNext}
                     >
-                      <span className="hidden sm:inline">
-                        {td("after")}
-                      </span>
+                      <span className="hidden sm:inline">{td("after")}</span>
 
                       <span>→</span>
                     </Button>

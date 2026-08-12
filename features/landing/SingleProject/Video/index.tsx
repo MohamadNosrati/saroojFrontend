@@ -14,7 +14,7 @@ export default function Video({ video }: IProps) {
   useEffect(() => {
     const container = containerRef.current;
 
-    if (!container) return;
+    if (!container || !video) return;
 
     setLoading(true);
     container.innerHTML = "";
@@ -35,7 +35,7 @@ export default function Video({ video }: IProps) {
 
     const script = document.createElement("script");
 
-    script.src = `https://www.aparat.com/embed/paa40l8?data[rnddiv]=${video}&data[responsive]=yes&muted=true&recom=self`;
+    script.src = `https://www.aparat.com/embed/${video}?data[rnddiv]=aparat-video-${video}&data[responsive]=yes&muted=true&recom=self`;
     script.async = true;
 
     container.appendChild(script);
@@ -47,17 +47,19 @@ export default function Video({ video }: IProps) {
   }, [video]);
 
   return (
-    <div className="relative w-full aspect-video">
+    <div className="relative aspect-video w-full overflow-hidden rounded-lg">
       {loading && (
-        <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-neutral-100 dark:bg-neutral-900">
-          <Skeleton className="w-full h-full" />
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-neutral-100 dark:bg-neutral-900">
+          <Skeleton className="h-full w-full" />
         </div>
       )}
 
       <div
         ref={containerRef}
-        className={loading ? "opacity-0" : "opacity-100"}
-        id={video}
+        id={`aparat-video-${video}`}
+        className={`h-full w-full transition-opacity duration-300 ${
+          loading ? "opacity-0" : "opacity-100"
+        }`}
       />
     </div>
   );
