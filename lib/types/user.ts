@@ -10,7 +10,7 @@ export interface IUser {
   role: TUserRole;
   updatedAt: Date;
   userName: string;
-  pictureId: IFile;
+  pictureId: IFile | string;
 }
 
 export interface IUserPayload {

@@ -63,7 +63,6 @@ export default function Carousel({ images }: IProps) {
             </SwiperSlide>
           ))}
         </Swiper>
-
         <div
           className={clsx([
             "pointer-events-none absolute inset-y-0 left-0 right-0 z-30 flex items-center justify-between px-2 sm:px-4",
@@ -100,21 +99,7 @@ export default function Carousel({ images }: IProps) {
         </div>
       </div>
 
-      <div className="mt-3 flex items-center justify-between gap-3 sm:mt-4">
-        <div className="flex min-w-0 items-center gap-2">
-          <span className="size-1.5 shrink-0 rounded-full bg-primary" />
-          <span className="truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-foreground/50 sm:text-[11px]">
-            {t("title")}
-          </span>
-        </div>
-
-        <span className="shrink-0 text-[10px] font-semibold tabular-nums text-foreground/40 sm:text-[11px]">
-          {String(activeIndex + 1).padStart(2, "0")} /{" "}
-          {String(total).padStart(2, "0")}
-        </span>
-      </div>
-
-      <div className="relative mt-3 sm:mt-4">
+      <div className="relative mt-3 lg:pb-4 lg:px-4 pb-2.5 sm:mt-4 px-2.5">
         <Swiper
           autoplay={{
             delay: 3500,

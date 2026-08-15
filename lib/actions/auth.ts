@@ -7,6 +7,7 @@ import { AxiosError } from "axios";
 import { authServices } from "../services/auth";
 import { IUser } from "../types/user";
 import { AUTH_COOKIE_KEY } from "../constants/user";
+import { AuthIdentityProvider } from "../types/auth";
 
 const loginSchema = z.object({
   email: z.string(),
@@ -27,6 +28,7 @@ export async function login(
   prevState: LoginState,
   formData: FormData,
 ): Promise<LoginState> {
+  console.log("generallllll");
   // 1. Validate form data
   const validatedFields = loginSchema.safeParse({
     email: formData.get("email"),
@@ -85,6 +87,70 @@ export async function login(
         },
       };
     }
+  }
+}
+
+export type ProviderLoginState = {
+  errors?: {
+    _form?: string[];
+  };
+  success?: boolean;
+  user?: IUser;
+};
+
+export async function loginWithProvider(
+  credentials: string,
+  provider: AuthIdentityProvider,
+): Promise<ProviderLoginState> {
+  try {
+    const response = await authServices.signInWithProvider(
+      credentials,
+      provider,
+    );
+
+    console.log("response", response);
+
+    const token = response?.data?.data?.token;
+
+    console.log("token", token);
+
+    if (!token) {
+      return {
+        errors: {
+          _form: ["Authentication failed. Please try again."],
+        },
+      };
+    }
+
+    (await cookies()).set(String(AUTH_COOKIE_KEY), String(token), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24,
+      path: "/",
+    });
+
+    return {
+      success: true,
+      user: response?.data?.data?.user,
+    };
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return {
+        errors: {
+          _form: [
+            error.response?.data?.message ??
+              "There is a problem. Please try again!",
+          ],
+        },
+      };
+    }
+
+    return {
+      errors: {
+        _form: ["There is a problem. Please try again!"],
+      },
+    };
   }
 }
 

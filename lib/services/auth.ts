@@ -1,5 +1,9 @@
 import { AuthRoute } from "../routes/apiRoutes";
-import { ISigninRes, ISinginPayload } from "../types/auth";
+import {
+  AuthIdentityProvider,
+  ISigninRes,
+  ISinginPayload,
+} from "../types/auth";
 import { IBaseResponse } from "../types/base";
 
 import axiosInstance from "./base";
@@ -9,6 +13,16 @@ class AuthService {
     return axiosInstance.post<IBaseResponse<ISigninRes>>(
       AuthRoute.signin(),
       paylod,
+    );
+  }
+  signInWithProvider(credentials: string, provider: AuthIdentityProvider) {
+    console.log("signIn with provider")
+    return axiosInstance.post<IBaseResponse<ISigninRes>>(
+      AuthRoute.signInWithProvider(provider),
+      {
+        credentials,
+        provider,
+      },
     );
   }
 }

@@ -26,6 +26,7 @@ const Team = async () => {
       <div className="grid container relative z-10 lg:mt-16 mt-10 grid-cols-12 gap-y-12 sm:gap-x-6 sm:gap-y-16 px-4">
         {data?.data
           ?.filter((item) => item[condition])
+          ?.filter((item) => item?.isActive)
           ?.map((item: ITeamate) => <TeamItem key={item?.id} item={item} />)}
       </div>
 

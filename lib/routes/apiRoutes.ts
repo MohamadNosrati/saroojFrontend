@@ -1,4 +1,5 @@
 import { queryStringCreator } from "../tools/searchParams";
+import { AuthIdentityProvider } from "../types/auth";
 import { IBlogParams } from "../types/blog";
 import { IProjectParams } from "../types/project";
 
@@ -11,6 +12,10 @@ class Auth {
 
   signin() {
     return `${this.base}/signin`;
+  }
+
+  signInWithProvider(provider: AuthIdentityProvider) {
+    return `${this.base}/signin/${provider}`;
   }
 
   signup() {

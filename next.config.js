@@ -25,11 +25,15 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: backendUrl.protocol.replace(":", ""), // "http" or "https"
-        hostname: backendUrl.hostname,
-        port: backendUrl.port || "",
+        protocol: "https",
+        hostname: "api.saroojcontractor.com",
+        pathname: "/uploads/**",
+        // protocol: backendUrl.protocol.replace(":", ""), // "http" or "https"
+        // hostname: backendUrl.hostname,
+        // port: backendUrl.port || "",
       },
     ],
+    unoptimized: true,
   },
 
   // Webpack fallback (used for production builds)
@@ -58,6 +62,21 @@ const nextConfig = {
     });
 
     return config;
+  },
+
+  // for signin with google provider!!!!
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin-allow-popups",
+          },
+        ],
+      },
+    ];
   },
 };
 

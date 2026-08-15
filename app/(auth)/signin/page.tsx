@@ -4,35 +4,22 @@ import { useActionState, useEffect } from "react";
 import { Button } from "@heroui/button";
 import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
-
 import CustomInput from "@/components/ui/CustomInput";
 import CustomContainer from "@/components/ui/CustomContainer";
 import { dashboardRoutes } from "@/lib/routes/navigationRoutes";
 import { responseHandler } from "@/lib/tools/responseHandler";
 import { login, LoginState } from "@/lib/actions/auth";
 import { useAuthStore } from "@/lib/stores/auth";
+import GoogleSignInButton from "@/features/Auth/GoogleSignInButton";
+import { useAuthResult } from "@/lib/hooks/auth";
 
 const SiginPage = () => {
-  const router = useRouter();
   const { pending } = useFormStatus();
-  const setUser = useAuthStore((store) => store.setUser);
   const [state, formAction] = useActionState<LoginState, FormData>(login, {
     errors: {},
   });
 
-  useEffect(() => {
-    if (state.success) {
-      if (state.user) {
-        setUser(state.user);
-      }
-
-      responseHandler.success("ورود با موفقیت انجام شد");
-      router?.push(dashboardRoutes.dashboard());
-    }
-    if (state.errors?._form?.length) {
-      responseHandler.fail(state.errors?._form[0]);
-    }
-  }, [router, setUser, state.errors?._form, state.success, state.user]);
+  useAuthResult(state, "ورود با موفقیت انجام شد");
 
   return (
     <div className="min-h-screen w-full flex justify-center items-center bg-slate-950 antialiased select-none px-4">
@@ -48,7 +35,9 @@ const SiginPage = () => {
             لطفاً اطلاعات خود را جهت ورود وارد نمایید
           </p>
         </div>
-
+        <div className="mb-3">
+          <GoogleSignInButton />
+        </div>
         <form action={formAction} className="space-y-4">
           {/* Email Input Field */}
           <div className="w-full">

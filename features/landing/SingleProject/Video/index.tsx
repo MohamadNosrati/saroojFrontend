@@ -27,6 +27,7 @@ export default function Video({ video }: IProps) {
 
     if (!sourceContainer) {
       setLoading(false);
+
       return;
     }
 
@@ -41,6 +42,7 @@ export default function Video({ video }: IProps) {
 
     if (!sourceScript?.src) {
       setLoading(false);
+
       return;
     }
 

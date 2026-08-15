@@ -5,6 +5,7 @@ import * as React from "react";
 import HeroUiProvider from "./HeroUiProvider";
 import ReactQueryProvider from "./ReactQueryProvider";
 import { NotificationProvider } from "./NotificationProvider";
+import GoogleProvider from "./GoogleOAuthProvider";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -12,12 +13,16 @@ interface ProvidersProps {
 
 const Providers: React.FC<ProvidersProps> = ({ children }) => {
   return (
-    <ReactQueryProvider>
-      <NotificationProvider />
-      <HeroUiProvider themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-        {children}
-      </HeroUiProvider>
-    </ReactQueryProvider>
+    <GoogleProvider>
+      <ReactQueryProvider>
+        <NotificationProvider />
+        <HeroUiProvider
+          themeProps={{ attribute: "class", defaultTheme: "dark" }}
+        >
+          {children}
+        </HeroUiProvider>
+      </ReactQueryProvider>
+    </GoogleProvider>
   );
 };
 
