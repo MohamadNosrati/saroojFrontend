@@ -30,8 +30,8 @@ export default function GoogleSignInButton() {
       responseHandler.success("ورود با گوگل با موفقیت انجام شد");
 
       router.push(dashboardRoutes.dashboard());
-    }else {
-      responseHandler.fail("There is a proplem with the server. try later!")
+    } else {
+      responseHandler.fail("There is a proplem with the server. try later!");
     }
   };
 

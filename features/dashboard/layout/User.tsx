@@ -1,23 +1,24 @@
 import Image from "next/image";
 import { useDisclosure } from "@heroui/modal";
 
-import { uploadUrl, userUploadUrl } from "@/lib/tools/upload";
+import { userUploadUrl } from "@/lib/tools/upload";
 import { useAuthStore } from "@/lib/stores/auth";
-
-import UserFormContainer from "./UserFormContainer";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { IFile } from "@/lib/types/file";
+
+import UserFormContainer from "./UserFormContainer";
 
 export default function User() {
   const user = useAuthStore((state) => state.user);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const pictureId = user?.pictureId;
+
   return (
     <div className="flex items-center gap-4 group">
       <div className="relative rounded-full size-14 bg-slate-800 ring-2 ring-slate-700/50 hover:ring-primary/50 transition-all duration-300 shadow-md">
         <button
-          disabled={typeof pictureId === "string"}
           className="size-full relative rounded-full overflow-hidden flex justify-center items-center group/avatar focus:outline-none"
+          disabled={typeof pictureId === "string"}
           onClick={onOpen}
         >
           <CustomWhen condition={Boolean(pictureId)}>
