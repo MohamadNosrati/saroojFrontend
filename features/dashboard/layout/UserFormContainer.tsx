@@ -25,12 +25,14 @@ export default function UserFormContainer({
 }: IProps) {
   const { mutate: updateMutate, isPending: isUpdatePending } = useUpdateUser();
   const setUser = useAuthStore((store) => store.setUser);
+  const pictureId = user?.pictureId;
   const { handleSubmit, control } = useForm<TFormValues>({
     defaultValues: {
       pictureId: "",
     },
     values: {
-      pictureId: user?.pictureId?.id || "",
+      pictureId:
+        typeof pictureId === "string" ? pictureId : pictureId?.id || "",
     },
   });
   const onSubmit = async (data: TFormValues) => {

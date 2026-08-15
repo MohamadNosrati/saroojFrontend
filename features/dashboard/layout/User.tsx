@@ -1,42 +1,44 @@
 import Image from "next/image";
 import { useDisclosure } from "@heroui/modal";
 
-import { uploadUrl } from "@/lib/tools/upload";
+import { uploadUrl, userUploadUrl } from "@/lib/tools/upload";
 import { useAuthStore } from "@/lib/stores/auth";
 
 import UserFormContainer from "./UserFormContainer";
+import { CustomWhen } from "@/components/ui/CustomWhen";
+import { IFile } from "@/lib/types/file";
 
 export default function User() {
   const user = useAuthStore((state) => state.user);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
+  const pictureId = user?.pictureId;
   return (
     <div className="flex items-center gap-4 group">
       <div className="relative rounded-full size-14 bg-slate-800 ring-2 ring-slate-700/50 hover:ring-primary/50 transition-all duration-300 shadow-md">
         <button
+          disabled={typeof pictureId === "string"}
           className="size-full relative rounded-full overflow-hidden flex justify-center items-center group/avatar focus:outline-none"
           onClick={onOpen}
         >
-          {user?.pictureId?.image ? (
-            <>
-              <Image
-                fill
-                alt={user?.userName || "User avatar"}
-                className="rounded-full object-cover size-full group-hover/avatar:scale-110 transition-transform duration-300"
-                src={uploadUrl(user?.pictureId?.image)}
-              />
-              {/* Subtle dark overlay on hover */}
-              <div className="absolute inset-0 bg-dark/40 opacity-0 group-hover/avatar:opacity-100 transition-opacity duration-200 flex items-center justify-center">
-                <span className="text-[10px] text-slate-200 font-medium">
-                  تغییر
-                </span>
-              </div>
-            </>
-          ) : (
+          <CustomWhen condition={Boolean(pictureId)}>
+            <Image
+              fill
+              alt={user?.userName || "User avatar"}
+              className="rounded-full object-cover size-full group-hover/avatar:scale-110 transition-transform duration-300"
+              src={userUploadUrl(pictureId as string | IFile)}
+            />
+            {/* Subtle dark overlay on hover */}
+            <div className="absolute inset-0 bg-dark/40 opacity-0 group-hover/avatar:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+              <span className="text-[10px] text-slate-200 font-medium">
+                تغییر
+              </span>
+            </div>
+          </CustomWhen>
+          <CustomWhen condition={!Boolean(pictureId)}>
             <div className="size-full rounded-full flex justify-center items-center bg-slate-800 hover:bg-slate-700/80 transition-colors duration-200">
               <span className="text-primary text-xs font-bold">آپلود عکس</span>
             </div>
-          )}
+          </CustomWhen>
         </button>
 
         <UserFormContainer

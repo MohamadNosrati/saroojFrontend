@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction } from "react";
 import { CustomWhen } from "@/components/ui/CustomWhen";
 import { useGetUsers } from "@/lib/hooks/user";
 import { useAuthStore } from "@/lib/stores/auth";
-import { uploadUrl } from "@/lib/tools/upload";
+import {  userUploadUrl } from "@/lib/tools/upload";
 import { IConversation } from "@/lib/types/conversation";
 import { IUser } from "@/lib/types/user";
 
@@ -41,6 +41,8 @@ const Contacts: React.FC<IProps> = ({
     }
   };
 
+  const pictureId = user?.pictureId;
+
   return (
     <div className="flex flex-col h-full w-full">
       <CustomWhen condition={!isLoading}>
@@ -68,16 +70,16 @@ const Contacts: React.FC<IProps> = ({
                       : "ring-1 ring-slate-700/50",
                   )}
                 >
-                  <CustomWhen condition={Boolean(item?.pictureId?.image)}>
+                  <CustomWhen condition={Boolean(item?.pictureId)}>
                     <Image
                       alt={item?.userName || ""}
                       className="rounded-full size-full object-cover"
                       height={40}
-                      src={uploadUrl(item?.pictureId?.image)}
+                      src={userUploadUrl(item?.pictureId)}
                       width={40}
                     />
                   </CustomWhen>
-                  <CustomWhen condition={!Boolean(item?.pictureId?.image)}>
+                  <CustomWhen condition={!Boolean(item?.pictureId)}>
                     <span className="text-xs font-bold text-slate-400">
                       {item?.userName?.slice(0, 2)}
                     </span>
