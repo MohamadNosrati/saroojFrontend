@@ -1,15 +1,12 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState } from "react";
 import { Button } from "@heroui/button";
-import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
+
 import CustomInput from "@/components/ui/CustomInput";
 import CustomContainer from "@/components/ui/CustomContainer";
-import { dashboardRoutes } from "@/lib/routes/navigationRoutes";
-import { responseHandler } from "@/lib/tools/responseHandler";
 import { login, LoginState } from "@/lib/actions/auth";
-import { useAuthStore } from "@/lib/stores/auth";
 import GoogleSignInButton from "@/features/Auth/GoogleSignInButton";
 import { useAuthResult } from "@/lib/hooks/auth";
 

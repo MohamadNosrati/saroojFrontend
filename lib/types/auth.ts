@@ -1,10 +1,9 @@
-import { inter } from "../config/fonts";
 import { IUser } from "./user";
 
 export interface ISinginPayload {
   email: string;
   password: string;
-  provider?:AuthIdentityProvider
+  provider?: AuthIdentityProvider;
 }
 
 export interface ISigninRes {
@@ -23,8 +22,7 @@ export enum AuthIdentityProvider {
   FACEBOOK = "facebook",
 }
 
-
 export interface ISigninWithProviderPayload {
-  provider:AuthIdentityProvider;
-  credentials:string;
+  provider: AuthIdentityProvider;
+  credentials: string;
 }

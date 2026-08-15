@@ -16,7 +16,8 @@ class AuthService {
     );
   }
   signInWithProvider(credentials: string, provider: AuthIdentityProvider) {
-    console.log("signIn with provider")
+    console.log("signIn with provider");
+
     return axiosInstance.post<IBaseResponse<ISigninRes>>(
       AuthRoute.signInWithProvider(provider),
       {

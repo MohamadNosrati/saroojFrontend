@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/stores/auth";
 import { dashboardRoutes } from "@/lib/routes/navigationRoutes";
 import { responseHandler } from "@/lib/tools/responseHandler";
+
 import { IUser } from "../types/user";
 
 type AuthResult = {

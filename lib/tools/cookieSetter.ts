@@ -1,3 +1,1 @@
-const cookieSetter = ()=>{
-    
-}
+const cookieSetter = () => {};
