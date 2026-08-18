@@ -9,6 +9,7 @@ import CustomContainer from "@/components/ui/CustomContainer";
 import { login, LoginState } from "@/lib/actions/auth";
 import GoogleSignInButton from "@/features/Auth/GoogleSignInButton";
 import { useAuthResult } from "@/lib/hooks/auth";
+import { yekanBakh } from "@/lib/config/fonts";
 
 const SiginPage = () => {
   const { pending } = useFormStatus();
@@ -19,7 +20,12 @@ const SiginPage = () => {
   useAuthResult(state, "ورود با موفقیت انجام شد");
 
   return (
-    <div className="min-h-screen w-full flex justify-center items-center bg-slate-950 antialiased select-none px-4">
+    <div
+      style={
+        { "--font-yekan": yekanBakh.style.fontFamily } as React.CSSProperties
+      }
+      className="min-h-screen w-full font-yekan flex justify-center items-center bg-slate-950 antialiased select-none px-4"
+    >
       {/* Ambient background glow behind the card */}
       <div className="absolute w-[400px] h-[400px] bg-primary/5 rounded-full blur-[120px] -z-10" />
 
@@ -32,7 +38,7 @@ const SiginPage = () => {
             لطفاً اطلاعات خود را جهت ورود وارد نمایید
           </p>
         </div>
-        <div className="mb-3">
+        <div className="mb-6">
           <GoogleSignInButton />
         </div>
         <form action={formAction} className="space-y-4">

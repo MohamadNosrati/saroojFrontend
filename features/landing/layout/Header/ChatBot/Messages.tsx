@@ -62,8 +62,6 @@ function TypingIndicator() {
           />
         ))}
       </div>
-
-      <span className="text-sm text-default-500">Thinking...</span>
     </motion.div>
   );
 }

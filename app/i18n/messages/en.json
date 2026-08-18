@@ -6,7 +6,8 @@
       "newCchatButton": "+ New chat",
       "subTitle": "Online assistant",
       "defaultMessage": "Hi 👋 How can I help you?",
-      "sendButton": "Send"
+      "sendButton": "Send",
+      "loadingMessage": "Generating response..."
     }
   },
   "About": {

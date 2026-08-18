@@ -89,6 +89,7 @@
     "react-compare-slider": "^4.0.0",
     "react-dom": "18.3.1",
     "react-easy-crop": "^5.5.7",
+    "react-facebook": "^11.0.2",
     "react-hook-form": "^7.62.0",
     "react-hotkeys-hook": "^5.3.2",
     "react-multi-date-picker": "^4.5.2",

@@ -5,9 +5,4 @@ export interface IFile {
 
 export interface IFilePayload {
   image: File;
-  // x:number;
-  // y:number;
-  // width:number;
-  // height:number;
-  // zoom:number;
 }

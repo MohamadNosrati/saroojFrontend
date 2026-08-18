@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 import { responseHandler } from "../tools/responseHandler";
 import { assistantMessageRoutes } from "../routes/apiRoutes";
@@ -40,7 +41,15 @@ export const useCreateAssistantMessage = () => {
       await assistantServices.create(payload),
 
     onError: (error) => {
-      responseHandler.fail(error?.message || "خطا در ایجاد پیام دستیار");
+      if (axios.isAxiosError(error)) {
+        const message =
+          error.response?.data?.message || "خطا در ایجاد پیام دستیار";
+
+        responseHandler.fail(message);
+        return;
+      }
+
+      responseHandler.fail(error.message || "خطا در ایجاد پیام دستیار");
     },
   });
 };

@@ -12,7 +12,10 @@ import { AuthIdentityProvider } from "@/lib/types/auth";
 export default function GoogleSignInButton() {
   const router = useRouter();
   const setUser = useAuthStore((store) => store.setUser);
-  const handleSuccess = async (credentialResponse: { credential?: string }) => {
+  const handleSuccess = async (
+    credentialResponse: { credential?: string },
+    provider: AuthIdentityProvider,
+  ) => {
     if (!credentialResponse.credential) {
       console.error("Google did not return a credential");
 
@@ -21,13 +24,17 @@ export default function GoogleSignInButton() {
 
     const result = await loginWithProvider(
       credentialResponse.credential,
-      AuthIdentityProvider.GOOGLE,
+      provider,
     );
 
     if (result.user) {
       setUser(result.user);
 
-      responseHandler.success("ورود با گوگل با موفقیت انجام شد");
+      responseHandler.success(
+        provider === AuthIdentityProvider.GOOGLE
+          ? "ورود با گوگل با موفقیت انجام شد"
+          : "ورود با فیس بوک با موفقیت انجام شد",
+      );
 
       router.push(dashboardRoutes.dashboard());
     } else {
@@ -36,23 +43,25 @@ export default function GoogleSignInButton() {
   };
 
   return (
-    <GoogleLogin
-      shape="rectangular"
-      size="large"
-      text="continue_with"
-      theme="outline"
-      width="100%"
-      onError={() => {
-        responseHandler.fail("Google login failed");
-      }}
-      onSuccess={(credentialResponse) => {
-        if (!credentialResponse.credential) {
-          return;
-        }
-        handleSuccess({
-          credential: credentialResponse.credential,
-        });
-      }}
-    />
+    <div className="w-full overflow-hidden rounded-medium bg-white font-phone">
+      <GoogleLogin
+        shape="rectangular"
+        size="large"
+        text="continue_with"
+        theme="outline"
+        width="100%"
+        onError={() => {
+          responseHandler.fail("Google login failed");
+        }}
+        onSuccess={(credentialResponse) => {
+          handleSuccess(
+            {
+              credential: credentialResponse.credential,
+            },
+            AuthIdentityProvider.GOOGLE,
+          );
+        }}
+      />
+    </div>
   );
 }

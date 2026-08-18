@@ -41,13 +41,13 @@ export default function Chats({ sessionId, chatId, setChatId }: IProps) {
             <button
               key={chat.id}
               className={clsx(
-                "rounded-2xl py-1.5 px-2.5 flex flex-col text-start text-sm transition hover:bg-default-100 bg-white dark:hover:bg-zinc-800",
+                "rounded-2xl cursor-pointer py-1.5 px-2.5 flex flex-col text-start text-sm transition bg-default-100 text-dark dark:text-white dark:bg-zinc-800",
                 chatId === chat?.id ? "border-2 border-primary " : "",
               )}
               onClick={() => setChatId(chat.id)}
             >
               <p className="truncate font-medium">
-                {chat?.title.substring(0, 20)}
+                {chat?.title.substring(0, 40)}
               </p>
               <span className="text-xs block text-default-500">
                 {dateConvertor(chat.createdAt, locale as LocaleEnum)}

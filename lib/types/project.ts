@@ -208,64 +208,6 @@ export type TProjectTranslatePayload = {
   steps: IStepItemPayload[];
 };
 
-const test = {
-  titleEn: "Apadana Isfahan",
-  titleAr: "آپادانا اصفهان",
-  altEn: "Apadana Isfahan",
-  altAr: "آپادانا اصفهان",
-  descriptionEn:
-    "The Apadana Isfahan project, with an area of 112 meters, was renovated in 1399 in a modern architectural style. In this project, due to the lack of sufficient lighting before renovation, measures were taken to create appropriate illumination. Additionally, the depth of the closet was more than necessary, so it was demolished and added to the living room space, and a mirror was used on its body so that the space appeared larger than it was. In this project, modern track lights, an electric fireplace, high-gloss Turkish cabinets, 100*100 tiles, a ceramic counter, a wall unit, etc., were used.",
-  descriptionAr:
-    "مشروع آپادانا اصفهان، بمساحة 112 مترًا، تم تجديده في عام 1399 بأسلوب معماري حديث. في هذا المشروع، ونظرًا لعدم توفر إضاءة كافية قبل التجديد، تم اتخاذ إجراءات لتوفير إضاءة مناسبة. بالإضافة إلى ذلك، كان عمق خزانة الملابس أكثر من اللازم، لذا تم هدمها وإضافتها إلى مساحة غرفة المعيشة، واستُخدمت مرآة على جسمها لتبدو المساحة أكبر مما كانت عليه. تم استخدام أضواء المسار الحديثة، والمدفأة الكهربائية، وخزائن تركية عالية اللمعان، وسيراميك 100*100، وكونتر سيراميك، ووحدة حائط، وما إلى ذلك في هذا المشروع.",
-  addressEn: "Apadana Isfahan",
-  addressAr: "أبادانا اصفهان",
-  imagesEn: [
-    {
-      afterEn: {
-        nameEn: "After",
-        pictureIdEn: "6a7b2744fc734480f638978c",
-      },
-      beforeEn: {
-        nameEn: "Before",
-        pictureIdEn: "6a7b2732fc734480f6389788",
-      },
-    },
-    {
-      afterEn: {
-        nameEn: "Room After",
-        pictureIdEn: "6a7b2782fc734480f6389794",
-      },
-      beforeEn: {
-        nameEn: "Room Before",
-        pictureIdEn: "6a7b276cfc734480f6389790",
-      },
-    },
-  ],
-  stepsEn: [
-    {
-      nameEn: "First Step",
-      pictureIdEn: "6a5e556fe791850dd75b327d",
-      altEn: "bispsy",
-      isActiveEn: true,
-      videoEn: "fdsfdsfds",
-      descriptionEn: "First Step description",
-      _idEn: "6a6140dca38c13ffebf75e32",
-    },
-    {
-      nameEn: "Second Step ",
-      pictureIdEn: "6a5e557fe791850dd75b3281",
-      altEn: "Second step description image",
-      isActiveEn: "1",
-      videoEn: "4353",
-      descriptionEn: "Second step description",
-      _idEn: "6a6140dca38c13ffebf75e33",
-    },
-  ],
-  stepsAr: [],
-  artitectureStyleEn: "",
-  artitectureStyleAr: "",
-};
-
 export interface ITranslatedProjectPayload {
   titleEn: string;
   titleAr: string;
