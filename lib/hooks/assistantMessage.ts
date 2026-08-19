@@ -46,6 +46,7 @@ export const useCreateAssistantMessage = () => {
           error.response?.data?.message || "خطا در ایجاد پیام دستیار";
 
         responseHandler.fail(message);
+
         return;
       }
 

@@ -1,5 +1,4 @@
-import { FacebookPixelProvider, FacebookProvider, Login } from "react-facebook";
-
+import { FacebookProvider } from "react-facebook";
 import { ReactNode } from "react";
 
 export default function FaceBookProvider({

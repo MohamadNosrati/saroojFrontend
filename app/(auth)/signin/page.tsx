@@ -21,10 +21,10 @@ const SiginPage = () => {
 
   return (
     <div
+      className="min-h-screen w-full font-yekan flex justify-center items-center bg-slate-950 antialiased select-none px-4"
       style={
         { "--font-yekan": yekanBakh.style.fontFamily } as React.CSSProperties
       }
-      className="min-h-screen w-full font-yekan flex justify-center items-center bg-slate-950 antialiased select-none px-4"
     >
       {/* Ambient background glow behind the card */}
       <div className="absolute w-[400px] h-[400px] bg-primary/5 rounded-full blur-[120px] -z-10" />
